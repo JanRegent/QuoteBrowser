@@ -1,18 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
+import './BL/email/email.dart';
 
-void main() {
+void main() async {
+  await Isar.initialize();
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  late Isar _isar;
+
+  @override
+  void initState() {
+    // Open Isar instance
+    _isar = Isar.open(
+      schemas: [EmailSchema],
+      directory: Isar.sqliteInMemory,
+      engine: IsarEngine.sqlite,
+    );
+    super.initState();
+  }
+
+  void emailAdd() {
+    // Persist counter value to database
+    _isar.write((isar) async {
+      isar.emails.put(Email(id: 1, title: 't1'));
+    });
+
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+        body: Column(
+          children: [
+            const Text('Hello World!4'),
+            IconButton(
+                onPressed: () {
+                  emailAdd();
+                },
+                icon: const Icon(Icons.abc))
+          ],
         ),
       ),
     );
