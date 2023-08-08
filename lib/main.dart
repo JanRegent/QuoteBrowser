@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import './BL/email/email.dart';
+import 'DL/gsheets1.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Isar.initialize();
+  maingSheet();
   runApp(const MainApp());
 }
 
