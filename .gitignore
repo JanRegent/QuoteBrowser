@@ -10,8 +10,8 @@
 .svn/
 migrate_working_dir/
 
-assets/.gitIgnoreDir/
-assets/assets/.gitIgnoreDir/
+assets/gitIgnore/
+assets/assets/gitIgnore/
 
 # IntelliJ related
 *.iml

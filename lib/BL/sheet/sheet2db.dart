@@ -23,6 +23,10 @@ Future sheet2db() async {
     isar.write((isar) {
       isar.sheets.put(sheet);
     });
+    if (sheet.aIndex > 1) {
+      await dl.gsheetsHelper.updateCell('newValue4', sheetName, fileId,
+          sheet.aIndex, rows[0].indexOf('title') + 1);
+    }
   }
   printSheet(sheetName);
 }

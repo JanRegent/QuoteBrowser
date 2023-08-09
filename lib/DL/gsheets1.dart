@@ -11,7 +11,7 @@ class GsheetsHelper {
   Future<void> loadCredentials() async {
     if (_credentials.isNotEmpty) return;
     final String jsonString =
-        await rootBundle.loadString('assets/.gitIgnoreDir/client_secret.json');
+        await rootBundle.loadString('assets/gitIgnore/client_secret.json');
     _credentials = jsonDecode(jsonString);
   }
 
@@ -31,5 +31,14 @@ class GsheetsHelper {
     List<List<String>> rows = await sheet!.values.allRows();
 
     return rows;
+  }
+
+  Future updateCell(String newValue, String sheetName, String spreadsheetId,
+      int rowIndex, int colIndex) async {
+    final ss = await gsheets.spreadsheet(spreadsheetId);
+
+    var sheet = ss.worksheetByTitle(sheetName);
+
+    await sheet.values.insertValue(newValue, column: colIndex, row: rowIndex);
   }
 }
