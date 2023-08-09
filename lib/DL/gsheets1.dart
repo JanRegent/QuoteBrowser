@@ -29,6 +29,7 @@ class GsheetsHelper {
 
     var sheet = ss.worksheetByTitle(sheetName);
     List<List<String>> rows = await sheet!.values.allRows();
+
     return rows;
   }
 }

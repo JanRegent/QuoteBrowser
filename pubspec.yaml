@@ -12,10 +12,14 @@ dependencies:
     sdk: flutter
 
   ##----db
-  isar: ^4.0.0-dev.9
+  isar: ^4.0.0-dev.9                      #https://pub.dev/packages/isar/versions/4.0.0-dev.9
   isar_flutter_libs: 4.0.0-dev.9
 
   gsheets: ^0.5.0 
+
+  #----------------------------------------------uti
+  intl: ^0.18.1                           #https://pub.dev/packages/intl
+  dartx: ^1.2.0                           #https://pub.dev/packages/dartx
 
 dev_dependencies:
   build_runner: any
