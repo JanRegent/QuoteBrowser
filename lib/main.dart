@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
+import 'package:quotebrowser/DL/dl.dart';
 import './BL/email/email.dart';
-import 'DL/gsheets1.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Isar.initialize();
-  maingSheet();
+  await dl.init();
+  print(await dl.gsheetsHelper
+      .getSheetAll('fb:Lao-c', '1YfST3IJ4V32M-uyfuthBxa2AL7NOVn_kWBq4isMLZ-w'));
   runApp(const MainApp());
 }
 
