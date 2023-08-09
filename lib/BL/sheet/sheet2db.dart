@@ -16,5 +16,13 @@ Future sheet2db() async {
   sheet.aSheetName = sheetName;
   sheet.zfileId = fileId;
 
-  print(await sheet.toStrings());
+  isar.write((isar) {
+    isar.sheets.put(sheet);
+  });
+  Sheet sheet2 = Sheet().sheetFromRow(rows[0], rows[1]);
+  sheet2.id = isar.sheets.autoIncrement();
+  isar.write((isar2) {
+    isar.sheets.put(sheet);
+  });
+  print(sheet2.id);
 }

@@ -18,7 +18,7 @@ Future<void> openIsar() async {
 
 @Collection()
 class Sheet {
-  int id = -1;
+  late int id;
   String aSheetName = '';
   String sheetID = '';
 
@@ -73,15 +73,11 @@ class Sheet {
   }
 
   Sheet sheetFromRow(List<String> cols, List<String> row) {
-    List<String> restCols = cols;
-    List<String> restRow = row;
     String getValue(String colName) {
-      int index = restCols.indexOf(colName);
+      int index = cols.indexOf(colName);
       if (index == -1) return '';
 
-      String value = restRow[index];
-      restCols.removeAt(index);
-      restRow.removeAt(index);
+      String value = row[index];
 
       return value;
     }
@@ -95,7 +91,7 @@ class Sheet {
     sheet.dateinsert = getValue('dateinsert');
 
     sheet.rowArr = row;
-    print(restCols);
+
     return sheet;
   }
 
