@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
 import '../bluti.dart';
@@ -6,9 +7,18 @@ part 'sheet.g.dart';
 
 // dart run build_runner build
 
+Future<void> openIsar() async {
+  Isar.open(
+    engine: kIsWeb ? IsarEngine.sqlite : IsarEngine.isar,
+    schemas: [SheetSchema],
+    directory: '',
+    inspector: true,
+  );
+}
+
 @Collection()
 class Sheet {
-  late final int id;
+  int id = -1;
   String aSheetName = '';
   String sheetID = '';
 
@@ -77,7 +87,7 @@ class Sheet {
     }
 
     Sheet sheet = Sheet();
-    sheet.id = int.tryParse(getValue('ID'))!;
+    //sheet.id = int.tryParse(getValue('ID'))!;
     sheet.quote = getValue('citat');
     sheet.author = getValue('autor');
     sheet.book = getValue('kniha');
