@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/DL/dl.dart';
 import './BL/email/email.dart';
+import 'BL/bl.dart';
 import 'BL/sheet/sheet2db.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Isar.initialize();
+
+  await bl.init();
   await dl.init();
   await sheet2db();
   runApp(const MainApp());

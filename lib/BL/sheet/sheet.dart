@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
 import '../bluti.dart';
@@ -7,19 +6,11 @@ part 'sheet.g.dart';
 
 // dart run build_runner build
 
-Future<void> openIsar() async {
-  Isar.open(
-    engine: kIsWeb ? IsarEngine.sqlite : IsarEngine.isar,
-    schemas: [SheetSchema],
-    directory: '',
-    inspector: true,
-  );
-}
-
 @Collection()
 class Sheet {
   late int id;
   String aSheetName = '';
+  int aIndex = 0;
   String sheetID = '';
 
   String quote = '';
@@ -49,23 +40,24 @@ class Sheet {
     -----------------------------------------------------sheet
     id          $id
     aSheetName  $aSheetName
-    sheetID     $sheetID
+    rowIndex    $aIndex
 
     author    $author
     book      $book
     pagePar   $pagePar
 
-    quote     ${quote.substring(0, 30)}
+    quote     ${quote.length >= 30 ? quote.substring(0, 30) : quote.length}
 
     dateinsert $dateinsert
 
     stars     $stars
     favorites $favorites
 
-    tags      $tagsStr
+    tagsStr   $tagsStr
     
     rowType  $rowType 
-    listStr
+    
+    rowArr
     $rowArr                
 
     zfileId     $zfileId
