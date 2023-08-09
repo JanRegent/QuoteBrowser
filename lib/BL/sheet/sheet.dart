@@ -63,25 +63,29 @@ class Sheet {
   }
 
   Sheet sheetFromRow(List<String> cols, List<String> row) {
-    List<String> restCols = blUti.toListString(cols);
+    List<String> restCols = cols;
     List<String> restRow = row;
     String getValue(String colName) {
       int index = restCols.indexOf(colName);
-      String value = restRow[index];
+      if (index == -1) return '';
 
+      String value = restRow[index];
       restCols.removeAt(index);
       restRow.removeAt(index);
 
       return value;
     }
 
-    Sheet sheet = Sheet()..id = -1;
+    Sheet sheet = Sheet();
+    sheet.id = int.tryParse(getValue('ID'))!;
     sheet.quote = getValue('citat');
     sheet.author = getValue('autor');
     sheet.book = getValue('kniha');
     sheet.tagsStr = getValue('tags');
+    sheet.dateinsert = getValue('dateinsert');
 
     sheet.rowArr = row;
+    print(restCols);
     return sheet;
   }
 
