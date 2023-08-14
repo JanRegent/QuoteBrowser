@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  ##-----bl status
+  get: ^4.6.5                             #https://pub.dev/packages/get
 
   ##----db
   isar: ^4.0.0-dev.9                      #https://pub.dev/packages/isar/versions/4.0.0-dev.9

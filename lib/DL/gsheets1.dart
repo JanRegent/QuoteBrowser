@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:gsheets/gsheets.dart';
 
 class GsheetsHelper {
-  /// Your google auth credentials
+  /// https://pub.dev/packages/gsheets/example
   ///
   /// how to get credentials - https://medium.com/@a.marenkov/how-to-get-credentials-for-google-sheets-456b7e88c430
   Map _credentials = {};
@@ -16,7 +16,7 @@ class GsheetsHelper {
   }
 
   // ignore: prefer_typing_uninitialized_variables
-  late final gsheets;
+  late final GSheets gsheets;
   Future init() async {
     await loadCredentials();
     // init GSheets
@@ -27,10 +27,27 @@ class GsheetsHelper {
       String sheetName, String spreadsheetId) async {
     final ss = await gsheets.spreadsheet(spreadsheetId);
 
-    var sheet = ss.worksheetByTitle(sheetName);
-    List<List<String>> rows = await sheet!.values.allRows();
+    Worksheet? worksheet = ss.worksheetByTitle(sheetName);
+    List<List<String>> rows = await worksheet!.values.allRows();
 
     return rows;
+  }
+
+  Future<List<String>> getSheetNames(String spreadsheetId) async {
+    final Spreadsheet ss = await gsheets.spreadsheet(spreadsheetId);
+
+    List<Worksheet> worksheets = ss.sheets;
+    List<String> sheetNames = [];
+    for (Worksheet worksheet in worksheets) {
+      if (worksheet.title.contains('log')) continue;
+      if (worksheet.title.contains('DailyManForm')) continue;
+      if (worksheet.title.toLowerCase().contains('config')) continue;
+      if (worksheet.title.startsWith('__')) continue;
+
+      sheetNames.add(worksheet.title);
+    }
+
+    return sheetNames;
   }
 
   Future updateCell(String newValue, String sheetName, String spreadsheetId,
@@ -39,6 +56,6 @@ class GsheetsHelper {
 
     var sheet = ss.worksheetByTitle(sheetName);
 
-    await sheet.values.insertValue(newValue, column: colIndex, row: rowIndex);
+    await sheet!.values.insertValue(newValue, column: colIndex, row: rowIndex);
   }
 }

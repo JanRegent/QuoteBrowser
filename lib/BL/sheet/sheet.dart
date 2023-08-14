@@ -69,9 +69,12 @@ class Sheet {
       int index = cols.indexOf(colName);
       if (index == -1) return '';
 
-      String value = row[index];
-
-      return value;
+      try {
+        String value = row[index];
+        return value;
+      } catch (_) {
+        return '';
+      }
     }
 
     Sheet sheet = Sheet();

@@ -3,15 +3,17 @@ import 'package:isar/isar.dart';
 import 'package:quotebrowser/DL/dl.dart';
 import './BL/email/email.dart';
 import 'BL/bl.dart';
-import 'BL/sheet/sheet2db.dart';
+
+import 'BL/sheet/sheet2dvui.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await bl.init();
   await dl.init();
-  await sheet2db();
-  runApp(const MainApp());
+  //await sheets2db();
+
+  runApp(const Sheets2dbPage());
 }
 
 class MainApp extends StatefulWidget {
@@ -53,7 +55,11 @@ class _MainAppState extends State<MainApp> {
             const Text('Hello World!4'),
             IconButton(
                 onPressed: () {
-                  emailAdd();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Sheets2dbPage()),
+                  );
                 },
                 icon: const Icon(Icons.abc))
           ],
