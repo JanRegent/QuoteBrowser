@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'sheetviewfields.dart';
 
 import '../../BL/sheet/sheetcrud.dart';
-import 'sheetviewfields.dart';
 
 import 'sheetviewmenu.dart';
 import 'sheetviewquote.dart';
@@ -23,11 +23,7 @@ class _SheetViewPageState extends State<SheetViewPage> {
   }
 
   Future<String> getData() async {
-    print(widget.locId);
-    currentSheet = await readByRowIndex2(widget.locId);
-    currentSheet.id ??= -1;
-
-    print(currentSheet.toStrings());
+    readByRowIndex2(widget.locId);
 
     return 'ok';
   }
@@ -52,8 +48,10 @@ class _SheetViewPageState extends State<SheetViewPage> {
         ),
         body: TabBarView(
           children: [
-            SheetViewQuote(currentSheet),
-            SheetViewFields(currentSheet),
+            //SheetViewQuote(currentSheet),
+            Text(currentSheet.toStrings()),
+            Text(currentSheet.toStrings()),
+            //SheetViewFields(currentSheet),
           ],
         ),
       ),

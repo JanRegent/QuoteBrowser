@@ -33,7 +33,7 @@ class Sheet {
   @ignore
   String save2cloud = '';
 
-  Future<String> toStrings() async {
+  String toStrings() {
     return '''
     -----------------------------------------------------sheet
     id          $id

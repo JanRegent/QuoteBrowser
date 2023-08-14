@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:isar/isar.dart';
+import 'package:quotebrowser/AL/zview/sheetviewmenu.dart';
 import 'package:quotebrowser/BL/sheet/sheet.dart';
 
 import '../bl.dart';
@@ -43,8 +44,7 @@ Future<Sheet?> readByRowIndex(int index) async {
 Future<Sheet> readByRowIndex2(int index) async {
   try {
     Sheet sheet = isar.sheets.where().aIndexEqualTo(index).findFirst()!;
-    print(sheet.toString());
-    print('********');
+    currentSheet = sheet;
     return sheet;
   } catch (e) {
     debugPrint(e.toString());

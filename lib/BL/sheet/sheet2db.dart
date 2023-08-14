@@ -61,6 +61,6 @@ Future printSheet(String sheetName) async {
   List<Sheet> sheets =
       isar.sheets.where().aSheetNameEqualTo(sheetName).findAll();
   for (var i = 0; i < sheets.length; i++) {
-    debugPrint(await sheets[i].toStrings());
+    debugPrint(sheets[i].toStrings());
   }
 }
