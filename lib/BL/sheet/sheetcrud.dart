@@ -17,13 +17,14 @@ Future<int> sheetTodayLength(String sheetName) async {
       .rowTypeEqualTo('dataRow')
       .findAll()
       .length;
-  print('--------------------------------$sheetName');
+  //todo error count, wait for inspector
+  // print('--------------------------------$sheetName');
 
-  print(isar.sheets
-      .where()
-      .dateinsertEqualTo('${blUti.todayStr()}.')
-      .dateinsertProperty()
-      .findFirst());
+  // print(isar.sheets
+  //     .where()
+  //     .dateinsertEqualTo('${blUti.todayStr()}.')
+  //     .dateinsertProperty()
+  //     .findFirst());
 
   return len;
 }

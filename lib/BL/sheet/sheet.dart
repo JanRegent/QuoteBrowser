@@ -1,7 +1,5 @@
 import 'package:isar/isar.dart';
 
-import '../bluti.dart';
-
 part 'sheet.g.dart';
 
 // dart run build_runner build
@@ -87,89 +85,6 @@ class Sheet {
 
     sheet.rowArr = row;
 
-    return sheet;
-  }
-
-  Sheet row2sheet(
-      List rowArrIn,
-      String sheetName,
-      String fileId,
-      String rowType,
-      int idix,
-      int dateinsertIx,
-      int tagIx,
-      int authorIx,
-      int bookIx,
-      int pageParIx,
-      int quoteIx) {
-    Sheet sheet = Sheet();
-    List<String> rowArr = blUti.toListString(rowArrIn);
-    //-----------------------ID
-    try {
-      sheet.sheetID = rowArr[idix].toString();
-    } catch (e) {
-      return sheet;
-    }
-
-    //-----------------------dateinsert
-    try {
-      if (dateinsertIx > -1) {
-        sheet.dateinsert = rowArr[dateinsertIx].trim();
-        // .replaceAll('__', '');
-        // if (!sheet.dateinsert.endsWith('.')) {
-        //   sheet.dateinsert = '${sheet.dateinsert}.';
-        //   sheet.dateinsert = sheet.dateinsert.replaceAll('..', '.');
-      }
-    } catch (e) {
-      sheet.dateinsert = '';
-    }
-    //-----------------------author
-
-    try {
-      if (authorIx > -1) {
-        sheet.author = rowArr[authorIx];
-      }
-    } catch (e) {
-      sheet.author = '';
-    }
-    //-----------------------book
-    try {
-      if (bookIx > -1) {
-        sheet.book = rowArr[bookIx];
-      }
-    } catch (e) {
-      sheet.book = '';
-    }
-    //-------------------------------pagePar
-    try {
-      if (pageParIx > -1) {
-        sheet.pagePar = rowArr[pageParIx];
-      }
-    } catch (e) {
-      sheet.pagePar = '';
-    }
-    //-------------------------------quote
-    try {
-      if (quoteIx > -1) {
-        sheet.quote = rowArr[quoteIx];
-      }
-    } catch (e) {
-      sheet.quote = '';
-    }
-    //-------------------------------------
-    try {
-      sheet
-        ..aSheetName = sheetName
-        ..rowType = rowType
-        ..zfileId = fileId
-        ..rowArr = rowArr;
-
-      if (tagIx > -1) {
-        sheet.tagsStr = rowArr[tagIx].trim();
-      }
-    } catch (_) {
-      //todo RangeError (index): Index out of range: index should be less than 10: 10
-    }
     return sheet;
   }
 }
