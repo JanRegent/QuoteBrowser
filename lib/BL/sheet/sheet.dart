@@ -77,6 +77,7 @@ class Sheet {
 
     Sheet sheet = Sheet();
     //sheet.id = int.tryParse(getValue('ID'))!;
+
     sheet.quote = getValue('citat');
     sheet.author = getValue('autor');
     sheet.book = getValue('kniha');

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../AL/zview/_sheetviewpage.dart';
 import '../../DL/dl.dart';
 import 'sheet2db.dart';
 
@@ -39,10 +40,18 @@ class _Sheets2dbPageState extends State {
                   fontSize: 20,
                 ),
               ),
-              leading: CircleAvatar(
-                child: Obx(() => Text(sheetNamesToday[index].toString(),
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.bold))),
+              leading: InkWell(
+                child: CircleAvatar(
+                  child: Obx(() => Text(sheetNamesToday[index].toString(),
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold))),
+                ),
+                onTap: () async {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SheetViewPage(12, 'xxx2')));
+                },
               ),
               trailing: Obx(() => Text(sheetNamesLength[index].toString())),
             ),

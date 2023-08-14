@@ -24,6 +24,7 @@ Future sheets2db() async {
 
     sheetNamesLength[index] = await sheetLength(sheetName);
     sheetNamesToday[index] = await sheetTodayLength(sheetName);
+    if (index == 0) break;
   }
   loadingTitle.value = 'Loading done of ${sheetNamesToday.length} sheets';
 }
@@ -43,10 +44,7 @@ Future sheet2db(String sheetName, String fileId) async {
     isar.write((isar) {
       isar.sheets.put(sheet);
     });
-    //await updateCell(sheet, rows[0], 'title', 'newNew1');
   }
-  //printSheet(sheetName);
-  //print(await dl.gsheetsHelper.getSheetNames(fileId));
 }
 
 Future updateCell(

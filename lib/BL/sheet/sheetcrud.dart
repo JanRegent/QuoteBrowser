@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/sheet/sheet.dart';
 
@@ -27,4 +28,26 @@ Future<int> sheetTodayLength(String sheetName) async {
   //     .findFirst());
 
   return len;
+}
+
+Future<Sheet?> readByRowIndex(int index) async {
+  try {
+    Sheet? sheet = isar.sheets.where().aIndexEqualTo(index).findFirst();
+
+    return sheet;
+  } catch (_) {
+    return Sheet()..aIndex = index;
+  }
+}
+
+Future<Sheet> readByRowIndex2(int index) async {
+  try {
+    Sheet sheet = isar.sheets.where().aIndexEqualTo(index).findFirst()!;
+    print(sheet.toString());
+    print('********');
+    return sheet;
+  } catch (e) {
+    debugPrint(e.toString());
+    return Sheet()..aIndex = index;
+  }
 }
