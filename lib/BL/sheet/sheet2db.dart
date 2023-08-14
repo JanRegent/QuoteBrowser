@@ -9,6 +9,7 @@ import '../bl.dart';
 import 'sheetcrud.dart';
 
 RxList sheetNamesToday = [].obs;
+RxList sheetNamesLength = [].obs;
 RxString loadingTitle = ''.obs;
 List<String> sheetNames = [];
 String fileId = '1YfST3IJ4V32M-uyfuthBxa2AL7NOVn_kWBq4isMLZ-w';
@@ -21,7 +22,8 @@ Future sheets2db() async {
     loadingTitle.value = 'loading $index/${sheetNames.length} $sheetName';
     await sheet2db(sheetName, fileId);
 
-    sheetNamesToday[index] = await sheetLength(sheetName);
+    sheetNamesLength[index] = await sheetLength(sheetName);
+    sheetNamesToday[index] = await sheetTodayLength(sheetName);
   }
   loadingTitle.value = 'Loading done of ${sheetNamesToday.length} sheets';
 }

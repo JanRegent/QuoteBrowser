@@ -20,6 +20,7 @@ class _Sheets2dbPageState extends State {
 
     for (var i = 0; i < sheetNames.length; i++) {
       sheetNamesToday.add(0);
+      sheetNamesLength.add(0);
     }
     return 'ok';
   }
@@ -43,7 +44,7 @@ class _Sheets2dbPageState extends State {
                     style: const TextStyle(
                         fontSize: 15, fontWeight: FontWeight.bold))),
               ),
-              trailing: Obx(() => Text(sheetNamesToday[index].toString())),
+              trailing: Obx(() => Text(sheetNamesLength[index].toString())),
             ),
           ),
         );
