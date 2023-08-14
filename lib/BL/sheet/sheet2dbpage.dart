@@ -23,6 +23,7 @@ class _Sheets2dbPageState extends State {
       sheetNamesToday.add(0);
       sheetNamesLength.add(0);
     }
+    await sheets2db();
     return 'ok';
   }
 

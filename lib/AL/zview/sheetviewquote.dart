@@ -18,7 +18,7 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
   initState() {
     super.initState();
 
-    highlightedWordFill();
+    //highlightedWordFill();
   }
 
   //------------------------------------------------------------------highlight
@@ -44,7 +44,7 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
   );
 
   TextHighlight quoteField(Sheet sheet) {
-    highlightedWordFill();
+    //highlightedWordFill();
     return TextHighlight(
         text: sheet.quote,
         words: highlightedWord,
