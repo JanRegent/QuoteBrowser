@@ -49,7 +49,6 @@ class _SheetViewPageState extends State<SheetViewPage> {
         body: TabBarView(
           children: [
             SheetViewQuote(currentSheet),
-            //Text(currentSheet.toStrings()),
             SheetViewFields(currentSheet),
           ],
         ),
