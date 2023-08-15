@@ -40,6 +40,7 @@ dependencies:
   intl: ^0.18.1                           #https://pub.dev/packages/intl
   dartx: ^1.2.0                           #https://pub.dev/packages/dartx
   csv: ^5.0.2                             #https://pub.dev/packages/csv
+  cupertino_icons: ^1.0.5                 #https://pub.dev/packages/cupertino_icons
 
 #******************************************************************************DEV  
 dev_dependencies:

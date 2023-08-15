@@ -24,10 +24,10 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
   //------------------------------------------------------------------highlight
   Map<String, HighlightedWord> highlightedWord = {};
   void highlightedWordFill() {
-    List<String> tagsStr = widget.sheet.tagsStr.split(RegExp(r'[,.\s]'));
-
+    List<String> tagsWords = widget.sheet.tagsStr.split(RegExp(r'[,.\s]'));
+    print(tagsWords);
     highlightedWord = {}; //split(RegExp(r'[,.\s]')
-    for (var word in tagsStr) {
+    for (var word in tagsWords) {
       highlightedWord[word] = HighlightedWord(
         onTap: () {
           debugPrint(word);

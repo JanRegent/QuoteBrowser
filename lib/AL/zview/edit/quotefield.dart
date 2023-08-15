@@ -8,66 +8,53 @@ class QuoteField extends StatelessWidget {
   Function setstate;
   QuoteField(this.sheet, this.setstate, {super.key});
   final TextEditingController _controller = TextEditingController();
-  @override
+
+  void attribSet(String attribName) {
+    String selected = _controller.text.substring(
+        _controller.selection.baseOffset, _controller.selection.extentOffset);
+
+    if (selected.isEmpty) return;
+
+    switch (attribName) {
+      case 'author':
+        sheet.author = selected;
+        break;
+      case 'book':
+        sheet.book = selected;
+        break;
+      case 'tags':
+        sheet.tagsStr += '|$selected';
+        break;
+      default:
+        return;
+    }
+    sheet.save2cloud += '$attribName, ';
+    setstate();
+  }
+
+  @override //printSelectedText()
   Widget build(BuildContext context) {
     _controller.text = sheet.quote;
-    return TextField(
-      controller: _controller,
-      maxLines: 10,
-      contextMenuBuilder: (context, editableTextState) {
-        final TextEditingValue value = editableTextState.textEditingValue;
-        String selected = value.selection.textInside(value.text);
-        final List<ContextMenuButtonItem> buttonItems =
-            editableTextState.contextMenuButtonItems;
-        buttonItems.insert(
-            0,
-            ContextMenuButtonItem(
-              label: '______________',
-              onPressed: () {},
-            ));
-
-        buttonItems.insert(
-            0,
-            ContextMenuButtonItem(
-              label: 'Author',
-              onPressed: () {
-                ContextMenuController.removeAny();
-                if (selected.isEmpty) return;
-                sheet.author = selected;
-                sheet.save2cloud += 'Author ';
-                setstate();
-              },
-            ));
-        buttonItems.insert(
-            0,
-            ContextMenuButtonItem(
-              label: 'Book',
-              onPressed: () {
-                ContextMenuController.removeAny();
-                if (selected.isEmpty) return;
-                sheet.book = selected;
-                sheet.save2cloud += 'Book ';
-                setstate();
-              },
-            ));
-        buttonItems.insert(
-            0,
-            ContextMenuButtonItem(
-              label: 'Tags',
-              onPressed: () {
-                ContextMenuController.removeAny();
-                if (selected.isEmpty) return;
-                //Navigator.of(context).push(_showDialog(context));
-                sheet.tagsStr += '|$selected';
-                sheet.save2cloud += 'tags ';
-                setstate();
-              },
-            ));
-        return AdaptiveTextSelectionToolbar.buttonItems(
-          anchors: editableTextState.contextMenuAnchors,
-          buttonItems: buttonItems,
-        );
-      },
+    return Column(
+      children: [
+        Row(
+          children: [
+            IconButton(
+                icon: const Icon(Icons.person),
+                onPressed: () => attribSet('author')),
+            IconButton(
+                icon: const Icon(Icons.book),
+                onPressed: () => attribSet('book')),
+            IconButton(
+                icon: const Icon(Icons.tag),
+                onPressed: () => attribSet('tags')),
+          ],
+        ),
+        TextField(
+          controller: _controller,
+          maxLines: 10,
+        )
+      ],
     );
   }
 }
