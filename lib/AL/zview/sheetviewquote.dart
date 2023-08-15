@@ -18,16 +18,19 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
   initState() {
     super.initState();
 
-    //highlightedWordFill();
+    highlightedWordFill();
   }
 
   //------------------------------------------------------------------highlight
   Map<String, HighlightedWord> highlightedWord = {};
   void highlightedWordFill() {
-    List<String> tagsWords = widget.sheet.tagsStr.split(RegExp(r'[,.\s]'));
-    print(tagsWords);
-    highlightedWord = {}; //split(RegExp(r'[,.\s]')
-    for (var word in tagsWords) {
+    List<String> tagsWords =
+        widget.sheet.tagsStr.trim().split(RegExp(r'[|,.\s]'));
+    highlightedWord.clear();
+    if (tagsWords.length < 2) return;
+    for (String word in tagsWords) {
+      if (word.length < 2) continue;
+      word = word.replaceAll("'", "").replaceAll('"', '');
       highlightedWord[word] = HighlightedWord(
         onTap: () {
           debugPrint(word);
@@ -44,7 +47,7 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
   );
 
   TextHighlight quoteField(Sheet sheet) {
-    //highlightedWordFill();
+    highlightedWordFill();
     return TextHighlight(
         text: sheet.quote,
         words: highlightedWord,

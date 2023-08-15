@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../BL/sheet/sheet.dart';
 
+import '../../../BL/sheet/sheetcrud.dart';
 import '../../alib/alicons.dart';
 import 'categorylistview.dart';
 import 'katkapbplistview.dart';
@@ -124,7 +125,11 @@ class _AttrEditState extends State<AttrEdit> {
           actions: [
             save2cloud!
                 ? const Text(' ')
-                : IconButton(onPressed: () {}, icon: const Icon(Icons.save))
+                : IconButton(
+                    icon: const Icon(Icons.save),
+                    onPressed: () {
+                      update(widget.sheet);
+                    })
           ],
         ),
         body: card(widget.sheet, context));

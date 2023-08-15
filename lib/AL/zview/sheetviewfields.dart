@@ -41,6 +41,7 @@ class _SheetViewFieldsState extends State<SheetViewFields> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => AttrEdit(widget.sheet)));
+
               setState(() {});
             },
           ))

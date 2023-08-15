@@ -22,12 +22,6 @@ Future<int> sheetTodayLength(String sheetName) async {
   //todo error count, wait for inspector
   // print('--------------------------------$sheetName');
 
-  // print(isar.sheets
-  //     .where()
-  //     .dateinsertEqualTo('${blUti.todayStr()}.')
-  //     .dateinsertProperty()
-  //     .findFirst());
-
   return len;
 }
 
@@ -50,4 +44,10 @@ Future<Sheet> readByRowIndex2(int index) async {
     debugPrint(e.toString());
     return Sheet()..aIndex = index;
   }
+}
+
+void update(Sheet sheet) {
+  isar.write((isar) {
+    isar.sheets.put(sheet);
+  });
 }
