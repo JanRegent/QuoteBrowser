@@ -1,8 +1,15 @@
 import 'package:isar/isar.dart';
 
+import '../bl.dart';
+
 part 'sheet.g.dart';
 
 // dart run build_runner build
+
+Sheet newSheet() {
+  Sheet sheet = Sheet()..id = isar.sheets.autoIncrement();
+  return sheet;
+}
 
 @Collection()
 class Sheet {
@@ -76,7 +83,6 @@ class Sheet {
     }
 
     Sheet sheet = Sheet();
-    //sheet.id = int.tryParse(getValue('ID'))!;
 
     sheet.quote = getValue('citat');
     sheet.author = getValue('autor');

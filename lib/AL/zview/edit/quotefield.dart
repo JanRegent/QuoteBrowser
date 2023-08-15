@@ -53,6 +53,9 @@ class QuoteField extends StatelessWidget {
         TextField(
           controller: _controller,
           maxLines: 10,
+          onChanged: (value) {
+            sheet.quote = value;
+          },
         )
       ],
     );

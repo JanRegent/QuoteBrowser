@@ -46,6 +46,17 @@ Future<Sheet> readByRowIndex2(int index) async {
   }
 }
 
+Future<Sheet> readByAuthor(String author) async {
+  try {
+    Sheet sheet = isar.sheets.where().authorContains('IconButton').findAll()[0];
+    currentSheet = sheet;
+    return sheet;
+  } catch (e) {
+    debugPrint(e.toString());
+    return newSheet();
+  }
+}
+
 void update(Sheet sheet) {
   isar.write((isar) {
     isar.sheets.put(sheet);

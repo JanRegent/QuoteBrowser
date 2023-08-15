@@ -57,11 +57,11 @@ class _AttrEditState extends State<AttrEdit> {
                 icon: ALicons.editIcons.undo,
                 onPressed: () {
                   try {
-                    //List<String> tagsOld = widget.sheet.tagsStr.split('|');
+                    List<String> tagsOld = widget.sheet.tagsStr.split('|');
                     List<String> tags = [];
-                    // for (var i = 0; i < tagsOld.length - 1; i++) {
-                    //   tags.add(widget.sheet.tags[i]);
-                    // }
+                    for (var i = 0; i < tagsOld.length - 1; i++) {
+                      tags.add(tagsOld[i]);
+                    }
                     widget.sheet.tagsStr = tags.join('|');
                   } catch (e) {
                     debugPrint(e.toString());
@@ -123,6 +123,18 @@ class _AttrEditState extends State<AttrEdit> {
         appBar: AppBar(
           title: const Text('Attributes edit'),
           actions: [
+            IconButton(
+                icon: const Icon(Icons.print),
+                onPressed: () async {
+                  Sheet sheet = await readByAuthor('l');
+                  print(sheet.toStrings());
+                }),
+            IconButton(
+                icon: const Icon(Icons.newspaper),
+                onPressed: () {
+                  widget.sheet = newSheet();
+                  setState(() {});
+                }),
             save2cloud!
                 ? const Text(' ')
                 : IconButton(
