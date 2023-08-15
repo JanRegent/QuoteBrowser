@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/BL/sheet/sheet2db.dart';
 
 import '../../../BL/sheet/sheet.dart';
 
 import '../../../BL/sheet/sheetcrud.dart';
 import '../../alib/alicons.dart';
+import '../../alib/selectiondialogs/selectone.dart';
 import 'categorylistview.dart';
 import 'katkapbplistview.dart';
 import 'quotefield.dart';
@@ -30,6 +32,7 @@ class _AttrEditState extends State<AttrEdit> {
   }
 
   Card card(Sheet sheet, BuildContext context) {
+    if (widget.sheet.aSheetName.isEmpty) widget.sheet.aSheetName = '[???]';
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 5),
       color: const Color.fromARGB(255, 213, 209, 192),
@@ -43,6 +46,16 @@ class _AttrEditState extends State<AttrEdit> {
             tileColor: Colors.white,
             leading: ALicons.attrIcons.author,
             title: Text(widget.sheet.author),
+            trailing: InkWell(
+              child: Text(widget.sheet.aSheetName),
+              onTap: () async {
+                String sheetName = await selectOne(sheetNames, context);
+                if (sheetName.isEmpty) return;
+                setState(() {
+                  widget.sheet.aSheetName = sheetName;
+                });
+              },
+            ),
           ),
           ListTile(
             tileColor: Colors.white,
