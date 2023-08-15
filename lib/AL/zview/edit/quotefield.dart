@@ -35,18 +35,19 @@ class QuoteField extends StatelessWidget {
   @override //printSelectedText()
   Widget build(BuildContext context) {
     _controller.text = sheet.quote;
+    double iconSize = 30.0;
     return Column(
       children: [
         Row(
           children: [
             IconButton(
-                icon: const Icon(Icons.person),
+                icon: Icon(Icons.person, size: iconSize),
                 onPressed: () => attribSet('author')),
             IconButton(
-                icon: const Icon(Icons.book),
+                icon: Icon(Icons.book, size: iconSize),
                 onPressed: () => attribSet('book')),
             IconButton(
-                icon: const Icon(Icons.tag),
+                icon: Icon(Icons.tag, size: iconSize),
                 onPressed: () => attribSet('tags')),
           ],
         ),
