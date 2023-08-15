@@ -41,7 +41,7 @@ dependencies:
   dartx: ^1.2.0                           #https://pub.dev/packages/dartx
   csv: ^5.0.2                             #https://pub.dev/packages/csv
   cupertino_icons: ^1.0.5                 #https://pub.dev/packages/cupertino_icons
-
+  device_info_plus: ^9.0.3                #https://pub.dev/packages/device_info_plus
 #******************************************************************************DEV  
 dev_dependencies:
   build_runner: any
