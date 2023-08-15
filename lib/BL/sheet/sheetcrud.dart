@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/AL/zview/sheetviewmenu.dart';
@@ -57,7 +59,24 @@ Future<Sheet> readByAuthor(String author) async {
   }
 }
 
-void update(Sheet sheet) {
+Future<int> readMaxRowIndex(String sheetName) async {
+  try {
+    List<int> rowIndexes = isar.sheets
+        .where()
+        .aSheetNameEqualTo(sheetName)
+        .aIndexProperty()
+        .findAll();
+    int newIndex = rowIndexes.reduce(max) + 1;
+
+    return newIndex;
+  } catch (e) {
+    debugPrint(e.toString());
+    return -1;
+  }
+}
+
+void update(Sheet sheet) async {
+  if (sheet.aIndex == 0) sheet.aIndex = await readMaxRowIndex(sheet.aSheetName);
   isar.write((isar) {
     isar.sheets.put(sheet);
   });

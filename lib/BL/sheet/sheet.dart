@@ -28,6 +28,9 @@ class Sheet {
   String category = '';
   String categoryChapterPB = '';
 
+  @Ignore()
+  String sourceUrl = '';
+
   String dateinsert = '';
   String tagsStr = '';
   // @Index(type: IndexType.value, caseSensitive: false)

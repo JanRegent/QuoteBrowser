@@ -3,7 +3,7 @@ import 'gsheets1.dart';
 Dl dl = Dl();
 
 class Dl {
-  GsheetsHelper gsheetsHelper = GsheetsHelper();
+  GsheetsCRUD gsheetsHelper = GsheetsCRUD();
 
   Future init() async {
     await gsheetsHelper.init();

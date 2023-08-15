@@ -31,7 +31,7 @@ Future sheets2db() async {
 
 Future sheet2db(String sheetName, String fileId) async {
   List<List<String>> rows =
-      await dl.gsheetsHelper.getSheetAll(sheetName, fileId);
+      await dl.gsheetsHelper.readSheetAll(sheetName, fileId);
 
   for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
     Sheet sheet = Sheet().sheetFromRow(rows[0], rows[rowIndex]);

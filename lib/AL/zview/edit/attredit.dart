@@ -5,6 +5,7 @@ import 'package:quotebrowser/BL/sheet/sheet2db.dart';
 import '../../../BL/sheet/sheet.dart';
 
 import '../../../BL/sheet/sheetcrud.dart';
+import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 import '../../alib/selectiondialogs/selectone.dart';
 import 'categorylistview.dart';
@@ -139,8 +140,7 @@ class _AttrEditState extends State<AttrEdit> {
             IconButton(
                 icon: const Icon(Icons.print),
                 onPressed: () async {
-                  Sheet sheet = await readByAuthor('l');
-                  print(sheet.toStrings());
+                  await readByAuthor('l');
                 }),
             IconButton(
                 icon: const Icon(Icons.newspaper),
@@ -154,6 +154,7 @@ class _AttrEditState extends State<AttrEdit> {
                     icon: const Icon(Icons.save),
                     onPressed: () {
                       update(widget.sheet);
+                      dl.gsheetsHelper.createRow(widget.sheet, fileId);
                     })
           ],
         ),

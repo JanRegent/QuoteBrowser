@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:gsheets/gsheets.dart';
 
-class GsheetsHelper {
+import '../BL/bluti.dart';
+import '../BL/sheet/sheet.dart';
+
+class GsheetsCRUD {
   /// https://pub.dev/packages/gsheets/example
   ///
   /// how to get credentials - https://medium.com/@a.marenkov/how-to-get-credentials-for-google-sheets-456b7e88c430
@@ -23,7 +26,28 @@ class GsheetsHelper {
     gsheets = GSheets(_credentials);
   }
 
-  Future<List<List<String>>> getSheetAll(
+  Future<int> createRow(Sheet sheet, String spreadsheetId) async {
+    String sheetName = sheet.aSheetName;
+    if (sheetName.isEmpty) return -1;
+    final ss = await gsheets.spreadsheet(spreadsheetId);
+
+    Worksheet? worksheet = ss.worksheetByTitle(sheetName);
+
+    final newRow = {
+      'citat': sheet.quote,
+      'autor': sheet.author,
+      'kniha': sheet.book,
+      'folder': sheet.folder,
+      'tags': sheet.tagsStr,
+      'sourceUrl': sheet.sourceUrl,
+      'dateinsert': '${blUti.todayStr()}.',
+    };
+    await worksheet!.values.map.appendRow(newRow);
+
+    return 0;
+  }
+
+  Future<List<List<String>>> readSheetAll(
       String sheetName, String spreadsheetId) async {
     final ss = await gsheets.spreadsheet(spreadsheetId);
 
