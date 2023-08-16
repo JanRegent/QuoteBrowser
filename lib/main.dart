@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
-import 'package:quotebrowser/DL/dl.dart';
-import './BL/email/email.dart';
+
 import 'BL/bl.dart';
 
 import 'BL/sheet/sheet2dbpage.dart';
+import 'DL/credentialspage.dart';
+import 'DL/gsheets1.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await bl.init();
-  await dl.init();
-  //await sheets2db();
 
-  runApp(const Sheets2dbPage());
+  //await sheets2db();
+  if (gsheetsCredentials.isEmpty) {
+    runApp(CredentialsPage());
+  } else {
+    runApp(const Sheets2dbPage());
+  }
 }
 
 class MainApp extends StatefulWidget {
@@ -24,28 +27,6 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  late Isar _isar;
-
-  @override
-  void initState() {
-    // Open Isar instance
-    _isar = Isar.open(
-      schemas: [EmailSchema],
-      directory: Isar.sqliteInMemory,
-      engine: IsarEngine.sqlite,
-    );
-    super.initState();
-  }
-
-  void emailAdd() {
-    // Persist counter value to database
-    _isar.write((isar) async {
-      isar.emails.put(Email(id: 1, title: 't1'));
-    });
-
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

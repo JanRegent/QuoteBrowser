@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../AL/zview/_sheetviewpage.dart';
+
 import '../../DL/dl.dart';
+
 import 'sheet2db.dart';
 
 class Sheets2dbPage extends StatefulWidget {
@@ -71,6 +73,20 @@ class _Sheets2dbPageState extends State {
     );
   }
 
+  Widget fileList() {
+    return FutureBuilder<String>(
+      future: getData(), // a previously-obtained Future<String> or null
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.hasData) {
+          return bodyLv();
+        }
+        return const Center(
+          child: Text('No data'),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -80,17 +96,7 @@ class _Sheets2dbPageState extends State {
           title: Obx(() => Text(loadingTitle.value)),
           actions: [runLoading()],
         ),
-        body: FutureBuilder<String>(
-          future: getData(), // a previously-obtained Future<String> or null
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            if (snapshot.hasData) {
-              return bodyLv();
-            }
-            return const Center(
-              child: Text('No data'),
-            );
-          },
-        ),
+        body: fileList(),
       ),
     );
   }

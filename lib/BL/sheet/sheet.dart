@@ -14,9 +14,9 @@ Sheet newSheet() {
 @Collection()
 class Sheet {
   late int id;
+
   String aSheetName = '';
   int aIndex = 0;
-  String sheetID = '';
 
   String quote = '';
   String author = '';
@@ -33,8 +33,8 @@ class Sheet {
 
   String dateinsert = '';
   String tagsStr = '';
-  // @Index(type: IndexType.value, caseSensitive: false)
-  // List<String> get tags => Isar.splitWords(tagsStr);
+  // @Index(unique: true)
+  // List<String> get tags => tagsStr.split(',');
 
   String rowType = 'row';
   List<String> rowArr = [];
