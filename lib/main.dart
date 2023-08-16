@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'AL/_home/_homepage.dart';
 import 'BL/bl.dart';
 
 import 'BL/sheet/sheet2dbpage.dart';
@@ -15,7 +16,7 @@ void main() async {
   if (gsheetsCredentials.isEmpty) {
     runApp(CredentialsPage());
   } else {
-    runApp(const Sheets2dbPage());
+    runApp(const SidebarHome());
   }
 }
 

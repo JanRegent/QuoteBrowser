@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../BL/sheet/sheet2dbpage.dart';
+import '../AL/_home/_homepage.dart';
+
 import 'dl.dart';
 import 'gsheets1.dart';
 
@@ -35,7 +36,7 @@ class CredentialsPage extends StatelessWidget {
                   onPressed: () async {
                     gsheetsCredentials = jsonDecode(_textFieldController.text);
                     await dl.init();
-                    runApp(const Sheets2dbPage());
+                    runApp(const SidebarHome());
                   },
                   icon: const Icon(Icons.run_circle_outlined))
             ],
