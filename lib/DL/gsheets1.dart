@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
-
 import 'package:gsheets/gsheets.dart';
 
 import '../BL/bluti.dart';
@@ -14,26 +10,9 @@ class GsheetsCRUD {
   ///
   /// how to get credentials - https://medium.com/@a.marenkov/how-to-get-credentials-for-google-sheets-456b7e88c430
 
-  Future<void> loadCredentials() async {
-    if (gsheetsCredentials.isNotEmpty) return;
-
-// Read value
-    String? jsonString = '';
-
-    // if (jsonString.isEmpty) {
-    //   NavigationService navigationService = NavigationService();
-    //   await navigationService.openDialog();
-    // }
-
-    // jsonString =
-    //     await rootBundle.loadString('assets/gitIgnore/client_secret.json');
-    // gsheetsCredentials = jsonDecode(jsonString);
-  }
-
   // ignore: prefer_typing_uninitialized_variables
   late final GSheets gsheets;
   Future init() async {
-    await loadCredentials();
     // init GSheets
     gsheets = GSheets(gsheetsCredentials);
   }

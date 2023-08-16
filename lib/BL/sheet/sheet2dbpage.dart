@@ -20,7 +20,6 @@ class Sheets2dbPage extends StatefulWidget {
 class _Sheets2dbPageState extends State {
   Future<String> getData() async {
     sheetNames = await dl.gsheetsHelper.getSheetNames(fileId);
-
     for (var i = 0; i < sheetNames.length; i++) {
       sheetNamesToday.add(0);
       sheetNamesLength.add(0);
@@ -81,7 +80,7 @@ class _Sheets2dbPageState extends State {
           return bodyLv();
         }
         return const Center(
-          child: Text('No data'),
+          child: Text('Data loading'),
         );
       },
     );

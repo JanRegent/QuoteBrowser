@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:isar/isar.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:quotebrowser/BL/sheet/sheet.dart';
 
@@ -17,8 +16,8 @@ String fileId = '1YfST3IJ4V32M-uyfuthBxa2AL7NOVn_kWBq4isMLZ-w';
 
 Future sheets2db() async {
   //String sheetName = 'fb:Lao-c';
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+  // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  // WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
 
   for (var index = 0; index < sheetNames.length; index++) {
     String sheetName = sheetNames[index];
@@ -27,11 +26,11 @@ Future sheets2db() async {
 
     sheetNamesLength[index] = await sheetLength(sheetName);
     sheetNamesToday[index] = await sheetTodayLength(sheetName);
-    if (webBrowserInfo.data['platform'] == 'Win32') {
-      if (webBrowserInfo.data['deviceMemory'] == 8) {
-        if (index == 0) break;
-      }
-    }
+    // if (webBrowserInfo.data['platform'] == 'Win32') {
+    //   if (webBrowserInfo.data['deviceMemory'] == 8) {
+    //     if (index == 0) break;
+    //   }
+    // }
   }
   loadingTitle.value = 'Loading done of ${sheetNamesToday.length} sheets';
 }
