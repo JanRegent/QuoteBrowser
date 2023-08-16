@@ -25,7 +25,7 @@ Future sheets2db() async {
     sheetNamesLength[index] = await sheetLength(sheetName);
     sheetNamesToday[index] = await sheetTodayLength(sheetName);
     if (bl.devMode) {
-      if (index == 0) break;
+      if (index == 10) break;
     }
   }
   loadingTitle.value = 'Loading done of ${sheetNamesToday.length} sheets';

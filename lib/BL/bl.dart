@@ -17,6 +17,10 @@ class Bl {
   }
 
   Future<void> openIsar() async {
+    try {
+      if (isar.isOpen) return;
+    } catch (_) {}
+
     await Isar.initialize();
     Isar.open(
       engine: kIsWeb ? IsarEngine.sqlite : IsarEngine.isar,
