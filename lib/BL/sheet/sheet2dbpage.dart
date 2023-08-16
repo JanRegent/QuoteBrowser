@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 
 import '../../AL/zview/_sheetviewpage.dart';
 
-import '../../DL/dl.dart';
-
 import 'sheet2db.dart';
 
 class Sheets2dbPage extends StatefulWidget {
@@ -19,12 +17,6 @@ class Sheets2dbPage extends StatefulWidget {
 
 class _Sheets2dbPageState extends State {
   Future<String> getData() async {
-    sheetNames = await dl.gsheetsHelper.getSheetNames(fileId);
-    for (var i = 0; i < sheetNames.length; i++) {
-      sheetNamesToday.add(0);
-      sheetNamesLength.add(0);
-    }
-    sheets2db();
     return 'ok';
   }
 

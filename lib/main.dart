@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:quotebrowser/BL/sheet/sheet.dart';
 
 import 'AL/_home/_homepage.dart';
 import 'BL/bl.dart';
 
+import 'BL/sheet/sheet2db.dart';
 import 'BL/sheet/sheet2dbpage.dart';
 import 'DL/credentialspage.dart';
+import 'DL/dl.dart';
 import 'DL/gsheets1.dart';
 
 void main() async {
@@ -16,6 +19,8 @@ void main() async {
   if (gsheetsCredentials.isEmpty) {
     runApp(CredentialsPage());
   } else {
+    await dl.init();
+    sheetNamesInit();
     runApp(const SidebarHome());
   }
 }

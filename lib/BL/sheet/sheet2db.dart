@@ -14,9 +14,20 @@ RxString loadingTitle = ''.obs;
 List<String> sheetNames = [];
 String fileId = '1YfST3IJ4V32M-uyfuthBxa2AL7NOVn_kWBq4isMLZ-w';
 
+Future sheetNamesInit() async {
+  sheetNames = [];
+  sheetNames = await dl.gsheetsHelper.getSheetNames(fileId);
+  for (var i = 0; i < sheetNames.length; i++) {
+    sheetNamesToday.add(0);
+    sheetNamesLength.add(0);
+  }
+  sheets2db();
+}
+
 Future sheets2db() async {
   //String sheetName = 'fb:Lao-c';
 
+  int sheetsLenStart = await sheetsLength();
   for (var index = 0; index < sheetNames.length; index++) {
     String sheetName = sheetNames[index];
     loadingTitle.value = 'loading $index/${sheetNames.length} $sheetName';
@@ -24,6 +35,7 @@ Future sheets2db() async {
 
     sheetNamesLength[index] = await sheetLength(sheetName);
     sheetNamesToday[index] = await sheetTodayLength(sheetName);
+    if (sheetsLenStart > 1) continue;
     if (bl.devMode) {
       if (index == 10) break;
     }

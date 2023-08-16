@@ -8,6 +8,11 @@ import 'package:quotebrowser/BL/sheet/sheet.dart';
 import '../bl.dart';
 import '../bluti.dart';
 
+Future<int> sheetsLength() async {
+  int len = isar.sheets.where().rowTypeEqualTo('dataRow').findAll().length;
+  return len;
+}
+
 Future<int> sheetLength(String sheetName) async {
   int len = isar.sheets.where().aSheetNameEqualTo(sheetName).findAll().length;
   return len;
@@ -79,5 +84,11 @@ void update(Sheet sheet) async {
   if (sheet.aIndex == 0) sheet.aIndex = await readMaxRowIndex(sheet.aSheetName);
   isar.write((isar) {
     isar.sheets.put(sheet);
+  });
+}
+
+void clearSheets() async {
+  isar.write((isar) {
+    isar.sheets.clear();
   });
 }
