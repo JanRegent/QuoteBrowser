@@ -1,9 +1,18 @@
+import 'dart:convert';
+
 import 'package:gsheets/gsheets.dart';
+import 'package:quotebrowser/BL/params/params.dart';
 
 import '../BL/bluti.dart';
 import '../BL/sheet/sheet.dart';
 
 Map gsheetsCredentials = {};
+
+Future gsheetsCredentialsLoad() async {
+  String clientSecret = await readParam('gsheetsCredentials');
+  if (clientSecret.isEmpty) return;
+  gsheetsCredentials = jsonDecode(clientSecret);
+}
 
 class GsheetsCRUD {
   /// https://pub.dev/packages/gsheets/example
@@ -15,6 +24,14 @@ class GsheetsCRUD {
   Future init() async {
     // init GSheets
     gsheets = GSheets(gsheetsCredentials);
+  }
+
+  Future gsheetsCredentialsSave() async {
+    Params paramCred = Params()
+      ..key = 'gsheetsCredentials'
+      ..scope = 'DL'
+      ..value = jsonEncode(gsheetsCredentials);
+    updateParam(paramCred);
   }
 
   Future<int> createRow(Sheet sheet, String spreadsheetId) async {

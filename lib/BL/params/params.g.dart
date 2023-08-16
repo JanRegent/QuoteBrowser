@@ -11,35 +11,34 @@ part of 'params.dart';
 // ignore_for_file: type=lint
 
 extension GetParamsCollection on Isar {
-  IsarCollection<int, Params> get params => this.collection();
+  IsarCollection<String, Params> get params => this.collection();
 }
 
 const ParamsSchema = IsarCollectionSchema(
   schema:
-      '{"name":"Params","idName":"id","properties":[{"name":"scope","type":"String"},{"name":"key","type":"String"},{"name":"value","type":"String"}]}',
-  converter: IsarObjectConverter<int, Params>(
+      '{"name":"Params","idName":"key","properties":[{"name":"key","type":"String"},{"name":"scope","type":"String"},{"name":"value","type":"String"}]}',
+  converter: IsarObjectConverter<String, Params>(
     serialize: serializeParams,
     deserialize: deserializeParams,
     deserializeProperty: deserializeParamsProp,
   ),
   embeddedSchemas: [],
-  //hash: -3974992183281136638,
+  //hash: 3080802201397324532,
 );
 
 @isarProtected
 int serializeParams(IsarWriter writer, Params object) {
-  IsarCore.writeString(writer, 1, object.scope);
-  IsarCore.writeString(writer, 2, object.key);
+  IsarCore.writeString(writer, 1, object.key);
+  IsarCore.writeString(writer, 2, object.scope);
   IsarCore.writeString(writer, 3, object.value);
-  return object.id;
+  return Isar.fastHash(object.key);
 }
 
 @isarProtected
 Params deserializeParams(IsarReader reader) {
   final object = Params();
-  object.id = IsarCore.readId(reader);
-  object.scope = IsarCore.readString(reader, 1) ?? '';
-  object.key = IsarCore.readString(reader, 2) ?? '';
+  object.key = IsarCore.readString(reader, 1) ?? '';
+  object.scope = IsarCore.readString(reader, 2) ?? '';
   object.value = IsarCore.readString(reader, 3) ?? '';
   return object;
 }
@@ -47,8 +46,6 @@ Params deserializeParams(IsarReader reader) {
 @isarProtected
 dynamic deserializeParamsProp(IsarReader reader, int property) {
   switch (property) {
-    case 0:
-      return IsarCore.readId(reader);
     case 1:
       return IsarCore.readString(reader, 1) ?? '';
     case 2:
@@ -62,9 +59,8 @@ dynamic deserializeParamsProp(IsarReader reader, int property) {
 
 sealed class _ParamsUpdate {
   bool call({
-    required int id,
+    required String key,
     String? scope,
-    String? key,
     String? value,
   });
 }
@@ -72,20 +68,18 @@ sealed class _ParamsUpdate {
 class _ParamsUpdateImpl implements _ParamsUpdate {
   const _ParamsUpdateImpl(this.collection);
 
-  final IsarCollection<int, Params> collection;
+  final IsarCollection<String, Params> collection;
 
   @override
   bool call({
-    required int id,
+    required String key,
     Object? scope = ignore,
-    Object? key = ignore,
     Object? value = ignore,
   }) {
     return collection.updateProperties([
-          id
+          key
         ], {
-          if (scope != ignore) 1: scope as String?,
-          if (key != ignore) 2: key as String?,
+          if (scope != ignore) 2: scope as String?,
           if (value != ignore) 3: value as String?,
         }) >
         0;
@@ -94,9 +88,8 @@ class _ParamsUpdateImpl implements _ParamsUpdate {
 
 sealed class _ParamsUpdateAll {
   int call({
-    required List<int> id,
+    required List<String> key,
     String? scope,
-    String? key,
     String? value,
   });
 }
@@ -104,24 +97,22 @@ sealed class _ParamsUpdateAll {
 class _ParamsUpdateAllImpl implements _ParamsUpdateAll {
   const _ParamsUpdateAllImpl(this.collection);
 
-  final IsarCollection<int, Params> collection;
+  final IsarCollection<String, Params> collection;
 
   @override
   int call({
-    required List<int> id,
+    required List<String> key,
     Object? scope = ignore,
-    Object? key = ignore,
     Object? value = ignore,
   }) {
-    return collection.updateProperties(id, {
-      if (scope != ignore) 1: scope as String?,
-      if (key != ignore) 2: key as String?,
+    return collection.updateProperties(key, {
+      if (scope != ignore) 2: scope as String?,
       if (value != ignore) 3: value as String?,
     });
   }
 }
 
-extension ParamsUpdate on IsarCollection<int, Params> {
+extension ParamsUpdate on IsarCollection<String, Params> {
   _ParamsUpdate get update => _ParamsUpdateImpl(this);
 
   _ParamsUpdateAll get updateAll => _ParamsUpdateAllImpl(this);
@@ -130,7 +121,6 @@ extension ParamsUpdate on IsarCollection<int, Params> {
 sealed class _ParamsQueryUpdate {
   int call({
     String? scope,
-    String? key,
     String? value,
   });
 }
@@ -144,12 +134,10 @@ class _ParamsQueryUpdateImpl implements _ParamsQueryUpdate {
   @override
   int call({
     Object? scope = ignore,
-    Object? key = ignore,
     Object? value = ignore,
   }) {
     return query.updateProperties(limit: limit, {
-      if (scope != ignore) 1: scope as String?,
-      if (key != ignore) 2: key as String?,
+      if (scope != ignore) 2: scope as String?,
       if (value != ignore) 3: value as String?,
     });
   }
@@ -162,258 +150,6 @@ extension ParamsQueryUpdate on IsarQuery<Params> {
 }
 
 extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
-  QueryBuilder<Params, Params, QAfterFilterCondition> idEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 0,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> idGreaterThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 0,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> idGreaterThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 0,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> idLessThan(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 0,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> idLessThanOrEqualTo(
-    int value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 0,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 0,
-          lower: lower,
-          upper: upper,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeGreaterThanOrEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeLessThan(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeLessThanOrEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 1,
-          lower: lower,
-          upper: upper,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        StartsWithCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EndsWithCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        ContainsCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        MatchesCondition(
-          property: 1,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 1,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterFilterCondition> scopeIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterCondition(
-          property: 1,
-          value: '',
-        ),
-      );
-    });
-  }
-
   QueryBuilder<Params, Params, QAfterFilterCondition> keyEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -421,7 +157,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -436,7 +172,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -451,7 +187,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -466,7 +202,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -481,7 +217,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -497,7 +233,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         BetweenCondition(
-          property: 2,
+          property: 1,
           lower: lower,
           upper: upper,
           caseSensitive: caseSensitive,
@@ -513,7 +249,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         StartsWithCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -528,7 +264,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EndsWithCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -541,7 +277,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -554,7 +290,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
-          property: 2,
+          property: 1,
           wildcard: pattern,
           caseSensitive: caseSensitive,
         ),
@@ -566,7 +302,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
-          property: 2,
+          property: 1,
           value: '',
         ),
       );
@@ -574,6 +310,178 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
   }
 
   QueryBuilder<Params, Params, QAfterFilterCondition> keyIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 1,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 2,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 2,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 2,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Params, Params, QAfterFilterCondition> scopeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -760,19 +668,7 @@ extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
 extension ParamsQueryObject on QueryBuilder<Params, Params, QFilterCondition> {}
 
 extension ParamsQuerySortBy on QueryBuilder<Params, Params, QSortBy> {
-  QueryBuilder<Params, Params, QAfterSortBy> sortById() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(0);
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterSortBy> sortByIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(0, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterSortBy> sortByScope(
+  QueryBuilder<Params, Params, QAfterSortBy> sortByKey(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -782,7 +678,7 @@ extension ParamsQuerySortBy on QueryBuilder<Params, Params, QSortBy> {
     });
   }
 
-  QueryBuilder<Params, Params, QAfterSortBy> sortByScopeDesc(
+  QueryBuilder<Params, Params, QAfterSortBy> sortByKeyDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -793,7 +689,7 @@ extension ParamsQuerySortBy on QueryBuilder<Params, Params, QSortBy> {
     });
   }
 
-  QueryBuilder<Params, Params, QAfterSortBy> sortByKey(
+  QueryBuilder<Params, Params, QAfterSortBy> sortByScope(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -803,7 +699,7 @@ extension ParamsQuerySortBy on QueryBuilder<Params, Params, QSortBy> {
     });
   }
 
-  QueryBuilder<Params, Params, QAfterSortBy> sortByKeyDesc(
+  QueryBuilder<Params, Params, QAfterSortBy> sortByScopeDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -837,40 +733,28 @@ extension ParamsQuerySortBy on QueryBuilder<Params, Params, QSortBy> {
 }
 
 extension ParamsQuerySortThenBy on QueryBuilder<Params, Params, QSortThenBy> {
-  QueryBuilder<Params, Params, QAfterSortBy> thenById() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(0);
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterSortBy> thenByIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(0, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterSortBy> thenByScope(
+  QueryBuilder<Params, Params, QAfterSortBy> thenByKey(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(1, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Params, Params, QAfterSortBy> thenByScopeDesc(
+  QueryBuilder<Params, Params, QAfterSortBy> thenByKeyDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(1, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Params, Params, QAfterSortBy> thenByKey(
+  QueryBuilder<Params, Params, QAfterSortBy> thenByScope(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(2, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Params, Params, QAfterSortBy> thenByKeyDesc(
+  QueryBuilder<Params, Params, QAfterSortBy> thenByScopeDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(2, sort: Sort.desc, caseSensitive: caseSensitive);
@@ -896,13 +780,6 @@ extension ParamsQueryWhereDistinct on QueryBuilder<Params, Params, QDistinct> {
   QueryBuilder<Params, Params, QAfterDistinct> distinctByScope(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(1, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<Params, Params, QAfterDistinct> distinctByKey(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(2, caseSensitive: caseSensitive);
     });
   }
@@ -916,19 +793,13 @@ extension ParamsQueryWhereDistinct on QueryBuilder<Params, Params, QDistinct> {
 }
 
 extension ParamsQueryProperty1 on QueryBuilder<Params, Params, QProperty> {
-  QueryBuilder<Params, int, QAfterProperty> idProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(0);
-    });
-  }
-
-  QueryBuilder<Params, String, QAfterProperty> scopeProperty() {
+  QueryBuilder<Params, String, QAfterProperty> keyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<Params, String, QAfterProperty> keyProperty() {
+  QueryBuilder<Params, String, QAfterProperty> scopeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });
@@ -942,19 +813,13 @@ extension ParamsQueryProperty1 on QueryBuilder<Params, Params, QProperty> {
 }
 
 extension ParamsQueryProperty2<R> on QueryBuilder<Params, R, QAfterProperty> {
-  QueryBuilder<Params, (R, int), QAfterProperty> idProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(0);
-    });
-  }
-
-  QueryBuilder<Params, (R, String), QAfterProperty> scopeProperty() {
+  QueryBuilder<Params, (R, String), QAfterProperty> keyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<Params, (R, String), QAfterProperty> keyProperty() {
+  QueryBuilder<Params, (R, String), QAfterProperty> scopeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });
@@ -969,19 +834,13 @@ extension ParamsQueryProperty2<R> on QueryBuilder<Params, R, QAfterProperty> {
 
 extension ParamsQueryProperty3<R1, R2>
     on QueryBuilder<Params, (R1, R2), QAfterProperty> {
-  QueryBuilder<Params, (R1, R2, int), QOperations> idProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(0);
-    });
-  }
-
-  QueryBuilder<Params, (R1, R2, String), QOperations> scopeProperty() {
+  QueryBuilder<Params, (R1, R2, String), QOperations> keyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<Params, (R1, R2, String), QOperations> keyProperty() {
+  QueryBuilder<Params, (R1, R2, String), QOperations> scopeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });

@@ -11,7 +11,7 @@ void main() async {
 
   await bl.init();
 
-  //await sheets2db();
+  await gsheetsCredentialsLoad();
   if (gsheetsCredentials.isEmpty) {
     runApp(CredentialsPage());
   } else {
