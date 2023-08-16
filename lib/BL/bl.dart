@@ -25,7 +25,7 @@ class Bl {
     Isar.open(
       engine: kIsWeb ? IsarEngine.sqlite : IsarEngine.isar,
       schemas: [SheetSchema, ParamsSchema],
-      directory: '../',
+      directory: kIsWeb ? '' : '../',
       inspector: true,
     );
   }
