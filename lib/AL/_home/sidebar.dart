@@ -61,7 +61,6 @@ class _SidebarPageState extends State<SidebarPage> {
               text: 'Refresh data',
               icon: Icons.refresh,
               onPressed: () {
-                print(1);
                 Navigator.push(
                   context,
                   MaterialPageRoute(

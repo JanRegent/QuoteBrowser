@@ -1,5 +1,6 @@
 
 
+del lib\DL\service_acount.dart
 rem check exist 
 rem     git ls-remote git remote add master  https://github.com/JanRegent/QuoteBrowser
 rem add remote

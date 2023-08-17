@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 
 import 'package:quotebrowser/BL/sheet/sheet.dart';
+import 'package:quotebrowser/DL/spreadsheets.dart';
 
 import '../../DL/dl.dart';
 import '../bl.dart';
@@ -12,7 +13,7 @@ RxList sheetNamesToday = [].obs;
 RxList sheetNamesLength = [].obs;
 RxString loadingTitle = ''.obs;
 List<String> sheetNames = [];
-String fileId = '1YfST3IJ4V32M-uyfuthBxa2AL7NOVn_kWBq4isMLZ-w';
+String fileId = spreadsheetIdInit;
 
 Future sheetNamesInit() async {
   sheetNames = [];
