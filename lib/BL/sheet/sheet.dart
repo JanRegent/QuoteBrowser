@@ -32,9 +32,9 @@ class Sheet {
   String sourceUrl = '';
 
   String dateinsert = '';
+
+  @Index(unique: true)
   String tagsStr = '';
-  // @Index(unique: true)
-  // List<String> get tags => tagsStr.split(',');
 
   String rowType = 'row';
   List<String> rowArr = [];

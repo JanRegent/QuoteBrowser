@@ -37,8 +37,8 @@ dependencies:
   get: ^4.6.5                             #https://pub.dev/packages/get
 
   ##----db
-  isar: ^4.0.0-dev.9                      #https://pub.dev/packages/isar/versions/4.0.0-dev.9
-  isar_flutter_libs: 4.0.0-dev.9
+  isar: ^4.0.0-dev.10                     #https://pub.dev/packages/isar/versions/4.0.0-dev.10
+  isar_flutter_libs: 4.0.0-dev.10 
   
 
   #============================================================================DL

@@ -14,16 +14,94 @@ extension GetSheetCollection on Isar {
   IsarCollection<int, Sheet> get sheets => this.collection();
 }
 
-const SheetSchema = IsarCollectionSchema(
-  schema:
-      '{"name":"Sheet","idName":"id","properties":[{"name":"aSheetName","type":"String"},{"name":"aIndex","type":"Long"},{"name":"quote","type":"String"},{"name":"author","type":"String"},{"name":"book","type":"String"},{"name":"pagePar","type":"String"},{"name":"stars","type":"String"},{"name":"favorites","type":"String"},{"name":"folder","type":"String"},{"name":"category","type":"String"},{"name":"categoryChapterPB","type":"String"},{"name":"dateinsert","type":"String"},{"name":"tagsStr","type":"String"},{"name":"rowType","type":"String"},{"name":"rowArr","type":"StringList"},{"name":"zfileId","type":"String"}]}',
+const SheetSchema = IsarGeneratedSchema(
+  schema: IsarSchema(
+    name: 'Sheet',
+    idName: 'id',
+    embedded: false,
+    properties: [
+      IsarPropertySchema(
+        name: 'aSheetName',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'aIndex',
+        type: IsarType.long,
+      ),
+      IsarPropertySchema(
+        name: 'quote',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'author',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'book',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'pagePar',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'stars',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'favorites',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'folder',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'category',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'categoryChapterPB',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'dateinsert',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'tagsStr',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'rowType',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'rowArr',
+        type: IsarType.stringList,
+      ),
+      IsarPropertySchema(
+        name: 'zfileId',
+        type: IsarType.string,
+      ),
+    ],
+    indexes: [
+      IsarIndexSchema(
+        name: 'tagsStr',
+        properties: [
+          "tagsStr",
+        ],
+        unique: true,
+        hash: false,
+      ),
+    ],
+  ),
   converter: IsarObjectConverter<int, Sheet>(
     serialize: serializeSheet,
     deserialize: deserializeSheet,
     deserializeProperty: deserializeSheetProp,
   ),
   embeddedSchemas: [],
-  //hash: 2665156666363221944,
 );
 
 @isarProtected
@@ -356,6 +434,62 @@ extension SheetQueryUpdate on IsarQuery<Sheet> {
   _SheetQueryUpdate get updateFirst => _SheetQueryUpdateImpl(this, limit: 1);
 
   _SheetQueryUpdate get updateAll => _SheetQueryUpdateImpl(this);
+}
+
+class _SheetQueryBuilderUpdateImpl implements _SheetQueryUpdate {
+  const _SheetQueryBuilderUpdateImpl(this.query, {this.limit});
+
+  final QueryBuilder<Sheet, Sheet, QOperations> query;
+  final int? limit;
+
+  @override
+  int call({
+    Object? aSheetName = ignore,
+    Object? aIndex = ignore,
+    Object? quote = ignore,
+    Object? author = ignore,
+    Object? book = ignore,
+    Object? pagePar = ignore,
+    Object? stars = ignore,
+    Object? favorites = ignore,
+    Object? folder = ignore,
+    Object? category = ignore,
+    Object? categoryChapterPB = ignore,
+    Object? dateinsert = ignore,
+    Object? tagsStr = ignore,
+    Object? rowType = ignore,
+    Object? zfileId = ignore,
+  }) {
+    final q = query.build();
+    try {
+      return q.updateProperties(limit: limit, {
+        if (aSheetName != ignore) 1: aSheetName as String?,
+        if (aIndex != ignore) 2: aIndex as int?,
+        if (quote != ignore) 3: quote as String?,
+        if (author != ignore) 4: author as String?,
+        if (book != ignore) 5: book as String?,
+        if (pagePar != ignore) 6: pagePar as String?,
+        if (stars != ignore) 7: stars as String?,
+        if (favorites != ignore) 8: favorites as String?,
+        if (folder != ignore) 9: folder as String?,
+        if (category != ignore) 10: category as String?,
+        if (categoryChapterPB != ignore) 11: categoryChapterPB as String?,
+        if (dateinsert != ignore) 12: dateinsert as String?,
+        if (tagsStr != ignore) 13: tagsStr as String?,
+        if (rowType != ignore) 14: rowType as String?,
+        if (zfileId != ignore) 16: zfileId as String?,
+      });
+    } finally {
+      q.close();
+    }
+  }
+}
+
+extension SheetQueryBuilderUpdate on QueryBuilder<Sheet, Sheet, QOperations> {
+  _SheetQueryUpdate get updateFirst =>
+      _SheetQueryBuilderUpdateImpl(this, limit: 1);
+
+  _SheetQueryUpdate get updateAll => _SheetQueryBuilderUpdateImpl(this);
 }
 
 extension SheetQueryFilter on QueryBuilder<Sheet, Sheet, QFilterCondition> {

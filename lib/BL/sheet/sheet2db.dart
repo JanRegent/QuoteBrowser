@@ -34,7 +34,7 @@ Future sheets2db() async {
 
     double progressPercD = (index / sheetNames.length) * 100;
 
-    loadingTitle.value = '${progressPercD.toInt()}%  $sheetName';
+    loadingTitle.value = '${progressPercD.toInt()}%  $sheetName}';
     await sheet2db(sheetName, fileId);
 
     sheetNamesLength[index] = await sheetLength(sheetName);
@@ -44,7 +44,7 @@ Future sheets2db() async {
       if (index == 10) break;
     }
   }
-  loadingTitle.value = 'Refresh done';
+  loadingTitle.value = 'Refresh done devmode:${bl.devMode}';
 }
 
 Future sheet2db(String sheetName, String fileId) async {

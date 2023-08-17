@@ -14,16 +14,33 @@ extension GetParamsCollection on Isar {
   IsarCollection<String, Params> get params => this.collection();
 }
 
-const ParamsSchema = IsarCollectionSchema(
-  schema:
-      '{"name":"Params","idName":"key","properties":[{"name":"key","type":"String"},{"name":"scope","type":"String"},{"name":"value","type":"String"}]}',
+const ParamsSchema = IsarGeneratedSchema(
+  schema: IsarSchema(
+    name: 'Params',
+    idName: 'key',
+    embedded: false,
+    properties: [
+      IsarPropertySchema(
+        name: 'key',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'scope',
+        type: IsarType.string,
+      ),
+      IsarPropertySchema(
+        name: 'value',
+        type: IsarType.string,
+      ),
+    ],
+    indexes: [],
+  ),
   converter: IsarObjectConverter<String, Params>(
     serialize: serializeParams,
     deserialize: deserializeParams,
     deserializeProperty: deserializeParamsProp,
   ),
   embeddedSchemas: [],
-  //hash: 3080802201397324532,
 );
 
 @isarProtected
@@ -147,6 +164,37 @@ extension ParamsQueryUpdate on IsarQuery<Params> {
   _ParamsQueryUpdate get updateFirst => _ParamsQueryUpdateImpl(this, limit: 1);
 
   _ParamsQueryUpdate get updateAll => _ParamsQueryUpdateImpl(this);
+}
+
+class _ParamsQueryBuilderUpdateImpl implements _ParamsQueryUpdate {
+  const _ParamsQueryBuilderUpdateImpl(this.query, {this.limit});
+
+  final QueryBuilder<Params, Params, QOperations> query;
+  final int? limit;
+
+  @override
+  int call({
+    Object? scope = ignore,
+    Object? value = ignore,
+  }) {
+    final q = query.build();
+    try {
+      return q.updateProperties(limit: limit, {
+        if (scope != ignore) 2: scope as String?,
+        if (value != ignore) 3: value as String?,
+      });
+    } finally {
+      q.close();
+    }
+  }
+}
+
+extension ParamsQueryBuilderUpdate
+    on QueryBuilder<Params, Params, QOperations> {
+  _ParamsQueryUpdate get updateFirst =>
+      _ParamsQueryBuilderUpdateImpl(this, limit: 1);
+
+  _ParamsQueryUpdate get updateAll => _ParamsQueryBuilderUpdateImpl(this);
 }
 
 extension ParamsQueryFilter on QueryBuilder<Params, Params, QFilterCondition> {
