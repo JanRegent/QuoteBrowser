@@ -3,6 +3,8 @@ import 'dart:math' as math show pi;
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
 
+import '../filters/simplef/dateinsert1.dart';
+
 class SidebarPage extends StatefulWidget {
   const SidebarPage({super.key});
 
@@ -27,15 +29,27 @@ class _SidebarPageState extends State<SidebarPage> {
       CollapsibleItem(
           text: 'Dashboard',
           icon: Icons.assessment,
-          onPressed: () => setState(() => _headline = 'DashBoard'),
+          onPressed: () => setState(() => _headline = 'Date filters'),
           onHold: () => ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("Dashboard"))),
+              .showSnackBar(const SnackBar(content: Text("Date filters"))),
           isSelected: true,
           subItems: [
             CollapsibleItem(
-              text: 'Menu',
+              text: 'Today',
+              icon: Icons.date_range,
+              onPressed: () {
+                dateinsersDo(context);
+              },
+              onHold: () => ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Date filters"))),
+              isSelected: true,
+            ),
+            CollapsibleItem(
+              text: 'Last days',
               icon: Icons.menu_book,
-              onPressed: () => setState(() => _headline = 'Menu'),
+              onPressed: () {
+                dateinsersLast(context);
+              },
               onHold: () => ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Menu"))),
               isSelected: true,

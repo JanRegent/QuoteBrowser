@@ -53,6 +53,34 @@ Future<Sheet> readByRowIndex2(int index) async {
   }
 }
 
+Future<List<int>> readDateinsert(String dateinsert) async {
+  try {
+    List<int> ids = isar.sheets
+        .where()
+        .dateinsertEqualTo(dateinsert)
+        .idProperty()
+        .findAll();
+
+    return ids;
+  } catch (_) {
+    return [];
+  }
+}
+
+Future<List<String>> readDateinserts() async {
+  try {
+    List<String> dateinserts = blUti.toListString(isar.sheets
+        .where()
+        .distinctByDateinsert()
+        .dateinsertProperty()
+        .findAll());
+    dateinserts.sort((str1, str2) => str2.compareTo(str1));
+    return dateinserts;
+  } catch (_) {
+    return [];
+  }
+}
+
 Future<Sheet> readByAuthor(String author) async {
   try {
     Sheet sheet = isar.sheets.where().authorContains('IconButton').findAll()[0];

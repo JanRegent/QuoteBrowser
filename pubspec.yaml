@@ -21,6 +21,10 @@ dependencies:
   ##----text
   highlight_text: ^1.7.0                  #https://pub.dev/packages/highlight_text
 
+
+  ##----elements
+  dropdown_button2: ^2.3.8                #https://pub.dev/packages/dropdown_button2
+  
   ##----url
   flutter_linkify: ^6.0.0                 #https://pub.dev/packages/flutter_linkify
   url_launcher: ^6.1.12                   #https://pub.dev/packages/url_launcher

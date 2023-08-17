@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../BL/sheet/sheet.dart';
+import '../filters/emptyview.dart';
 import '_sheetviewpage.dart';
 
 List<Sheet> filteredSheets = [];
@@ -48,23 +49,5 @@ class _SearchableListviewState extends State<SearchableListview> {
           title: Text(widget.title),
         ),
         body: searchableList());
-  }
-}
-
-class EmptyView extends StatelessWidget {
-  const EmptyView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.error,
-          color: Colors.red,
-        ),
-        Text('no sheet is found with this word'),
-      ],
-    );
   }
 }
