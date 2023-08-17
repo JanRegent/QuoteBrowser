@@ -4,7 +4,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../BL/bluti.dart';
 import '../../../BL/sheet/sheetcrud.dart';
-import '../../zview/cardsswiper.dart';
+import '../../zview/_cardsswiper.dart';
 import '../emptyview.dart';
 import '../sheetnames.dart';
 
@@ -28,6 +28,18 @@ Future dateinsersLast(BuildContext context) async {
   );
 }
 
+void filterByDateInsert(String dateinsert, BuildContext context) async {
+  List<int> ids = await readDateinsert('$dateinsert.');
+  if (ids.isEmpty) return;
+
+  // ignore: use_build_context_synchronously
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => CardSwiper(ids, dateinsert, const {})),
+  );
+}
+
 class Dateinsert1 extends StatefulWidget {
   final List<String> dateinserts;
 
@@ -46,18 +58,6 @@ class _Dateinsert1State extends State<Dateinsert1> {
   }
 
   final TextEditingController textEditingController = TextEditingController();
-
-  void filterByDateInsert(String dateinsert, BuildContext context) async {
-    List<int> ids = await readDateinsert('$dateinsert.');
-    if (ids.isEmpty) return;
-
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => CardSwiper(ids, dateinsert, const {})),
-    );
-  }
 
   Widget bodyLv2(BuildContext context) {
     return SearchableList<String>(

@@ -23,7 +23,7 @@ class _SheetViewPageState extends State<SheetViewPage> {
   }
 
   Future<String> getData() async {
-    readByRowIndex2(widget.locId);
+    readByLocId(widget.locId);
 
     return 'ok';
   }

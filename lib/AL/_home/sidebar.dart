@@ -2,6 +2,7 @@ import 'dart:math' as math show pi;
 
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
+import 'package:quotebrowser/BL/bluti.dart';
 
 import '../filters/simplef/dateinsert1.dart';
 
@@ -26,9 +27,10 @@ class _SidebarPageState extends State<SidebarPage> {
 
   List<CollapsibleItem> get _generateItems {
     return [
+      //-----------------------------------------------------------------date
       CollapsibleItem(
-          text: 'Dashboard',
-          icon: Icons.assessment,
+          text: 'Date filters',
+          icon: Icons.date_range,
           onPressed: () => setState(() => _headline = 'Date filters'),
           onHold: () => ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("Date filters"))),
@@ -38,7 +40,7 @@ class _SidebarPageState extends State<SidebarPage> {
               text: 'Today',
               icon: Icons.date_range,
               onPressed: () {
-                dateinsersDo(context);
+                filterByDateInsert(blUti.todayStr(), context);
               },
               onHold: () => ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Date filters"))),
@@ -46,7 +48,7 @@ class _SidebarPageState extends State<SidebarPage> {
             ),
             CollapsibleItem(
               text: 'Last days',
-              icon: Icons.menu_book,
+              icon: Icons.date_range_outlined,
               onPressed: () {
                 dateinsersLast(context);
               },
@@ -72,6 +74,7 @@ class _SidebarPageState extends State<SidebarPage> {
                   )
                 ]),
           ]),
+      //-----------------------------------------------------------------search
       CollapsibleItem(
         text: 'Search',
         icon: Icons.search,

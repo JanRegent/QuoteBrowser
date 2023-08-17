@@ -53,6 +53,17 @@ Future<Sheet> readByRowIndex2(int index) async {
   }
 }
 
+Future<Sheet> readByLocId(int locId) async {
+  try {
+    Sheet sheet = isar.sheets.get(locId)!;
+    currentSheet = sheet;
+    return sheet;
+  } catch (e) {
+    debugPrint('readByLocId $e');
+    return newSheet()..quote = '??';
+  }
+}
+
 Future<List<int>> readDateinsert(String dateinsert) async {
   try {
     List<int> ids = isar.sheets
