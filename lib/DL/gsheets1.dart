@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:gsheets/gsheets.dart';
 import 'package:quotebrowser/BL/params/params.dart';
+import 'package:quotebrowser/DL/service_acount.dart';
 
 import '../BL/bluti.dart';
 import '../BL/sheet/sheet.dart';
@@ -9,6 +10,9 @@ import '../BL/sheet/sheet.dart';
 Map gsheetsCredentials = {};
 
 Future gsheetsCredentialsLoad() async {
+  try {
+    gsheetsCredentials = gsheetsCredentialsDeploy;
+  } catch (_) {}
   String clientSecret = await readParam('gsheetsCredentials');
   if (clientSecret.isEmpty) return;
   gsheetsCredentials = jsonDecode(clientSecret);
