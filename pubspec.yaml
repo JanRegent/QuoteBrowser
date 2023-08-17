@@ -25,6 +25,9 @@ dependencies:
   ##----elements
   dropdown_button2: ^2.3.8                #https://pub.dev/packages/dropdown_button2
   
+  ##----icons
+  fluentui_system_icons: ^1.1.210         #https://pub.dev/packages/fluentui_system_icons
+
   ##----url
   flutter_linkify: ^6.0.0                 #https://pub.dev/packages/flutter_linkify
   url_launcher: ^6.1.12                   #https://pub.dev/packages/url_launcher

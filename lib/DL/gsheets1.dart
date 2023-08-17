@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:gsheets/gsheets.dart';
 import 'package:quotebrowser/BL/params/params.dart';
-import 'package:quotebrowser/DL/service_acount.dart';
 
+import './credentials.dart';
 import '../BL/bluti.dart';
 import '../BL/sheet/sheet.dart';
 
@@ -59,6 +59,9 @@ class GsheetsCRUD {
     return 0;
   }
 
+  ///
+  ///todo [ERROR:flutter/runtime/dart_vm_initializer.cc(41)]
+  ///Unhandled Exception: GSheetsException: Quota exceeded for quota metric 'Read requests' and limit 'Read requests per minute per user' of service 'sheets.googleapis.com' for consumer 'project_number:470535595594'.
   Future<List<List<String>>> readSheetAll(
       String sheetName, String spreadsheetId) async {
     final ss = await gsheets.spreadsheet(spreadsheetId);

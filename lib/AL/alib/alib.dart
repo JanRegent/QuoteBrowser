@@ -11,6 +11,7 @@ class AL {
   Future<void> openhUrl(Uri url, BuildContext context) async {
     await canLaunchUrl(url)
         ? await launchUrl(url)
+        // ignore: use_build_context_synchronously
         : message(context, 'could_not_launch_this_url\n $url');
   }
 

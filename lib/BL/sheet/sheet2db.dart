@@ -32,9 +32,9 @@ Future sheets2db() async {
   for (var index = 0; index < sheetNames.length; index++) {
     String sheetName = sheetNames[index];
 
-    int progressPerc = (index % sheetNames.length);
+    double progressPercD = (index / sheetNames.length) * 100;
 
-    loadingTitle.value = '$progressPerc%  $sheetName';
+    loadingTitle.value = '${progressPercD.toInt()}%  $sheetName';
     await sheet2db(sheetName, fileId);
 
     sheetNamesLength[index] = await sheetLength(sheetName);

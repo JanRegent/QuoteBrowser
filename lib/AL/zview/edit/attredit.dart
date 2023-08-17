@@ -45,7 +45,7 @@ class _AttrEditState extends State<AttrEdit> {
           ),
           ListTile(
             tileColor: Colors.white,
-            leading: ALicons.attrIcons.author,
+            leading: ALicons.attrIcons.authorIcon,
             title: Text(widget.sheet.author),
             trailing: InkWell(
               child: Text(widget.sheet.aSheetName),
@@ -60,12 +60,12 @@ class _AttrEditState extends State<AttrEdit> {
           ),
           ListTile(
             tileColor: Colors.white,
-            leading: ALicons.attrIcons.book,
+            leading: ALicons.attrIcons.bookIcon,
             title: Text(widget.sheet.book),
           ),
           ListTile(
             tileColor: Colors.lime,
-            leading: ALicons.attrIcons.tag,
+            leading: ALicons.attrIcons.tagIcon,
             title: Text(widget.sheet.tagsStr),
             trailing: IconButton(
                 icon: ALicons.editIcons.undo,
@@ -85,7 +85,7 @@ class _AttrEditState extends State<AttrEdit> {
           ),
           ListTile(
             tileColor: Colors.white,
-            leading: ALicons.attrIcons.category,
+            leading: ALicons.attrIcons.categoryIcon,
             title: InkWell(
               child: Text(widget.sheet.category),
               onTap: () async {

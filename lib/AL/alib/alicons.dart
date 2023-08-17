@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -25,19 +26,27 @@ class ViewIcons {
 }
 
 class AttrIcons {
-  Icon get tag {
+  Icon get tagIcon {
     return const Icon(CupertinoIcons.tag);
   }
 
-  Icon get book {
-    return const Icon(CupertinoIcons.book);
+  Icon get bookIcon {
+    return const Icon(FluentIcons.book_24_regular);
   }
 
-  Icon get author {
+  Icon get authorIcon {
     return const Icon(CupertinoIcons.person);
   }
 
-  Icon get category {
+  Icon get categoryIcon {
     return const Icon(Icons.category);
+  }
+
+  Icon get sheetIcon {
+    return const Icon(FluentIcons.table_20_regular);
+  }
+
+  Icon get listIcon {
+    return const Icon(FluentIcons.list_24_regular);
   }
 }

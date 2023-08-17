@@ -32,7 +32,7 @@ class _SheetViewFieldsState extends State<SheetViewFields> {
     expandedCard = [
       ListTile(
           tileColor: Colors.white,
-          leading: ALicons.attrIcons.author,
+          leading: ALicons.attrIcons.authorIcon,
           title: Text(widget.sheet.author),
           trailing: IconButton(
             icon: const Icon(Icons.edit),
@@ -49,21 +49,21 @@ class _SheetViewFieldsState extends State<SheetViewFields> {
     if (widget.sheet.book.isNotEmpty) {
       expandedCard.add(ListTile(
         tileColor: Colors.white,
-        leading: ALicons.attrIcons.book,
+        leading: ALicons.attrIcons.bookIcon,
         title: Text(widget.sheet.book),
       ));
     }
     if (widget.sheet.tagsStr.isNotEmpty) {
       expandedCard.add(ListTile(
         tileColor: Colors.lime,
-        leading: ALicons.attrIcons.tag,
+        leading: ALicons.attrIcons.tagIcon,
         title: Text(widget.sheet.tagsStr),
       ));
     }
     if (widget.sheet.category.isNotEmpty) {
       expandedCard.add(ListTile(
         tileColor: Colors.white,
-        leading: ALicons.attrIcons.category,
+        leading: ALicons.attrIcons.categoryIcon,
         title: InkWell(
           child: Text(widget.sheet.category),
           onTap: () async {},
