@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../BL/sheet/sheet2dbpage.dart';
+import '../../BL/sheet/sheet2db.dart';
+
 import 'sidebar.dart';
 
 class SidebarHome extends StatefulWidget {
@@ -18,20 +20,15 @@ class _SidebarHomeState extends State<SidebarHome> {
   }
 
   Widget homeBody(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-          appBar: AppBar(
-            bottom: const TabBar(
-              tabs: [
-                Tab(text: "News"),
-                Tab(text: "Data Update"),
-              ],
-            ),
-          ),
-          body: const TabBarView(
-            children: [SidebarPage(), Sheets2dbPage()],
-          )),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Obx(() => Text(loadingTitle.value)),
+          actions: const [],
+        ),
+        body: const SidebarPage(),
+      ),
     );
   }
 }

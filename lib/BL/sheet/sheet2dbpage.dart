@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/BL/sheet/sheetcrud.dart';
 
 import '../../AL/zview/_sheetviewpage.dart';
 
@@ -57,9 +58,14 @@ class _Sheets2dbPageState extends State {
 
   IconButton runLoading() {
     return IconButton(
-      icon: const Icon(Icons.run_circle),
+      icon: const Icon(Icons.refresh),
       onPressed: () async {
-        await sheets2db();
+        clearSheets();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Sheets2dbPage()),
+        );
       },
     );
   }
@@ -80,15 +86,12 @@ class _Sheets2dbPageState extends State {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Obx(() => Text(loadingTitle.value)),
-          actions: [runLoading()],
-        ),
-        body: fileList(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Obx(() => Text(loadingTitle.value)),
+        actions: [runLoading()],
       ),
+      body: fileList(),
     );
   }
 }

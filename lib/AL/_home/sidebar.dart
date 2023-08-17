@@ -4,6 +4,7 @@ import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
+import '../../BL/sheet/sheet2dbpage.dart';
 import '../filters/simplef/dateinsert1.dart';
 
 class SidebarPage extends StatefulWidget {
@@ -53,7 +54,22 @@ class _SidebarPageState extends State<SidebarPage> {
                 dateinsersLast(context);
               },
               onHold: () => ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text("Menu"))),
+                  .showSnackBar(const SnackBar(content: Text("Last days"))),
+              isSelected: true,
+            ),
+            CollapsibleItem(
+              text: 'Refresh data',
+              icon: Icons.refresh,
+              onPressed: () {
+                print(1);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Sheets2dbPage()),
+                );
+              },
+              onHold: () => ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Refresh data"))),
               isSelected: true,
             ),
             CollapsibleItem(
