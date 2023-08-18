@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 
 import 'package:quotebrowser/BL/sheet/sheet.dart';
+
 import 'package:quotebrowser/DL/spreadsheets.dart';
 
 import '../../DL/dl.dart';
+import '../../DL/gsheets1.dart';
 import '../bl.dart';
 import 'sheetcrud.dart';
 
@@ -29,6 +31,11 @@ Future sheets2db() async {
   //String sheetName = 'fb:Lao-c';
 
   int sheetsLenStart = await sheetsLength();
+  if (sheetsLenStart > 1) {
+    loadingTitle.value = 'Data UpToDate devmode:${bl.devMode}';
+    return;
+  }
+
   for (var index = 0; index < sheetNames.length; index++) {
     String sheetName = sheetNames[index];
 
@@ -38,8 +45,10 @@ Future sheets2db() async {
     await sheet2db(sheetName, fileId);
 
     sheetNamesLength[index] = await sheetLength(sheetName);
+    debugPrint(
+        '$sheetName L: ${sheetNamesLength[index]} D:${sheetLastDateinsert[index]}');
     sheetNamesToday[index] = await sheetTodayLength(sheetName);
-    if (sheetsLenStart > 1) continue;
+
     if (bl.devMode) {
       if (index == 10) break;
     }

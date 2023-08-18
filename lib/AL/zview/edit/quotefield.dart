@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:translator_plus/translator_plus.dart';
 
 import '../../../BL/sheet/sheet.dart';
 
@@ -54,8 +55,10 @@ class QuoteField extends StatelessWidget {
         TextField(
           controller: _controller,
           maxLines: 10,
-          onChanged: (value) {
-            sheet.quote = value;
+          onChanged: (value) async {
+            final translator = GoogleTranslator();
+            var translation = await translator.translate(value, to: 'cs');
+            sheet.quote = translation.toString();
           },
         )
       ],

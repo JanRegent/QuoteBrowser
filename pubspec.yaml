@@ -32,9 +32,11 @@ dependencies:
   flutter_linkify: ^6.0.0                 #https://pub.dev/packages/flutter_linkify
   url_launcher: ^6.1.12                   #https://pub.dev/packages/url_launcher
   clipboard: ^0.1.3                       #https://pub.dev/packages/clipboard
+  translator_plus: ^1.0.1                 #https://pub.dev/packages/translator_plus
+  
   #============================================================================BL  
   ##-----bl status
-  get: ^4.6.5                             #https://pub.dev/packages/get
+  get: ^4.6.5                             #https://pub.dev/packages/get  
 
   ##----db
   isar: ^4.0.0-dev.10                     #https://pub.dev/packages/isar/versions/4.0.0-dev.10

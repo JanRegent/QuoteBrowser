@@ -18,6 +18,8 @@ Future gsheetsCredentialsLoad() async {
   gsheetsCredentials = jsonDecode(clientSecret);
 }
 
+List<String> sheetLastDateinsert = [];
+
 class GsheetsCRUD {
   /// https://pub.dev/packages/gsheets/example
   ///
@@ -77,6 +79,7 @@ class GsheetsCRUD {
 
     List<Worksheet> worksheets = ss.sheets;
     List<String> sheetNames = [];
+    sheetLastDateinsert = [];
     for (Worksheet worksheet in worksheets) {
       if (worksheet.title.contains('log')) continue;
       if (worksheet.title.contains('DailyManForm')) continue;

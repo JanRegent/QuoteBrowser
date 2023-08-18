@@ -4,8 +4,10 @@ import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
+import '../../BL/sheet/sheet.dart';
 import '../../BL/sheet/sheet2dbpage.dart';
 import '../filters/simplef/dateinsert1.dart';
+import '../zview/edit/attredit.dart';
 
 class SidebarPage extends StatefulWidget {
   const SidebarPage({super.key});
@@ -89,6 +91,21 @@ class _SidebarPageState extends State<SidebarPage> {
                   )
                 ]),
           ]),
+      //-----------------------------------------------------------------new
+      CollapsibleItem(
+        text: 'Add quote',
+        icon: Icons.search,
+        onPressed: () {
+          Sheet sheet = newSheet();
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AttrEdit(sheet)),
+          );
+        },
+        onHold: () => ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Search"))),
+      ),
       //-----------------------------------------------------------------search
       CollapsibleItem(
         text: 'Search',
@@ -97,6 +114,7 @@ class _SidebarPageState extends State<SidebarPage> {
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Search"))),
       ),
+
       CollapsibleItem(
         text: 'Notifications',
         icon: Icons.notifications,

@@ -5,6 +5,7 @@ import 'package:quotebrowser/BL/sheet/sheet2db.dart';
 import '../../../BL/sheet/sheet.dart';
 
 import '../../../BL/sheet/sheetcrud.dart';
+
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 import '../../alib/selectiondialogs/selectone.dart';
@@ -130,6 +131,44 @@ class _AttrEditState extends State<AttrEdit> {
     );
   }
 
+  void emptyDialog(String fieldName) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Field empty"),
+          content: Text("$fieldName is empty"),
+          actions: [
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future saveQuote() async {
+    if (widget.sheet.quote.isEmpty) {
+      emptyDialog('Quote');
+      return;
+    }
+    if (widget.sheet.aSheetName.isEmpty) {
+      emptyDialog('Sheetname');
+      return;
+    }
+    if (widget.sheet.aSheetName == '[???]') {
+      emptyDialog('Sheetname');
+      return;
+    }
+
+    update(widget.sheet);
+    dl.gsheetsHelper.createRow(widget.sheet, fileId);
+  }
+
   @override
   Widget build(BuildContext context) {
     bool? save2cloud = widget.sheet.save2cloud.isBlank;
@@ -152,9 +191,8 @@ class _AttrEditState extends State<AttrEdit> {
                 ? const Text(' ')
                 : IconButton(
                     icon: const Icon(Icons.save),
-                    onPressed: () {
-                      update(widget.sheet);
-                      dl.gsheetsHelper.createRow(widget.sheet, fileId);
+                    onPressed: () async {
+                      await saveQuote();
                     })
           ],
         ),
