@@ -1,5 +1,4 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
@@ -17,17 +16,17 @@ class EditIcons {
 
 class ViewIcons {
   Icon get tableView {
-    return const Icon(CupertinoIcons.table);
+    return const Icon(Icons.table_bar);
   }
 
   Icon get listView {
-    return const Icon(CupertinoIcons.list_bullet);
+    return const Icon(Icons.list);
   }
 }
 
 class AttrIcons {
   Icon get tagIcon {
-    return const Icon(CupertinoIcons.tag);
+    return const Icon(Icons.tag);
   }
 
   Icon get bookIcon {
@@ -35,7 +34,7 @@ class AttrIcons {
   }
 
   Icon get authorIcon {
-    return const Icon(CupertinoIcons.person);
+    return const Icon(Icons.person);
   }
 
   Icon get categoryIcon {

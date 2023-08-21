@@ -7,7 +7,7 @@ import 'package:quotebrowser/BL/sheet/sheet.dart';
 import 'package:quotebrowser/DL/spreadsheets.dart';
 
 import '../../DL/dl.dart';
-import '../../DL/gsheets1.dart';
+
 import '../bl.dart';
 import 'sheetcrud.dart';
 
@@ -45,8 +45,7 @@ Future sheets2db() async {
     await sheet2db(sheetName, fileId);
 
     sheetNamesLength[index] = await sheetLength(sheetName);
-    debugPrint(
-        '$sheetName L: ${sheetNamesLength[index]} D:${sheetLastDateinsert[index]}');
+    debugPrint('$sheetName Len: ${sheetNamesLength[index]} ');
     sheetNamesToday[index] = await sheetTodayLength(sheetName);
 
     if (bl.devMode) {
