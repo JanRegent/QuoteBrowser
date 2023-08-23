@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/params/params.dart';
@@ -11,18 +13,18 @@ class Bl {
   bool devMode = false;
 
   Future init() async {
+    updateStartParams();
     devModeSet();
     await openIsar();
-    isar = Isar.get(schemas: [SheetSchema, ParamsSchema]);
+    //isar = Isar.get(schemas: [SheetSchema, ParamsSchema]);
   }
 
   Future<void> openIsar() async {
     try {
       if (isar.isOpen) return;
     } catch (_) {}
-
     await Isar.initialize();
-    Isar.open(
+    isar = Isar.open(
       engine: kIsWeb ? IsarEngine.sqlite : IsarEngine.isar,
       schemas: [SheetSchema, ParamsSchema],
       directory: kIsWeb ? '' : '../',

@@ -1,25 +1,25 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:isar/isar.dart';
+import 'package:quotebrowser/BL/params/params.dart';
 
 import 'package:quotebrowser/BL/sheet/sheet.dart';
 
-import 'package:quotebrowser/DL/spreadsheets.dart';
-
-import '../../DL/dl.dart';
+import '../../DL/diocrud.dart';
 
 import '../bl.dart';
+import '../bluti.dart';
 import 'sheetcrud.dart';
 
 RxList sheetNamesToday = [].obs;
 RxList sheetNamesLength = [].obs;
 RxString loadingTitle = ''.obs;
 List<String> sheetNames = [];
-String fileId = spreadsheetIdInit;
+String fileId = dataSheetId;
 
 Future sheetNamesInit() async {
   sheetNames = [];
-  sheetNames = await dl.gsheetsHelper.getSheetNames(fileId);
+  sheetNames = await getDataSheets(dataSheetId);
   for (var i = 0; i < sheetNames.length; i++) {
     sheetNamesToday.add(0);
     sheetNamesLength.add(0);
@@ -28,9 +28,12 @@ Future sheetNamesInit() async {
 }
 
 Future sheets2db() async {
-  //String sheetName = 'fb:Lao-c';
+  await isar.write((isar) async {
+    isar.clear();
+  });
 
   int sheetsLenStart = await sheetsLength();
+
   if (sheetsLenStart > 1) {
     loadingTitle.value = 'Data UpToDate devmode:${bl.devMode}';
     return;
@@ -41,7 +44,7 @@ Future sheets2db() async {
 
     double progressPercD = (index / sheetNames.length) * 100;
 
-    loadingTitle.value = '${progressPercD.toInt()}%  $sheetName}';
+    loadingTitle.value = '${progressPercD.toInt()}%  $sheetName';
     await sheet2db(sheetName, fileId);
 
     sheetNamesLength[index] = await sheetLength(sheetName);
@@ -51,26 +54,50 @@ Future sheets2db() async {
     if (bl.devMode) {
       if (index == 10) break;
     }
+    if (1 == 1) break;
   }
   loadingTitle.value = 'Refresh done devmode:${bl.devMode}';
 }
 
 Future sheet2db(String sheetName, String fileId) async {
-  List<List<String>> rows =
-      await dl.gsheetsHelper.readSheetAll(sheetName, fileId);
+  // List<List<String>> rows =
+  //     await dl.gsheetsHelper.readSheetAll(sheetName, fileId);
+
+  List rows = await getAllrows(sheetName, dataSheetId);
+  List<Sheet> sheets = [];
+  List<String> cols = blUti.toListString(rows[0]);
 
   for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
-    Sheet sheet = Sheet().sheetFromRow(rows[0], rows[rowIndex]);
+    List<String> datarow = blUti.toListString(rows[rowIndex]);
+    Sheet sheet = Sheet().sheetFromRow(cols, datarow);
     sheet.id = isar.sheets.autoIncrement();
     sheet.aSheetName = sheetName;
     sheet.aIndex = rowIndex + 1;
     sheet.zfileId = fileId;
     sheet.rowType = 'dataRow';
-    if (rowIndex == 0) sheet.rowType = 'colRow';
-    isar.write((isar) {
-      isar.sheets.put(sheet);
-    });
+
+    if (rowIndex != 0) sheet.rowType = 'colRow';
+    sheets.add(sheet);
+
+    if (rowIndex % 100 == 0) {
+      await Future.delayed(const Duration(seconds: 2), () async {
+        await isar.write((isar) async {
+          isar.sheets.putAll(sheets);
+        });
+        sheets = [];
+      });
+    }
   }
+  // Isolate._exit error
+  // await isar.writeAsync((isar) async {
+  //   isar.sheets.putAll(sheets);
+  // });
+  debugPrint(sheets.length.toString());
+  await isar.write((isar) async {
+    isar.sheets.putAll(sheets);
+  });
+  int sheetsLenStart = await sheetsLength();
+  debugPrint('sheetsLenStart $sheetsLenStart');
 }
 
 Future updateCell(
@@ -78,8 +105,8 @@ Future updateCell(
   if (sheet.aIndex < 2) return;
   int colIx = cols.indexOf(columnName) + 1;
   if (colIx < 1) return;
-  await dl.gsheetsHelper.updateCell(
-      newValue, sheet.aSheetName, sheet.zfileId, sheet.aIndex, colIx);
+  // await dl.gsheetsHelper.updateCell(
+  //     newValue, sheet.aSheetName, sheet.zfileId, sheet.aIndex, colIx);
 }
 
 Future printSheet(String sheetName) async {

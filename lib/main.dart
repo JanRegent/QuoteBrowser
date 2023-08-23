@@ -5,23 +5,19 @@ import 'BL/bl.dart';
 
 import 'BL/sheet/sheet2db.dart';
 import 'BL/sheet/sheet2dbpage.dart';
-import 'DL/credentialspage.dart';
-import 'DL/dl.dart';
-import 'DL/gsheets1.dart';
 
+import 'DL/dl.dart';
+
+// flutter run -d windows  --dart-define=devmode=1
+// flutter run -d chrome --web-renderer html --dart-define=devmode=1
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await bl.init();
+  await dl.init();
 
-  await gsheetsCredentialsLoad();
-  if (gsheetsCredentials.isEmpty) {
-    runApp(CredentialsPage());
-  } else {
-    await dl.init();
-    sheetNamesInit();
-    runApp(const SidebarHome());
-  }
+  sheetNamesInit();
+  runApp(const SidebarHome());
 }
 
 class MainApp extends StatefulWidget {

@@ -6,7 +6,6 @@ import '../../../BL/sheet/sheet.dart';
 
 import '../../../BL/sheet/sheetcrud.dart';
 
-import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 import '../../alib/selectiondialogs/selectone.dart';
 import 'categorylistview.dart';
@@ -166,7 +165,7 @@ class _AttrEditState extends State<AttrEdit> {
     }
 
     update(widget.sheet);
-    dl.gsheetsHelper.createRow(widget.sheet, fileId);
+    //dl.gsheetsHelper.createRow(widget.sheet, fileId);
   }
 
   @override

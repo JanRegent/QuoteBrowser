@@ -28,3 +28,11 @@ void updateParam(Params param) async {
     isar.params.put(param);
   });
 }
+
+String backendUrl = '';
+String dataSheetId = '1YfST3IJ4V32M-uyfuthBxa2AL7NOVn_kWBq4isMLZ-w';
+String backendId =
+    'AKfycbzrG0866Av_DikVTFOEDBX-XB9jvvjWu_imgUOtf2C19dqFRNlSrAGaYBEU1SrBnear';
+void updateStartParams() async {
+  backendUrl = 'https://script.google.com/macros/s/$backendId/exec';
+}
