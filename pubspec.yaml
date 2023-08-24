@@ -1,5 +1,5 @@
 name: quotebrowser
-description: A new Flutter project.
+description: Quotes browser.
 publish_to: 'none'
 version: 0.1.0
 
@@ -24,9 +24,6 @@ dependencies:
 
   ##----elements
   dropdown_button2: ^2.3.8                #https://pub.dev/packages/dropdown_button2
-  
-  ##----icons
-  fluentui_system_icons: ^1.1.210         #https://pub.dev/packages/fluentui_system_icons
 
   ##----url
   flutter_linkify: ^6.0.0                 #https://pub.dev/packages/flutter_linkify
@@ -50,6 +47,10 @@ dependencies:
   intl: ^0.18.1                           #https://pub.dev/packages/intl
   dartx: ^1.2.0                           #https://pub.dev/packages/dartx
   csv: ^5.0.2                             #https://pub.dev/packages/csv
+
+    
+  ##----icons
+  fluentui_system_icons: ^1.1.210         #https://pub.dev/packages/fluentui_system_icons
   cupertino_icons: ^1.0.5                 #https://pub.dev/packages/cupertino_icons
 
 

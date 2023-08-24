@@ -1,6 +1,8 @@
 import 'package:isar/isar.dart';
+import 'package:quotebrowser/BL/bluti.dart';
 
 import '../bl.dart';
+import 'sheetcrud.dart';
 
 part 'sheet.g.dart';
 
@@ -96,6 +98,39 @@ class Sheet {
     sheet.rowArr = row;
 
     return sheet;
+  }
+
+  Future<List<String>> sheet2Row(Sheet sheet) async {
+    List<String> cols = await readCols(sheet.aSheetName);
+    List<String> lastRow = await readLastRow(sheet.aSheetName);
+    int? maxID = int.tryParse(lastRow[cols.indexOf('ID')]);
+    List<String> row = [];
+
+    for (var i = 0; i < cols.length; i++) {
+      row.add('');
+    }
+
+    void setValue(String colName, value) {
+      int index = cols.indexOf(colName);
+
+      if (index == -1) return;
+
+      try {
+        row[index] = value;
+        return;
+      } catch (_) {
+        return;
+      }
+    }
+
+    setValue('citat', sheet.quote);
+    setValue('autor', sheet.author);
+    setValue('kniha', sheet.book);
+    setValue('tags', sheet.tagsStr);
+    setValue('dateinsert', '${blUti.todayStr()}.');
+    setValue('ID', (maxID! + 1).toString());
+
+    return row;
   }
 }
 

@@ -6,6 +6,7 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../BL/sheet/sheet.dart';
 import '../../BL/sheet/sheet2dbpage.dart';
+
 import '../filters/simplef/dateinsert1.dart';
 import '../zview/edit/attredit.dart';
 
@@ -95,7 +96,7 @@ class _SidebarPageState extends State<SidebarPage> {
       CollapsibleItem(
         text: 'Add quote',
         icon: Icons.search,
-        onPressed: () {
+        onPressed: () async {
           Sheet sheet = newSheet();
 
           Navigator.push(

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/BL/params/params.dart';
 import 'package:quotebrowser/BL/sheet/sheet2db.dart';
 
 import '../../../BL/sheet/sheet.dart';
 
 import '../../../BL/sheet/sheetcrud.dart';
 
+import '../../../DL/diocrud.dart';
 import '../../alib/alicons.dart';
 import '../../alib/selectiondialogs/selectone.dart';
 import 'categorylistview.dart';
@@ -71,12 +73,12 @@ class _AttrEditState extends State<AttrEdit> {
                 icon: ALicons.editIcons.undo,
                 onPressed: () {
                   try {
-                    List<String> tagsOld = widget.sheet.tagsStr.split('|');
+                    List<String> tagsOld = widget.sheet.tagsStr.split(', ');
                     List<String> tags = [];
                     for (var i = 0; i < tagsOld.length - 1; i++) {
                       tags.add(tagsOld[i]);
                     }
-                    widget.sheet.tagsStr = tags.join('|');
+                    widget.sheet.tagsStr = tags.join(',');
                   } catch (e) {
                     debugPrint(e.toString());
                   }
@@ -163,9 +165,11 @@ class _AttrEditState extends State<AttrEdit> {
       emptyDialog('Sheetname');
       return;
     }
-
+    List<String> row = await Sheet().sheet2Row(widget.sheet);
+    int? respStatus =
+        await postAppendRow(widget.sheet.aSheetName, dataSheetId, row);
+    debugPrint('respStatus post $respStatus');
     update(widget.sheet);
-    //dl.gsheetsHelper.createRow(widget.sheet, fileId);
   }
 
   @override

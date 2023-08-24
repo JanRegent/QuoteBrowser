@@ -76,7 +76,7 @@ Future sheet2db(String sheetName, String fileId) async {
     sheet.zfileId = fileId;
     sheet.rowType = 'dataRow';
 
-    if (rowIndex != 0) sheet.rowType = 'colRow';
+    if (rowIndex == 0) sheet.rowType = 'colRow';
     sheets.add(sheet);
 
     if (rowIndex % 100 == 0) {

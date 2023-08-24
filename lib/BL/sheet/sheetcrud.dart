@@ -31,16 +31,7 @@ Future<int> sheetTodayLength(String sheetName) async {
 
   return len;
 }
-
-Future<Sheet?> readByRowIndex(int index) async {
-  try {
-    Sheet? sheet = isar.sheets.where().aIndexEqualTo(index).findFirst();
-
-    return sheet;
-  } catch (_) {
-    return Sheet()..aIndex = index;
-  }
-}
+//-------------------------------------------------------------------------read
 
 Future<Sheet> readByRowIndex2(int index) async {
   try {
@@ -61,6 +52,41 @@ Future<Sheet> readByLocId(int locId) async {
   } catch (e) {
     debugPrint('readByLocId $e');
     return newSheet()..quote = '??';
+  }
+}
+
+Future<List<String>> readCols(String sheetName) async {
+  try {
+    List<String>? cols = isar.sheets
+        .where()
+        .aSheetNameEqualTo(sheetName)
+        .and()
+        .rowTypeEqualTo('colRow')
+        .rowArrProperty()
+        .findFirst();
+
+    return blUti.toListString(cols!);
+  } catch (e) {
+    debugPrint(e.toString());
+    return [];
+  }
+}
+
+Future<List<String>> readLastRow(String sheetName) async {
+  try {
+    List<String>? cols = isar.sheets
+        .where()
+        .aSheetNameEqualTo(sheetName)
+        .and()
+        .rowTypeEqualTo('dataRow')
+        .rowArrProperty()
+        .findAll()
+        .last;
+
+    return blUti.toListString(cols);
+  } catch (e) {
+    debugPrint(e.toString());
+    return [];
   }
 }
 
@@ -119,6 +145,7 @@ Future<int> readMaxRowIndex(String sheetName) async {
   }
 }
 
+//-----------------------------------------------------------------------update
 void update(Sheet sheet) async {
   if (sheet.aIndex == 0) sheet.aIndex = await readMaxRowIndex(sheet.aSheetName);
   isar.write((isar) {
@@ -126,6 +153,7 @@ void update(Sheet sheet) async {
   });
 }
 
+//-----------------------------------------------------------------------delete
 void clearSheets() async {
   isar.write((isar) {
     isar.sheets.clear();

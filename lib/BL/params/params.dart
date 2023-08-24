@@ -32,7 +32,7 @@ void updateParam(Params param) async {
 String backendUrl = '';
 String dataSheetId = '1YfST3IJ4V32M-uyfuthBxa2AL7NOVn_kWBq4isMLZ-w';
 String backendId =
-    'AKfycbzrG0866Av_DikVTFOEDBX-XB9jvvjWu_imgUOtf2C19dqFRNlSrAGaYBEU1SrBnear';
+    'AKfycbyuWdT9n868lQIAEnthbcETDF-cO5om5B7SiD1R9b-iNrG5tf-6qWZfEgkQXT4YDQgN';
 void updateStartParams() async {
   backendUrl = 'https://script.google.com/macros/s/$backendId/exec';
 }
