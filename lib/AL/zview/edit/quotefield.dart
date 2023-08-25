@@ -24,7 +24,7 @@ class QuoteField extends StatelessWidget {
         sheet.book = selected;
         break;
       case 'tags':
-        sheet.tagsStr += '|$selected';
+        sheet.tagsStr += ',$selected';
         break;
       default:
         return;

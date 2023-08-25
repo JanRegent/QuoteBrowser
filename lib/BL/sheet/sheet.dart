@@ -91,7 +91,7 @@ class Sheet {
       }
     }
 
-    Sheet sheet = Sheet();
+    Sheet sheet = newSheet();
 
     sheet.quote = getValue('citat');
     sheet.author = getValue('autor');
@@ -132,8 +132,7 @@ class Sheet {
     setValue('kniha', sheet.book);
     setValue('tags', sheet.tagsStr);
     setValue('dateinsert', '${blUti.todayStr()}.');
-    print(cols);
-    print(row);
+
     return row;
   }
 }

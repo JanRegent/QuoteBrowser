@@ -53,7 +53,7 @@ Future sheets2db() async {
     sheetNamesToday[index] = await sheetTodayLength(sheetName);
 
     if (bl.devMode) {
-      if (index == 0) break;
+      if (index == 1) break;
     }
   }
   debugPrint('refresh done');
@@ -71,7 +71,7 @@ Future sheet2db(String sheetName, String fileId) async {
   for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
     List<String> datarow = blUti.toListString(rows[rowIndex]);
     Sheet sheet = Sheet().sheetFromRow(cols, datarow);
-    sheet.id = isar.sheets.autoIncrement();
+
     sheet.aSheetName = sheetName;
     sheet.aIndex = rowIndex + 1;
     sheet.zfileId = fileId;
@@ -79,27 +79,10 @@ Future sheet2db(String sheetName, String fileId) async {
 
     if (rowIndex == 0) sheet.rowType = 'colRow';
     sheets.add(sheet);
-
-    // if (rowIndex % 100 == 0) {
-    //   await Future.delayed(const Duration(seconds: 2), () async {
-    //     await isar.write((isar) async {
-    //       isar.sheets.putAll(sheets);
-    //     });
-    //     sheets = [];
-    //   });
-    // }
   }
-  // Isolate._exit error
-  // await isar.writeAsync((isar) async {
-  //   isar.sheets.putAll(sheets);
-  // });
-
-  // await isar.write((isar) async {
-  //   isar.sheets.putAll(sheets);
-  // });
 
   await isar.write((isar) async {
-    for (var sheet in sheets) {
+    for (Sheet sheet in sheets) {
       isar.sheets.put(sheet);
     }
   });
