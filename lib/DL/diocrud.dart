@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 import '../BL/bluti.dart';
 import '../BL/params/params.dart';
@@ -39,19 +38,4 @@ Future<int?> postAppendRow(
     'row': row
   });
   return response.statusCode;
-}
-
-Future postAppendTest() async {
-  int? status = await postAppendRow('EMTdaily', dataSheetId, [
-    'Aaaaaa bbb tt tt tt4',
-    'aaa',
-    'bbb',
-    '',
-    ', ',
-    '|ttt|t4',
-    '2023-08-24.',
-    '',
-    ''
-  ]);
-  debugPrint(status.toString());
 }

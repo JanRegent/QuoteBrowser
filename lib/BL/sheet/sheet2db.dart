@@ -28,6 +28,7 @@ Future sheetNamesInit() async {
 }
 
 Future sheets2db() async {
+  debugPrint('refresh start');
   await isar.write((isar) async {
     isar.clear();
   });
@@ -48,14 +49,14 @@ Future sheets2db() async {
     await sheet2db(sheetName, fileId);
 
     sheetNamesLength[index] = await sheetLength(sheetName);
-    debugPrint('$sheetName Len: ${sheetNamesLength[index]} ');
+
     sheetNamesToday[index] = await sheetTodayLength(sheetName);
 
     if (bl.devMode) {
-      if (index == 10) break;
+      if (index == 0) break;
     }
-    if (1 == 1) break;
   }
+  debugPrint('refresh done');
   loadingTitle.value = 'Refresh done devmode:${bl.devMode}';
 }
 
@@ -79,25 +80,29 @@ Future sheet2db(String sheetName, String fileId) async {
     if (rowIndex == 0) sheet.rowType = 'colRow';
     sheets.add(sheet);
 
-    if (rowIndex % 100 == 0) {
-      await Future.delayed(const Duration(seconds: 2), () async {
-        await isar.write((isar) async {
-          isar.sheets.putAll(sheets);
-        });
-        sheets = [];
-      });
-    }
+    // if (rowIndex % 100 == 0) {
+    //   await Future.delayed(const Duration(seconds: 2), () async {
+    //     await isar.write((isar) async {
+    //       isar.sheets.putAll(sheets);
+    //     });
+    //     sheets = [];
+    //   });
+    // }
   }
   // Isolate._exit error
   // await isar.writeAsync((isar) async {
   //   isar.sheets.putAll(sheets);
   // });
-  debugPrint(sheets.length.toString());
+
+  // await isar.write((isar) async {
+  //   isar.sheets.putAll(sheets);
+  // });
+
   await isar.write((isar) async {
-    isar.sheets.putAll(sheets);
+    for (var sheet in sheets) {
+      isar.sheets.put(sheet);
+    }
   });
-  int sheetsLenStart = await sheetsLength();
-  debugPrint('sheetsLenStart $sheetsLenStart');
 }
 
 Future updateCell(

@@ -55,19 +55,19 @@ Future<Sheet> readByLocId(int locId) async {
   }
 }
 
-Future<List<String>> readCols(String sheetName) async {
+Future<List<String>?> readCols(String sheetName) async {
   try {
-    List<String>? cols = isar.sheets
+    Sheet? sheet = isar.sheets
         .where()
-        .aSheetNameEqualTo(sheetName)
-        .and()
         .rowTypeEqualTo('colRow')
-        .rowArrProperty()
+        .and()
+        .aSheetNameEqualTo(sheetName)
         .findFirst();
 
-    return blUti.toListString(cols!);
+    return sheet?.rowArr;
+    // blUti.toListString(cols!);
   } catch (e) {
-    debugPrint(e.toString());
+    debugPrint('readCols \n\n$e');
     return [];
   }
 }

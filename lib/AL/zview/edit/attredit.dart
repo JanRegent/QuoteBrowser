@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/BL/params/params.dart';
+
 import 'package:quotebrowser/BL/sheet/sheet2db.dart';
 
 import '../../../BL/sheet/sheet.dart';
@@ -161,13 +161,19 @@ class _AttrEditState extends State<AttrEdit> {
       emptyDialog('Sheetname');
       return;
     }
+    if (widget.sheet.zfileId.isEmpty) {
+      emptyDialog('sheetId');
+      return;
+    }
     if (widget.sheet.aSheetName == '[???]') {
       emptyDialog('Sheetname');
       return;
     }
+
     List<String> row = await Sheet().sheet2Row(widget.sheet);
+    if (row.isEmpty) return;
     int? respStatus =
-        await postAppendRow(widget.sheet.aSheetName, dataSheetId, row);
+        await postAppendRow(widget.sheet.aSheetName, widget.sheet.zfileId, row);
     debugPrint('respStatus post $respStatus');
     update(widget.sheet);
   }

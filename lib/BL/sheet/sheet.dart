@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/bluti.dart';
+import 'package:quotebrowser/BL/params/params.dart';
 
 import '../bl.dart';
 import 'sheetcrud.dart';
@@ -9,7 +10,10 @@ part 'sheet.g.dart';
 // dart run build_runner build
 
 Sheet newSheet() {
-  Sheet sheet = Sheet()..id = isar.sheets.autoIncrement();
+  Sheet sheet = Sheet()
+    ..id = isar.sheets.autoIncrement()
+    ..zfileId = dataSheetId;
+
   return sheet;
 }
 
@@ -101,9 +105,9 @@ class Sheet {
   }
 
   Future<List<String>> sheet2Row(Sheet sheet) async {
-    List<String> cols = await readCols(sheet.aSheetName);
-    List<String> lastRow = await readLastRow(sheet.aSheetName);
-    int? maxID = int.tryParse(lastRow[cols.indexOf('ID')]);
+    List<String>? cols = await readCols(sheet.aSheetName);
+
+    if (cols!.isEmpty) return [];
     List<String> row = [];
 
     for (var i = 0; i < cols.length; i++) {
@@ -128,8 +132,8 @@ class Sheet {
     setValue('kniha', sheet.book);
     setValue('tags', sheet.tagsStr);
     setValue('dateinsert', '${blUti.todayStr()}.');
-    setValue('ID', (maxID! + 1).toString());
-
+    print(cols);
+    print(row);
     return row;
   }
 }
