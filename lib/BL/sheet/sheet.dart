@@ -19,6 +19,7 @@ Sheet newSheet() {
 
 @Collection()
 class Sheet {
+  @Id()
   late int id;
 
   String aSheetName = '';

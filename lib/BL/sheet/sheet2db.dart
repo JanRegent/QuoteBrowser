@@ -53,7 +53,7 @@ Future sheets2db() async {
     sheetNamesToday[index] = await sheetTodayLength(sheetName);
 
     if (bl.devMode) {
-      if (index == 1) break;
+      if (index == 0) break;
     }
   }
   debugPrint('refresh done');
@@ -81,11 +81,17 @@ Future sheet2db(String sheetName, String fileId) async {
     sheets.add(sheet);
   }
 
-  await isar.write((isar) async {
-    for (Sheet sheet in sheets) {
-      isar.sheets.put(sheet);
-    }
+  // await isar.write((isar) async {
+  //   for (Sheet sheet in sheets) {
+  //     isar.sheets.put(sheet);
+  //   }
+  // });
+
+  isar.writeAsync((isar) async {
+    isar.sheets.putAll(sheets);
   });
+
+  //   await isar.writeTxn(() async => isar.sheets.putAll(sheets));
 }
 
 Future updateCell(
