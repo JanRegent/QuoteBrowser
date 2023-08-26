@@ -105,6 +105,49 @@ class Sheet {
     return sheet;
   }
 
+  Sheet fromJson(List<String> cols, List<String> row) {
+    String getValue(String colName) {
+      int index = cols.indexOf(colName);
+      if (index == -1) return '';
+
+      try {
+        String value = row[index];
+        return value;
+      } catch (_) {
+        return '';
+      }
+    }
+
+    Sheet sheet = newSheet();
+
+    sheet.quote = getValue('citat');
+    sheet.author = getValue('autor');
+    sheet.book = getValue('kniha');
+    sheet.tagsStr = getValue('tags');
+    sheet.dateinsert = getValue('dateinsert');
+
+    sheet.rowArr = row;
+
+    return sheet;
+  }
+
+  Map<String, dynamic> toJson(
+      List<String> cols, List<String> row, Sheet sheet) {
+    Map<String, dynamic> rowMap = {};
+    rowMap["sheetName"] = sheet.aSheetName;
+    rowMap["rowNo"] = sheet.aIndex;
+    if (sheet.rowType == 'colRow') {
+      rowMap["colRow"] = cols;
+      return rowMap;
+    }
+
+    for (var i = 0; i < cols.length; i++) {
+      rowMap[cols[i]] = row[i];
+    }
+    rowMap["fileId"] = sheet.zfileId;
+    return rowMap;
+  }
+
   Future<List<String>> sheet2Row(Sheet sheet) async {
     List<String>? cols = await readCols(sheet.aSheetName);
 
@@ -136,6 +179,17 @@ class Sheet {
 
     return row;
   }
+}
+
+Future<Sheet> sheetFromMap(Map<String, dynamic> map) async {
+  Sheet sheet = newSheet();
+
+  sheet.quote = map['citat'];
+  sheet.author = map['autor'];
+  sheet.book = map['kniha'];
+  sheet.tagsStr = map['tags'];
+
+  return sheet;
 }
 
 enum Status {

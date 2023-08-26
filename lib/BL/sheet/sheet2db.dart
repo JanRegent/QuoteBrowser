@@ -9,6 +9,7 @@ import '../../DL/diocrud.dart';
 
 import '../bl.dart';
 import '../bluti.dart';
+import '../locdb/sembast/sembastdao.dart';
 import 'sheetcrud.dart';
 
 RxList sheetNamesToday = [].obs;
@@ -28,7 +29,7 @@ Future sheetNamesInit() async {
 }
 
 Future sheets2db() async {
-  debugPrint('refresh start');
+  debugPrint('-------------------------------refresh start');
   isar.write((isar) {
     isar.clear();
   });
@@ -54,10 +55,13 @@ Future sheets2db() async {
     sheetNamesToday[index] = await sheetTodayLength(sheetName);
 
     if (bl.devMode) {
-      if (index == 0) break;
+      if (index == 1) break;
     }
   }
-  debugPrint('refresh done');
+  debugPrint('-------------------------------refresh done');
+
+  await searchFoodByField('dateinsert', '2023-08-23.');
+  //await searchFoodByField('quote', 'Zpokorněte ');
   loadingTitle.value = 'Refresh done devmode:${bl.devMode}';
 }
 
@@ -79,11 +83,10 @@ Future sheet2db(String sheetName, String fileId) async {
     sheet.rowType = 'dataRow';
 
     if (rowIndex == 0) sheet.rowType = 'colRow';
-    isar.writeAsync((isar) {
+    isar.write((isar) async {
       isar.sheets.put(sheet);
     });
-
-    //sheets.add(sheet);
+    await insertSheet(cols, datarow, sheet);
   }
 
   // await isar.write((isar) async {

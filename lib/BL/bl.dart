@@ -4,15 +4,22 @@ import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/params/params.dart';
 import 'package:quotebrowser/BL/sheet/sheet.dart';
+import 'package:sembast/sembast.dart';
+
+import 'locdb/sembast/opensembast.dart';
 
 // ignore: prefer_typing_uninitialized_variables
 late final Isar isar;
+late Database senbastDb;
+late StoreRef sheetStore;
+
 Bl bl = Bl();
 
 class Bl {
   bool devMode = false;
 
   Future init() async {
+    await openSembast();
     updateStartParams();
     devModeSet();
     await openIsar();
@@ -25,7 +32,8 @@ class Bl {
     } catch (_) {}
     await Isar.initialize();
     isar = Isar.open(
-      engine: kIsWeb ? IsarEngine.sqlite : IsarEngine.isar,
+      engine: IsarEngine.sqlite,
+      //kIsWeb ? IsarEngine.sqlite : IsarEngine.sqlite, //IsarEngine.isar,
       schemas: [SheetSchema, ParamsSchema],
       directory: kIsWeb ? Isar.sqliteInMemory : '../',
       inspector: true,
