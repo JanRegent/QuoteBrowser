@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'package:pluto_menu_bar/pluto_menu_bar.dart';
 
-import '../../BL/sheet/sheet.dart';
 import '../alib/alib.dart';
 
 int currentRowIndex = 0;
-Sheet currentSheet = Sheet()
-  ..quote = '[init]'
-  ..id = -1;
+Map currentSheet = {'quote': '[init]'};
 
 // ignore: must_be_immutable
 class SheetviewMenu extends StatefulWidget {
@@ -89,7 +86,7 @@ class _SheetviewMenuState extends State<SheetviewMenu> {
             onTap: () async {
               // ignore: use_build_context_synchronously
               await al.openDoc(
-                  currentSheet.zfileId, context, 'Open source sheet');
+                  currentSheet['fileId'], context, 'Open source sheet');
             },
           ),
           PlutoMenuItem(
@@ -164,7 +161,7 @@ class _SheetviewMenuState extends State<SheetviewMenu> {
               children: [
                 PlutoMenuBar(
                   mode: PlutoMenuBarMode.tap,
-                  backgroundColor: const Color.fromARGB(255, 193, 218, 230),
+                  backgroundColor: const Color.fromARGB(255, 29, 82, 107),
                   menus: whiteTapMenus,
                 ),
               ],

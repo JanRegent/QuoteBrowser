@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:highlight_text/highlight_text.dart';
 
-import '../../BL/sheet/sheet.dart';
-
 // ignore: must_be_immutable
 class SheetViewQuote extends StatefulWidget {
-  Sheet sheet;
-  SheetViewQuote(this.sheet, {super.key});
+  Map rowMap;
+  SheetViewQuote(this.rowMap, {super.key});
 
   @override
   State<SheetViewQuote> createState() => _SheetViewQuoteState();
@@ -25,7 +23,7 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
   Map<String, HighlightedWord> highlightedWord = {};
   void highlightedWordFill() {
     List<String> tagsWords =
-        widget.sheet.tagsStr.trim().split(RegExp(r'[|,.\s]'));
+        widget.rowMap['tags'].trim().split(RegExp(r'[|,.\s]'));
     highlightedWord.clear();
     if (tagsWords.length < 2) return;
     for (String word in tagsWords) {
@@ -46,10 +44,10 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
     color: Colors.red,
   );
 
-  TextHighlight quoteField(Sheet sheet) {
+  TextHighlight quoteField(Map rowMap) {
     highlightedWordFill();
     return TextHighlight(
-        text: sheet.quote,
+        text: rowMap['citat'],
         words: highlightedWord,
         matchCase: false,
         textStyle: const TextStyle(
@@ -60,14 +58,14 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
 
   //------------------------------------------------------------------card
 
-  Card card(Sheet sheet) {
+  Card card(Map rowMap) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 5),
       color: const Color.fromARGB(255, 213, 209, 192),
       child: ListView(children: [
         ListTile(
-          title: quoteField(sheet),
-          leading: Text(sheet.id.toString()),
+          title: quoteField(rowMap),
+          leading: Text(rowMap['rowNo']),
         ),
       ]),
     );
@@ -75,6 +73,6 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
 
   @override
   Widget build(BuildContext context) {
-    return card(widget.sheet);
+    return card(widget.rowMap);
   }
 }

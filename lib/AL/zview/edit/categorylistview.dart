@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:searchable_listview/searchable_listview.dart';
 
-import '../../../BL/sheet/sheet.dart';
-
 List<String> keywords = [
   'ego.triky',
   'ego.sluzebne',
@@ -12,8 +10,8 @@ List<String> keywords = [
 
 // ignore: must_be_immutable
 class CategoryListview extends StatefulWidget {
-  Sheet sheet;
-  CategoryListview(this.sheet, {super.key});
+  Map rowMap;
+  CategoryListview(this.rowMap, {super.key});
 
   @override
   State<CategoryListview> createState() => _CategoryListviewState();

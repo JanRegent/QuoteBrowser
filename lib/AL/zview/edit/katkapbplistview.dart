@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:searchable_listview/searchable_listview.dart';
 
-import '../../../BL/sheet/sheet.dart';
 import 'katkapdata.dart';
 
 // ignore: must_be_immutable
 class CategoryChapterBPListview extends StatefulWidget {
-  Sheet sheet;
-  CategoryChapterBPListview(this.sheet, {super.key});
+  Map rowMap;
+  CategoryChapterBPListview(this.rowMap, {super.key});
 
   @override
   State<CategoryChapterBPListview> createState() =>

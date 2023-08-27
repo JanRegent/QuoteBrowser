@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'sheetviewfields.dart';
 
+import 'sheetviewfields.dart';
 import 'sheetviewmenu.dart';
 import 'sheetviewquote.dart';
 
@@ -20,10 +20,6 @@ class _SheetViewPageState extends State<SheetViewPage> {
     super.initState();
   }
 
-  Future<String> getData() async {
-    return 'ok';
-  }
-
   setstate() {
     setState(() {});
   }
@@ -37,8 +33,10 @@ class _SheetViewPageState extends State<SheetViewPage> {
           title: Text(widget.title),
           bottom: TabBar(
             tabs: [
-              Tab(text: currentSheet.author),
-              const Tab(icon: Icon(Icons.text_fields_outlined)),
+              Tab(text: currentSheet['autor']),
+              const Tab(
+                text: 'Atributes',
+              ),
             ],
           ),
         ),
@@ -54,17 +52,6 @@ class _SheetViewPageState extends State<SheetViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String>(
-        future: getData(), // a previously-obtained Future<String> or null
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          if (snapshot.hasData) {
-            tabs();
-          } else if (snapshot.hasError) {
-            return tabs();
-          } else {
-            const Text('Awaiting result...');
-          }
-          return tabs();
-        });
+    return tabs();
   }
 }

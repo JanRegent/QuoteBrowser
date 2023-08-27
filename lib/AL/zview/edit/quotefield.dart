@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:translator_plus/translator_plus.dart';
 
-import '../../../BL/sheet/sheet.dart';
-
 // ignore: must_be_immutable
 class QuoteField extends StatelessWidget {
-  final Sheet sheet;
+  final Map rowMap;
   Function setstate;
-  QuoteField(this.sheet, this.setstate, {super.key});
+  QuoteField(this.rowMap, this.setstate, {super.key});
   final TextEditingController _controller = TextEditingController();
 
   void attribSet(String attribName) {
@@ -18,24 +16,24 @@ class QuoteField extends StatelessWidget {
 
     switch (attribName) {
       case 'author':
-        sheet.author = selected;
+        rowMap['author'] = selected;
         break;
       case 'book':
-        sheet.book = selected;
+        rowMap['book'] = selected;
         break;
       case 'tags':
-        sheet.tagsStr += ',$selected';
+        rowMap['tags'] += ',$selected';
         break;
       default:
         return;
     }
-    sheet.save2cloud += '$attribName, ';
+    rowMap['save2cloud'] += '$attribName, ';
     setstate();
   }
 
   @override //printSelectedText()
   Widget build(BuildContext context) {
-    _controller.text = sheet.quote;
+    _controller.text = rowMap['quote'];
     double iconSize = 30.0;
     return Column(
       children: [
@@ -58,7 +56,7 @@ class QuoteField extends StatelessWidget {
           onChanged: (value) async {
             final translator = GoogleTranslator();
             var translation = await translator.translate(value, to: 'cs');
-            sheet.quote = translation.toString();
+            rowMap['quote'] = translation.toString();
           },
         )
       ],

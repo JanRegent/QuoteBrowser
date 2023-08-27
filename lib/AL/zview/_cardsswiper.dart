@@ -77,7 +77,8 @@ class _CardSwiperState extends State<CardSwiper> {
   }
 
   ConstrainedBox body() {
-    //widget.configRow['localIds.length'] = widget.sheets.length;
+    currentRowIndex = 0;
+    currentSheet = widget.rowMaps[currentRowIndex];
     return ConstrainedBox(
         constraints: BoxConstraints.loose(Size(
             MediaQuery.of(context).size.width,

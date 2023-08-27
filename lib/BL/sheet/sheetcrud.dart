@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:isar/isar.dart';
-import 'package:quotebrowser/AL/zview/sheetviewmenu.dart';
+
 import 'package:quotebrowser/BL/sheet/sheet.dart';
 
 import '../bl.dart';
@@ -34,25 +34,27 @@ Future<int> sheetTodayLength(String sheetName) async {
 //-------------------------------------------------------------------------read
 
 Future<Sheet> readByRowIndex2(int index) async {
-  try {
-    Sheet sheet = isar.sheets.where().aIndexEqualTo(index).findFirst()!;
-    currentSheet = sheet;
-    return sheet;
-  } catch (e) {
-    debugPrint(e.toString());
-    return Sheet()..aIndex = index;
-  }
+  // try {
+  //   Sheet sheet = isar.sheets.where().aIndexEqualTo(index).findFirst()!;
+  //   currentSheet = sheet;
+  //   return sheet;
+  // } catch (e) {
+  //   debugPrint(e.toString());
+  //   return Sheet()..aIndex = index;
+  // }
+  return newSheet();
 }
 
 Future<Sheet> readByLocId(int locId) async {
-  try {
-    Sheet sheet = isar.sheets.get(locId)!;
-    currentSheet = sheet;
-    return sheet;
-  } catch (e) {
-    debugPrint('readByLocId $e');
-    return newSheet()..quote = '??';
-  }
+  // try {
+  //   Sheet sheet = isar.sheets.get(locId)!;
+  //   currentSheet = sheet;
+  //   return sheet;
+  // } catch (e) {
+  //   debugPrint('readByLocId $e');
+  //   return newSheet()..quote = '??';
+  // }
+  return newSheet()..quote = '??';
 }
 
 Future<List<String>?> readCols(String sheetName) async {
@@ -119,14 +121,15 @@ Future<List<String>> readDateinserts() async {
 }
 
 Future<Sheet> readByAuthor(String author) async {
-  try {
-    Sheet sheet = isar.sheets.where().authorContains('IconButton').findAll()[0];
-    currentSheet = sheet;
-    return sheet;
-  } catch (e) {
-    debugPrint(e.toString());
-    return newSheet();
-  }
+  // try {
+  //   Sheet sheet = isar.sheets.where().authorContains('IconButton').findAll()[0];
+  //   currentSheet = sheet;
+  //   return sheet;
+  // } catch (e) {
+  //   debugPrint(e.toString());
+  //   return newSheet();
+  // }
+  return newSheet();
 }
 
 Future<int> readMaxRowIndex(String sheetName) async {
