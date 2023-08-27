@@ -115,10 +115,10 @@ class _SidebarPageState extends State<SidebarPage> {
         onPressed: () async {
           setState(() => _headline = 'Search');
           List<Map<dynamic, dynamic>> result =
-              await searchFoodByField('dateinsert', '2023-08-23.');
+              await searchByField('dateinsert', '2023-08-23.');
           for (var i = 0; i < result.length; i++) {
-            print('-------------------------------------------$i');
-            print(result[i]);
+            // print('-------------------------------------------$i');
+            // print(result[i]);
           }
         },
         onHold: () => ScaffoldMessenger.of(context)
@@ -129,8 +129,8 @@ class _SidebarPageState extends State<SidebarPage> {
         text: 'Notifications',
         icon: Icons.notifications,
         onPressed: () async {
-          List<Map<dynamic, dynamic>> result = await searchQuote('Zpokorněte ');
-          print(result[0]);
+          // List<Map<dynamic, dynamic>> result = await searchQuote('Zpokorněte ');
+          // print(result[0]);
         },
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Notifications"))),
@@ -138,7 +138,13 @@ class _SidebarPageState extends State<SidebarPage> {
       CollapsibleItem(
         text: 'Settings',
         icon: Icons.settings,
-        onPressed: () => setState(() => _headline = 'Settings'),
+        onPressed: () async {
+          List<Map> result = await readColRows();
+          for (var i = 0; i < result.length; i++) {
+            // print('-------------------------------------------$i');
+            // print(result[i]);
+          }
+        },
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Settings"))),
       ),

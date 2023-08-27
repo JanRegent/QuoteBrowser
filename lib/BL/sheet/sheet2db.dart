@@ -34,7 +34,7 @@ Future sheets2db() async {
   //   isar.clear();
   // });
 
-  int sheetsLenStart = await sheetsLength();
+  int sheetsLenStart = await readLenght();
 
   if (sheetsLenStart > 1) {
     loadingTitle.value = 'Data UpToDate devmode:${bl.devMode}';
@@ -64,40 +64,16 @@ Future sheets2db() async {
 }
 
 Future sheet2db(String sheetName, String fileId) async {
-  // List<List<String>> rows =
-  //     await dl.gsheetsHelper.readSheetAll(sheetName, fileId);
-
   List rows = await getAllrows(sheetName, dataSheetId);
-  //List<Sheet> sheets = [];
+
   List<String> cols = blUti.toListString(rows[0]);
 
   for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
     List<String> datarow = blUti.toListString(rows[rowIndex]);
-    Sheet sheet = Sheet().sheetFromRow(cols, datarow);
 
-    sheet.aSheetName = sheetName;
-    sheet.aIndex = rowIndex + 1;
-    sheet.zfileId = fileId;
-    sheet.rowType = 'dataRow';
-
-    if (rowIndex == 0) sheet.rowType = 'colRow';
-    isar.write((isar) async {
-      isar.sheets.put(sheet);
-    });
-    await insertSheet(cols, datarow, sheet);
+    await createRowMap(
+        cols, datarow, sheetName, (rowIndex + 1).toString(), fileId);
   }
-
-  // await isar.write((isar) async {
-  //   for (Sheet sheet in sheets) {
-  //     isar.sheets.put(sheet);
-  //   }
-  // });
-
-  // isar.write((isar) async {
-  //   isar.sheets.putAll(sheets);
-  // });
-
-  //   await isar.writeTxn(() async => isar.sheets.putAll(sheets));
 }
 
 Future updateCell(
