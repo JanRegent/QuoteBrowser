@@ -26,6 +26,10 @@ Future searchByField(String fieldName, String searchItem) async {
   return maps;
 }
 
+Future searchByDateinsert(String searchItem) async {
+  return searchByField('dateinsert', searchItem);
+}
+
 Future searchQuote(String searchItem) async {
   String fieldName = 'citat';
 
@@ -73,8 +77,8 @@ Future<List<Map>> readColRows() async {
   var records = await sheetStore.find(senbastDb, finder: finder);
   List<Map> colRows = [];
 
-  for (var element in records) {
-    colRows.add(element.value as Map);
+  for (var record in records) {
+    colRows.add(record.value as Map);
   }
   return colRows;
 }

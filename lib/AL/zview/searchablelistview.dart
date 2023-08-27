@@ -9,9 +9,9 @@ import '_sheetviewpage.dart';
 List<Sheet> filteredSheets = [];
 
 class SearchableListview extends StatefulWidget {
-  final int locId;
+  final Map rowMap;
   final String title;
-  const SearchableListview(this.locId, this.title, {super.key});
+  const SearchableListview(this.rowMap, this.title, {super.key});
 
   @override
   State<SearchableListview> createState() => _SearchableListviewState();
@@ -23,7 +23,7 @@ class _SearchableListviewState extends State<SearchableListview> {
     Widget searchableList() {
       return SearchableList<Sheet>(
         initialList: filteredSheets,
-        builder: (index) => SheetViewPage(widget.locId, widget.title),
+        builder: (index) => SheetViewPage(widget.rowMap, widget.title),
         filter: (value) => filteredSheets
             .where(
               (element) => element.quote.toLowerCase().contains(value),

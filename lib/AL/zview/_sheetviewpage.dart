@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'sheetviewfields.dart';
 
-import '../../BL/sheet/sheetcrud.dart';
-
 import 'sheetviewmenu.dart';
 import 'sheetviewquote.dart';
 
 // ignore: must_be_immutable
 class SheetViewPage extends StatefulWidget {
-  int locId;
+  Map rowMap;
   final String title;
-  SheetViewPage(this.locId, this.title, {super.key});
+  SheetViewPage(this.rowMap, this.title, {super.key});
 
   @override
   State<SheetViewPage> createState() => _SheetViewPageState();
@@ -23,8 +21,6 @@ class _SheetViewPageState extends State<SheetViewPage> {
   }
 
   Future<String> getData() async {
-    readByLocId(widget.locId);
-
     return 'ok';
   }
 

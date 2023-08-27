@@ -45,7 +45,8 @@ class _Sheets2dbPageState extends State {
                   await Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SheetViewPage(12, 'xxx2')));
+                          builder: (context) =>
+                              SheetViewPage(const {}, 'xxx2')));
                 },
               ),
               trailing: Obx(() => Text(sheetNamesLength[index].toString())),

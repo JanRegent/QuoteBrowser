@@ -12,11 +12,11 @@ import 'sheetviewmenu.dart';
 // import 'd20menu.dart';
 
 class CardSwiper extends StatefulWidget {
-  final List<int> ids;
+  final List<Map> rowMaps;
   final String title;
   final Map configRow;
 
-  const CardSwiper(this.ids, this.title, this.configRow, {super.key});
+  const CardSwiper(this.rowMaps, this.title, this.configRow, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -87,9 +87,9 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://github.com/TheAnkurPanchani/card_swiper/
 
           itemBuilder: (BuildContext context, int rowIndex) {
-            return SheetViewPage(widget.ids[currentRowIndex], widget.title);
+            return SheetViewPage(widget.rowMaps[currentRowIndex], widget.title);
           },
-          itemCount: widget.ids.length,
+          itemCount: widget.rowMaps.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
           pagination:
               const SwiperPagination(builder: SwiperPagination.fraction),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../BL/bluti.dart';
+import '../../../BL/locdb/sembast/sembastdao.dart';
 import '../../../BL/sheet/sheetcrud.dart';
 import '../../zview/_cardsswiper.dart';
 import '../emptyview.dart';
@@ -29,14 +30,14 @@ Future dateinsersLast(BuildContext context) async {
 }
 
 void filterByDateInsert(String dateinsert, BuildContext context) async {
-  List<int> ids = await readDateinsert('$dateinsert.');
-  if (ids.isEmpty) return;
+  List<Map> rowMaps = await searchByField('dateinsert', '$dateinsert.');
+  if (rowMaps.isEmpty) return;
 
   // ignore: use_build_context_synchronously
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => CardSwiper(ids, dateinsert, const {})),
+        builder: (context) => CardSwiper(rowMaps, dateinsert, const {})),
   );
 }
 
