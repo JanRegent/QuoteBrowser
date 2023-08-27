@@ -4,6 +4,7 @@ import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
+import '../../BL/locdb/sembast/sembastdao.dart';
 import '../../BL/sheet/sheet.dart';
 import '../../BL/sheet/sheet2dbpage.dart';
 
@@ -111,7 +112,15 @@ class _SidebarPageState extends State<SidebarPage> {
       CollapsibleItem(
         text: 'Search',
         icon: Icons.search,
-        onPressed: () => setState(() => _headline = 'Search'),
+        onPressed: () async {
+          setState(() => _headline = 'Search');
+          List<Map<dynamic, dynamic>> result =
+              await searchFoodByField('dateinsert', '2023-08-23.');
+          for (var i = 0; i < result.length; i++) {
+            print('-------------------------------------------$i');
+            print(result[i]);
+          }
+        },
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Search"))),
       ),
@@ -119,7 +128,10 @@ class _SidebarPageState extends State<SidebarPage> {
       CollapsibleItem(
         text: 'Notifications',
         icon: Icons.notifications,
-        onPressed: () => setState(() => _headline = 'Notifications'),
+        onPressed: () async {
+          List<Map<dynamic, dynamic>> result = await searchQuote('Zpokorněte ');
+          print(result[0]);
+        },
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Notifications"))),
       ),

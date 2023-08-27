@@ -7,6 +7,7 @@ import 'package:quotebrowser/BL/sheet/sheet.dart';
 import 'package:sembast/sembast.dart';
 
 import 'locdb/sembast/opensembast.dart';
+import 'orm.dart';
 
 // ignore: prefer_typing_uninitialized_variables
 late final Isar isar;
@@ -17,6 +18,7 @@ Bl bl = Bl();
 
 class Bl {
   bool devMode = false;
+  Orm orm = Orm();
 
   Future init() async {
     await openSembast();

@@ -5,7 +5,7 @@ import '../../bl.dart';
 
 Future openSembast() async {
   // Declare our store (records are mapd, ids are ints)
-  sheetStore = intMapStoreFactory.store();
+  sheetStore = stringMapStoreFactory.store();
   var factory = databaseFactoryWeb;
 
   // Open the database

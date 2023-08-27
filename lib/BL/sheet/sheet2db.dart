@@ -30,9 +30,9 @@ Future sheetNamesInit() async {
 
 Future sheets2db() async {
   debugPrint('-------------------------------refresh start');
-  isar.write((isar) {
-    isar.clear();
-  });
+  // isar.write((isar) {
+  //   isar.clear();
+  // });
 
   int sheetsLenStart = await sheetsLength();
 
@@ -60,8 +60,6 @@ Future sheets2db() async {
   }
   debugPrint('-------------------------------refresh done');
 
-  await searchFoodByField('dateinsert', '2023-08-23.');
-  //await searchFoodByField('quote', 'Zpokorněte ');
   loadingTitle.value = 'Refresh done devmode:${bl.devMode}';
 }
 
