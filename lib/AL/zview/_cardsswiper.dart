@@ -11,12 +11,13 @@ import 'sheetviewmenu.dart';
 // import 'd1quotedetailpage.dart';
 // import 'd20menu.dart';
 
+List<Map> swiperMaps = [];
+
 class CardSwiper extends StatefulWidget {
-  final List<Map> rowMaps;
   final String title;
   final Map configRow;
 
-  const CardSwiper(this.rowMaps, this.title, this.configRow, {super.key});
+  const CardSwiper(this.title, this.configRow, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -30,6 +31,11 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<String> getData() async {
+    currentSheet = swiperMaps[currentRowIndex];
+    return 'OK';
   }
 
   //---------------------------------------------------------- int startRow
@@ -60,6 +66,7 @@ class _CardSwiperState extends State<CardSwiper> {
 
   void onIndexChanged(int rowIndex) {
     currentRowIndex = rowIndex;
+    setState(() {});
     // if (widget.configRow['__bookmarkLastRowVisitSave__'] == '') {
     //   return;
     // }
@@ -77,8 +84,6 @@ class _CardSwiperState extends State<CardSwiper> {
   }
 
   ConstrainedBox body() {
-    currentRowIndex = 0;
-    currentSheet = widget.rowMaps[currentRowIndex];
     return ConstrainedBox(
         constraints: BoxConstraints.loose(Size(
             MediaQuery.of(context).size.width,
@@ -88,9 +93,9 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://github.com/TheAnkurPanchani/card_swiper/
 
           itemBuilder: (BuildContext context, int rowIndex) {
-            return SheetViewPage(widget.rowMaps[currentRowIndex], widget.title);
+            return SheetViewPage(swiperMaps[currentRowIndex], widget.title);
           },
-          itemCount: widget.rowMaps.length,
+          itemCount: swiperMaps.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
           pagination:
               const SwiperPagination(builder: SwiperPagination.fraction),
@@ -106,6 +111,20 @@ class _CardSwiperState extends State<CardSwiper> {
         appBar: AppBar(
           title: SheetviewMenu(const {}, const {}, swiperSetstate),
         ),
-        body: body());
+        body: FutureBuilder<String>(
+          future: getData(), // a previously-obtained Future<String> or null
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.hasData) {
+              if (currentSheet.isEmpty) {
+                return Text('${swiperMaps[currentRowIndex]} is empty');
+              } else {
+                return body();
+              }
+            }
+            return const Center(
+              child: Text('Data loading'),
+            );
+          },
+        ));
   }
 }

@@ -4,14 +4,15 @@ import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../BL/sheet/sheet.dart';
 import '../filters/emptyview.dart';
+import '_cardsswiper.dart';
 import '_sheetviewpage.dart';
 
 List<Sheet> filteredSheets = [];
 
 class SearchableListview extends StatefulWidget {
-  final Map rowMap;
+  final String sheetRowKey;
   final String title;
-  const SearchableListview(this.rowMap, this.title, {super.key});
+  const SearchableListview(this.sheetRowKey, this.title, {super.key});
 
   @override
   State<SearchableListview> createState() => _SearchableListviewState();
@@ -23,7 +24,7 @@ class _SearchableListviewState extends State<SearchableListview> {
     Widget searchableList() {
       return SearchableList<Sheet>(
         initialList: filteredSheets,
-        builder: (index) => SheetViewPage(widget.rowMap, widget.title),
+        builder: (index) => SheetViewPage(swiperMaps[0], widget.title),
         filter: (value) => filteredSheets
             .where(
               (element) => element.quote.toLowerCase().contains(value),

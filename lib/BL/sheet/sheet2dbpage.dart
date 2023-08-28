@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../AL/zview/_cardsswiper.dart';
 import '../../AL/zview/_sheetviewpage.dart';
 
 import '../locdbsembast/rows2db.dart';
@@ -45,7 +46,7 @@ class _Sheets2dbPageState extends State {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              SheetViewPage(const {}, 'xxx2')));
+                              SheetViewPage(swiperMaps[0], 'xxx2')));
                 },
               ),
               trailing: Obx(() => Text(sheetNamesLength[index].toString())),

@@ -16,7 +16,8 @@ class CRUDsembast {
   }
 
   //------------------------------------------------------------------search
-  Future searchByField(String fieldName, String searchItem) async {
+  Future<List<String>> searchByField(
+      String fieldName, String searchItem) async {
 // Using a regular expression matching the exact word (no case)
     Filter filterRegex = Filter.matchesRegExp(
         fieldName, RegExp('^$searchItem\$', caseSensitive: false));
@@ -31,13 +32,38 @@ class CRUDsembast {
       senbastDb,
       finder: finder,
     );
-    List<Map> maps = [];
+    List<String> keys = [];
 
     for (var snap in recordSnapshots) {
-      maps.add(snap.value as Map);
+      keys.add('${snap['sheetName']},${snap['rowNo']} ');
     }
 
-    return maps;
+    return keys;
+  }
+
+  Future<List<Map>> searchByFieldMaps(
+      String fieldName, String searchItem) async {
+// Using a regular expression matching the exact word (no case)
+    Filter filterRegex = Filter.matchesRegExp(
+        fieldName, RegExp('^$searchItem\$', caseSensitive: false));
+
+    // Using a custom filter exact word (converting everything to lowercase)
+    searchItem = searchItem.toLowerCase();
+
+    Finder finder =
+        Finder(filter: filterRegex, sortOrders: [SortOrder('dateinsert')]);
+
+    final recordSnapshots = await sheetStore.find(
+      senbastDb,
+      finder: finder,
+    );
+    List<Map> keys = [];
+
+    for (var snap in recordSnapshots) {
+      keys.add(snap.value as Map);
+    }
+
+    return keys;
   }
 
   Future searchByDateinsert(String searchItem) async {
@@ -66,6 +92,14 @@ class CRUDsembast {
     }
 
     return maps;
+  }
+
+  //----------------------------------------------------------------readByKey
+  Future<Map> readBySheetRowKey(String sheetRowKey) async {
+    final snapshot =
+        await sheetStore.record(sheetRowKey).getSnapshot(senbastDb);
+    if (snapshot == null) return {};
+    return snapshot.value as Map;
   }
 
   //----------------------------------------------------------------readLen

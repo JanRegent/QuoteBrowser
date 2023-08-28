@@ -112,7 +112,7 @@ class _SidebarPageState extends State<SidebarPage> {
         icon: Icons.search,
         onPressed: () async {
           setState(() => _headline = 'Search');
-          List<Map<dynamic, dynamic>> result =
+          List<String> result =
               await bl.crud.searchByField('dateinsert', '2023-08-23.');
           for (var i = 0; i < result.length; i++) {
             // print('-------------------------------------------$i');

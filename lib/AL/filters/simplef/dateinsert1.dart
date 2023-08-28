@@ -31,14 +31,13 @@ Future dateinsersLast(BuildContext context) async {
 }
 
 void filterByDateInsert(String dateinsert, BuildContext context) async {
-  List<Map> rowMaps = await bl.crud.searchByField('dateinsert', '$dateinsert.');
-  if (rowMaps.isEmpty) return;
+  swiperMaps = await bl.crud.searchByFieldMaps('dateinsert', '$dateinsert.');
+  if (swiperMaps.isEmpty) return;
 
   // ignore: use_build_context_synchronously
   Navigator.push(
     context,
-    MaterialPageRoute(
-        builder: (context) => CardSwiper(rowMaps, dateinsert, const {})),
+    MaterialPageRoute(builder: (context) => CardSwiper(dateinsert, const {})),
   );
 }
 
