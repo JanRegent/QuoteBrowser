@@ -6,7 +6,7 @@ import 'package:quotebrowser/BL/sheet/sheet2db.dart';
 
 import '../../../BL/sheet/sheetcrud.dart';
 
-import '../../../DL/diocrud.dart';
+import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 import '../../alib/selectiondialogs/selectone.dart';
 import 'categorylistview.dart';
@@ -173,7 +173,7 @@ class _AttrEditState extends State<AttrEdit> {
 
     List<String> row = blUti.toListString(widget.rowMap.values.toList());
     if (row.isEmpty) return;
-    int? respStatus = await postAppendRow(
+    int? respStatus = await dl.httpService.postAppendRow(
         widget.rowMap['sheetName'], widget.rowMap['fileId'], row);
     debugPrint('respStatus post $respStatus');
     //update(widget.sheet);

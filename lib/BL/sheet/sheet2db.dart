@@ -5,8 +5,7 @@ import 'package:quotebrowser/BL/params/params.dart';
 
 import 'package:quotebrowser/BL/sheet/sheet.dart';
 
-import '../../DL/diocrud.dart';
-
+import '../../DL/dl.dart';
 import '../bl.dart';
 import '../bluti.dart';
 import '../locdb/sembast/sembastdao.dart';
@@ -20,7 +19,7 @@ String fileId = dataSheetId;
 
 Future sheetNamesInit() async {
   sheetNames = [];
-  sheetNames = await getDataSheets(dataSheetId);
+  sheetNames = await dl.httpService.getDataSheets(dataSheetId);
   for (var i = 0; i < sheetNames.length; i++) {
     sheetNamesToday.add(0);
     sheetNamesLength.add(0);
@@ -64,7 +63,7 @@ Future sheets2db() async {
 }
 
 Future sheet2db(String sheetName, String fileId) async {
-  List rows = await getAllrows(sheetName, dataSheetId);
+  List rows = await dl.httpService.getAllrows(sheetName, dataSheetId);
 
   List<String> cols = blUti.toListString(rows[0]);
 
