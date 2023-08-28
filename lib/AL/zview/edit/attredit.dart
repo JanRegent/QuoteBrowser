@@ -4,6 +4,7 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import 'package:quotebrowser/BL/sheet/sheet2db.dart';
 
+import '../../../BL/bl.dart';
 import '../../../BL/sheet/sheetcrud.dart';
 
 import '../../../DL/dl.dart';
@@ -49,7 +50,7 @@ class _AttrEditState extends State<AttrEdit> {
           ListTile(
             tileColor: Colors.white,
             leading: ALicons.attrIcons.authorIcon,
-            title: Text(widget.rowMap['author']),
+            title: Text(widget.rowMap[bl.fields['author']]),
             trailing: InkWell(
               child: Text(widget.rowMap['sheetName']),
               onTap: () async {
@@ -64,7 +65,7 @@ class _AttrEditState extends State<AttrEdit> {
           ListTile(
             tileColor: Colors.white,
             leading: ALicons.attrIcons.bookIcon,
-            title: Text(widget.rowMap['book']),
+            title: Text(widget.rowMap[bl.fields['book']]),
           ),
           ListTile(
             tileColor: Colors.lime,

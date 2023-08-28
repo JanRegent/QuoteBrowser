@@ -19,6 +19,7 @@ Bl bl = Bl();
 
 class Bl {
   bool devMode = false;
+  Map fields = {'author': 'autor', 'book': 'kniha'};
   Orm orm = Orm();
   CRUDsembast crud = CRUDsembast();
 

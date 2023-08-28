@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../BL/bl.dart';
 import 'sheetviewfields.dart';
 import 'sheetviewmenu.dart';
 import 'sheetviewquote.dart';
@@ -33,7 +34,7 @@ class _SheetViewPageState extends State<SheetViewPage> {
           title: Text(widget.title),
           bottom: TabBar(
             tabs: [
-              Tab(text: currentSheet['autor']),
+              Tab(text: currentSheet[bl.fields['author']]),
               const Tab(
                 text: 'Atributes',
               ),

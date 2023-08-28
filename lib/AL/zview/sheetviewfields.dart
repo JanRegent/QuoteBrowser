@@ -4,6 +4,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:expandable/expandable.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../BL/bl.dart';
 import '../alib/alicons.dart';
 import 'edit/attredit.dart';
 
@@ -32,7 +33,7 @@ class _SheetViewFieldsState extends State<SheetViewFields> {
       ListTile(
           tileColor: Colors.white,
           leading: ALicons.attrIcons.authorIcon,
-          title: Text(widget.rowMap['autor']),
+          title: Text(widget.rowMap[bl.fields['author']]),
           trailing: IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () async {
@@ -45,11 +46,11 @@ class _SheetViewFieldsState extends State<SheetViewFields> {
             },
           ))
     ];
-    if (widget.rowMap['kniha'].isNotEmpty) {
+    if (widget.rowMap[bl.fields['book']].isNotEmpty) {
       expandedCard.add(ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.bookIcon,
-        title: Text(widget.rowMap['kniha']),
+        title: Text(widget.rowMap[bl.fields['book']]),
       ));
     }
     if (widget.rowMap['tags'].isNotEmpty) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:translator_plus/translator_plus.dart';
 
+import '../../../BL/bl.dart';
+
 // ignore: must_be_immutable
 class QuoteField extends StatelessWidget {
   final Map rowMap;
@@ -16,10 +18,10 @@ class QuoteField extends StatelessWidget {
 
     switch (attribName) {
       case 'author':
-        rowMap['author'] = selected;
+        rowMap[bl.fields['author']] = selected;
         break;
       case 'book':
-        rowMap['book'] = selected;
+        rowMap[bl.fields['book']] = selected;
         break;
       case 'tags':
         rowMap['tags'] += ',$selected';
