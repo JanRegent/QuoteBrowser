@@ -6,7 +6,8 @@ import 'package:quotebrowser/BL/params/params.dart';
 import 'package:quotebrowser/BL/sheet/sheet.dart';
 import 'package:sembast/sembast.dart';
 
-import 'locdb/sembast/opensembast.dart';
+import 'locdbsembast/crudsembast.dart';
+import 'locdbsembast/opensembast.dart';
 import 'orm.dart';
 
 // ignore: prefer_typing_uninitialized_variables
@@ -19,6 +20,7 @@ Bl bl = Bl();
 class Bl {
   bool devMode = false;
   Orm orm = Orm();
+  CRUDsembast crud = CRUDsembast();
 
   Future init() async {
     await openSembast();

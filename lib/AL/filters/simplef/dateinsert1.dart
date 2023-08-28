@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:searchable_listview/searchable_listview.dart';
 
+import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
-import '../../../BL/locdb/sembast/sembastdao.dart';
+
 import '../../../BL/sheet/sheetcrud.dart';
 import '../../zview/_cardsswiper.dart';
 import '../emptyview.dart';
@@ -30,7 +31,7 @@ Future dateinsersLast(BuildContext context) async {
 }
 
 void filterByDateInsert(String dateinsert, BuildContext context) async {
-  List<Map> rowMaps = await searchByField('dateinsert', '$dateinsert.');
+  List<Map> rowMaps = await bl.crud.searchByField('dateinsert', '$dateinsert.');
   if (rowMaps.isEmpty) return;
 
   // ignore: use_build_context_synchronously

@@ -4,7 +4,7 @@ import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
-import '../../BL/locdb/sembast/sembastdao.dart';
+import '../../BL/bl.dart';
 
 import '../../BL/sheet/sheet2dbpage.dart';
 
@@ -113,7 +113,7 @@ class _SidebarPageState extends State<SidebarPage> {
         onPressed: () async {
           setState(() => _headline = 'Search');
           List<Map<dynamic, dynamic>> result =
-              await searchByField('dateinsert', '2023-08-23.');
+              await bl.crud.searchByField('dateinsert', '2023-08-23.');
           for (var i = 0; i < result.length; i++) {
             // print('-------------------------------------------$i');
             // print(result[i]);
@@ -137,7 +137,7 @@ class _SidebarPageState extends State<SidebarPage> {
         text: 'Settings',
         icon: Icons.settings,
         onPressed: () async {
-          List<Map> result = await readColRows();
+          List<Map> result = await bl.crud.readColRows();
           for (var i = 0; i < result.length; i++) {
             // print('-------------------------------------------$i');
             // print(result[i]);

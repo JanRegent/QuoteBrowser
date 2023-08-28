@@ -8,7 +8,7 @@ import 'package:quotebrowser/BL/sheet/sheet.dart';
 import '../../DL/dl.dart';
 import '../bl.dart';
 import '../bluti.dart';
-import '../locdb/sembast/sembastdao.dart';
+
 import 'sheetcrud.dart';
 
 RxList sheetNamesToday = [].obs;
@@ -33,7 +33,7 @@ Future sheets2db() async {
   //   isar.clear();
   // });
 
-  int sheetsLenStart = await readLenght();
+  int sheetsLenStart = await bl.crud.readLenght();
 
   if (sheetsLenStart > 1) {
     loadingTitle.value = 'Data UpToDate devmode:${bl.devMode}';
@@ -70,7 +70,7 @@ Future sheet2db(String sheetName, String fileId) async {
   for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
     List<String> datarow = blUti.toListString(rows[rowIndex]);
 
-    await createRowMap(
+    await bl.crud.createRowMap(
         cols, datarow, sheetName, (rowIndex + 1).toString(), fileId);
   }
 }
