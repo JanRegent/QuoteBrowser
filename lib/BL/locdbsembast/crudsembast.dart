@@ -32,13 +32,11 @@ class CRUDsembast {
   }
 
   Future searchQuote(String searchItem) async {
-    String fieldName = 'citat';
-
     // Using a custom filter exact word (converting everything to lowercase)
     searchItem = searchItem.toLowerCase();
 
     Filter filter = Filter.custom((snapshot) {
-      var value = snapshot[fieldName] as String;
+      var value = snapshot[bl.fields['quote']] as String;
       return value.toLowerCase().contains(searchItem);
     });
     Finder finder =

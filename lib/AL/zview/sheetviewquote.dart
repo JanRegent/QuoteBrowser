@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:highlight_text/highlight_text.dart';
 
+import '../../BL/bl.dart';
+
 // ignore: must_be_immutable
 class SheetViewQuote extends StatefulWidget {
   Map rowMap;
@@ -47,7 +49,7 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
   TextHighlight quoteField(Map rowMap) {
     highlightedWordFill();
     return TextHighlight(
-        text: rowMap['citat'],
+        text: rowMap[bl.fields['quote']],
         words: highlightedWord,
         matchCase: false,
         textStyle: const TextStyle(

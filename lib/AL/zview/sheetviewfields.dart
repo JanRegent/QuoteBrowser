@@ -23,7 +23,7 @@ class _SheetViewFieldsState extends State<SheetViewFields> {
     super.initState();
 
     expandedCard = expandedWidgets1();
-    expandedWidgets2urls(widget.rowMap['citat']);
+    expandedWidgets2urls(widget.rowMap[bl.fields['quote']]);
   }
 
   //------------------------------------------------------------------expand
