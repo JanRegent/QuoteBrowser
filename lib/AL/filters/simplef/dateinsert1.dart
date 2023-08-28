@@ -5,13 +5,13 @@ import 'package:searchable_listview/searchable_listview.dart';
 import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
 
-import '../../../BL/sheet/sheetcrud.dart';
 import '../../zview/_cardsswiper.dart';
 import '../emptyview.dart';
 import '../sheetnames.dart';
 
 Future dateinsersDo(BuildContext context) async {
-  List<String> dateinserts = await readDateinserts();
+  List<String> dateinserts = [];
+  // await readDateinserts();
 
   // ignore: use_build_context_synchronously
   Navigator.push(

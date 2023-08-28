@@ -1,25 +1,8 @@
-import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/bluti.dart';
-import 'package:quotebrowser/BL/params/params.dart';
-
-import '../bl.dart';
-import 'sheetcrud.dart';
-
-part 'sheet.g.dart';
 
 // dart run build_runner build
 
-Sheet newSheet() {
-  Sheet sheet = Sheet()
-    ..id = isar.sheets.autoIncrement()
-    ..zfileId = dataSheetId;
-
-  return sheet;
-}
-
-@Collection()
 class Sheet {
-  @Id()
   late int id;
 
   String aSheetName = '';
@@ -35,19 +18,17 @@ class Sheet {
   String category = '';
   String categoryChapterPB = '';
 
-  @Ignore()
   String sourceUrl = '';
 
   String dateinsert = '';
 
-  @Index(unique: true)
   String tagsStr = '';
 
   String rowType = 'row';
   List<String> rowArr = [];
 
   String zfileId = '';
-  @ignore
+
   String save2cloud = '';
 
   String toStrings() {
@@ -92,7 +73,7 @@ class Sheet {
       }
     }
 
-    Sheet sheet = newSheet();
+    Sheet sheet = Sheet();
 
     sheet.quote = getValue('citat');
     sheet.author = getValue('autor');
@@ -118,7 +99,7 @@ class Sheet {
       }
     }
 
-    Sheet sheet = newSheet();
+    Sheet sheet = Sheet();
 
     sheet.quote = getValue('citat');
     sheet.author = getValue('autor');
@@ -149,9 +130,9 @@ class Sheet {
   }
 
   Future<List<String>> sheet2Row(Sheet sheet) async {
-    List<String>? cols = await readCols(sheet.aSheetName);
+    List<String>? cols = []; // await readCols(sheet.aSheetName);
 
-    if (cols!.isEmpty) return [];
+    if (cols.isEmpty) return [];
     List<String> row = [];
 
     for (var i = 0; i < cols.length; i++) {
@@ -182,7 +163,7 @@ class Sheet {
 }
 
 Future<Sheet> sheetFromMap(Map<String, dynamic> map) async {
-  Sheet sheet = newSheet();
+  Sheet sheet = Sheet();
 
   sheet.quote = map['citat'];
   sheet.author = map['autor'];

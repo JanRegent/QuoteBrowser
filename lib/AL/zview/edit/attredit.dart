@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:quotebrowser/BL/bluti.dart';
 
-import 'package:quotebrowser/BL/sheet/sheet2db.dart';
+import 'package:quotebrowser/BL/locdbsembast/rows2db.dart';
 
 import '../../../BL/bl.dart';
-import '../../../BL/sheet/sheetcrud.dart';
 
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
@@ -190,7 +189,7 @@ class _AttrEditState extends State<AttrEdit> {
             IconButton(
                 icon: const Icon(Icons.print),
                 onPressed: () async {
-                  await readByAuthor('l');
+                  //await readByAuthor('l');
                 }),
             IconButton(
                 icon: const Icon(Icons.newspaper),

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/BL/sheet/sheetcrud.dart';
 
 import '../../AL/zview/_sheetviewpage.dart';
 
-import 'sheet2db.dart';
+import '../locdbsembast/rows2db.dart';
 
 class Sheets2dbPage extends StatefulWidget {
   const Sheets2dbPage({super.key});
@@ -61,8 +60,6 @@ class _Sheets2dbPageState extends State {
     return IconButton(
       icon: const Icon(Icons.refresh),
       onPressed: () async {
-        clearSheets();
-
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const Sheets2dbPage()),

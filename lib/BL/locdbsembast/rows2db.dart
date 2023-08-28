@@ -1,15 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:isar/isar.dart';
-import 'package:quotebrowser/BL/params/params.dart';
 
-import 'package:quotebrowser/BL/sheet/sheet.dart';
+import 'package:quotebrowser/BL/params/params.dart';
 
 import '../../DL/dl.dart';
 import '../bl.dart';
 import '../bluti.dart';
-
-import 'sheetcrud.dart';
 
 RxList sheetNamesToday = [].obs;
 RxList sheetNamesLength = [].obs;
@@ -49,12 +45,12 @@ Future sheets2db() async {
 
     await sheet2db(sheetName, fileId);
 
-    sheetNamesLength[index] = await sheetLength(sheetName);
+    sheetNamesLength[index] = await bl.crud.readLenSheet(sheetName);
 
-    sheetNamesToday[index] = await sheetTodayLength(sheetName);
+    sheetNamesToday[index] = await bl.crud.readLenToday(sheetName);
 
     if (bl.devMode) {
-      if (index == 1) break;
+      //if (index == 1) break;
     }
   }
   debugPrint('-------------------------------refresh done');
@@ -76,19 +72,10 @@ Future sheet2db(String sheetName, String fileId) async {
 }
 
 Future updateCell(
-    Sheet sheet, List<String> cols, String columnName, String newValue) async {
-  if (sheet.aIndex < 2) return;
+    Map rowMap, List<String> cols, String columnName, String newValue) async {
+  if (int.tryParse(rowMap['rowNo'])! < 2) return;
   int colIx = cols.indexOf(columnName) + 1;
   if (colIx < 1) return;
   // await dl.gsheetsHelper.updateCell(
   //     newValue, sheet.aSheetName, sheet.zfileId, sheet.aIndex, colIx);
-}
-
-Future printSheet(String sheetName) async {
-  debugPrint('---------------------------------------printSheet($sheetName)');
-  List<Sheet> sheets =
-      isar.sheets.where().aSheetNameEqualTo(sheetName).findAll();
-  for (var i = 0; i < sheets.length; i++) {
-    debugPrint(sheets[i].toStrings());
-  }
 }

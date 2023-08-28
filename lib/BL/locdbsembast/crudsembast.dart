@@ -1,8 +1,21 @@
 import 'package:sembast/sembast.dart';
 
 import '../bl.dart';
+import '../bluti.dart';
 
 class CRUDsembast {
+  //https://hrishi445.medium.com/persist-data-with-sembast-nosql-database-in-flutter-2b6c5110170f
+  Future createRowMap(List<String> cols, List<String> row, String sheetName,
+      String rowNo, String fileId) async {
+    await senbastDb.transaction((txn) async {
+      // You can specify a key
+      await sheetStore
+          .record('$sheetName,$rowNo')
+          .put(txn, bl.orm.row2map(cols, row, sheetName, rowNo, fileId));
+    });
+  }
+
+  //------------------------------------------------------------------search
   Future searchByField(String fieldName, String searchItem) async {
 // Using a regular expression matching the exact word (no case)
     Filter filterRegex = Filter.matchesRegExp(
@@ -55,21 +68,29 @@ class CRUDsembast {
     return maps;
   }
 
-//https://hrishi445.medium.com/persist-data-with-sembast-nosql-database-in-flutter-2b6c5110170f
-  Future createRowMap(List<String> cols, List<String> row, String sheetName,
-      String rowNo, String fileId) async {
-    await senbastDb.transaction((txn) async {
-      // You can specify a key
-      await sheetStore
-          .record('$sheetName,$rowNo')
-          .put(txn, bl.orm.row2map(cols, row, sheetName, rowNo, fileId));
-    });
-  }
-
+  //----------------------------------------------------------------readLen
   Future readLenght() async {
     return sheetStore.count(senbastDb);
   }
 
+  Future<int> readLenSheet(String sheetName) async {
+    var finder = Finder(
+      filter: Filter.equals('sheetName', sheetName),
+    );
+    var records = await sheetStore.find(senbastDb, finder: finder);
+    return records.length;
+  }
+
+  Future<int> readLenToday(String sheetName) async {
+    var finder = Finder(
+      filter: Filter.equals('sheetName', sheetName) &
+          Filter.equals('dateinsert', '${blUti.todayStr()}.'),
+    );
+    var records = await sheetStore.find(senbastDb, finder: finder);
+    return records.length;
+  }
+
+  //----------------------------------------------------------------readCols
   Future<List<Map>> readColRows() async {
     var finder = Finder(
       filter: Filter.equals('rowNo', '1'),
