@@ -4,5 +4,7 @@ Dl dl = Dl();
 
 class Dl {
   HttpService httpService = HttpService();
-  Future init() async {}
+  Future init() async {
+    httpService.updateStartParams();
+  }
 }

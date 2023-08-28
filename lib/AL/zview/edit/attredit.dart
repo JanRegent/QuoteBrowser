@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:quotebrowser/BL/bluti.dart';
-
 import 'package:quotebrowser/BL/locdbsembast/rows2db.dart';
+import 'package:quotebrowser/BL/params/params.dart';
 
 import '../../../BL/bl.dart';
 
@@ -49,7 +48,7 @@ class _AttrEditState extends State<AttrEdit> {
           ListTile(
             tileColor: Colors.white,
             leading: ALicons.attrIcons.authorIcon,
-            title: Text(widget.rowMap[bl.fields['author']]),
+            title: Text(widget.rowMap[bl.orm.fields['author']]),
             trailing: InkWell(
               child: Text(widget.rowMap['sheetName']),
               onTap: () async {
@@ -57,6 +56,7 @@ class _AttrEditState extends State<AttrEdit> {
                 if (sheetName.isEmpty) return;
                 setState(() {
                   widget.rowMap['sheetName'] = sheetName;
+                  widget.rowMap['fileId'] = dataSheetId;
                 });
               },
             ),
@@ -64,7 +64,7 @@ class _AttrEditState extends State<AttrEdit> {
           ListTile(
             tileColor: Colors.white,
             leading: ALicons.attrIcons.bookIcon,
-            title: Text(widget.rowMap[bl.fields['book']]),
+            title: Text(widget.rowMap[bl.orm.fields['book']]),
           ),
           ListTile(
             tileColor: Colors.lime,
@@ -162,17 +162,11 @@ class _AttrEditState extends State<AttrEdit> {
       emptyDialog('Sheetname');
       return;
     }
-    if (widget.rowMap['fileId'].isEmpty) {
-      emptyDialog('sheetId');
-      return;
-    }
-    if (widget.rowMap['sheetName'] == '[???]') {
-      emptyDialog('Sheetname');
-      return;
-    }
 
-    List<String> row = blUti.toListString(widget.rowMap.values.toList());
+    List<String> row = await bl.orm.map2row(widget.rowMap);
+
     if (row.isEmpty) return;
+
     int? respStatus = await dl.httpService.postAppendRow(
         widget.rowMap['sheetName'], widget.rowMap['fileId'], row);
     debugPrint('respStatus post $respStatus');
@@ -181,7 +175,6 @@ class _AttrEditState extends State<AttrEdit> {
 
   @override
   Widget build(BuildContext context) {
-    bool? save2cloud = widget.rowMap['save2cloud'].isBlank;
     return Scaffold(
         appBar: AppBar(
           title: const Text('Attributes edit'),
@@ -191,19 +184,18 @@ class _AttrEditState extends State<AttrEdit> {
                 onPressed: () async {
                   //await readByAuthor('l');
                 }),
+            // IconButton(
+            //     icon: const Icon(Icons.newspaper),
+            //     onPressed: () {
+            //       widget.rowMap = {};
+            //       setState(() {});
+            //     }),
+
             IconButton(
-                icon: const Icon(Icons.newspaper),
-                onPressed: () {
-                  widget.rowMap = {};
-                  setState(() {});
-                }),
-            save2cloud!
-                ? const Text(' ')
-                : IconButton(
-                    icon: const Icon(Icons.save),
-                    onPressed: () async {
-                      await saveQuote();
-                    })
+                icon: const Icon(Icons.save),
+                onPressed: () async {
+                  await saveQuote();
+                })
           ],
         ),
         body: card(widget.rowMap, context));

@@ -18,24 +18,27 @@ class QuoteField extends StatelessWidget {
 
     switch (attribName) {
       case 'author':
-        rowMap[bl.fields['author']] = selected;
+        rowMap[bl.orm.fieldLocal('author')] = selected;
+
         break;
       case 'book':
-        rowMap[bl.fields['book']] = selected;
+        rowMap[bl.orm.fieldLocal('book')] = selected;
         break;
       case 'tags':
-        rowMap['tags'] += ',$selected';
+        rowMap[bl.orm.fieldLocal('tags')] += ',$selected';
         break;
       default:
         return;
     }
-    rowMap['save2cloud'] += '$attribName, ';
+    if (rowMap['save2cloud'] == null) rowMap['save2cloud'] = false;
+    rowMap['save2cloud'] = true;
     setstate();
   }
 
   @override //printSelectedText()
   Widget build(BuildContext context) {
-    _controller.text = rowMap['quote'];
+    _controller.text = rowMap[bl.orm.fields['quote']];
+
     double iconSize = 30.0;
     return Column(
       children: [

@@ -32,8 +32,10 @@ Future dateinsersLast(BuildContext context) async {
 
 void filterByDateInsert(String dateinsert, BuildContext context) async {
   swiperMaps = await bl.crud.searchByFieldMaps('dateinsert', '$dateinsert.');
-  if (swiperMaps.isEmpty) return;
-
+  // List<int> keysInt =
+  //     await bl.crud.searchByFieldKeysInt('dateinsert', '$dateinsert.');
+  // if (swiperMaps.isEmpty) return;
+  // print(keysInt);
   // ignore: use_build_context_synchronously
   Navigator.push(
     context,

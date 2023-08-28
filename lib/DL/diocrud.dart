@@ -5,6 +5,11 @@ import '../BL/params/params.dart';
 
 class HttpService {
   final dio = Dio();
+  String backendId =
+      'AKfycbyuWdT9n868lQIAEnthbcETDF-cO5om5B7SiD1R9b-iNrG5tf-6qWZfEgkQXT4YDQgN';
+  void updateStartParams() async {
+    backendUrl = 'https://script.google.com/macros/s/$backendId/exec';
+  }
 
   Future<List> getAllrows(String sheetName, String sheetId) async {
     // The below request is the same as above.
@@ -32,6 +37,9 @@ class HttpService {
 
   Future<int?> postAppendRow(
       String sheetName, String sheetId, List<String> row) async {
+    print('$sheetName $sheetId');
+    print(row);
+    print(backendUrl);
     Response response = await dio.post(backendUrl, data: {
       'action': 'appendRow',
       'sheetName': sheetName,

@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'package:quotebrowser/BL/params/params.dart';
-
 import 'package:sembast/sembast.dart';
 
 import 'locdbsembast/crudsembast.dart';
@@ -17,13 +15,12 @@ Bl bl = Bl();
 
 class Bl {
   bool devMode = false;
-  Map fields = {'quote': 'citat', 'author': 'autor', 'book': 'kniha'};
+
   Orm orm = Orm();
   CRUDsembast crud = CRUDsembast();
 
   Future init() async {
     await openSembast();
-    updateStartParams();
     devModeSet();
   }
 

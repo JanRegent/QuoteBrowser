@@ -34,7 +34,7 @@ class _SheetViewPageState extends State<SheetViewPage> {
           title: Text(widget.title),
           bottom: TabBar(
             tabs: [
-              Tab(text: currentSheet[bl.fields['author']]),
+              Tab(text: currentSheet[bl.orm.fields['author']]),
               const Tab(
                 text: 'Atributes',
               ),

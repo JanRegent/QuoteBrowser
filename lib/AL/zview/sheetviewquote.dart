@@ -49,7 +49,7 @@ class _SheetViewQuoteState extends State<SheetViewQuote> {
   TextHighlight quoteField(Map rowMap) {
     highlightedWordFill();
     return TextHighlight(
-        text: rowMap[bl.fields['quote']],
+        text: rowMap[bl.orm.fields['quote']],
         words: highlightedWord,
         matchCase: false,
         textStyle: const TextStyle(

@@ -23,7 +23,7 @@ class _SheetViewFieldsState extends State<SheetViewFields> {
     super.initState();
 
     expandedCard = expandedWidgets1();
-    expandedWidgets2urls(widget.rowMap[bl.fields['quote']]);
+    expandedWidgets2urls(widget.rowMap[bl.orm.fields['quote']]);
   }
 
   //------------------------------------------------------------------expand
@@ -33,7 +33,7 @@ class _SheetViewFieldsState extends State<SheetViewFields> {
       ListTile(
           tileColor: Colors.white,
           leading: ALicons.attrIcons.authorIcon,
-          title: Text(widget.rowMap[bl.fields['author']]),
+          title: Text(widget.rowMap[bl.orm.fields['author']]),
           trailing: IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () async {
@@ -46,11 +46,11 @@ class _SheetViewFieldsState extends State<SheetViewFields> {
             },
           ))
     ];
-    if (widget.rowMap[bl.fields['book']].isNotEmpty) {
+    if (widget.rowMap[bl.orm.fields['book']].isNotEmpty) {
       expandedCard.add(ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.bookIcon,
-        title: Text(widget.rowMap[bl.fields['book']]),
+        title: Text(widget.rowMap[bl.orm.fields['book']]),
       ));
     }
     if (widget.rowMap['tags'].isNotEmpty) {

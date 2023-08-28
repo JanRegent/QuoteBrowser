@@ -16,9 +16,9 @@ class CRUDsembast {
   }
 
   //------------------------------------------------------------------search
-  Future<List<String>> searchByField(
+  Future<List<String>> searchByFieldSheetRowKeys(
       String fieldName, String searchItem) async {
-// Using a regular expression matching the exact word (no case)
+    // Using a regular expression matching the exact word (no case)
     Filter filterRegex = Filter.matchesRegExp(
         fieldName, RegExp('^$searchItem\$', caseSensitive: false));
 
@@ -39,6 +39,31 @@ class CRUDsembast {
     }
 
     return keys;
+  }
+
+  Future<List<String>> searchByFieldKeysInt(
+      String fieldName, String searchItem) async {
+    // Using a regular expression matching the exact word (no case)
+    Filter filterRegex = Filter.matchesRegExp(
+        fieldName, RegExp('^$searchItem\$', caseSensitive: false));
+
+    // Using a custom filter exact word (converting everything to lowercase)
+    searchItem = searchItem.toLowerCase();
+
+    Finder finder =
+        Finder(filter: filterRegex, sortOrders: [SortOrder('dateinsert')]);
+
+    final recordSnapshots = await sheetStore.find(
+      senbastDb,
+      finder: finder,
+    );
+    List<String> keysInt = [];
+
+    for (var snap in recordSnapshots) {
+      keysInt.add(snap.key.toString());
+    }
+
+    return keysInt;
   }
 
   Future<List<Map>> searchByFieldMaps(
@@ -67,7 +92,7 @@ class CRUDsembast {
   }
 
   Future searchByDateinsert(String searchItem) async {
-    return searchByField('dateinsert', searchItem);
+    return searchByFieldSheetRowKeys('dateinsert', searchItem);
   }
 
   Future searchQuote(String searchItem) async {
@@ -75,7 +100,7 @@ class CRUDsembast {
     searchItem = searchItem.toLowerCase();
 
     Filter filter = Filter.custom((snapshot) {
-      var value = snapshot[bl.fields['quote']] as String;
+      var value = snapshot[bl.orm.fields['quote']] as String;
       return value.toLowerCase().contains(searchItem);
     });
     Finder finder =
@@ -136,5 +161,15 @@ class CRUDsembast {
       colRows.add(record.value as Map);
     }
     return colRows;
+  }
+
+  Future<List<String>> readColRowsOfSheetName(String sheetName) async {
+    List<Map> colrowsMaps = await readColRows();
+    for (var colMap in colrowsMaps) {
+      if (colMap['sheetName'] == sheetName) {
+        return blUti.toListString(colMap['colRow']);
+      }
+    }
+    return [];
   }
 }

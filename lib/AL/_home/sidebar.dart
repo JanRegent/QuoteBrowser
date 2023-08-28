@@ -96,11 +96,13 @@ class _SidebarPageState extends State<SidebarPage> {
       //-----------------------------------------------------------------new
       CollapsibleItem(
         text: 'Add quote',
-        icon: Icons.search,
+        icon: Icons.add,
         onPressed: () async {
+          Map newRowMap = bl.orm.newRowMap();
+
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AttrEdit(const {})),
+            MaterialPageRoute(builder: (context) => AttrEdit(newRowMap)),
           );
         },
         onHold: () => ScaffoldMessenger.of(context)
@@ -112,8 +114,8 @@ class _SidebarPageState extends State<SidebarPage> {
         icon: Icons.search,
         onPressed: () async {
           setState(() => _headline = 'Search');
-          List<String> result =
-              await bl.crud.searchByField('dateinsert', '2023-08-23.');
+          List<String> result = await bl.crud
+              .searchByFieldSheetRowKeys('dateinsert', '2023-08-23.');
           for (var i = 0; i < result.length; i++) {
             // print('-------------------------------------------$i');
             // print(result[i]);
