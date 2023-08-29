@@ -35,6 +35,17 @@ class QuoteField extends StatelessWidget {
     setstate();
   }
 
+  Future transl() async {
+    final translator = GoogleTranslator();
+
+    var translation =
+        await translator.translate(rowMap[bl.orm.fields['quote']], to: 'cs');
+
+    rowMap[bl.orm.fields['quote']] = translation.text;
+
+    setstate();
+  }
+
   @override //printSelectedText()
   Widget build(BuildContext context) {
     _controller.text = rowMap[bl.orm.fields['quote']];
@@ -44,6 +55,9 @@ class QuoteField extends StatelessWidget {
       children: [
         Row(
           children: [
+            IconButton(
+                icon: Icon(Icons.translate, size: iconSize),
+                onPressed: () => transl()),
             IconButton(
                 icon: Icon(Icons.person, size: iconSize),
                 onPressed: () => attribSet('author')),
@@ -59,9 +73,7 @@ class QuoteField extends StatelessWidget {
           controller: _controller,
           maxLines: 10,
           onChanged: (value) async {
-            final translator = GoogleTranslator();
-            var translation = await translator.translate(value, to: 'cs');
-            rowMap[bl.orm.fields['quote']] = translation.toString();
+            rowMap[bl.orm.fields['quote']] = value;
           },
         )
       ],
