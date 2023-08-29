@@ -129,7 +129,7 @@ class CRUDsembast {
 
   //----------------------------------------------------------------readLen
   Future readLenght() async {
-    return sheetStore.count(senbastDb);
+    return await sheetStore.count(senbastDb);
   }
 
   Future<int> readLenSheet(String sheetName) async {
@@ -171,5 +171,17 @@ class CRUDsembast {
       }
     }
     return [];
+  }
+
+  Future<List<String>> readColRowsOfSheetName2(String sheetName) async {
+    var finder = Finder(
+      filter:
+          Filter.equals('rowNo', '1') & Filter.equals('sheetName', sheetName),
+    );
+    var records = await sheetStore.find(senbastDb, finder: finder);
+    List<String> colRows =
+        blUti.toListString(records[0]['colRow'] as List<String>);
+
+    return colRows;
   }
 }

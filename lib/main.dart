@@ -15,8 +15,9 @@ void main() async {
 
   await bl.init();
   await dl.init();
+  await sheetNamesInit();
+  await rows2db();
 
-  sheetNamesInit();
   runApp(const SidebarHome());
 }
 

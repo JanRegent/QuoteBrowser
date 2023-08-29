@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import 'bl.dart';
 
 class Orm {
@@ -21,13 +23,14 @@ class Orm {
   Future<List<String>> map2row(Map rowMap) async {
     String sheetName = rowMap['sheetName'];
     List<String> cols = await bl.crud.readColRowsOfSheetName(sheetName);
-
+    debugPrint(cols.toString());
     List<String> row = [];
 
     for (var i = 0; i < cols.length; i++) {
       try {
         row.add(rowMap[cols[i]]);
-      } catch (_) {
+      } catch (e) {
+        debugPrint(e.toString());
         row.add('');
       }
     }

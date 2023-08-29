@@ -23,16 +23,14 @@ Future sheetNamesInit() async {
   //sheets2db();
 }
 
-Future sheets2db() async {
+Future rows2db() async {
   debugPrint('-------------------------------refresh start');
-  // isar.write((isar) {
-  //   isar.clear();
-  // });
 
   int sheetsLenStart = await bl.crud.readLenght();
 
-  if (sheetsLenStart > 1) {
+  if (sheetsLenStart != 0) {
     loadingTitle.value = 'Data UpToDate devmode:${bl.devMode}';
+
     return;
   }
 
@@ -48,9 +46,9 @@ Future sheets2db() async {
     sheetNamesLength[index] = await bl.crud.readLenSheet(sheetName);
 
     sheetNamesToday[index] = await bl.crud.readLenToday(sheetName);
-
+    if (index == 1) break;
     if (bl.devMode) {
-      //if (index == 1) break;
+      if (index == 1) break;
     }
   }
   debugPrint('-------------------------------refresh done');

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quotebrowser/BL/bluti.dart';
 
 import 'package:quotebrowser/BL/locdbsembast/rows2db.dart';
 import 'package:quotebrowser/BL/params/params.dart';
@@ -153,23 +154,32 @@ class _AttrEditState extends State<AttrEdit> {
     );
   }
 
+  int? respStatus = 0;
   Future saveQuote() async {
+    setState(() {
+      respStatus = 0;
+    });
+    debugPrint('1post--widget.rowMap[bl.orm.fields[quote]].isEmpty');
     if (widget.rowMap[bl.orm.fields['quote']].isEmpty) {
       emptyDialog('Quote /n ${bl.orm.fields['quote']}');
       return;
     }
+    debugPrint('2post--widget.rowMap[bl.orm.fields[sheetName]].isEmpty');
     if (widget.rowMap['sheetName'].isEmpty) {
       emptyDialog('Sheetname');
       return;
     }
-
+    widget.rowMap['dateinsert'] = '${blUti.todayStr()}.';
+    debugPrint(widget.rowMap['dateinsert']);
+    debugPrint(widget.rowMap.toString());
     List<String> row = await bl.orm.map2row(widget.rowMap);
-
+    debugPrint(row.toString());
     if (row.isEmpty) return;
-
-    int? respStatus = await dl.httpService.postAppendRow(
+    debugPrint('5 pred post');
+    respStatus = await dl.httpService.postAppendRow(
         widget.rowMap['sheetName'], widget.rowMap['fileId'], row);
     debugPrint('respStatus post $respStatus');
+    setState(() {});
     //update(widget.sheet);
   }
 
@@ -195,7 +205,8 @@ class _AttrEditState extends State<AttrEdit> {
                 icon: const Icon(Icons.save),
                 onPressed: () async {
                   await saveQuote();
-                })
+                }),
+            Text(respStatus.toString())
           ],
         ),
         body: card(widget.rowMap, context));
