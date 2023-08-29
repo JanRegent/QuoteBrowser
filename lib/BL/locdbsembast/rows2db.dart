@@ -20,7 +20,7 @@ Future sheetNamesInit() async {
     sheetNamesToday.add(0);
     sheetNamesLength.add(0);
   }
-  sheets2db();
+  //sheets2db();
 }
 
 Future sheets2db() async {

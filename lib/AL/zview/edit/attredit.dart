@@ -12,6 +12,14 @@ import 'categorylistview.dart';
 import 'katkapbplistview.dart';
 import 'quotefield.dart';
 
+Future sheetNameSet(Map rowMap, BuildContext context) async {
+  String sheetName = await selectOne(sheetNames, context);
+  if (sheetName.isEmpty) return;
+
+  rowMap['sheetName'] = sheetName;
+  rowMap['fileId'] = dataSheetId;
+}
+
 // ignore: must_be_immutable
 class AttrEdit extends StatefulWidget {
   Map rowMap;
@@ -33,9 +41,6 @@ class _AttrEditState extends State<AttrEdit> {
   }
 
   Card card(Map rowMap, BuildContext context) {
-    if (widget.rowMap['sheetName'].isEmpty) {
-      widget.rowMap['sheetName'] = '[???]';
-    }
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 5),
       color: const Color.fromARGB(255, 213, 209, 192),
@@ -50,14 +55,9 @@ class _AttrEditState extends State<AttrEdit> {
             leading: ALicons.attrIcons.authorIcon,
             title: Text(widget.rowMap[bl.orm.fields['author']]),
             trailing: InkWell(
-              child: Text(widget.rowMap['sheetName']),
+              child: Text('sheetName: ${widget.rowMap['sheetName']}'),
               onTap: () async {
-                String sheetName = await selectOne(sheetNames, context);
-                if (sheetName.isEmpty) return;
-                setState(() {
-                  widget.rowMap['sheetName'] = sheetName;
-                  widget.rowMap['fileId'] = dataSheetId;
-                });
+                sheetNameSet(widget.rowMap, context);
               },
             ),
           ),
@@ -154,8 +154,8 @@ class _AttrEditState extends State<AttrEdit> {
   }
 
   Future saveQuote() async {
-    if (widget.rowMap['quote'].isEmpty) {
-      emptyDialog('Quote');
+    if (widget.rowMap[bl.orm.fields['quote']].isEmpty) {
+      emptyDialog('Quote /n ${bl.orm.fields['quote']}');
       return;
     }
     if (widget.rowMap['sheetName'].isEmpty) {

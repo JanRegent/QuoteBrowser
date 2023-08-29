@@ -9,7 +9,7 @@ import 'BL/sheet/sheet2dbpage.dart';
 import 'DL/dl.dart';
 
 // flutter run -d windows  --dart-define=devmode=1
-// flutter run -d chrome --web-renderer html --dart-define=devmode=1
+// flutter run -d chrome --web-renderer html --dart-define=devmode=1 --web-browser-flag "--disable-web-security"
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

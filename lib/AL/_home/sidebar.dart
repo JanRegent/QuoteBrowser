@@ -6,6 +6,7 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../BL/bl.dart';
 
+import '../../BL/locdbsembast/rows2db.dart';
 import '../../BL/sheet/sheet2dbpage.dart';
 
 import '../filters/simplef/dateinsert1.dart';
@@ -28,6 +29,7 @@ class _SidebarPageState extends State<SidebarPage> {
     super.initState();
     _items = _generateItems;
     _headline = _items.firstWhere((item) => item.isSelected).text;
+    sheetNamesInit();
   }
 
   List<CollapsibleItem> get _generateItems {
@@ -99,7 +101,8 @@ class _SidebarPageState extends State<SidebarPage> {
         icon: Icons.add,
         onPressed: () async {
           Map newRowMap = bl.orm.newRowMap();
-
+          await sheetNameSet(newRowMap, context);
+          // ignore: use_build_context_synchronously
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AttrEdit(newRowMap)),

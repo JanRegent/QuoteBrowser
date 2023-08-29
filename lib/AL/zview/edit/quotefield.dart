@@ -61,7 +61,7 @@ class QuoteField extends StatelessWidget {
           onChanged: (value) async {
             final translator = GoogleTranslator();
             var translation = await translator.translate(value, to: 'cs');
-            rowMap['quote'] = translation.toString();
+            rowMap[bl.orm.fields['quote']] = translation.toString();
           },
         )
       ],
