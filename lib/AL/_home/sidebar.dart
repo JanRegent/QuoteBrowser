@@ -10,7 +10,7 @@ import '../../BL/locdbsembast/rows2db.dart';
 import '../../BL/sheet/sheet2dbpage.dart';
 
 import '../filters/simplef/dateinsert1.dart';
-import '../zview/edit/attredit.dart';
+import '../zview/edit/addquote.dart';
 
 class SidebarPage extends StatefulWidget {
   const SidebarPage({super.key});
@@ -100,12 +100,9 @@ class _SidebarPageState extends State<SidebarPage> {
         text: 'Add quote',
         icon: Icons.add,
         onPressed: () async {
-          Map newRowMap = bl.orm.newRowMap();
-          await sheetNameSet(newRowMap, context);
-          // ignore: use_build_context_synchronously
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AttrEdit(newRowMap)),
+            MaterialPageRoute(builder: (context) => const AddQuote()),
           );
         },
         onHold: () => ScaffoldMessenger.of(context)

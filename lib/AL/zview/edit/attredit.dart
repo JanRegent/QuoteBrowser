@@ -1,25 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
-import 'package:quotebrowser/BL/locdbsembast/rows2db.dart';
-import 'package:quotebrowser/BL/params/params.dart';
-
 import '../../../BL/bl.dart';
 
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
-import '../../alib/selectiondialogs/selectone.dart';
+
 import 'categorylistview.dart';
 import 'katkapbplistview.dart';
 import 'quotefield.dart';
-
-Future sheetNameSet(Map rowMap, BuildContext context) async {
-  String sheetName = await selectOne(sheetNames, context);
-  if (sheetName.isEmpty) return;
-
-  rowMap['sheetName'] = sheetName;
-  rowMap['fileId'] = dataSheetId;
-}
 
 // ignore: must_be_immutable
 class AttrEdit extends StatefulWidget {
@@ -48,19 +37,14 @@ class _AttrEditState extends State<AttrEdit> {
       child: ListView(
         children: [
           ListTile(
-            title: QuoteField(rowMap, setstate),
+            title: QuoteField(rowMap, true, setstate),
             leading: Text(rowMap['rowNo']),
           ),
           ListTile(
             tileColor: Colors.white,
             leading: ALicons.attrIcons.authorIcon,
             title: Text(widget.rowMap[bl.orm.fields['author']]),
-            trailing: InkWell(
-              child: Text('sheetName: ${widget.rowMap['sheetName']}'),
-              onTap: () async {
-                sheetNameSet(widget.rowMap, context);
-              },
-            ),
+            trailing: Text('sheetName: ${widget.rowMap['sheetName']}'),
           ),
           ListTile(
             tileColor: Colors.white,
@@ -173,12 +157,13 @@ class _AttrEditState extends State<AttrEdit> {
       emptyDialog('Quote /n ${bl.orm.fields['quote']}');
       return [];
     }
-    debugPrint('2post--widget.rowMap[bl.orm.fields[sheetName]].isEmpty');
+
     if (widget.rowMap['sheetName'].isEmpty) {
       emptyDialog('Sheetname');
       return [];
     }
     await setCell('quote', widget.rowMap[bl.orm.fields['quote']], '');
+    widget.rowMap['dateinsert'] = '${blUti.todayStr()}.';
     //update(widget.sheet);
   }
 

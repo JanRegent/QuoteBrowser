@@ -7,8 +7,9 @@ import '../../../DL/dl.dart';
 // ignore: must_be_immutable
 class QuoteField extends StatelessWidget {
   final Map rowMap;
+  final bool isAttrEdit;
   Function setstate;
-  QuoteField(this.rowMap, this.setstate, {super.key});
+  QuoteField(this.rowMap, this.isAttrEdit, this.setstate, {super.key});
   final TextEditingController _controller = TextEditingController();
 
   Future setCellAttr(
@@ -67,22 +68,27 @@ class QuoteField extends StatelessWidget {
     double iconSize = 30.0;
     return Column(
       children: [
-        Row(
-          children: [
-            IconButton(
-                icon: Icon(Icons.translate, size: iconSize),
-                onPressed: () => transl()),
-            IconButton(
-                icon: Icon(Icons.person, size: iconSize),
-                onPressed: () => attribSet('author')),
-            IconButton(
-                icon: Icon(Icons.book, size: iconSize),
-                onPressed: () => attribSet('book')),
-            IconButton(
-                icon: Icon(Icons.tag, size: iconSize),
-                onPressed: () => attribSet('tags')),
-          ],
-        ),
+        isAttrEdit
+            ? Row(
+                children: [
+                  IconButton(
+                      icon: Icon(Icons.person, size: iconSize),
+                      onPressed: () => attribSet('author')),
+                  IconButton(
+                      icon: Icon(Icons.book, size: iconSize),
+                      onPressed: () => attribSet('book')),
+                  IconButton(
+                      icon: Icon(Icons.tag, size: iconSize),
+                      onPressed: () => attribSet('tags')),
+                ],
+              )
+            : Row(
+                children: [
+                  IconButton(
+                      icon: Icon(Icons.translate, size: iconSize),
+                      onPressed: () => transl()),
+                ],
+              ),
         TextField(
           controller: _controller,
           maxLines: 10,
