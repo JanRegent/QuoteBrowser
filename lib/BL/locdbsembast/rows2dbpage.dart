@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sembast/sembast.dart';
 
 import '../../AL/zview/_cardsswiper.dart';
 import '../../AL/zview/_sheetviewpage.dart';
 
-import '../locdbsembast/rows2db.dart';
+import '../bl.dart';
+import 'rows2db.dart';
 
-class Sheets2dbPage extends StatefulWidget {
-  const Sheets2dbPage({super.key});
+class Rows2dbPage extends StatefulWidget {
+  const Rows2dbPage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _Sheets2dbPageState createState() {
-    return _Sheets2dbPageState();
+  _Rows2dbPageState createState() {
+    return _Rows2dbPageState();
   }
 }
 
-class _Sheets2dbPageState extends State {
+class _Rows2dbPageState extends State {
   Future<String> getData() async {
     return 'ok';
   }
@@ -38,8 +40,12 @@ class _Sheets2dbPageState extends State {
               leading: InkWell(
                 child: CircleAvatar(
                   child: Obx(() => Text(sheetNamesToday[index].toString(),
-                      style: const TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.bold))),
+                      style: TextStyle(
+                          backgroundColor: sheetNamesToday[index] == 0
+                              ? Colors.white
+                              : Colors.lightBlue,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold))),
                 ),
                 onTap: () async {
                   await Navigator.push(
@@ -57,14 +63,22 @@ class _Sheets2dbPageState extends State {
     );
   }
 
-  IconButton runLoading() {
+  IconButton deleteRefresh() {
     return IconButton(
       icon: const Icon(Icons.refresh),
       onPressed: () async {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Sheets2dbPage()),
-        );
+        print(await sheetStore.count(sembastDb));
+
+        await sheetStore.delete(sembastDb);
+
+        print(await sheetStore.count(sembastDb));
+        clearLoadingStats();
+        await rows2db();
+        // // ignore: use_build_context_synchronously
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const Rows2dbPage()),
+        // );
       },
     );
   }
@@ -88,7 +102,7 @@ class _Sheets2dbPageState extends State {
     return Scaffold(
       appBar: AppBar(
         title: Obx(() => Text(loadingTitle.value)),
-        actions: [runLoading()],
+        actions: [deleteRefresh()],
       ),
       body: fileList(),
     );

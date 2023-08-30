@@ -9,5 +9,5 @@ Future openSembast() async {
   var factory = databaseFactoryWeb;
 
   // Open the database
-  senbastDb = await factory.openDatabase('sheets');
+  sembastDb = await factory.openDatabase('sheets');
 }

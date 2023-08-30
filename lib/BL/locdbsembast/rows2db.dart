@@ -20,7 +20,13 @@ Future sheetNamesInit() async {
     sheetNamesToday.add(0);
     sheetNamesLength.add(0);
   }
-  //sheets2db();
+}
+
+void clearLoadingStats() {
+  for (var i = 0; i < sheetNames.length; i++) {
+    sheetNamesToday[i] = 0;
+    sheetNamesLength[i] = 0;
+  }
 }
 
 Future rows2db() async {
@@ -46,7 +52,7 @@ Future rows2db() async {
     sheetNamesLength[index] = await bl.crud.readLenSheet(sheetName);
 
     sheetNamesToday[index] = await bl.crud.readLenToday(sheetName);
-    if (index == 1) break;
+
     if (bl.devMode) {
       if (index == 1) break;
     }
@@ -67,13 +73,4 @@ Future sheet2db(String sheetName, String fileId) async {
     await bl.crud.createRowMap(
         cols, datarow, sheetName, (rowIndex + 1).toString(), fileId);
   }
-}
-
-Future updateCell(
-    Map rowMap, List<String> cols, String columnName, String newValue) async {
-  if (int.tryParse(rowMap['rowNo'])! < 2) return;
-  int colIx = cols.indexOf(columnName) + 1;
-  if (colIx < 1) return;
-  // await dl.gsheetsHelper.updateCell(
-  //     newValue, sheet.aSheetName, sheet.zfileId, sheet.aIndex, colIx);
 }

@@ -7,7 +7,7 @@ class CRUDsembast {
   //https://hrishi445.medium.com/persist-data-with-sembast-nosql-database-in-flutter-2b6c5110170f
   Future createRowMap(List<String> cols, List<String> row, String sheetName,
       String rowNo, String fileId) async {
-    await senbastDb.transaction((txn) async {
+    await sembastDb.transaction((txn) async {
       // You can specify a key
       await sheetStore
           .record('$sheetName,$rowNo')
@@ -29,7 +29,7 @@ class CRUDsembast {
         Finder(filter: filterRegex, sortOrders: [SortOrder('dateinsert')]);
 
     final recordSnapshots = await sheetStore.find(
-      senbastDb,
+      sembastDb,
       finder: finder,
     );
     List<String> keys = [];
@@ -54,7 +54,7 @@ class CRUDsembast {
         Finder(filter: filterRegex, sortOrders: [SortOrder('dateinsert')]);
 
     final recordSnapshots = await sheetStore.find(
-      senbastDb,
+      sembastDb,
       finder: finder,
     );
     List<String> keysInt = [];
@@ -79,7 +79,7 @@ class CRUDsembast {
         Finder(filter: filterRegex, sortOrders: [SortOrder('dateinsert')]);
 
     final recordSnapshots = await sheetStore.find(
-      senbastDb,
+      sembastDb,
       finder: finder,
     );
     List<Map> keys = [];
@@ -107,7 +107,7 @@ class CRUDsembast {
         Finder(filter: filter, sortOrders: [SortOrder('dateinsert')]);
 
     final recordSnapshots = await sheetStore.find(
-      senbastDb,
+      sembastDb,
       finder: finder,
     );
     List<Map> maps = [];
@@ -122,21 +122,21 @@ class CRUDsembast {
   //----------------------------------------------------------------readByKey
   Future<Map> readBySheetRowKey(String sheetRowKey) async {
     final snapshot =
-        await sheetStore.record(sheetRowKey).getSnapshot(senbastDb);
+        await sheetStore.record(sheetRowKey).getSnapshot(sembastDb);
     if (snapshot == null) return {};
     return snapshot.value as Map;
   }
 
   //----------------------------------------------------------------readLen
   Future readLenght() async {
-    return await sheetStore.count(senbastDb);
+    return await sheetStore.count(sembastDb);
   }
 
   Future<int> readLenSheet(String sheetName) async {
     var finder = Finder(
       filter: Filter.equals('sheetName', sheetName),
     );
-    var records = await sheetStore.find(senbastDb, finder: finder);
+    var records = await sheetStore.find(sembastDb, finder: finder);
     return records.length;
   }
 
@@ -145,7 +145,7 @@ class CRUDsembast {
       filter: Filter.equals('sheetName', sheetName) &
           Filter.equals('dateinsert', '${blUti.todayStr()}.'),
     );
-    var records = await sheetStore.find(senbastDb, finder: finder);
+    var records = await sheetStore.find(sembastDb, finder: finder);
     return records.length;
   }
 
@@ -154,7 +154,7 @@ class CRUDsembast {
     var finder = Finder(
       filter: Filter.equals('rowNo', '1'),
     );
-    var records = await sheetStore.find(senbastDb, finder: finder);
+    var records = await sheetStore.find(sembastDb, finder: finder);
     List<Map> colRows = [];
 
     for (var record in records) {
@@ -178,7 +178,7 @@ class CRUDsembast {
       filter:
           Filter.equals('rowNo', '1') & Filter.equals('sheetName', sheetName),
     );
-    var records = await sheetStore.find(senbastDb, finder: finder);
+    var records = await sheetStore.find(sembastDb, finder: finder);
     List<String> colRows =
         blUti.toListString(records[0]['colRow'] as List<String>);
 

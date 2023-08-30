@@ -7,7 +7,7 @@ import 'package:quotebrowser/BL/bluti.dart';
 import '../../BL/bl.dart';
 
 import '../../BL/locdbsembast/rows2db.dart';
-import '../../BL/sheet/sheet2dbpage.dart';
+import '../../BL/locdbsembast/rows2dbpage.dart';
 
 import '../filters/simplef/dateinsert1.dart';
 import '../zview/edit/addquote.dart';
@@ -69,8 +69,7 @@ class _SidebarPageState extends State<SidebarPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const Sheets2dbPage()),
+                  MaterialPageRoute(builder: (context) => const Rows2dbPage()),
                 );
               },
               onHold: () => ScaffoldMessenger.of(context)

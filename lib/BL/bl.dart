@@ -8,7 +8,7 @@ import 'orm.dart';
 
 // ignore: prefer_typing_uninitialized_variables
 //late final Isar isar;
-late Database senbastDb;
+late Database sembastDb;
 late StoreRef sheetStore;
 
 Bl bl = Bl();
