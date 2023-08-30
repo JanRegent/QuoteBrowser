@@ -36,34 +36,53 @@ class HttpService {
     return blUti.toListString(response.data['data']);
   }
 
-  Future<int?> postAppendRow(
-      String sheetName, String sheetId, List<String> row) async {
-    dio.options.headers.addAll({
-      "Access-Control-Allow-Origin": "*",
-      "content-type": "text/plain",
-      "Access-Control-Allow-Methods": "GET,PUT,PATCH,POST,DELETE",
-      "Access-Control-Allow-Headers":
-          "Origin, X-Requested-With, Content-Type, Accept"
-    });
-
-    Response response = await dio.post(
+  Future<List> setCell(String sheetName, String sheetId, String columnName,
+      String cellContent, String rowNo) async {
+    // The below request is the same as above.
+    // ignore: unused_local_variable
+    Response response = await dio.get(
       backendUrl,
-      data: {
-        'action': 'appendRow',
+      queryParameters: {
+        'action': 'setCell',
         'sheetName': sheetName,
         'sheetId': sheetId,
-        'row': row
+        'columnName': columnName,
+        'cellContent': cellContent,
+        'rowNo': rowNo
       },
-      // options: Options(
-      //   headers: {
-      //     'content-type': 'application/json',
-      //     'Access-Control-Allow-Origin': '*',
-      //     "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
-      //     'Access-Control-Allow-Headers':
-      //         'Origin, X-Requested-With, Content-Type, Accept',
-      //   },
-      // )
     );
-    return response.statusCode;
+
+    return response.data['data'];
   }
+
+  // Future<int?> postAppendRow(
+  //     String sheetName, String sheetId, List<String> row) async {
+  //   dio.options.headers.addAll({
+  //     "Access-Control-Allow-Origin": "*",
+  //     "content-type": "text/plain",
+  //     "Access-Control-Allow-Methods": "GET,PUT,PATCH,POST,DELETE",
+  //     "Access-Control-Allow-Headers":
+  //         "Origin, X-Requested-With, Content-Type, Accept"
+  //   });
+
+  //   Response response = await dio.post(
+  //     backendUrl,
+  //     data: {
+  //       'action': 'appendRow',
+  //       'sheetName': sheetName,
+  //       'sheetId': sheetId,
+  //       'row': row
+  //     },
+  //     // options: Options(
+  //     //   headers: {
+  //     //     'content-type': 'application/json',
+  //     //     'Access-Control-Allow-Origin': '*',
+  //     //     "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
+  //     //     'Access-Control-Allow-Headers':
+  //     //         'Origin, X-Requested-With, Content-Type, Accept',
+  //     //   },
+  //     // )
+  //   );
+  //   return response.statusCode;
+  // }
 }

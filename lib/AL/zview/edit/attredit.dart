@@ -154,32 +154,31 @@ class _AttrEditState extends State<AttrEdit> {
     );
   }
 
-  int? respStatus = 0;
+  Future setCell(String columnName, String cellContent, String rowNo) async {
+    debugPrint('5 pred post');
+    List respData = await dl.httpService.setCell(widget.rowMap['sheetName'],
+        widget.rowMap['fileId'], bl.orm.fields[columnName], cellContent, rowNo);
+    widget.rowMap['rowNo'] = respData[0].toString();
+    respStatus = 'row:${respData[0]}';
+    setState(() {});
+  }
+
+  String? respStatus = 'status:new';
   Future saveQuote() async {
     setState(() {
-      respStatus = 0;
+      respStatus = 'status:?';
     });
     debugPrint('1post--widget.rowMap[bl.orm.fields[quote]].isEmpty');
     if (widget.rowMap[bl.orm.fields['quote']].isEmpty) {
       emptyDialog('Quote /n ${bl.orm.fields['quote']}');
-      return;
+      return [];
     }
     debugPrint('2post--widget.rowMap[bl.orm.fields[sheetName]].isEmpty');
     if (widget.rowMap['sheetName'].isEmpty) {
       emptyDialog('Sheetname');
-      return;
+      return [];
     }
-    widget.rowMap['dateinsert'] = '${blUti.todayStr()}.';
-    debugPrint(widget.rowMap['dateinsert']);
-    debugPrint(widget.rowMap.toString());
-    List<String> row = await bl.orm.map2row(widget.rowMap);
-    debugPrint(row.toString());
-    if (row.isEmpty) return;
-    debugPrint('5 pred post');
-    respStatus = await dl.httpService.postAppendRow(
-        widget.rowMap['sheetName'], widget.rowMap['fileId'], row);
-    debugPrint('respStatus post $respStatus');
-    setState(() {});
+    await setCell('quote', widget.rowMap[bl.orm.fields['quote']], '');
     //update(widget.sheet);
   }
 
@@ -190,23 +189,11 @@ class _AttrEditState extends State<AttrEdit> {
           title: const Text('Attributes edit'),
           actions: [
             IconButton(
-                icon: const Icon(Icons.print),
-                onPressed: () async {
-                  //await readByAuthor('l');
-                }),
-            // IconButton(
-            //     icon: const Icon(Icons.newspaper),
-            //     onPressed: () {
-            //       widget.rowMap = {};
-            //       setState(() {});
-            //     }),
-
-            IconButton(
                 icon: const Icon(Icons.save),
                 onPressed: () async {
                   await saveQuote();
                 }),
-            Text(respStatus.toString())
+            Text(respStatus!)
           ],
         ),
         body: card(widget.rowMap, context));

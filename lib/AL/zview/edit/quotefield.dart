@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:translator_plus/translator_plus.dart';
 
 import '../../../BL/bl.dart';
+import '../../../DL/dl.dart';
 
 // ignore: must_be_immutable
 class QuoteField extends StatelessWidget {
@@ -10,7 +11,15 @@ class QuoteField extends StatelessWidget {
   QuoteField(this.rowMap, this.setstate, {super.key});
   final TextEditingController _controller = TextEditingController();
 
-  void attribSet(String attribName) {
+  Future setCellAttr(
+      String columnName, String cellContent, String rowNo) async {
+    List respData = await dl.httpService.setCell(rowMap['sheetName'],
+        rowMap['fileId'], bl.orm.fields[columnName], cellContent, rowNo);
+
+    debugPrint('row: $respData');
+  }
+
+  void attribSet(String attribName) async {
     String selected = _controller.text.substring(
         _controller.selection.baseOffset, _controller.selection.extentOffset);
 
@@ -19,13 +28,18 @@ class QuoteField extends StatelessWidget {
     switch (attribName) {
       case 'author':
         rowMap[bl.orm.fieldLocal('author')] = selected;
-
+        await setCellAttr(
+            attribName, rowMap[bl.orm.fields[attribName]], rowMap['rowNo']);
         break;
       case 'book':
         rowMap[bl.orm.fieldLocal('book')] = selected;
+        await setCellAttr(
+            attribName, rowMap[bl.orm.fields[attribName]], rowMap['rowNo']);
         break;
       case 'tags':
         rowMap[bl.orm.fieldLocal('tags')] += ',$selected';
+        await setCellAttr(
+            attribName, rowMap[bl.orm.fields[attribName]], rowMap['rowNo']);
         break;
       default:
         return;
