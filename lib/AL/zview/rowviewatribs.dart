@@ -6,7 +6,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../BL/bl.dart';
 import '../alib/alicons.dart';
-import 'edit/attredit.dart';
 
 // ignore: must_be_immutable
 class RowViewAtribs extends StatefulWidget {
@@ -31,21 +30,10 @@ class _RowViewAtribsState extends State<RowViewAtribs> {
   List<Widget> expandedWidgets1() {
     expandedCard = [
       ListTile(
-          tileColor: Colors.white,
-          leading: ALicons.attrIcons.authorIcon,
-          title: Text(widget.rowMap[bl.orm.fields['author']]),
-          trailing: IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () async {
-              print(widget.rowMap);
-              await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AttrEdit(widget.rowMap)));
-
-              setState(() {});
-            },
-          ))
+        tileColor: Colors.white,
+        leading: ALicons.attrIcons.authorIcon,
+        title: Text(widget.rowMap[bl.orm.fields['author']]),
+      )
     ];
     if (widget.rowMap[bl.orm.fields['book']].isNotEmpty) {
       expandedCard.add(ListTile(

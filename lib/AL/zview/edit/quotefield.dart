@@ -6,7 +6,7 @@ import '../../../DL/dl.dart';
 
 // ignore: must_be_immutable
 class QuoteField extends StatelessWidget {
-  final Map rowMap;
+  Map rowMap;
   final bool isAttrEdit;
   Function setstate;
   QuoteField(this.rowMap, this.isAttrEdit, this.setstate, {super.key});
@@ -38,7 +38,8 @@ class QuoteField extends StatelessWidget {
             attribName, rowMap[bl.orm.fields[attribName]], rowMap['rowNo']);
         break;
       case 'tags':
-        rowMap[bl.orm.fieldLocal('tags')] += ',$selected';
+        print(selected);
+        rowMap['tags'] = rowMap['tags'] + ',$selected';
         await setCellAttr(
             attribName, rowMap[bl.orm.fields[attribName]], rowMap['rowNo']);
         break;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../BL/bl.dart';
 import 'edit/addquote.dart';
+import 'edit/attredit.dart';
 import 'rowviewatribs.dart';
 import 'sheetviewmenu.dart';
 import 'rowviewquote.dart';
@@ -36,7 +37,23 @@ class _RowViewPageState extends State<RowViewPage> {
           bottom: TabBar(
             tabs: [
               Tab(text: currentSheet[bl.orm.fields['author']]),
-              const Tab(text: 'Atributes'),
+              Tab(
+                child: Row(children: [
+                  const Icon(Icons.edit_attributes),
+                  const Text('          '),
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () async {
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AttrEdit(widget.rowMap)));
+
+                      setState(() {});
+                    },
+                  )
+                ]),
+              ),
               const Tab(icon: Icon(Icons.add)),
             ],
           ),
