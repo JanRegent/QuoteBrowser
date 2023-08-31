@@ -5,15 +5,15 @@ import 'package:highlight_text/highlight_text.dart';
 import '../../BL/bl.dart';
 
 // ignore: must_be_immutable
-class SheetViewQuote extends StatefulWidget {
+class RowViewQuote extends StatefulWidget {
   Map rowMap;
-  SheetViewQuote(this.rowMap, {super.key});
+  RowViewQuote(this.rowMap, {super.key});
 
   @override
-  State<SheetViewQuote> createState() => _SheetViewQuoteState();
+  State<RowViewQuote> createState() => _RowViewQuoteState();
 }
 
-class _SheetViewQuoteState extends State<SheetViewQuote> {
+class _RowViewQuoteState extends State<RowViewQuote> {
   @override
   initState() {
     super.initState();

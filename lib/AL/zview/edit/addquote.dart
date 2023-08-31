@@ -11,7 +11,7 @@ import '../../../DL/dl.dart';
 import '../../alib/selectiondialogs/selectone.dart';
 
 import '../_cardsswiper.dart';
-import 'attredit.dart';
+
 import 'quotefield.dart';
 
 // ignore: must_be_immutable
@@ -79,20 +79,6 @@ class _AddQuoteState extends State<AddQuote> {
                     rowMap[bl.orm.fields['quote']] = '';
                   });
                 }),
-            trailing: IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () async {
-                if (rowMap['rowNo'].isEmpty) {
-                  emptyDialog(
-                      'Save new quote before to get rowNo from cloud sheet');
-                  return;
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AttrEdit(rowMap)),
-                );
-              },
-            ),
           ),
         ],
       ),

@@ -71,41 +71,41 @@ class _AttrEditState extends State<AttrEdit> {
                   setstate();
                 }),
           ),
-          ListTile(
-            tileColor: Colors.white,
-            leading: ALicons.attrIcons.categoryIcon,
-            title: InkWell(
-              child: Text(widget.rowMap['category']),
-              onTap: () async {
-                String keyrow = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CategoryListview(widget.rowMap)),
-                );
-                if (keyrow.isEmpty) return;
-                widget.rowMap['category'] = keyrow;
-                setState(() {});
-              },
-            ),
-          ),
-          ListTile(
-            tileColor: Colors.lime,
-            leading: const Text('PB'),
-            title: InkWell(
-              child: Text(widget.rowMap['categoryChapterPB']),
-              onTap: () async {
-                String keyrow = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          CategoryChapterBPListview(widget.rowMap)),
-                );
-                if (keyrow.isEmpty) return;
-                widget.rowMap['categoryChapterPB'] = keyrow;
-                setState(() {});
-              },
-            ),
-          ),
+          // ListTile(
+          //   tileColor: Colors.white,
+          //   leading: ALicons.attrIcons.categoryIcon,
+          //   title: InkWell(
+          //     child: Text(widget.rowMap['category']),
+          //     onTap: () async {
+          //       String keyrow = await Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //             builder: (context) => CategoryListview(widget.rowMap)),
+          //       );
+          //       if (keyrow.isEmpty) return;
+          //       widget.rowMap['category'] = keyrow;
+          //       setState(() {});
+          //     },
+          //   ),
+          // ),
+          // ListTile(
+          //   tileColor: Colors.lime,
+          //   leading: const Text('PB'),
+          //   title: InkWell(
+          //     child: Text(widget.rowMap['categoryChapterPB']),
+          //     onTap: () async {
+          //       String keyrow = await Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //             builder: (context) =>
+          //                 CategoryChapterBPListview(widget.rowMap)),
+          //       );
+          //       if (keyrow.isEmpty) return;
+          //       widget.rowMap['categoryChapterPB'] = keyrow;
+          //       setState(() {});
+          //     },
+          //   ),
+          // ),
           ListTile(
             tileColor: Colors.white,
             title: Text(widget.rowMap['folder']),

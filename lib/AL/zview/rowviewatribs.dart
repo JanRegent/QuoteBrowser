@@ -9,15 +9,15 @@ import '../alib/alicons.dart';
 import 'edit/attredit.dart';
 
 // ignore: must_be_immutable
-class SheetViewFields extends StatefulWidget {
+class RowViewAtribs extends StatefulWidget {
   Map rowMap;
-  SheetViewFields(this.rowMap, {super.key});
+  RowViewAtribs(this.rowMap, {super.key});
 
   @override
-  State<SheetViewFields> createState() => _SheetViewFieldsState();
+  State<RowViewAtribs> createState() => _RowViewAtribsState();
 }
 
-class _SheetViewFieldsState extends State<SheetViewFields> {
+class _RowViewAtribsState extends State<RowViewAtribs> {
   @override
   initState() {
     super.initState();
@@ -37,6 +37,7 @@ class _SheetViewFieldsState extends State<SheetViewFields> {
           trailing: IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () async {
+              print(widget.rowMap);
               await Navigator.push(
                   context,
                   MaterialPageRoute(

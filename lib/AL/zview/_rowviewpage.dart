@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../BL/bl.dart';
 import 'edit/addquote.dart';
-import 'sheetviewfields.dart';
+import 'rowviewatribs.dart';
 import 'sheetviewmenu.dart';
-import 'sheetviewquote.dart';
+import 'rowviewquote.dart';
 
 // ignore: must_be_immutable
 class RowViewPage extends StatefulWidget {
@@ -43,8 +43,8 @@ class _RowViewPageState extends State<RowViewPage> {
         ),
         body: TabBarView(
           children: [
-            SheetViewQuote(currentSheet),
-            SheetViewFields(currentSheet),
+            RowViewQuote(currentSheet),
+            RowViewAtribs(currentSheet),
             const AddQuote()
           ],
         ),
