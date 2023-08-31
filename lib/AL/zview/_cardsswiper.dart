@@ -33,8 +33,18 @@ class _CardSwiperState extends State<CardSwiper> {
     super.initState();
   }
 
+  Map rowMap2viewReadWrite = {}; //Map Bad state: read only
   Future<String> getData() async {
     currentSheet = swiperRowMaps[currentRowIndex];
+
+    for (var key in currentSheet.keys) {
+      if (currentSheet[key] == null) {
+        rowMap2viewReadWrite[key] = '';
+      } else {
+        rowMap2viewReadWrite[key] = currentSheet[key];
+      }
+    }
+
     return 'OK';
   }
 
@@ -93,7 +103,7 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://github.com/TheAnkurPanchani/card_swiper/
 
           itemBuilder: (BuildContext context, int rowIndex) {
-            return RowViewPage(swiperRowMaps[currentRowIndex], widget.title);
+            return RowViewPage(rowMap2viewReadWrite, widget.title);
           },
           itemCount: swiperRowMaps.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),

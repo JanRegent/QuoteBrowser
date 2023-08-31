@@ -38,7 +38,6 @@ class QuoteField extends StatelessWidget {
             attribName, rowMap[bl.orm.fields[attribName]], rowMap['rowNo']);
         break;
       case 'tags':
-        print(selected);
         rowMap['tags'] = rowMap['tags'] + ',$selected';
         await setCellAttr(
             attribName, rowMap[bl.orm.fields[attribName]], rowMap['rowNo']);
