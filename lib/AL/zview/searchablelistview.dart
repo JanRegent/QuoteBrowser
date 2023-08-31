@@ -5,7 +5,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 import '../../BL/sheet/sheet.dart';
 import '../filters/emptyview.dart';
 import '_cardsswiper.dart';
-import '_sheetviewpage.dart';
+import '_rowviewpage.dart';
 
 List<Sheet> filteredSheets = [];
 
@@ -24,7 +24,7 @@ class _SearchableListviewState extends State<SearchableListview> {
     Widget searchableList() {
       return SearchableList<Sheet>(
         initialList: filteredSheets,
-        builder: (index) => SheetViewPage(swiperMaps[0], widget.title),
+        builder: (index) => RowViewPage(swiperRowMaps[0], widget.title),
         filter: (value) => filteredSheets
             .where(
               (element) => element.quote.toLowerCase().contains(value),

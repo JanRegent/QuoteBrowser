@@ -1,7 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
-import '_sheetviewpage.dart';
+import '_rowviewpage.dart';
 import 'sheetviewmenu.dart';
 
 // import '../../../2business_layer/appdata/approotdata.dart';
@@ -11,7 +11,7 @@ import 'sheetviewmenu.dart';
 // import 'd1quotedetailpage.dart';
 // import 'd20menu.dart';
 
-List<Map> swiperMaps = [];
+List<Map> swiperRowMaps = [];
 
 class CardSwiper extends StatefulWidget {
   final String title;
@@ -34,7 +34,7 @@ class _CardSwiperState extends State<CardSwiper> {
   }
 
   Future<String> getData() async {
-    currentSheet = swiperMaps[currentRowIndex];
+    currentSheet = swiperRowMaps[currentRowIndex];
     return 'OK';
   }
 
@@ -93,9 +93,9 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://github.com/TheAnkurPanchani/card_swiper/
 
           itemBuilder: (BuildContext context, int rowIndex) {
-            return SheetViewPage(swiperMaps[currentRowIndex], widget.title);
+            return RowViewPage(swiperRowMaps[currentRowIndex], widget.title);
           },
-          itemCount: swiperMaps.length,
+          itemCount: swiperRowMaps.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
           pagination:
               const SwiperPagination(builder: SwiperPagination.fraction),
@@ -116,7 +116,7 @@ class _CardSwiperState extends State<CardSwiper> {
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             if (snapshot.hasData) {
               if (currentSheet.isEmpty) {
-                return Text('${swiperMaps[currentRowIndex]} is empty');
+                return Text('${swiperRowMaps[currentRowIndex]} is empty');
               } else {
                 return body();
               }

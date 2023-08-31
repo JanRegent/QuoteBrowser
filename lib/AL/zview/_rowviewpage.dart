@@ -7,16 +7,16 @@ import 'sheetviewmenu.dart';
 import 'sheetviewquote.dart';
 
 // ignore: must_be_immutable
-class SheetViewPage extends StatefulWidget {
+class RowViewPage extends StatefulWidget {
   Map rowMap;
   final String title;
-  SheetViewPage(this.rowMap, this.title, {super.key});
+  RowViewPage(this.rowMap, this.title, {super.key});
 
   @override
-  State<SheetViewPage> createState() => _SheetViewPageState();
+  State<RowViewPage> createState() => _RowViewPageState();
 }
 
-class _SheetViewPageState extends State<SheetViewPage> {
+class _RowViewPageState extends State<RowViewPage> {
   @override
   initState() {
     super.initState();

@@ -3,6 +3,7 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import 'package:quotebrowser/BL/locdbsembast/rows2db.dart';
 import 'package:quotebrowser/BL/params/params.dart';
+import 'package:sembast/sembast.dart';
 
 import '../../../BL/bl.dart';
 
@@ -10,6 +11,7 @@ import '../../../DL/dl.dart';
 
 import '../../alib/selectiondialogs/selectone.dart';
 
+import '../_cardsswiper.dart';
 import 'attredit.dart';
 import 'quotefield.dart';
 
@@ -143,6 +145,7 @@ class _AddQuoteState extends State<AddQuote> {
     }
     await setCell('quote', rowMap[bl.orm.fields['quote']], '');
     rowMap['dateinsert'] = '${blUti.todayStr()}.';
+    swiperRowMaps.add(rowMap);
     //update(widget.sheet);
   }
 

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sembast/sembast.dart';
 
 import '../../AL/zview/_cardsswiper.dart';
-import '../../AL/zview/_sheetviewpage.dart';
+import '../../AL/zview/_rowviewpage.dart';
 
 import '../bl.dart';
 import 'rows2db.dart';
@@ -52,7 +52,7 @@ class _Rows2dbPageState extends State {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              SheetViewPage(swiperMaps[0], 'xxx2')));
+                              RowViewPage(swiperRowMaps[0], 'xxx2')));
                 },
               ),
               trailing: Obx(() => Text(sheetNamesLength[index].toString())),
