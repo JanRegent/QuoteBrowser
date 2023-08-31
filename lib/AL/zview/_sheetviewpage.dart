@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../BL/bl.dart';
+import 'edit/addquote.dart';
 import 'sheetviewfields.dart';
 import 'sheetviewmenu.dart';
 import 'sheetviewquote.dart';
@@ -27,7 +28,7 @@ class _SheetViewPageState extends State<SheetViewPage> {
 
   Widget tabs() {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           leading: const Text(' '),
@@ -35,9 +36,8 @@ class _SheetViewPageState extends State<SheetViewPage> {
           bottom: TabBar(
             tabs: [
               Tab(text: currentSheet[bl.orm.fields['author']]),
-              const Tab(
-                text: 'Atributes',
-              ),
+              const Tab(text: 'Atributes'),
+              const Tab(icon: Icon(Icons.add)),
             ],
           ),
         ),
@@ -45,6 +45,7 @@ class _SheetViewPageState extends State<SheetViewPage> {
           children: [
             SheetViewQuote(currentSheet),
             SheetViewFields(currentSheet),
+            const AddQuote()
           ],
         ),
       ),

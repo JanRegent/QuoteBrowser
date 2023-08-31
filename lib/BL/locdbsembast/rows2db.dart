@@ -9,6 +9,7 @@ import '../bluti.dart';
 
 RxList sheetNamesToday = [].obs;
 RxList sheetNamesLength = [].obs;
+RxString loadingStoreCount = ''.obs;
 RxString loadingTitle = ''.obs;
 List<String> sheetNames = [];
 String fileId = dataSheetId;

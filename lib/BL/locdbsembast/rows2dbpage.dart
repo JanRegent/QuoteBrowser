@@ -67,18 +67,17 @@ class _Rows2dbPageState extends State {
     return IconButton(
       icon: const Icon(Icons.refresh),
       onPressed: () async {
-        print(await sheetStore.count(sembastDb));
+        int sheetsCount = await sheetStore.count(sembastDb);
+        loadingStoreCount.value = sheetsCount.toString();
 
         await sheetStore.delete(sembastDb);
 
-        print(await sheetStore.count(sembastDb));
+        sheetsCount = await sheetStore.count(sembastDb);
+        loadingStoreCount.value = sheetsCount.toString();
         clearLoadingStats();
         await rows2db();
-        // // ignore: use_build_context_synchronously
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const Rows2dbPage()),
-        // );
+        sheetsCount = await sheetStore.count(sembastDb);
+        loadingStoreCount.value = sheetsCount.toString();
       },
     );
   }
@@ -102,7 +101,7 @@ class _Rows2dbPageState extends State {
     return Scaffold(
       appBar: AppBar(
         title: Obx(() => Text(loadingTitle.value)),
-        actions: [deleteRefresh()],
+        actions: [Obx(() => Text(loadingStoreCount.value)), deleteRefresh()],
       ),
       body: fileList(),
     );
