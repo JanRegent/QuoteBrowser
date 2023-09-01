@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sembast/sembast.dart';
 
-import '../../AL/zview/_cardsswiper.dart';
-import '../../AL/zview/_rowviewpage.dart';
-
 import '../bl.dart';
 import 'rows2db.dart';
 
@@ -47,13 +44,7 @@ class _Rows2dbPageState extends State {
                           fontSize: 15,
                           fontWeight: FontWeight.bold))),
                 ),
-                onTap: () async {
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              RowViewPage(swiperRowMaps[0], 'xxx2')));
-                },
+                onTap: () async {},
               ),
               trailing: Obx(() => Text(sheetNamesLength[index].toString())),
             ),

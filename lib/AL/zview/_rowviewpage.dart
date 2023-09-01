@@ -4,14 +4,15 @@ import '../../BL/bl.dart';
 import 'edit/addquote.dart';
 import 'edit/attredit.dart';
 import 'rowviewatribs.dart';
-import 'sheetviewmenu.dart';
+import 'rowviewmenu.dart';
 import 'rowviewquote.dart';
 
 // ignore: must_be_immutable
 class RowViewPage extends StatefulWidget {
   Map rowMap;
   final String title;
-  RowViewPage(this.rowMap, this.title, {super.key});
+  final VoidCallback swiperSetstate;
+  RowViewPage(this.rowMap, this.title, this.swiperSetstate, {super.key});
 
   @override
   State<RowViewPage> createState() => _RowViewPageState();
@@ -32,8 +33,8 @@ class _RowViewPageState extends State<RowViewPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          leading: const Text(' '),
           title: Text(widget.title),
+          actions: [rowViewMenu(widget.rowMap, {}, widget.swiperSetstate)],
           bottom: TabBar(
             tabs: [
               Tab(text: currentSheet[bl.orm.fields['author']]),

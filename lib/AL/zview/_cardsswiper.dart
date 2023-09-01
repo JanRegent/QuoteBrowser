@@ -2,7 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
 import '_rowviewpage.dart';
-import 'sheetviewmenu.dart';
+import 'rowviewmenu.dart';
 
 // import '../../../2business_layer/appdata/approotdata.dart';
 
@@ -103,7 +103,8 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://github.com/TheAnkurPanchani/card_swiper/
 
           itemBuilder: (BuildContext context, int rowIndex) {
-            return RowViewPage(rowMap2viewReadWrite, widget.title);
+            return RowViewPage(
+                rowMap2viewReadWrite, widget.title, swiperSetstate);
           },
           itemCount: swiperRowMaps.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
@@ -118,23 +119,23 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: SheetviewMenu(const {}, const {}, swiperSetstate),
-        ),
+        // appBar: AppBar(
+        //   title: SheetviewMenu(const {}, const {}, swiperSetstate),
+        // ),
         body: FutureBuilder<String>(
-          future: getData(), // a previously-obtained Future<String> or null
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            if (snapshot.hasData) {
-              if (currentSheet.isEmpty) {
-                return Text('${swiperRowMaps[currentRowIndex]} is empty');
-              } else {
-                return body();
-              }
-            }
-            return const Center(
-              child: Text('Data loading'),
-            );
-          },
-        ));
+      future: getData(), // a previously-obtained Future<String> or null
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.hasData) {
+          if (currentSheet.isEmpty) {
+            return Text('${swiperRowMaps[currentRowIndex]} is empty');
+          } else {
+            return body();
+          }
+        }
+        return const Center(
+          child: Text('Data loading - swiper'),
+        );
+      },
+    ));
   }
 }

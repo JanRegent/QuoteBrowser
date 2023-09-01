@@ -19,12 +19,19 @@ class SearchableListview extends StatefulWidget {
 }
 
 class _SearchableListviewState extends State<SearchableListview> {
+  void swiperSetstate() {
+    setState(() {
+      //startRow changed
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget searchableList() {
       return SearchableList<Sheet>(
         initialList: filteredSheets,
-        builder: (index) => RowViewPage(swiperRowMaps[0], widget.title),
+        builder: (index) =>
+            RowViewPage(swiperRowMaps[0], widget.title, swiperSetstate),
         filter: (value) => filteredSheets
             .where(
               (element) => element.quote.toLowerCase().contains(value),
