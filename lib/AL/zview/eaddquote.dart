@@ -4,15 +4,15 @@ import 'package:quotebrowser/BL/bluti.dart';
 import 'package:quotebrowser/BL/locdbsembast/rows2db.dart';
 import 'package:quotebrowser/BL/params/params.dart';
 
-import '../../../BL/bl.dart';
+import '../../BL/bl.dart';
 
-import '../../../DL/dl.dart';
+import '../../DL/dl.dart';
 
-import '../../alib/selectiondialogs/selectone.dart';
+import '../alib/selectiondialogs/selectone.dart';
 
-import '../_cardsswiper.dart';
+import '_cardsswiper.dart';
 
-import 'quotefield.dart';
+import 'cedit/quoteedit.dart';
 
 // ignore: must_be_immutable
 class AddQuote extends StatefulWidget {
@@ -49,7 +49,7 @@ class _AddQuoteState extends State<AddQuote> {
       child: ListView(
         children: [
           ListTile(
-            title: QuoteField(rowMap, false, setstate),
+            title: QuoteEdit(rowMap, false, setstate),
             leading: Text(rowMap['rowNo']),
           ),
           ListTile(

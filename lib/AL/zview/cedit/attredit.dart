@@ -8,12 +8,13 @@ import '../../alib/alicons.dart';
 
 import 'categorylistview.dart';
 import 'katkapbplistview.dart';
-import 'quotefield.dart';
+import 'quoteedit.dart';
 
 // ignore: must_be_immutable
 class AttrEdit extends StatefulWidget {
   Map rowMap;
-  AttrEdit(this.rowMap, {super.key});
+  VoidCallback setstateRowView;
+  AttrEdit(this.rowMap, this.setstateRowView, {super.key});
 
   @override
   State<AttrEdit> createState() => _AttrEditState();
@@ -25,16 +26,12 @@ class _AttrEditState extends State<AttrEdit> {
     super.initState();
   }
 
-  void setstate() {
-    setState(() {});
-  }
-
-  Card card(Map rowMap, BuildContext context) {
+  Card card(BuildContext context) {
     List<ListTile> listTilesGet() {
       List<ListTile> listtiles = [
         ListTile(
-          title: QuoteField(rowMap, true, setstate),
-          leading: Text(rowMap['rowNo']),
+          title: QuoteEdit(widget.rowMap, true, widget.setstateRowView),
+          leading: Text(widget.rowMap['rowNo']),
         )
       ];
       try {
@@ -183,18 +180,6 @@ class _AttrEditState extends State<AttrEdit> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Attributes edit'),
-          actions: [
-            IconButton(
-                icon: const Icon(Icons.save),
-                onPressed: () async {
-                  await saveQuote();
-                }),
-            Text(respStatus!)
-          ],
-        ),
-        body: card(widget.rowMap, context));
+    return card(context);
   }
 }

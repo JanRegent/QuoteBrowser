@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../BL/bl.dart';
-import 'edit/addquote.dart';
-import 'edit/attredit.dart';
-import 'rowviewatribs.dart';
+import 'eaddquote.dart';
+import 'cedit/attredit.dart';
+import 'browviewattribs.dart';
 import 'rowviewmenu.dart';
-import 'rowviewquote.dart';
+import 'aquoteview.dart';
 
 // ignore: must_be_immutable
 class RowViewPage extends StatefulWidget {
@@ -24,36 +24,24 @@ class _RowViewPageState extends State<RowViewPage> {
     super.initState();
   }
 
-  setstate() {
+  setstateRowView() {
     setState(() {});
   }
 
   Widget tabs() {
     return DefaultTabController(
-      length: 3,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          actions: [rowViewMenu(widget.rowMap, {}, widget.swiperSetstate)],
+          actions: [rowViewMenu(widget.rowMap, {}, setstateRowView)],
           bottom: TabBar(
             tabs: [
               Tab(text: currentSheet[bl.orm.fields['author']]),
-              Tab(
-                child: Row(children: [
-                  const Icon(Icons.edit_attributes),
-                  const Text('          '),
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () async {
-                      await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AttrEdit(widget.rowMap)));
-
-                      setState(() {});
-                    },
-                  )
-                ]),
+              const Tab(child: Icon(Icons.view_agenda)),
+              const Tab(child: Icon(Icons.edit)),
+              const Tab(
+                text: '##',
               ),
               const Tab(icon: Icon(Icons.add)),
             ],
@@ -61,8 +49,10 @@ class _RowViewPageState extends State<RowViewPage> {
         ),
         body: TabBarView(
           children: [
-            RowViewQuote(currentSheet),
-            RowViewAtribs(currentSheet),
+            QuoteView(currentSheet),
+            QuoteAttribs(currentSheet),
+            AttrEdit(widget.rowMap, setstateRowView),
+            const Text('##'),
             const AddQuote()
           ],
         ),

@@ -5,11 +5,11 @@ import '../../../BL/bl.dart';
 import '../../../DL/dl.dart';
 
 // ignore: must_be_immutable
-class QuoteField extends StatelessWidget {
+class QuoteEdit extends StatelessWidget {
   Map rowMap;
   final bool isAttrEdit;
   Function setstate;
-  QuoteField(this.rowMap, this.isAttrEdit, this.setstate, {super.key});
+  QuoteEdit(this.rowMap, this.isAttrEdit, this.setstate, {super.key});
   final TextEditingController _controller = TextEditingController();
 
   Future setCellAttr(
@@ -45,8 +45,7 @@ class QuoteField extends StatelessWidget {
       default:
         return;
     }
-    if (rowMap['save2cloud'] == null) rowMap['save2cloud'] = false;
-    rowMap['save2cloud'] = true;
+
     setstate();
   }
 

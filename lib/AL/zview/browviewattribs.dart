@@ -8,15 +8,15 @@ import '../../BL/bl.dart';
 import '../alib/alicons.dart';
 
 // ignore: must_be_immutable
-class RowViewAtribs extends StatefulWidget {
+class QuoteAttribs extends StatefulWidget {
   Map rowMap;
-  RowViewAtribs(this.rowMap, {super.key});
+  QuoteAttribs(this.rowMap, {super.key});
 
   @override
-  State<RowViewAtribs> createState() => _RowViewAtribsState();
+  State<QuoteAttribs> createState() => _QuoteAttribsState();
 }
 
-class _RowViewAtribsState extends State<RowViewAtribs> {
+class _QuoteAttribsState extends State<QuoteAttribs> {
   @override
   initState() {
     super.initState();
