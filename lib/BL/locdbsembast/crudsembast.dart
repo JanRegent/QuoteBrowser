@@ -100,7 +100,7 @@ class CRUDsembast {
     searchItem = searchItem.toLowerCase();
 
     Filter filter = Filter.custom((snapshot) {
-      var value = snapshot[bl.orm.fields['quote']] as String;
+      var value = snapshot['quote'] as String;
       return value.toLowerCase().contains(searchItem);
     });
     Finder finder =

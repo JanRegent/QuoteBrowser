@@ -28,7 +28,7 @@ app/
 ios/
 linux/
 macos/
-web/
+
 windows/
 .
 # Flutter/Dart/Pub related

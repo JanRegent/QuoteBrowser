@@ -38,26 +38,22 @@ class Orm {
     return row;
   }
 
-  Map fields = {
-    'quote': 'citat',
-    'author': 'autor',
-    'book': 'kniha',
-    'tags': 'tags',
-    'category': 'category',
-    'categoryChapterPB': 'categoryChapterPB',
-    'folder': 'folder'
-  };
-  String fieldLocal(String key) {
-    String localName = fields[key];
-    return localName;
-  }
+  List<String> fields = [
+    'quote',
+    'author',
+    'book',
+    'tags',
+    'category',
+    'categoryChapterPB',
+    'folder'
+  ];
 
   Map<String, dynamic> newRowMap() {
     Map<String, dynamic> rowMap = {};
     rowMap["sheetName"] = '';
     rowMap["rowNo"] = '';
 
-    for (var fieldName in bl.orm.fields.values) {
+    for (var fieldName in bl.orm.fields) {
       rowMap[fieldName] = '';
     }
     rowMap['save2cloud'] = false;

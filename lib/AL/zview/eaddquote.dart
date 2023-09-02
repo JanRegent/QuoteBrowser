@@ -76,7 +76,7 @@ class _AddQuoteState extends State<AddQuote> {
                 onPressed: () async {
                   setState(() {
                     rowMap = bl.orm.newRowMap();
-                    rowMap[bl.orm.fields['quote']] = '';
+                    rowMap['quote'] = '';
                   });
                 }),
           ),
@@ -107,8 +107,8 @@ class _AddQuoteState extends State<AddQuote> {
 
   Future setCell(String columnName, String cellContent, String rowNo) async {
     debugPrint('5 pred post');
-    List respData = await dl.httpService.setCell(rowMap['sheetName'],
-        rowMap['fileId'], bl.orm.fields[columnName], cellContent, rowNo);
+    List respData = await dl.httpService.setCell(
+        rowMap['sheetName'], rowMap['fileId'], columnName, cellContent, rowNo);
     rowMap['rowNo'] = respData[0].toString();
     respStatus = 'row:${respData[0]}';
     setState(() {});
@@ -119,8 +119,8 @@ class _AddQuoteState extends State<AddQuote> {
     setState(() {
       respStatus = 'status:?';
     });
-    if (rowMap[bl.orm.fields['quote']].isEmpty) {
-      emptyDialog('Quote /n ${bl.orm.fields['quote']}');
+    if (rowMap['quote'].isEmpty) {
+      emptyDialog('Quote /n ${'quote'}');
       return [];
     }
 
@@ -128,7 +128,7 @@ class _AddQuoteState extends State<AddQuote> {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCell('quote', rowMap[bl.orm.fields['quote']], '');
+    await setCell('quote', rowMap['quote'], '');
     rowMap['dateinsert'] = '${blUti.todayStr()}.';
     swiperRowMaps.add(rowMap);
     //update(widget.sheet);

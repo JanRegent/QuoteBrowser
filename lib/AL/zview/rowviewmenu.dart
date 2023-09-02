@@ -2,7 +2,6 @@ import 'package:clipboard/clipboard.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 
-import '../../BL/bl.dart';
 import '../alib/alib.dart';
 
 int currentRowIndex = 0;
@@ -81,8 +80,7 @@ PopupMenuButton rowViewMenu(
                 child: InkWell(
               child: const Text('Copy current quote'),
               onTap: () async {
-                FlutterClipboard.copy(rowmap[bl.orm.fields['quote']])
-                    .then((value) => {});
+                FlutterClipboard.copy(rowmap['quote']).then((value) => {});
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
                 // ignore: use_build_context_synchronously

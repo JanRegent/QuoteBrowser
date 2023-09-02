@@ -4,7 +4,6 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:expandable/expandable.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../BL/bl.dart';
 import '../alib/alicons.dart';
 
 // ignore: must_be_immutable
@@ -22,7 +21,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
     super.initState();
 
     expandedCard = expandedWidgets1();
-    expandedWidgets2urls(widget.rowMap[bl.orm.fields['quote']]);
+    expandedWidgets2urls(widget.rowMap['quote']);
   }
 
   //------------------------------------------------------------------expand
@@ -32,14 +31,14 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
       ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.authorIcon,
-        title: Text(widget.rowMap[bl.orm.fields['author']]),
+        title: Text(widget.rowMap['author']),
       )
     ];
-    if (widget.rowMap[bl.orm.fields['book']].isNotEmpty) {
+    if (widget.rowMap['book'].isNotEmpty) {
       expandedCard.add(ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.bookIcon,
-        title: Text(widget.rowMap[bl.orm.fields['book']]),
+        title: Text(widget.rowMap['book']),
       ));
     }
     if (widget.rowMap['tags'].isNotEmpty) {

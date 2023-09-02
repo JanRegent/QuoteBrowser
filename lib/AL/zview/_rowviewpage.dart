@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../BL/bl.dart';
 import 'eaddquote.dart';
 import 'cedit/attredit.dart';
 import 'browviewattribs.dart';
@@ -37,7 +36,7 @@ class _RowViewPageState extends State<RowViewPage> {
           actions: [rowViewMenu(widget.rowMap, {}, setstateRowView)],
           bottom: TabBar(
             tabs: [
-              Tab(text: currentSheet[bl.orm.fields['author']]),
+              Tab(text: currentSheet['author']),
               const Tab(child: Icon(Icons.view_agenda)),
               const Tab(child: Icon(Icons.edit)),
               const Tab(

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
-import '../../../BL/bl.dart';
-
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
@@ -35,26 +33,26 @@ class _AttrEditState extends State<AttrEdit> {
         )
       ];
       try {
-        if (widget.rowMap[bl.orm.fields['author'] != null]) {
+        if (widget.rowMap['author'] != null) {
           listtiles.add(ListTile(
             tileColor: Colors.white,
             leading: ALicons.attrIcons.authorIcon,
-            title: Text(widget.rowMap[bl.orm.fields['author']]),
+            title: Text(widget.rowMap['author']),
             trailing: Text('sheetName: ${widget.rowMap['sheetName']}'),
           ));
         }
       } catch (_) {}
       try {
-        if (widget.rowMap[bl.orm.fields['book']]) {
+        if (widget.rowMap['book']) {
           listtiles.add(ListTile(
             tileColor: Colors.white,
             leading: ALicons.attrIcons.bookIcon,
-            title: Text(widget.rowMap[bl.orm.fields['book']]),
+            title: Text(widget.rowMap['book']),
           ));
         }
       } catch (_) {}
       try {
-        if (widget.rowMap[bl.orm.fields['tags']] != null) {
+        if (widget.rowMap['tags'] != null) {
           listtiles.add(ListTile(
             tileColor: Colors.lime,
             leading: ALicons.attrIcons.tagIcon,
@@ -63,7 +61,7 @@ class _AttrEditState extends State<AttrEdit> {
         }
       } catch (_) {}
       try {
-        if (widget.rowMap[bl.orm.fields['category']] != null) {
+        if (widget.rowMap['category'] != null) {
           listtiles.add(ListTile(
             tileColor: Colors.white,
             leading: ALicons.attrIcons.categoryIcon,
@@ -84,7 +82,7 @@ class _AttrEditState extends State<AttrEdit> {
         }
       } catch (_) {}
       try {
-        if (widget.rowMap[bl.orm.fields['categoryChapterPB']] != null) {
+        if (widget.rowMap['categoryChapterPB'] != null) {
           listtiles.add(ListTile(
             tileColor: Colors.lime,
             leading: const Text('PB'),
@@ -107,7 +105,7 @@ class _AttrEditState extends State<AttrEdit> {
       } catch (_) {}
 
       try {
-        if (widget.rowMap[bl.orm.fields['folder']] != null) {
+        if (widget.rowMap['folder'] != null) {
           listtiles.add(ListTile(
             tileColor: Colors.white,
             title: Text(widget.rowMap['folder']),
@@ -152,7 +150,7 @@ class _AttrEditState extends State<AttrEdit> {
   Future setCell(String columnName, String cellContent, String rowNo) async {
     debugPrint('5 pred post');
     List respData = await dl.httpService.setCell(widget.rowMap['sheetName'],
-        widget.rowMap['fileId'], bl.orm.fields[columnName], cellContent, rowNo);
+        widget.rowMap['fileId'], columnName, cellContent, rowNo);
     widget.rowMap['rowNo'] = respData[0].toString();
     respStatus = 'row:${respData[0]}';
     setState(() {});
@@ -163,9 +161,9 @@ class _AttrEditState extends State<AttrEdit> {
     setState(() {
       respStatus = 'status:?';
     });
-    debugPrint('1post--widget.rowMap[bl.orm.fields[quote]].isEmpty');
-    if (widget.rowMap[bl.orm.fields['quote']].isEmpty) {
-      emptyDialog('Quote /n ${bl.orm.fields['quote']}');
+    debugPrint('1post--widget.rowMap[quote]].isEmpty');
+    if (widget.rowMap['quote'].isEmpty) {
+      emptyDialog('Quote /n ${'quote'}');
       return [];
     }
 
@@ -173,7 +171,7 @@ class _AttrEditState extends State<AttrEdit> {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCell('quote', widget.rowMap[bl.orm.fields['quote']], '');
+    await setCell('quote', widget.rowMap['quote'], '');
     widget.rowMap['dateinsert'] = '${blUti.todayStr()}.';
     //update(widget.sheet);
   }
