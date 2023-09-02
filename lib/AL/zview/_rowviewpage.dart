@@ -48,9 +48,10 @@ class _RowViewPageState extends State<RowViewPage> {
           ),
         ),
         body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
           children: [
-            QuoteView(currentSheet),
-            QuoteAttribs(currentSheet),
+            QuoteView(widget.rowMap),
+            QuoteAttribs(widget.rowMap),
             AttrEdit(widget.rowMap, setstateRowView),
             const Text('##'),
             const AddQuote()
