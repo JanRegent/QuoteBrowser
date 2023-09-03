@@ -136,10 +136,6 @@ class _AddQuoteState extends State<AddQuote> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('New quote'),
-        ),
-        body: card(context));
+    return card(context);
   }
 }

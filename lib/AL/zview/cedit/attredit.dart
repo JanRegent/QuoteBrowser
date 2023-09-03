@@ -4,8 +4,6 @@ import 'package:quotebrowser/BL/bluti.dart';
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
-import 'categorylistview.dart';
-import 'katkapbplistview.dart';
 import 'quoteedit.dart';
 
 // ignore: must_be_immutable
@@ -28,93 +26,16 @@ class _AttrEditState extends State<AttrEdit> {
     List<ListTile> listTilesGet() {
       List<ListTile> listtiles = [
         ListTile(
+          tileColor: Colors.lime,
+          leading: ALicons.attrIcons.tagIcon,
+          title: Text(widget.rowMap['tags']),
+        ),
+        ListTile(
           title: QuoteEdit(widget.rowMap, true, widget.setstateRowView),
           leading: Text(widget.rowMap['rowNo']),
         )
       ];
-      try {
-        if (widget.rowMap['author'] != null) {
-          listtiles.add(ListTile(
-            tileColor: Colors.white,
-            leading: ALicons.attrIcons.authorIcon,
-            title: Text(widget.rowMap['author']),
-            trailing: Text('sheetName: ${widget.rowMap['sheetName']}'),
-          ));
-        }
-      } catch (_) {}
-      try {
-        if (widget.rowMap['book']) {
-          listtiles.add(ListTile(
-            tileColor: Colors.white,
-            leading: ALicons.attrIcons.bookIcon,
-            title: Text(widget.rowMap['book']),
-          ));
-        }
-      } catch (_) {}
-      try {
-        if (widget.rowMap['tags'] != null) {
-          listtiles.add(ListTile(
-            tileColor: Colors.lime,
-            leading: ALicons.attrIcons.tagIcon,
-            title: Text(widget.rowMap['tags']),
-          ));
-        }
-      } catch (_) {}
-      try {
-        if (widget.rowMap['category'] != null) {
-          listtiles.add(ListTile(
-            tileColor: Colors.white,
-            leading: ALicons.attrIcons.categoryIcon,
-            title: InkWell(
-              child: Text(widget.rowMap['category']),
-              onTap: () async {
-                String keyrow = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CategoryListview(widget.rowMap)),
-                );
-                if (keyrow.isEmpty) return;
-                widget.rowMap['category'] = keyrow;
-                setState(() {});
-              },
-            ),
-          ));
-        }
-      } catch (_) {}
-      try {
-        if (widget.rowMap['categoryChapterPB'] != null) {
-          listtiles.add(ListTile(
-            tileColor: Colors.lime,
-            leading: const Text('PB'),
-            title: InkWell(
-              child: Text(widget.rowMap['categoryChapterPB']),
-              onTap: () async {
-                String keyrow = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          CategoryChapterBPListview(widget.rowMap)),
-                );
-                if (keyrow.isEmpty) return;
-                widget.rowMap['categoryChapterPB'] = keyrow;
-                setState(() {});
-              },
-            ),
-          ));
-        }
-      } catch (_) {}
 
-      try {
-        if (widget.rowMap['folder'] != null) {
-          listtiles.add(ListTile(
-            tileColor: Colors.white,
-            title: Text(widget.rowMap['folder']),
-            leading: const Icon(Icons.folder),
-            trailing: IconButton(
-                onPressed: () async {}, icon: const Icon(Icons.link)),
-          ));
-        }
-      } catch (_) {}
       return listtiles;
     }
 

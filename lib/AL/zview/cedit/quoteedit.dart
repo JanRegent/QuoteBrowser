@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:translator_plus/translator_plus.dart';
 
 import '../../../DL/dl.dart';
+import '../../alib/alicons.dart';
 
 // ignore: must_be_immutable
 class QuoteEdit extends StatelessWidget {
@@ -66,13 +67,13 @@ class QuoteEdit extends StatelessWidget {
             ? Row(
                 children: [
                   IconButton(
-                      icon: Icon(Icons.person, size: iconSize),
+                      icon: ALicons.attrIcons.authorIcon,
                       onPressed: () => attribSet('author')),
                   IconButton(
-                      icon: Icon(Icons.book, size: iconSize),
+                      icon: ALicons.attrIcons.bookIcon,
                       onPressed: () => attribSet('book')),
                   IconButton(
-                      icon: Icon(Icons.tag, size: iconSize),
+                      icon: ALicons.attrIcons.tagIcon,
                       onPressed: () => attribSet('tags')),
                 ],
               )
@@ -85,7 +86,11 @@ class QuoteEdit extends StatelessWidget {
               ),
         TextField(
           controller: _controller,
-          maxLines: 10,
+          style: const TextStyle(
+            fontSize: 20.0,
+            color: Colors.black,
+          ),
+          maxLines: 20,
           onChanged: (value) async {
             rowMap['quote'] = value;
           },

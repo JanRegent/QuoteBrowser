@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 
 import 'package:expandable/expandable.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../BL/bl.dart';
 import '../alib/alicons.dart';
 
 // ignore: must_be_immutable
@@ -34,55 +36,29 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
         title: Text(widget.rowMap['author']),
       )
     ];
-    if (widget.rowMap['book'].isNotEmpty) {
+    if (widget.rowMap['book'].isEmpty) widget.rowMap['book'] = '';
+    expandedCard.add(ListTile(
+      tileColor: Colors.white,
+      leading: ALicons.attrIcons.bookIcon,
+      title: Text(widget.rowMap['book']),
+    ));
+
+    if (widget.rowMap['tags'].isEmpty) widget.rowMap['tags'] = '';
+    expandedCard.add(ListTile(
+      tileColor: Colors.lime,
+      leading: ALicons.attrIcons.tagIcon,
+      title: Text(widget.rowMap['tags']),
+    ));
+
+    for (String columnName in bl.orm.optionalFields) {
+      if (widget.rowMap[columnName] == null) continue;
+      if (widget.rowMap[columnName].toString().isEmpty) continue;
       expandedCard.add(ListTile(
         tileColor: Colors.white,
-        leading: ALicons.attrIcons.bookIcon,
-        title: Text(widget.rowMap['book']),
+        leading: Text(columnName),
+        title: Text(widget.rowMap[columnName]),
       ));
     }
-    if (widget.rowMap['tags'].isNotEmpty) {
-      expandedCard.add(ListTile(
-        tileColor: Colors.lime,
-        leading: ALicons.attrIcons.tagIcon,
-        title: Text(widget.rowMap['tags']),
-      ));
-    }
-    try {
-      if (widget.rowMap['category'].isNotEmpty) {
-        expandedCard.add(ListTile(
-          tileColor: Colors.white,
-          leading: ALicons.attrIcons.categoryIcon,
-          title: InkWell(
-            child: Text(widget.rowMap['category']),
-            onTap: () async {},
-          ),
-        ));
-      }
-    } catch (_) {}
-    try {
-      if (widget.rowMap['categoryChapterPB'].isNotEmpty) {
-        expandedCard.add(ListTile(
-          tileColor: Colors.lime,
-          leading: const Text('PB'),
-          title: InkWell(
-            child: Text(widget.rowMap['categoryChapterPB']),
-            onTap: () async {},
-          ),
-        ));
-      }
-    } catch (_) {}
-    try {
-      if (widget.rowMap['folder'].isNotEmpty) {
-        expandedCard.add(ListTile(
-          tileColor: Colors.white,
-          title: Text(widget.rowMap['folder']),
-          leading: const Icon(Icons.folder),
-          trailing:
-              IconButton(onPressed: () async {}, icon: const Icon(Icons.link)),
-        ));
-      }
-    } catch (_) {}
 
     return expandedCard;
   }
@@ -114,10 +90,16 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
   ExpandableController contr = ExpandableController(initialExpanded: true);
   Card card(Map rowMap) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      color: const Color.fromARGB(255, 213, 209, 192),
-      child: ListView(children: expandedCard),
-    );
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        color: const Color.fromARGB(255, 122, 203, 243),
+        child: ListView.separated(
+          itemCount: expandedCard.length,
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+          itemBuilder: (BuildContext context, int index) {
+            return expandedCard[index];
+          },
+        ));
   }
 
   @override
