@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'aarowmaprowview.dart';
+import 'aacommon.dart';
 import 'eaddquote.dart';
 import 'cedit/attredit.dart';
 import 'battribs.dart';

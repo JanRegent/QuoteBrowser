@@ -2,8 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
 import '_rowviewpage.dart';
-import 'aarowmaprowview.dart';
-import 'rowviewmenu.dart';
+import 'aacommon.dart';
 
 // import '../../../2business_layer/appdata/approotdata.dart';
 
@@ -36,13 +35,13 @@ class _CardSwiperState extends State<CardSwiper> {
 
   Map rowMap2viewReadWrite = {}; //Map Bad state: read only
   Future<String> getData() async {
-    currentSheet = swiperRowMaps[currentRowIndex];
+    rowMap2viewReadWrite = swiperRowMaps[currentRowIndex];
 
-    for (var key in currentSheet.keys) {
-      if (currentSheet[key] == null) {
+    for (var key in rowMap2viewReadWrite.keys) {
+      if (rowMap2viewReadWrite[key] == null) {
         rowMap2viewReadWrite[key] = '';
       } else {
-        rowMap2viewReadWrite[key] = currentSheet[key];
+        rowMap2viewReadWrite[key] = rowMap2viewReadWrite[key];
       }
     }
 
@@ -127,7 +126,7 @@ class _CardSwiperState extends State<CardSwiper> {
       future: getData(), // a previously-obtained Future<String> or null
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         if (snapshot.hasData) {
-          if (currentSheet.isEmpty) {
+          if (rowMap2viewReadWrite.isEmpty) {
             return Text('${swiperRowMaps[currentRowIndex]} is empty');
           } else {
             return body();

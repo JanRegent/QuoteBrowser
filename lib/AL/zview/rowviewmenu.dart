@@ -3,9 +3,7 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 
 import '../alib/alib.dart';
-
-int currentRowIndex = 0;
-Map currentSheet = {'quote': '[init]'};
+import 'aacommon.dart';
 
 PopupMenuButton rowViewMenu(
     Map rowmap, Map configRow, VoidCallback swiperSetstate) {
@@ -25,7 +23,7 @@ PopupMenuButton rowViewMenu(
               onTap: () async {
                 // ignore: use_build_context_synchronously //Icons.open_in_browser
                 await al.openDoc(
-                    currentSheet['fileId'], context, 'Open source sheet');
+                    rowMapRowView['fileId'], context, 'Open source sheet');
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
                 // ignore: use_build_context_synchronously
