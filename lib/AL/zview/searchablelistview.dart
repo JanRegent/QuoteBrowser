@@ -6,6 +6,7 @@ import '../../BL/sheet/sheet.dart';
 import '../filters/emptyview.dart';
 import '_cardsswiper.dart';
 import '_rowviewpage.dart';
+import 'acommonrowmap.dart';
 
 List<Sheet> filteredSheets = [];
 
@@ -28,10 +29,10 @@ class _SearchableListviewState extends State<SearchableListview> {
   @override
   Widget build(BuildContext context) {
     Widget searchableList() {
+      rowMapRowView = swiperRowMaps[0];
       return SearchableList<Sheet>(
         initialList: filteredSheets,
-        builder: (index) =>
-            RowViewPage(swiperRowMaps[0], widget.title, swiperSetstate),
+        builder: (index) => RowViewPage(widget.title, swiperSetstate),
         filter: (value) => filteredSheets
             .where(
               (element) => element.quote.toLowerCase().contains(value),

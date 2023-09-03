@@ -3,19 +3,19 @@ import 'package:translator_plus/translator_plus.dart';
 
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
+import '../acommonrowmap.dart';
 
 // ignore: must_be_immutable
 class QuoteEdit extends StatelessWidget {
-  Map rowMap;
   final bool isAttrEdit;
   Function setstate;
-  QuoteEdit(this.rowMap, this.isAttrEdit, this.setstate, {super.key});
+  QuoteEdit(this.isAttrEdit, this.setstate, {super.key});
   final TextEditingController _controller = TextEditingController();
 
   Future setCellAttr(
       String columnName, String cellContent, String rowNo) async {
-    List respData = await dl.httpService.setCell(
-        rowMap['sheetName'], rowMap['fileId'], columnName, cellContent, rowNo);
+    List respData = await dl.httpService.setCell(rowMapRowView['sheetName'],
+        rowMapRowView['fileId'], columnName, cellContent, rowNo);
 
     debugPrint('row: $respData');
   }
@@ -28,16 +28,19 @@ class QuoteEdit extends StatelessWidget {
 
     switch (attribName) {
       case 'author':
-        rowMap['author'] = selected;
-        await setCellAttr(attribName, rowMap[attribName], rowMap['rowNo']);
+        rowMapRowView['author'] = selected;
+        await setCellAttr(
+            attribName, rowMapRowView[attribName], rowMapRowView['rowNo']);
         break;
       case 'book':
-        rowMap['book'] = selected;
-        await setCellAttr(attribName, rowMap[attribName], rowMap['rowNo']);
+        rowMapRowView['book'] = selected;
+        await setCellAttr(
+            attribName, rowMapRowView[attribName], rowMapRowView['rowNo']);
         break;
       case 'tags':
-        rowMap['tags'] = rowMap['tags'] + ',$selected';
-        await setCellAttr(attribName, rowMap[attribName], rowMap['rowNo']);
+        rowMapRowView['tags'] = rowMapRowView['tags'] + ',$selected';
+        await setCellAttr(
+            attribName, rowMapRowView[attribName], rowMapRowView['rowNo']);
         break;
       default:
         return;
@@ -49,16 +52,17 @@ class QuoteEdit extends StatelessWidget {
   Future transl() async {
     final translator = GoogleTranslator();
 
-    var translation = await translator.translate(rowMap['quote'], to: 'cs');
+    var translation =
+        await translator.translate(rowMapRowView['quote'], to: 'cs');
 
-    rowMap['quote'] = translation.text;
+    rowMapRowView['quote'] = translation.text;
 
     setstate();
   }
 
   @override //printSelectedText()
   Widget build(BuildContext context) {
-    _controller.text = rowMap['quote'];
+    _controller.text = rowMapRowView['quote'];
 
     double iconSize = 30.0;
     return Column(
@@ -92,7 +96,7 @@ class QuoteEdit extends StatelessWidget {
           ),
           maxLines: 20,
           onChanged: (value) async {
-            rowMap['quote'] = value;
+            rowMapRowView['quote'] = value;
           },
         )
       ],

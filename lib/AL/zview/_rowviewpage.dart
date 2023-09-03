@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'acommonrowmap.dart';
 import 'eaddquote.dart';
 import 'cedit/attredit.dart';
 import 'battribs.dart';
@@ -8,10 +9,9 @@ import 'aquoteview.dart';
 
 // ignore: must_be_immutable
 class RowViewPage extends StatefulWidget {
-  Map rowMap;
   final String title;
-  final VoidCallback swiperSetstate;
-  RowViewPage(this.rowMap, this.title, this.swiperSetstate, {super.key});
+  final VoidCallback setstateSviper;
+  const RowViewPage(this.title, this.setstateSviper, {super.key});
 
   @override
   State<RowViewPage> createState() => _RowViewPageState();
@@ -33,25 +33,25 @@ class _RowViewPageState extends State<RowViewPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          actions: [rowViewMenu(widget.rowMap, {}, setstateRowView)],
-          bottom: TabBar(
+          actions: [rowViewMenu(rowMapRowView, {}, setstateRowView)],
+          bottom: const TabBar(
             tabs: [
-              Tab(text: currentSheet['author']),
-              const Tab(child: Icon(Icons.view_agenda)),
-              const Tab(child: Icon(Icons.edit)),
-              const Tab(
+              Tab(child: Icon(Icons.format_quote)),
+              Tab(child: Icon(Icons.view_agenda)),
+              Tab(child: Icon(Icons.edit)),
+              Tab(
                 text: '##',
               ),
-              const Tab(icon: Icon(Icons.add)),
+              Tab(icon: Icon(Icons.add)),
             ],
           ),
         ),
         body: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            QuoteView(widget.rowMap),
-            QuoteAttribs(widget.rowMap),
-            AttrEdit(widget.rowMap, setstateRowView),
+            const QuoteView(),
+            const QuoteAttribs(),
+            AttrEdit(setstateRowView),
             const Text('##'),
             const AddQuote()
           ],

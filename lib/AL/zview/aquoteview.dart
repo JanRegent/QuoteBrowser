@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:highlight_text/highlight_text.dart';
 
+import 'acommonrowmap.dart';
+
 // ignore: must_be_immutable
 class QuoteView extends StatefulWidget {
-  Map rowMap;
-  QuoteView(this.rowMap, {super.key});
+  const QuoteView({super.key});
 
   @override
   State<QuoteView> createState() => _QuoteViewState();
@@ -23,7 +24,7 @@ class _QuoteViewState extends State<QuoteView> {
   Map<String, HighlightedWord> highlightedWord = {};
   void highlightedWordFill() {
     List<String> tagsWords =
-        widget.rowMap['tags'].trim().split(RegExp(r'[|,.\s]'));
+        rowMapRowView['tags'].trim().split(RegExp(r'[|,.\s]'));
     highlightedWord.clear();
     if (tagsWords.length < 2) return;
     for (String word in tagsWords) {
@@ -44,10 +45,10 @@ class _QuoteViewState extends State<QuoteView> {
     color: Colors.red,
   );
 
-  TextHighlight quoteField(Map rowMap) {
+  TextHighlight quoteField() {
     highlightedWordFill();
     return TextHighlight(
-        text: rowMap['quote'],
+        text: rowMapRowView['quote'],
         words: highlightedWord,
         matchCase: false,
         textStyle: const TextStyle(
@@ -58,14 +59,14 @@ class _QuoteViewState extends State<QuoteView> {
 
   //------------------------------------------------------------------card
 
-  Card card(Map rowMap) {
+  Card card() {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 5),
       color: const Color.fromARGB(255, 213, 209, 192),
       child: ListView(children: [
         ListTile(
-          title: quoteField(rowMap),
-          leading: Text(rowMap['rowNo']),
+          title: quoteField(),
+          leading: Text(rowMapRowView['rowNo']),
         ),
       ]),
     );
@@ -73,6 +74,6 @@ class _QuoteViewState extends State<QuoteView> {
 
   @override
   Widget build(BuildContext context) {
-    return card(widget.rowMap);
+    return card();
   }
 }

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 
 import 'package:expandable/expandable.dart';
-import 'package:get/get.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../BL/bl.dart';
 import '../alib/alicons.dart';
+import 'acommonrowmap.dart';
 
 // ignore: must_be_immutable
 class QuoteAttribs extends StatefulWidget {
-  Map rowMap;
-  QuoteAttribs(this.rowMap, {super.key});
+  const QuoteAttribs({super.key});
 
   @override
   State<QuoteAttribs> createState() => _QuoteAttribsState();
@@ -23,7 +23,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
     super.initState();
 
     expandedCard = expandedWidgets1();
-    expandedWidgets2urls(widget.rowMap['quote']);
+    expandedWidgets2urls(rowMapRowView['quote']);
   }
 
   //------------------------------------------------------------------expand
@@ -33,30 +33,30 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
       ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.authorIcon,
-        title: Text(widget.rowMap['author']),
+        title: Text(rowMapRowView['author']),
       )
     ];
-    if (widget.rowMap['book'].isEmpty) widget.rowMap['book'] = '';
+    if (rowMapRowView['book'].isEmpty) rowMapRowView['book'] = '';
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.bookIcon,
-      title: Text(widget.rowMap['book']),
+      title: Text(rowMapRowView['book']),
     ));
 
-    if (widget.rowMap['tags'].isEmpty) widget.rowMap['tags'] = '';
+    if (rowMapRowView['tags'].isEmpty) rowMapRowView['tags'] = '';
     expandedCard.add(ListTile(
       tileColor: Colors.lime,
       leading: ALicons.attrIcons.tagIcon,
-      title: Text(widget.rowMap['tags']),
+      title: Text(rowMapRowView['tags']),
     ));
 
     for (String columnName in bl.orm.optionalFields) {
-      if (widget.rowMap[columnName] == null) continue;
-      if (widget.rowMap[columnName].toString().isEmpty) continue;
+      if (rowMapRowView[columnName] == null) continue;
+      if (rowMapRowView[columnName].toString().isEmpty) continue;
       expandedCard.add(ListTile(
         tileColor: Colors.white,
         leading: Text(columnName),
-        title: Text(widget.rowMap[columnName]),
+        title: Text(rowMapRowView[columnName]),
       ));
     }
 
@@ -104,6 +104,6 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
 
   @override
   Widget build(BuildContext context) {
-    return card(widget.rowMap);
+    return card(rowMapRowView);
   }
 }

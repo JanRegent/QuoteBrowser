@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
 import '_rowviewpage.dart';
+import 'acommonrowmap.dart';
 import 'rowviewmenu.dart';
 
 // import '../../../2business_layer/appdata/approotdata.dart';
@@ -103,8 +104,8 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://github.com/TheAnkurPanchani/card_swiper/
 
           itemBuilder: (BuildContext context, int rowIndex) {
-            return RowViewPage(
-                rowMap2viewReadWrite, widget.title, swiperSetstate);
+            rowMapRowView = rowMap2viewReadWrite;
+            return RowViewPage(widget.title, swiperSetstate);
           },
           itemCount: swiperRowMaps.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),

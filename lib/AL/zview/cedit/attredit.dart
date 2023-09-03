@@ -4,13 +4,13 @@ import 'package:quotebrowser/BL/bluti.dart';
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
+import '../acommonrowmap.dart';
 import 'quoteedit.dart';
 
 // ignore: must_be_immutable
 class AttrEdit extends StatefulWidget {
-  Map rowMap;
   VoidCallback setstateRowView;
-  AttrEdit(this.rowMap, this.setstateRowView, {super.key});
+  AttrEdit(this.setstateRowView, {super.key});
 
   @override
   State<AttrEdit> createState() => _AttrEditState();
@@ -28,11 +28,11 @@ class _AttrEditState extends State<AttrEdit> {
         ListTile(
           tileColor: Colors.lime,
           leading: ALicons.attrIcons.tagIcon,
-          title: Text(widget.rowMap['tags']),
+          title: Text(rowMapRowView['tags']),
         ),
         ListTile(
-          title: QuoteEdit(widget.rowMap, true, widget.setstateRowView),
-          leading: Text(widget.rowMap['rowNo']),
+          title: QuoteEdit(true, widget.setstateRowView),
+          leading: Text(rowMapRowView['rowNo']),
         )
       ];
 
@@ -70,9 +70,9 @@ class _AttrEditState extends State<AttrEdit> {
 
   Future setCell(String columnName, String cellContent, String rowNo) async {
     debugPrint('5 pred post');
-    List respData = await dl.httpService.setCell(widget.rowMap['sheetName'],
-        widget.rowMap['fileId'], columnName, cellContent, rowNo);
-    widget.rowMap['rowNo'] = respData[0].toString();
+    List respData = await dl.httpService.setCell(rowMapRowView['sheetName'],
+        rowMapRowView['fileId'], columnName, cellContent, rowNo);
+    rowMapRowView['rowNo'] = respData[0].toString();
     respStatus = 'row:${respData[0]}';
     setState(() {});
   }
@@ -82,18 +82,18 @@ class _AttrEditState extends State<AttrEdit> {
     setState(() {
       respStatus = 'status:?';
     });
-    debugPrint('1post--widget.rowMap[quote]].isEmpty');
-    if (widget.rowMap['quote'].isEmpty) {
+    debugPrint('1post--rowMapRowView[quote]].isEmpty');
+    if (rowMapRowView['quote'].isEmpty) {
       emptyDialog('Quote /n ${'quote'}');
       return [];
     }
 
-    if (widget.rowMap['sheetName'].isEmpty) {
+    if (rowMapRowView['sheetName'].isEmpty) {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCell('quote', widget.rowMap['quote'], '');
-    widget.rowMap['dateinsert'] = '${blUti.todayStr()}.';
+    await setCell('quote', rowMapRowView['quote'], '');
+    rowMapRowView['dateinsert'] = '${blUti.todayStr()}.';
     //update(widget.sheet);
   }
 
