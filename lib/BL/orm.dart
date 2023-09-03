@@ -38,14 +38,14 @@ class Orm {
     return row;
   }
 
-  List<String> fields = [
-    'quote',
-    'author',
-    'book',
-    'tags',
+  List<String> mandatoryFields = ['quote', 'author', 'book', 'tags'];
+  List<String> optionalFields = [
     'category',
+    'sourceUrl',
+    'fileUrl',
     'categoryChapterPB',
-    'folder'
+    'folder',
+    'original'
   ];
 
   Map<String, dynamic> newRowMap() {
@@ -53,10 +53,9 @@ class Orm {
     rowMap["sheetName"] = '';
     rowMap["rowNo"] = '';
 
-    for (var fieldName in bl.orm.fields) {
+    for (var fieldName in bl.orm.mandatoryFields) {
       rowMap[fieldName] = '';
     }
-    rowMap['save2cloud'] = false;
 
     return rowMap;
   }
