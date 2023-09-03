@@ -46,7 +46,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
     expandedCard.add(ListTile(
       tileColor: Colors.lime,
       leading: ALicons.attrIcons.tagIcon,
-      title: Text(rowMapRowView['tags']),
+      title: Text(rowMapRowView['tags'].toString().replaceAll(',', ',\n')),
     ));
 
     for (String columnName in bl.orm.optionalFields) {

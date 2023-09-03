@@ -29,7 +29,7 @@ class _SearchableListviewState extends State<SearchableListview> {
   @override
   Widget build(BuildContext context) {
     Widget searchableList() {
-      rowMapRowView = swiperRowMaps[0];
+      rowMapRowView = swiperSheetRownoKeys[0];
       return SearchableList<Sheet>(
         initialList: filteredSheets,
         builder: (index) => RowViewPage(widget.title, swiperSetstate),

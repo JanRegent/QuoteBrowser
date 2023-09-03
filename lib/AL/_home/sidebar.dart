@@ -76,23 +76,6 @@ class _SidebarPageState extends State<SidebarPage> {
                   .showSnackBar(const SnackBar(content: Text("Refresh data"))),
               isSelected: true,
             ),
-            CollapsibleItem(
-                text: 'Shop',
-                icon: Icons.ac_unit,
-                onPressed: () => setState(() => _headline = 'Shop'),
-                onHold: () => ScaffoldMessenger.of(context)
-                    .showSnackBar(const SnackBar(content: Text("Shop"))),
-                isSelected: true,
-                subItems: [
-                  CollapsibleItem(
-                    text: 'Cart',
-                    icon: Icons.shopping_cart,
-                    onPressed: () => setState(() => _headline = 'Cart'),
-                    onHold: () => ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(content: Text("Cart"))),
-                    isSelected: true,
-                  )
-                ]),
           ]),
       //-----------------------------------------------------------------new
       CollapsibleItem(

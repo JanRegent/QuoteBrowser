@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
 import 'package:quotebrowser/BL/locdbsembast/rows2db.dart';
-import 'package:quotebrowser/BL/params/params.dart';
 
 import '../../BL/bl.dart';
 
@@ -129,7 +128,7 @@ class _AddQuoteState extends State<AddQuote> {
     }
     await setCell('quote', rowMapRowView['quote'], '');
     rowMapRowView['dateinsert'] = '${blUti.todayStr()}.';
-    swiperRowMaps.add(rowMapRowView);
+    swiperSheetRownoKeys.add(rowMapRowView);
     //update(widget.sheet);
   }
 

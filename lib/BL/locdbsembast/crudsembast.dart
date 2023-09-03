@@ -91,6 +91,36 @@ class CRUDsembast {
     return keys;
   }
 
+  Future<List<Map>> searchByFieldSheetRowNo(
+      String fieldName, String searchItem) async {
+// Using a regular expression matching the exact word (no case)
+    Filter filterRegex = Filter.matchesRegExp(
+        fieldName, RegExp('^$searchItem\$', caseSensitive: false));
+
+    // Using a custom filter exact word (converting everything to lowercase)
+    searchItem = searchItem.toLowerCase();
+
+    Finder finder =
+        Finder(filter: filterRegex, sortOrders: [SortOrder('dateinsert')]);
+
+    final recordSnapshots = await sheetStore.find(
+      sembastDb,
+      finder: finder,
+    );
+    List<Map> keys = [];
+
+    for (var snap in recordSnapshots) {
+      Map snapMap = snap.value as Map;
+      Map sheetRowNo = {};
+      sheetRowNo['sheetName'] = snapMap['sheetName'];
+      sheetRowNo['rowNo'] = snapMap['rowNo'];
+      if (sheetRowNo['rowNo'] == '1') continue;
+      keys.add(sheetRowNo);
+    }
+
+    return keys;
+  }
+
   Future searchByDateinsert(String searchItem) async {
     return searchByFieldSheetRowKeys('dateinsert', searchItem);
   }
@@ -125,6 +155,20 @@ class CRUDsembast {
         await sheetStore.record(sheetRowKey).getSnapshot(sembastDb);
     if (snapshot == null) return {};
     return snapshot.value as Map;
+  }
+
+  Future<Map> readBySheetRowNo(Map sheetRowNo) async {
+    var filterAnd = Filter.equals('sheetName', sheetRowNo['sheetName']) &
+        Filter.equals('rowNo', sheetRowNo['rowNo']);
+
+    Finder finder =
+        Finder(filter: filterAnd, sortOrders: [SortOrder('dateinsert')]);
+
+    final records = await sheetStore.find(sembastDb, finder: finder);
+    // ignore: unnecessary_null_comparison
+    if (records == null) return {};
+
+    return records[0].value as Map;
   }
 
   //----------------------------------------------------------------readLen

@@ -12,7 +12,7 @@ import 'aacommon.dart';
 // import 'd1quotedetailpage.dart';
 // import 'd20menu.dart';
 
-List<Map> swiperRowMaps = [];
+List<Map> swiperSheetRownoKeys = [];
 
 class CardSwiper extends StatefulWidget {
   final String title;
@@ -33,22 +33,14 @@ class _CardSwiperState extends State<CardSwiper> {
   void initState() {
     super.initState();
     currentRowIndex = 0;
-    rowMap2viewReadWrite = swiperRowMaps[currentRowIndex];
+    //rowMap2viewReadWrite = swiperRowMaps[currentRowIndex];
   }
 
-  Map rowMap2viewReadWrite = {}; //Map Bad state: read only
-  Future<String> getData() async {
-    rowMap2viewReadWrite = bl.orm.checkMap(swiperRowMaps[currentRowIndex]);
-
-    for (var key in rowMap2viewReadWrite.keys) {
-      if (rowMap2viewReadWrite[key] == null) {
-        rowMap2viewReadWrite[key] = '';
-      } else {
-        rowMap2viewReadWrite[key] = rowMap2viewReadWrite[key];
-      }
-    }
-
-    return 'OK';
+  //Map Bad state: read only
+  Future<Map> getData() async {
+    Map map =
+        await bl.crud.readBySheetRowNo(swiperSheetRownoKeys[currentRowIndex]);
+    return bl.orm.checkMap(map);
   }
 
   //---------------------------------------------------------- int startRow
@@ -96,7 +88,7 @@ class _CardSwiperState extends State<CardSwiper> {
     });
   }
 
-  ConstrainedBox body() {
+  ConstrainedBox body(Map rowmap) {
     return ConstrainedBox(
         constraints: BoxConstraints.loose(Size(
             MediaQuery.of(context).size.width,
@@ -106,10 +98,11 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://github.com/TheAnkurPanchani/card_swiper/
 
           itemBuilder: (BuildContext context, int rowIndex) {
-            rowMapRowView = rowMap2viewReadWrite;
+            rowMapRowView = rowmap;
+
             return RowViewPage(widget.title, swiperSetstate);
           },
-          itemCount: swiperRowMaps.length,
+          itemCount: swiperSheetRownoKeys.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
           pagination:
               const SwiperPagination(builder: SwiperPagination.fraction),
@@ -125,14 +118,33 @@ class _CardSwiperState extends State<CardSwiper> {
         // appBar: AppBar(
         //   title: SheetviewMenu(const {}, const {}, swiperSetstate),
         // ),
-        body: FutureBuilder<String>(
+        body: FutureBuilder<Map>(
       future: getData(), // a previously-obtained Future<String> or null
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        if (rowMap2viewReadWrite.isEmpty) {
-          return Text('${swiperRowMaps[currentRowIndex]} is empty');
+      builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
+        List<Widget> children;
+        if (snapshot.hasData) {
+          return body(snapshot.data as Map);
+        } else if (snapshot.hasError) {
+          return const Text('sviper load err');
         } else {
-          return body();
+          children = const <Widget>[
+            SizedBox(
+              width: 60,
+              height: 60,
+              child: CircularProgressIndicator(),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: Text('Awaiting result...'),
+            ),
+          ];
         }
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: children,
+          ),
+        );
       },
     ));
   }
