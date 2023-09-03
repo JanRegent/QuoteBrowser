@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 import 'bl.dart';
+import 'bluti.dart';
+import 'params/params.dart';
 
 class Orm {
   Map<String, dynamic> row2map(List<String> cols, List<String> row,
@@ -48,14 +50,34 @@ class Orm {
     'original'
   ];
 
-  Map<String, dynamic> newRowMap() {
-    Map<String, dynamic> rowMap = {};
+  Map newRowMap() {
+    Map rowMap = {};
     rowMap["sheetName"] = '';
     rowMap["rowNo"] = '';
+    rowMap['fileId'] = dataSheetId;
+    rowMap['dateinsert'] = '${blUti.todayStr()}.';
 
     for (var fieldName in bl.orm.mandatoryFields) {
       rowMap[fieldName] = '';
     }
+
+    return checkMap(rowMap);
+  }
+
+  Map checkMap(Map rowMap) {
+    void checkField(String columnName) {
+      if (rowMap[columnName] == null) {
+        rowMap[columnName] = '';
+        return;
+      }
+      if (rowMap[columnName].toString().isEmpty) {
+        rowMap[columnName] = '';
+      }
+    }
+
+    checkField('author');
+    checkField('book');
+    checkField('tags');
 
     return rowMap;
   }

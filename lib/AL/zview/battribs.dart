@@ -29,21 +29,20 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
   //------------------------------------------------------------------expand
   List<Widget> expandedCard = [];
   List<Widget> expandedWidgets1() {
-    expandedCard = [
-      ListTile(
-        tileColor: Colors.white,
-        leading: ALicons.attrIcons.authorIcon,
-        title: Text(rowMapRowView['author']),
-      )
-    ];
-    if (rowMapRowView['book'].isEmpty) rowMapRowView['book'] = '';
+    expandedCard = [];
+
+    expandedCard.add(ListTile(
+      tileColor: Colors.white,
+      leading: ALicons.attrIcons.authorIcon,
+      title: Text(rowMapRowView['author']),
+    ));
+
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.bookIcon,
       title: Text(rowMapRowView['book']),
     ));
 
-    if (rowMapRowView['tags'].isEmpty) rowMapRowView['tags'] = '';
     expandedCard.add(ListTile(
       tileColor: Colors.lime,
       leading: ALicons.attrIcons.tagIcon,
@@ -53,6 +52,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
     for (String columnName in bl.orm.optionalFields) {
       if (rowMapRowView[columnName] == null) continue;
       if (rowMapRowView[columnName].toString().isEmpty) continue;
+
       expandedCard.add(ListTile(
         tileColor: Colors.white,
         leading: Text(columnName),

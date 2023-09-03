@@ -64,7 +64,10 @@ class _QuoteViewState extends State<QuoteView> {
       margin: const EdgeInsets.symmetric(vertical: 5),
       color: const Color.fromARGB(255, 213, 209, 192),
       child: ListView(children: [
-        Text(rowMapRowView['sheetName']),
+        ListTile(
+          leading: Text(rowMapRowView['dateinsert']),
+          title: Text(rowMapRowView['sheetName']),
+        ),
         ListTile(
           title: quoteField(),
           leading: Text(rowMapRowView['rowNo']),

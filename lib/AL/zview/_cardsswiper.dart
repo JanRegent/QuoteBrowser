@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
+import '../../BL/bl.dart';
 import '_rowviewpage.dart';
 import 'aacommon.dart';
 
@@ -31,11 +32,13 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   void initState() {
     super.initState();
+    currentRowIndex = 0;
+    rowMap2viewReadWrite = swiperRowMaps[currentRowIndex];
   }
 
   Map rowMap2viewReadWrite = {}; //Map Bad state: read only
   Future<String> getData() async {
-    rowMap2viewReadWrite = swiperRowMaps[currentRowIndex];
+    rowMap2viewReadWrite = bl.orm.checkMap(swiperRowMaps[currentRowIndex]);
 
     for (var key in rowMap2viewReadWrite.keys) {
       if (rowMap2viewReadWrite[key] == null) {
@@ -125,16 +128,11 @@ class _CardSwiperState extends State<CardSwiper> {
         body: FutureBuilder<String>(
       future: getData(), // a previously-obtained Future<String> or null
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        if (snapshot.hasData) {
-          if (rowMap2viewReadWrite.isEmpty) {
-            return Text('${swiperRowMaps[currentRowIndex]} is empty');
-          } else {
-            return body();
-          }
+        if (rowMap2viewReadWrite.isEmpty) {
+          return Text('${swiperRowMaps[currentRowIndex]} is empty');
+        } else {
+          return body();
         }
-        return const Center(
-          child: Text('Data loading - swiper'),
-        );
       },
     ));
   }

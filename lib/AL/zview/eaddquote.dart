@@ -39,7 +39,6 @@ class _AddQuoteState extends State<AddQuote> {
     if (sheetName.isEmpty) return;
 
     rowMapRowView['sheetName'] = sheetName;
-    rowMapRowView['fileId'] = dataSheetId;
   }
 
   Card card(BuildContext context) {
