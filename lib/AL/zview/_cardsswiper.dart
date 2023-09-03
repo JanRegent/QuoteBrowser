@@ -2,7 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
 import '_rowviewpage.dart';
-import 'aarowMapRowView.dart';
+import 'aarowmaprowview.dart';
 import 'rowviewmenu.dart';
 
 // import '../../../2business_layer/appdata/approotdata.dart';

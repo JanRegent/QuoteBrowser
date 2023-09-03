@@ -6,7 +6,7 @@ import '../../BL/sheet/sheet.dart';
 import '../filters/emptyview.dart';
 import '_cardsswiper.dart';
 import '_rowviewpage.dart';
-import 'aarowMapRowView.dart';
+import 'aarowmaprowview.dart';
 
 List<Sheet> filteredSheets = [];
 

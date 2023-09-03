@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../BL/bl.dart';
 import '../alib/alicons.dart';
-import 'aarowMapRowView.dart';
+import 'aarowmaprowview.dart';
 
 // ignore: must_be_immutable
 class QuoteAttribs extends StatefulWidget {
@@ -56,7 +56,11 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
       expandedCard.add(ListTile(
         tileColor: Colors.white,
         leading: Text(columnName),
-        title: Text(rowMapRowView[columnName]),
+        title: rowMapRowView[columnName].toString().startsWith('https:')
+            ? TextButton(
+                child: Text(rowMapRowView[columnName]),
+                onPressed: () => _onOpen(rowMapRowView[columnName]))
+            : Text(rowMapRowView[columnName]),
       ));
     }
 
@@ -76,6 +80,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
 
     for (var match in matches) {
       String url = text.substring(match.start, match.end);
+      if (!url.startsWith('http')) continue;
       expandedCard.add(
         ListTile(
           tileColor: Colors.white,

@@ -4,7 +4,7 @@ import 'package:quotebrowser/BL/bluti.dart';
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
-import '../aarowMapRowView.dart';
+import '../aarowmaprowview.dart';
 import 'quoteedit.dart';
 
 // ignore: must_be_immutable
@@ -30,10 +30,7 @@ class _AttrEditState extends State<AttrEdit> {
           leading: ALicons.attrIcons.tagIcon,
           title: Text(rowMapRowView['tags']),
         ),
-        ListTile(
-          title: QuoteEdit(true, widget.setstateRowView),
-          leading: Text(rowMapRowView['rowNo']),
-        )
+        ListTile(title: QuoteEdit(true, widget.setstateRowView))
       ];
 
       return listtiles;

@@ -12,7 +12,7 @@ import '../alib/selectiondialogs/selectone.dart';
 
 import '_cardsswiper.dart';
 
-import 'aarowMapRowView.dart';
+import 'aarowmaprowview.dart';
 import 'cedit/quoteedit.dart';
 
 // ignore: must_be_immutable
@@ -46,32 +46,12 @@ class _AddQuoteState extends State<AddQuote> {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 5),
       color: const Color.fromARGB(255, 213, 209, 192),
-      child: ListView(
+      child: SingleChildScrollView(
+          child: Column(
         children: [
           ListTile(
-            title: QuoteEdit(false, setstate),
-            leading: Text(rowMapRowView['rowNo']),
-          ),
-          ListTile(
             tileColor: Colors.white,
-            trailing: InkWell(
-              child: Text('sheetName: ${rowMapRowView['sheetName']}'),
-              onTap: () async {
-                await sheetNameSet(context);
-
-                setState(() {});
-              },
-            ),
-          ),
-          //----------------------------------------------------last buttons row
-          ListTile(
-            tileColor: Colors.lightBlue,
             leading: IconButton(
-                icon: const Icon(Icons.save),
-                onPressed: () async {
-                  await saveQuote();
-                }),
-            title: IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () async {
                   setState(() {
@@ -79,9 +59,29 @@ class _AddQuoteState extends State<AddQuote> {
                     rowMapRowView['quote'] = '';
                   });
                 }),
+            title: InkWell(
+              child: Text('sheetName: ${rowMapRowView['sheetName']}'),
+              onTap: () async {
+                await sheetNameSet(context);
+
+                setState(() {});
+              },
+            ),
+            trailing: IconButton(
+                icon: const Icon(Icons.save),
+                onPressed: () async {
+                  await saveQuote();
+                }),
           ),
+
+          ListTile(
+            title: QuoteEdit(false, setstate),
+            leading: Text(rowMapRowView['rowNo']),
+          ),
+
+          //----------------------------------------------------last buttons row
         ],
-      ),
+      )),
     );
   }
 
