@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../BL/bl.dart';
 import '../alib/alicons.dart';
-import 'acommonrowmap.dart';
+import 'aarowMapRowView.dart';
 
 // ignore: must_be_immutable
 class QuoteAttribs extends StatefulWidget {

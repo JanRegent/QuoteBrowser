@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:highlight_text/highlight_text.dart';
 
-import 'acommonrowmap.dart';
+import 'aarowMapRowView.dart';
 
 // ignore: must_be_immutable
 class QuoteView extends StatefulWidget {

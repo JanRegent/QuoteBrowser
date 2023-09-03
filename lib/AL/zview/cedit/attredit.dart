@@ -4,7 +4,7 @@ import 'package:quotebrowser/BL/bluti.dart';
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
-import '../acommonrowmap.dart';
+import '../aarowMapRowView.dart';
 import 'quoteedit.dart';
 
 // ignore: must_be_immutable

@@ -3,7 +3,7 @@ import 'package:translator_plus/translator_plus.dart';
 
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
-import '../acommonrowmap.dart';
+import '../aarowMapRowView.dart';
 
 // ignore: must_be_immutable
 class QuoteEdit extends StatelessWidget {

@@ -12,7 +12,7 @@ import '../alib/selectiondialogs/selectone.dart';
 
 import '_cardsswiper.dart';
 
-import 'acommonrowmap.dart';
+import 'aarowMapRowView.dart';
 import 'cedit/quoteedit.dart';
 
 // ignore: must_be_immutable
