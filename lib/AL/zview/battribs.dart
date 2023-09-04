@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 
 import 'package:expandable/expandable.dart';
+import 'package:get/get.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -33,23 +34,24 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.authorIcon,
-      title: Text(bl.orm.currentRow.author.value),
+      title: Obx(() => Text(bl.orm.currentRow.author.value)),
     ));
 
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.bookIcon,
-      title: Text(bl.orm.currentRow.book.value),
+      title: Obx(() => Text(bl.orm.currentRow.book.value)),
     ));
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.parPageIcon,
-      title: Text(bl.orm.currentRow.parPage.value),
+      title: Obx(() => Text(bl.orm.currentRow.parPage.value)),
     ));
     expandedCard.add(ListTile(
       tileColor: Colors.lime,
       leading: ALicons.attrIcons.tagIcon,
-      title: Text(bl.orm.currentRow.tags.value.replaceAll(',', ',\n')),
+      title:
+          Obx(() => Text(bl.orm.currentRow.tags.value.replaceAll(',', ',\n'))),
     ));
 
     for (String columnName in bl.orm.optionalFields) {
@@ -60,15 +62,16 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
 
       expandedCard.add(ListTile(
         tileColor: Colors.white,
-        leading: Text(columnName),
+        leading: Obx(() => Text(columnName)),
         title: bl.orm.currentRow.optionalFields[columnName]
                 .toString()
                 .startsWith('https:')
             ? TextButton(
-                child: Text(bl.orm.currentRow.optionalFields[columnName]),
+                child: Obx(
+                    () => Text(bl.orm.currentRow.optionalFields[columnName])),
                 onPressed: () =>
                     _onOpen(bl.orm.currentRow.optionalFields[columnName]))
-            : Text(bl.orm.currentRow.optionalFields[columnName]),
+            : Obx(() => Text(bl.orm.currentRow.optionalFields[columnName])),
       ));
     }
 

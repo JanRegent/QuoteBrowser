@@ -70,26 +70,6 @@ class Orm {
     //return checkMap(rowMap);
     return rowMap;
   }
-
-  Map checkMap(Map rowMap) {
-    return rowMap;
-    // ;
-    // void checkField(String columnName) {
-    //   if (rowMap[columnName] == null) {
-    //     rowMap[columnName] = '';
-    //     return;
-    //   }
-    //   if (rowMap[columnName].toString().isEmpty) {
-    //     rowMap[columnName] = '';
-    //   }
-    // }
-
-    // checkField('author');
-    // checkField('book');
-    // checkField('tags');
-    // //checkField('parPage');
-    // return rowMap;
-  }
 }
 
 List<Map> swiperSheetRownoKeys = [];
@@ -116,7 +96,6 @@ class CurrentRow {
 Future currentRowSet() async {
   Map rowMapRowView =
       await bl.crud.readBySheetRowNo(swiperSheetRownoKeys[currentRowIndex]);
-  rowMapRowView = bl.orm.checkMap(rowMapRowView);
 
   bl.orm.currentRow.quote.value = rowMapRowView['quote'] ?? '';
   bl.orm.currentRow.author.value = rowMapRowView['author'] ?? '';

@@ -162,7 +162,7 @@ class CRUDsembast {
         Filter.equals('rowNo', sheetRowNo['rowNo']);
 
     Finder finder =
-        Finder(filter: filterAnd, sortOrders: [SortOrder('dateinsert')]);
+        Finder(filter: filterAnd, sortOrders: [SortOrder('author')]);
 
     final records = await sheetStore.find(sembastDb, finder: finder);
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:highlight_text/highlight_text.dart';
 
@@ -71,7 +72,7 @@ class _QuoteViewState extends State<QuoteView> {
         ),
         ListTile(
           title: quoteField(),
-          leading: Text(bl.orm.currentRow.rowNo.value),
+          leading: Obx(() => Text(bl.orm.currentRow.rowNo.value)),
         ),
       ]),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
 import 'package:quotebrowser/BL/locdbsembast/rows2db.dart';
@@ -55,7 +56,8 @@ class _AddQuoteState extends State<AddQuote> {
                   });
                 }),
             title: InkWell(
-              child: Text('sheetName: ${bl.orm.currentRow.sheetName.value}'),
+              child: Obx(() =>
+                  Text('sheetName: ${bl.orm.currentRow.sheetName.value}')),
               onTap: () async {
                 await sheetNameSet(context);
 
@@ -71,7 +73,7 @@ class _AddQuoteState extends State<AddQuote> {
 
           ListTile(
             title: QuoteEdit(false, setstate),
-            leading: Text(bl.orm.currentRow.rowNo.value),
+            leading: Obx(() => Text(bl.orm.currentRow.rowNo.value)),
           ),
 
           //----------------------------------------------------last buttons row
