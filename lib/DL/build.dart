@@ -1,1 +1,1 @@
-Syst‚m nem…§e nal‚zt uvedenì soubor.
+"String buildDate = '" + datetimef + "';"  
