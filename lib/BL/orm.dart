@@ -78,7 +78,7 @@ class Orm {
     checkField('author');
     checkField('book');
     checkField('tags');
-
+    //checkField('parPage');
     return rowMap;
   }
 }

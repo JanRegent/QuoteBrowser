@@ -34,15 +34,19 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.authorIcon,
-      title: Text(rowMapRowView['author']),
+      title: Text(author.value),
     ));
 
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.bookIcon,
-      title: Text(rowMapRowView['book']),
+      title: Text(book.value),
     ));
-
+    expandedCard.add(ListTile(
+      tileColor: Colors.white,
+      leading: ALicons.attrIcons.parPageIcon,
+      title: Text(parPage.value),
+    ));
     expandedCard.add(ListTile(
       tileColor: Colors.lime,
       leading: ALicons.attrIcons.tagIcon,

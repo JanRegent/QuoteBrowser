@@ -14,6 +14,7 @@ class QuoteEdit extends StatelessWidget {
 
   Future setCellAttr(
       String columnName, String cellContent, String rowNo) async {
+    debugPrint('setCell $columnName $rowNo');
     List respData = await dl.httpService.setCell(rowMapRowView['sheetName'],
         rowMapRowView['fileId'], columnName, cellContent, rowNo);
 
@@ -29,18 +30,19 @@ class QuoteEdit extends StatelessWidget {
     switch (attribName) {
       case 'author':
         rowMapRowView['author'] = selected;
-        await setCellAttr(
-            attribName, rowMapRowView[attribName], rowMapRowView['rowNo']);
+        await setCellAttr(attribName, author.value, rowMapRowView['rowNo']);
         break;
       case 'book':
         rowMapRowView['book'] = selected;
-        await setCellAttr(
-            attribName, rowMapRowView[attribName], rowMapRowView['rowNo']);
+        await setCellAttr(attribName, book.value, rowMapRowView['rowNo']);
+        break;
+      case 'parPage':
+        parPage.value += ' $selected';
+        await setCellAttr(attribName, tags.value, rowMapRowView['rowNo']);
         break;
       case 'tags':
-        rowMapRowView['tags'] = rowMapRowView['tags'] + ',$selected';
-        await setCellAttr(
-            attribName, rowMapRowView[attribName], rowMapRowView['rowNo']);
+        tags.value += ',$selected';
+        await setCellAttr(attribName, tags.value, rowMapRowView['rowNo']);
         break;
       default:
         return;

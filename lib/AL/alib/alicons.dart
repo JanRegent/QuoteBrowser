@@ -33,6 +33,10 @@ class AttrIcons {
     return const Icon(FluentIcons.book_24_regular);
   }
 
+  Icon get parPageIcon {
+    return const Icon(Icons.pages);
+  }
+
   Icon get authorIcon {
     return const Icon(Icons.person);
   }

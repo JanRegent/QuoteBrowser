@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../../DL/dl.dart';
@@ -28,7 +29,7 @@ class _AttrEditState extends State<AttrEdit> {
         ListTile(
           tileColor: Colors.lime,
           leading: ALicons.attrIcons.tagIcon,
-          title: Text(rowMapRowView['tags']),
+          title: Obx(() => Text(tags.value)),
         ),
         ListTile(title: QuoteEdit(true, widget.setstateRowView))
       ];
@@ -66,7 +67,7 @@ class _AttrEditState extends State<AttrEdit> {
   }
 
   Future setCell(String columnName, String cellContent, String rowNo) async {
-    debugPrint('5 pred post');
+    debugPrint('setCell $columnName $rowNo');
     List respData = await dl.httpService.setCell(rowMapRowView['sheetName'],
         rowMapRowView['fileId'], columnName, cellContent, rowNo);
     rowMapRowView['rowNo'] = respData[0].toString();

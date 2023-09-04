@@ -9,7 +9,7 @@ import '../bluti.dart';
 
 RxList sheetNamesToday = [].obs;
 RxList sheetNamesLength = [].obs;
-RxString loadingStoreCount = ''.obs;
+RxInt loadingStoreCount = 0.obs;
 RxString loadingTitle = ''.obs;
 List<String> sheetNames = [];
 String fileId = dataSheetId;
@@ -51,7 +51,8 @@ Future rows2db() async {
     await sheet2db(sheetName, fileId);
 
     sheetNamesLength[index] = await bl.crud.readLenSheet(sheetName);
-
+    loadingStoreCount.value =
+        (loadingStoreCount.value + sheetNamesLength[index]) as int;
     sheetNamesToday[index] = await bl.crud.readLenToday(sheetName);
 
     if (bl.devMode) {

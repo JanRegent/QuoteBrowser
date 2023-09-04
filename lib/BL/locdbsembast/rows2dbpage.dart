@@ -59,16 +59,16 @@ class _Rows2dbPageState extends State {
       icon: const Icon(Icons.refresh),
       onPressed: () async {
         int sheetsCount = await sheetStore.count(sembastDb);
-        loadingStoreCount.value = sheetsCount.toString();
+        loadingStoreCount.value = sheetsCount;
 
         await sheetStore.delete(sembastDb);
 
         sheetsCount = await sheetStore.count(sembastDb);
-        loadingStoreCount.value = sheetsCount.toString();
+        loadingStoreCount.value = sheetsCount;
         clearLoadingStats();
         await rows2db();
         sheetsCount = await sheetStore.count(sembastDb);
-        loadingStoreCount.value = sheetsCount.toString();
+        loadingStoreCount.value = sheetsCount;
       },
     );
   }
@@ -92,7 +92,10 @@ class _Rows2dbPageState extends State {
     return Scaffold(
       appBar: AppBar(
         title: Obx(() => Text(loadingTitle.value)),
-        actions: [Obx(() => Text(loadingStoreCount.value)), deleteRefresh()],
+        actions: [
+          Obx(() => Text(loadingStoreCount.value.toString())),
+          deleteRefresh()
+        ],
       ),
       body: fileList(),
     );
