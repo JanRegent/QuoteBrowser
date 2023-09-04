@@ -41,7 +41,7 @@ class QuoteEdit extends StatelessWidget {
       case 'parPage':
         currentRow.parPage.value += ' $selected';
         await setCellAttr(
-            attribName, currentRow.tags.value, currentRow.rowNo.value);
+            attribName, currentRow.parPage.value, currentRow.rowNo.value);
         break;
       case 'tags':
         currentRow.tags.value += ',$selected';
@@ -70,7 +70,6 @@ class QuoteEdit extends StatelessWidget {
   Widget build(BuildContext context) {
     _controller.text = currentRow.quote.value;
 
-    double iconSize = 30.0;
     return Column(
       children: [
         isAttrEdit
@@ -85,12 +84,15 @@ class QuoteEdit extends StatelessWidget {
                   IconButton(
                       icon: ALicons.attrIcons.tagIcon,
                       onPressed: () => attribSet('tags')),
+                  IconButton(
+                      icon: ALicons.attrIcons.parPageIcon,
+                      onPressed: () => attribSet('parPage')),
                 ],
               )
             : Row(
                 children: [
                   IconButton(
-                      icon: Icon(Icons.translate, size: iconSize),
+                      icon: const Icon(Icons.translate),
                       onPressed: () => transl()),
                 ],
               ),
