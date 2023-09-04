@@ -1,12 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
+import '_rowviewpage.dart';
 import 'aacommon.dart';
-import 'aquoteview.dart';
-import 'battribs.dart';
-import 'cedit/attredit.dart';
-import 'eaddquote.dart';
-import 'rowviewmenu.dart';
 
 // import '../../../2business_layer/appdata/approotdata.dart';
 
@@ -37,8 +33,7 @@ class _CardSwiperState extends State<CardSwiper> {
 
   //Map Bad state: read only
   Future<String> getData() async {
-    await newRowSet();
-
+    await currentRowSet();
     return 'ok';
   }
 
@@ -93,40 +88,6 @@ class _CardSwiperState extends State<CardSwiper> {
     });
   }
 
-  Widget tabs() {
-    return DefaultTabController(
-      length: 5,
-      initialIndex: 1, //refresh 1st page
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          actions: [rowViewMenu(rowMapRowView, {}, swiperSetstate)],
-          bottom: const TabBar(
-            tabs: [
-              Tab(child: Icon(Icons.format_quote)),
-              Tab(child: Icon(Icons.view_agenda)),
-              Tab(child: Icon(Icons.edit)),
-              Tab(
-                text: '##',
-              ),
-              Tab(icon: Icon(Icons.add)),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            const QuoteView(),
-            const QuoteAttribs(),
-            AttrEdit(swiperSetstate),
-            const Text('##'),
-            const AddQuote()
-          ],
-        ),
-      ),
-    );
-  }
-
   ConstrainedBox body() {
     return ConstrainedBox(
         constraints: BoxConstraints.loose(Size(
@@ -137,7 +98,7 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://github.com/TheAnkurPanchani/card_swiper/
 
           itemBuilder: (BuildContext context, int rowIndex) {
-            return tabs(); //RowViewPage(widget.title, swiperSetstate);
+            return RowViewPage(widget.title, swiperSetstate);
           },
           itemCount: swiperSheetRownoKeys.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
@@ -162,7 +123,7 @@ class _CardSwiperState extends State<CardSwiper> {
         if (snapshot.hasData) {
           return body();
         } else if (snapshot.hasError) {
-          return Text('sviper load err\n$rowMapRowView');
+          return const Text('sviper load err');
         } else {
           children = const <Widget>[
             SizedBox(

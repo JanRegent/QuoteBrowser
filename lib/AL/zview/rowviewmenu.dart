@@ -53,7 +53,7 @@ PopupMenuButton rowViewMenu(
               onTap: () async {
                 // ignore: use_build_context_synchronously //Icons.open_in_browser
                 await al.openDoc(
-                    rowMapRowView['fileId'], context, 'Open source sheet');
+                    currentRow.fileId, context, 'Open source sheet');
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
                 // ignore: use_build_context_synchronously

@@ -15,9 +15,9 @@ class QuoteEdit extends StatelessWidget {
   Future setCellAttr(
       String columnName, String cellContent, String rowNo) async {
     debugPrint('setCell $columnName $rowNo');
-    List respData = await dl.httpService.setCell(rowMapRowView['sheetName'],
-        rowMapRowView['fileId'], columnName, cellContent, rowNo);
-
+    List respData = await dl.httpService.setCell(currentRow.sheetName.value,
+        currentRow.fileId, columnName, cellContent, rowNo);
+    await currentRowUpdate();
     debugPrint('row: $respData');
   }
 
@@ -29,20 +29,24 @@ class QuoteEdit extends StatelessWidget {
 
     switch (attribName) {
       case 'author':
-        rowMapRowView['author'] = selected;
-        await setCellAttr(attribName, author.value, rowMapRowView['rowNo']);
+        currentRow.author.value = selected;
+        await setCellAttr(
+            attribName, currentRow.author.value, currentRow.rowNo.value);
         break;
       case 'book':
-        rowMapRowView['book'] = selected;
-        await setCellAttr(attribName, book.value, rowMapRowView['rowNo']);
+        currentRow.book.value = selected;
+        await setCellAttr(
+            attribName, currentRow.book.value, currentRow.rowNo.value);
         break;
       case 'parPage':
-        parPage.value += ' $selected';
-        await setCellAttr(attribName, tags.value, rowMapRowView['rowNo']);
+        currentRow.parPage.value += ' $selected';
+        await setCellAttr(
+            attribName, currentRow.tags.value, currentRow.rowNo.value);
         break;
       case 'tags':
-        tags.value += ',$selected';
-        await setCellAttr(attribName, tags.value, rowMapRowView['rowNo']);
+        currentRow.tags.value += ',$selected';
+        await setCellAttr(
+            attribName, currentRow.tags.value, currentRow.rowNo.value);
         break;
       default:
         return;
@@ -55,16 +59,16 @@ class QuoteEdit extends StatelessWidget {
     final translator = GoogleTranslator();
 
     var translation =
-        await translator.translate(rowMapRowView['quote'], to: 'cs');
-
-    rowMapRowView['quote'] = translation.text;
+        await translator.translate(currentRow.quote.value, to: 'cs');
+    currentRow.original = currentRow.quote.value;
+    currentRow.quote.value = translation.text;
 
     setstate();
   }
 
   @override //printSelectedText()
   Widget build(BuildContext context) {
-    _controller.text = rowMapRowView['quote'];
+    _controller.text = currentRow.quote.value;
 
     double iconSize = 30.0;
     return Column(
@@ -98,7 +102,7 @@ class QuoteEdit extends StatelessWidget {
           ),
           maxLines: 20,
           onChanged: (value) async {
-            rowMapRowView['quote'] = value;
+            currentRow.quote.value = value;
           },
         )
       ],

@@ -167,9 +167,17 @@ class CRUDsembast {
     final records = await sheetStore.find(sembastDb, finder: finder);
 
     // ignore: unnecessary_null_comparison
-    if (records == null) return {};
-
+    if (records == null) {
+      lastKey = '';
+      return {};
+    }
+    lastKey = records[0].key as String;
     return records[0].value as Map;
+  }
+
+  String lastKey = '';
+  Future updateOrInsert(Map row) async {
+    await sheetStore.record(lastKey).put(sembastDb, row);
   }
 
   //----------------------------------------------------------------readLen

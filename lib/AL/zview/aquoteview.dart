@@ -24,7 +24,7 @@ class _QuoteViewState extends State<QuoteView> {
   Map<String, HighlightedWord> highlightedWord = {};
   void highlightedWordFill() {
     List<String> tagsWords =
-        rowMapRowView['tags'].trim().split(RegExp(r'[|,.\s]'));
+        currentRow.tags.value.trim().split(RegExp(r'[|,.\s]'));
     highlightedWord.clear();
     if (tagsWords.length < 2) return;
     for (String word in tagsWords) {
@@ -48,7 +48,7 @@ class _QuoteViewState extends State<QuoteView> {
   TextHighlight quoteField() {
     highlightedWordFill();
     return TextHighlight(
-        text: rowMapRowView['quote'],
+        text: currentRow.quote.value,
         words: highlightedWord,
         matchCase: false,
         textStyle: const TextStyle(
@@ -65,12 +65,13 @@ class _QuoteViewState extends State<QuoteView> {
       color: const Color.fromARGB(255, 213, 209, 192),
       child: ListView(children: [
         ListTile(
-          leading: Text(rowMapRowView['dateinsert']),
-          title: Text(rowMapRowView['sheetName']),
+          tileColor: const Color.fromARGB(255, 232, 216, 142),
+          leading: Text(currentRow.dateinsert),
+          title: Text(currentRow.sheetName.value),
         ),
         ListTile(
           title: quoteField(),
-          leading: Text(rowMapRowView['rowNo']),
+          leading: Text(currentRow.rowNo.value),
         ),
       ]),
     );

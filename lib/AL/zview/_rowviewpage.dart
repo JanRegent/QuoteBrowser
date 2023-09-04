@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'aacommon.dart';
 import 'eaddquote.dart';
 import 'cedit/attredit.dart';
 import 'battribs.dart';
-import 'rowviewmenu.dart';
+
 import 'aquoteview.dart';
 
 // ignore: must_be_immutable
@@ -34,7 +33,7 @@ class _RowViewPageState extends State<RowViewPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          actions: [rowViewMenu(rowMapRowView, {}, widget.setstateSviper)],
+          //actions: [rowViewMenu(rowMapRowView, {}, widget.setstateSviper)],
           bottom: const TabBar(
             tabs: [
               Tab(child: Icon(Icons.format_quote)),

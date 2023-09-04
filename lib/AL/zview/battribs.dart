@@ -23,7 +23,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
     super.initState();
 
     expandedCard = expandedWidgets1();
-    expandedWidgets2urls(rowMapRowView['quote']);
+    expandedWidgets2urls(currentRow.quote.value);
   }
 
   //------------------------------------------------------------------expand
@@ -34,37 +34,39 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.authorIcon,
-      title: Text(author.value),
+      title: Text(currentRow.author.value),
     ));
 
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.bookIcon,
-      title: Text(book.value),
+      title: Text(currentRow.book.value),
     ));
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.parPageIcon,
-      title: Text(parPage.value),
+      title: Text(currentRow.parPage.value),
     ));
     expandedCard.add(ListTile(
       tileColor: Colors.lime,
       leading: ALicons.attrIcons.tagIcon,
-      title: Text(rowMapRowView['tags'].toString().replaceAll(',', ',\n')),
+      title: Text(currentRow.tags.value.replaceAll(',', ',\n')),
     ));
 
     for (String columnName in bl.orm.optionalFields) {
-      if (rowMapRowView[columnName] == null) continue;
-      if (rowMapRowView[columnName].toString().isEmpty) continue;
+      if (currentRow.optionalFields[columnName] == null) continue;
+      if (currentRow.optionalFields[columnName].toString().isEmpty) continue;
 
       expandedCard.add(ListTile(
         tileColor: Colors.white,
         leading: Text(columnName),
-        title: rowMapRowView[columnName].toString().startsWith('https:')
+        title: currentRow.optionalFields[columnName]
+                .toString()
+                .startsWith('https:')
             ? TextButton(
-                child: Text(rowMapRowView[columnName]),
-                onPressed: () => _onOpen(rowMapRowView[columnName]))
-            : Text(rowMapRowView[columnName]),
+                child: Text(currentRow.optionalFields[columnName]),
+                onPressed: () => _onOpen(currentRow.optionalFields[columnName]))
+            : Text(currentRow.optionalFields[columnName]),
       ));
     }
 
@@ -97,7 +99,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
 
   //------------------------------------------------------------------card
   ExpandableController contr = ExpandableController(initialExpanded: true);
-  Card card(Map rowMap) {
+  Card card() {
     return Card(
         margin: const EdgeInsets.symmetric(vertical: 5),
         color: const Color.fromARGB(255, 122, 203, 243),
@@ -113,6 +115,6 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
 
   @override
   Widget build(BuildContext context) {
-    return card(rowMapRowView);
+    return card();
   }
 }

@@ -31,9 +31,11 @@ Future dateinsersLast(BuildContext context) async {
   );
 }
 
-void filterByDateInsert(String dateinsert, BuildContext context) async {
+Future filterByDateInsert(String dateinsert, BuildContext context) async {
   swiperSheetRownoKeys =
       await bl.crud.searchByFieldSheetRowNo('dateinsert', '$dateinsert.');
+
+  await currentRowSet();
   // List<int> keysInt =
   //     await bl.crud.searchByFieldKeysInt('dateinsert', '$dateinsert.');
   // if (swiperMaps.isEmpty) return;

@@ -24,7 +24,7 @@ class _AddQuoteState extends State<AddQuote> {
   @override
   initState() {
     super.initState();
-    rowMapRowView = bl.orm.newRowMap();
+    bl.orm.newRowMap();
   }
 
   void setstate() {
@@ -35,7 +35,7 @@ class _AddQuoteState extends State<AddQuote> {
     String sheetName = await selectOne(sheetNames, context);
     if (sheetName.isEmpty) return;
 
-    rowMapRowView['sheetName'] = sheetName;
+    currentRow.sheetName.value = sheetName;
   }
 
   Card card(BuildContext context) {
@@ -51,12 +51,12 @@ class _AddQuoteState extends State<AddQuote> {
                 icon: const Icon(Icons.add),
                 onPressed: () async {
                   setState(() {
-                    rowMapRowView = bl.orm.newRowMap();
-                    rowMapRowView['quote'] = '';
+                    bl.orm.newRowMap();
+                    currentRow.quote.value = '';
                   });
                 }),
             title: InkWell(
-              child: Text('sheetName: ${rowMapRowView['sheetName']}'),
+              child: Text('sheetName: ${currentRow.sheetName.value}'),
               onTap: () async {
                 await sheetNameSet(context);
 
@@ -72,7 +72,7 @@ class _AddQuoteState extends State<AddQuote> {
 
           ListTile(
             title: QuoteEdit(false, setstate),
-            leading: Text(rowMapRowView['rowNo']),
+            leading: Text(currentRow.rowNo.value),
           ),
 
           //----------------------------------------------------last buttons row
@@ -103,9 +103,9 @@ class _AddQuoteState extends State<AddQuote> {
 
   Future setCell(String columnName, String cellContent, String rowNo) async {
     debugPrint('5 pred post');
-    List respData = await dl.httpService.setCell(rowMapRowView['sheetName'],
-        rowMapRowView['fileId'], columnName, cellContent, rowNo);
-    rowMapRowView['rowNo'] = respData[0].toString();
+    List respData = await dl.httpService.setCell(currentRow.sheetName.value,
+        currentRow.fileId, columnName, cellContent, rowNo);
+    currentRow.rowNo.value = respData[0].toString();
     respStatus = 'row:${respData[0]}';
     setState(() {});
   }
@@ -115,18 +115,18 @@ class _AddQuoteState extends State<AddQuote> {
     setState(() {
       respStatus = 'status:?';
     });
-    if (rowMapRowView['quote'].isEmpty) {
+    if (currentRow.quote.value.isEmpty) {
       emptyDialog('Quote /n ${'quote'}');
       return [];
     }
 
-    if (rowMapRowView['sheetName'].isEmpty) {
+    if (currentRow.sheetName.value.isEmpty) {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCell('quote', rowMapRowView['quote'], '');
-    rowMapRowView['dateinsert'] = '${blUti.todayStr()}.';
-    swiperSheetRownoKeys.add(rowMapRowView);
+    await setCell('quote', currentRow.quote.value, '');
+    currentRow.dateinsert = '${blUti.todayStr()}.';
+    //swiperSheetRownoKeys.add(rowMapRowView);
     //update(widget.sheet);
   }
 

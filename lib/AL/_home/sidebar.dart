@@ -46,8 +46,8 @@ class _SidebarPageState extends State<SidebarPage> {
             CollapsibleItem(
               text: 'Today',
               icon: Icons.date_range,
-              onPressed: () {
-                filterByDateInsert(blUti.todayStr(), context);
+              onPressed: () async {
+                await filterByDateInsert(blUti.todayStr(), context);
               },
               onHold: () => ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Date filters"))),

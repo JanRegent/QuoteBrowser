@@ -51,34 +51,40 @@ class Orm {
   ];
 
   Map newRowMap() {
-    Map rowMap = {};
-    rowMap["sheetName"] = '';
-    rowMap["rowNo"] = '';
-    rowMap['fileId'] = dataSheetId;
-    rowMap['dateinsert'] = '${blUti.todayStr()}.';
+    Map rowMap = {
+      'sheetName': '',
+      'rowNo': '',
+      'fileId': dataSheetId,
+      'dateinsert': '${blUti.todayStr()}.'
+    };
 
-    for (var fieldName in bl.orm.mandatoryFields) {
-      rowMap[fieldName] = '';
-    }
+    try {
+      for (var fieldName in bl.orm.mandatoryFields) {
+        rowMap[fieldName] = '';
+      }
+    } catch (_) {}
 
-    return checkMap(rowMap);
+    //return checkMap(rowMap);
+    return rowMap;
   }
 
   Map checkMap(Map rowMap) {
-    void checkField(String columnName) {
-      if (rowMap[columnName] == null) {
-        rowMap[columnName] = '';
-        return;
-      }
-      if (rowMap[columnName].toString().isEmpty) {
-        rowMap[columnName] = '';
-      }
-    }
-
-    checkField('author');
-    checkField('book');
-    checkField('tags');
-    //checkField('parPage');
     return rowMap;
+    // ;
+    // void checkField(String columnName) {
+    //   if (rowMap[columnName] == null) {
+    //     rowMap[columnName] = '';
+    //     return;
+    //   }
+    //   if (rowMap[columnName].toString().isEmpty) {
+    //     rowMap[columnName] = '';
+    //   }
+    // }
+
+    // checkField('author');
+    // checkField('book');
+    // checkField('tags');
+    // //checkField('parPage');
+    // return rowMap;
   }
 }

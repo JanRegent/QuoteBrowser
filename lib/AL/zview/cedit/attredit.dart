@@ -29,7 +29,7 @@ class _AttrEditState extends State<AttrEdit> {
         ListTile(
           tileColor: Colors.lime,
           leading: ALicons.attrIcons.tagIcon,
-          title: Obx(() => Text(tags.value)),
+          title: Obx(() => Text(currentRow.tags.value)),
         ),
         ListTile(title: QuoteEdit(true, widget.setstateRowView))
       ];
@@ -68,9 +68,9 @@ class _AttrEditState extends State<AttrEdit> {
 
   Future setCell(String columnName, String cellContent, String rowNo) async {
     debugPrint('setCell $columnName $rowNo');
-    List respData = await dl.httpService.setCell(rowMapRowView['sheetName'],
-        rowMapRowView['fileId'], columnName, cellContent, rowNo);
-    rowMapRowView['rowNo'] = respData[0].toString();
+    List respData = await dl.httpService.setCell(currentRow.sheetName.value,
+        currentRow.fileId, columnName, cellContent, rowNo);
+    currentRow.rowNo.value = respData[0].toString();
     respStatus = 'row:${respData[0]}';
     setState(() {});
   }
@@ -81,17 +81,17 @@ class _AttrEditState extends State<AttrEdit> {
       respStatus = 'status:?';
     });
     debugPrint('1post--rowMapRowView[quote]].isEmpty');
-    if (rowMapRowView['quote'].isEmpty) {
+    if (currentRow.quote.isEmpty) {
       emptyDialog('Quote /n ${'quote'}');
       return [];
     }
 
-    if (rowMapRowView['sheetName'].isEmpty) {
+    if (currentRow.sheetName.isEmpty) {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCell('quote', rowMapRowView['quote'], '');
-    rowMapRowView['dateinsert'] = '${blUti.todayStr()}.';
+    await setCell('quote', currentRow.quote.value, '');
+    currentRow.dateinsert = '${blUti.todayStr()}.';
     //update(widget.sheet);
   }
 
