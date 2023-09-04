@@ -2,6 +2,7 @@ import 'dart:math' as math show pi;
 
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
+import 'package:quotebrowser/AL/alib/alicons.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../BL/bl.dart';
@@ -9,6 +10,7 @@ import '../../BL/bl.dart';
 import '../../BL/locdbsembast/rows2db.dart';
 import '../../BL/locdbsembast/rows2dbpage.dart';
 
+import '../../DL/build.dart';
 import '../filters/simplef/dateinsert1.dart';
 import '../zview/eaddquote.dart';
 
@@ -171,11 +173,11 @@ class _SidebarPageState extends State<SidebarPage> {
               .showSnackBar(const SnackBar(content: Text("News"))),
           subItems: [
             CollapsibleItem(
-              text: 'Old News',
-              icon: Icons.elderly,
-              onPressed: () => setState(() => _headline = 'Old News'),
+              text: 'About',
+              icon: Icons.app_registration,
+              onPressed: () => setState(() => _headline = 'Build date'),
               onHold: () => ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text("Old News"))),
+                  .showSnackBar(SnackBar(content: Text(buildDate))),
             ),
             CollapsibleItem(
                 text: 'Current News',

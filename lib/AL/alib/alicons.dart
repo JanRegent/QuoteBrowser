@@ -1,4 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
@@ -6,6 +7,7 @@ class ALicons {
   static AttrIcons attrIcons = AttrIcons();
   static EditIcons editIcons = EditIcons();
   static ViewIcons viewIcons = ViewIcons();
+  static AppIcons appIcons = AppIcons();
 }
 
 class EditIcons {
@@ -51,5 +53,15 @@ class AttrIcons {
 
   Icon get listIcon {
     return const Icon(FluentIcons.list_24_regular);
+  }
+}
+
+class AppIcons {
+  Icon get aboutApp {
+    return const Icon(Icons.app_registration);
+  }
+
+  Icon get listView {
+    return const Icon(Icons.list);
   }
 }
