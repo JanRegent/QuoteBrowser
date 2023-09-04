@@ -55,7 +55,7 @@ Future rows2db() async {
     sheetNamesToday[index] = await bl.crud.readLenToday(sheetName);
 
     if (bl.devMode) {
-      if (index == 1) break;
+      if (index == 10) break;
     }
   }
   debugPrint('-------------------------------refresh done');

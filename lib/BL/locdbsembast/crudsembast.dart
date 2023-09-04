@@ -165,6 +165,7 @@ class CRUDsembast {
         Finder(filter: filterAnd, sortOrders: [SortOrder('dateinsert')]);
 
     final records = await sheetStore.find(sembastDb, finder: finder);
+
     // ignore: unnecessary_null_comparison
     if (records == null) return {};
 

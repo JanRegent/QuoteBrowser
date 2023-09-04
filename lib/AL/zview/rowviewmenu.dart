@@ -7,6 +7,36 @@ import 'aacommon.dart';
 
 PopupMenuButton rowViewMenu(
     Map rowmap, Map configRow, VoidCallback swiperSetstate) {
+  List<PopupMenuItem<String>> gotoItems = [];
+  void gotoItemsBuild() {
+    int localIdsLength = 25;
+    //todo widget.configRow['localIds.length'];
+    gotoItems.add(PopupMenuItem(
+      child: Text('$localIdsLength >|'),
+      onTap: () async {
+        currentRowIndex = localIdsLength - 1;
+        swiperSetstate();
+      },
+    ));
+    for (int i = 0; i < localIdsLength; i = i + 10) {
+      gotoItems.add(PopupMenuItem(
+        child: i > 0 ? Text((i + 1).toString()) : const Text('1  |<'),
+        onTap: () async {
+          currentRowIndex = i;
+          swiperSetstate();
+        },
+      ));
+    }
+    gotoItems.add(PopupMenuItem(
+      child: Text('$localIdsLength >|'),
+      onTap: () async {
+        currentRowIndex = localIdsLength - 1;
+        swiperSetstate();
+      },
+    ));
+  }
+
+  gotoItemsBuild();
   return PopupMenuButton(
     child: const Icon(Icons.menu),
     itemBuilder: (BuildContext context) => <PopupMenuEntry<PopupMenuButton>>[
@@ -88,6 +118,16 @@ PopupMenuButton rowViewMenu(
           ],
         ),
       ),
+      PopupMenuItem(
+          child: PopupMenuButton<String>(
+        child: const Text('GoTo'),
+        onSelected: (String result) {
+          //setState(() { _selection = result; });
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },
+        itemBuilder: (BuildContext context) => gotoItems,
+      )),
     ],
   );
 }

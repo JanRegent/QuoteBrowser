@@ -1,7 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
-import '../../BL/bl.dart';
 import '_rowviewpage.dart';
 import 'aacommon.dart';
 
@@ -11,8 +10,6 @@ import 'aacommon.dart';
 
 // import 'd1quotedetailpage.dart';
 // import 'd20menu.dart';
-
-List<Map> swiperSheetRownoKeys = [];
 
 class CardSwiper extends StatefulWidget {
   final String title;
@@ -32,17 +29,20 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   void initState() {
     super.initState();
-    currentRowIndex = 0;
-    //rowMap2viewReadWrite = swiperRowMaps[currentRowIndex];
   }
 
   //Map Bad state: read only
-  Future<Map> getData() async {
-    Map map =
-        await bl.crud.readBySheetRowNo(swiperSheetRownoKeys[currentRowIndex]);
-    return bl.orm.checkMap(map);
+  Future<String> getData() async {
+    await newRowSet();
+
+    return 'ok';
   }
 
+  @override
+  dispose() {
+    controller.dispose();
+    super.dispose();
+  }
   //---------------------------------------------------------- int startRow
 
   void currentRowIndexFromBookmarksGet() {
@@ -72,6 +72,7 @@ class _CardSwiperState extends State<CardSwiper> {
   void onIndexChanged(int rowIndex) {
     currentRowIndex = rowIndex;
     setState(() {});
+
     // if (widget.configRow['__bookmarkLastRowVisitSave__'] == '') {
     //   return;
     // }
@@ -88,7 +89,7 @@ class _CardSwiperState extends State<CardSwiper> {
     });
   }
 
-  ConstrainedBox body(Map rowmap) {
+  ConstrainedBox body() {
     return ConstrainedBox(
         constraints: BoxConstraints.loose(Size(
             MediaQuery.of(context).size.width,
@@ -98,8 +99,6 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://github.com/TheAnkurPanchani/card_swiper/
 
           itemBuilder: (BuildContext context, int rowIndex) {
-            rowMapRowView = rowmap;
-
             return RowViewPage(widget.title, swiperSetstate);
           },
           itemCount: swiperSheetRownoKeys.length,
@@ -118,14 +117,14 @@ class _CardSwiperState extends State<CardSwiper> {
         // appBar: AppBar(
         //   title: SheetviewMenu(const {}, const {}, swiperSetstate),
         // ),
-        body: FutureBuilder<Map>(
+        body: FutureBuilder<String>(
       future: getData(), // a previously-obtained Future<String> or null
-      builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
-          return body(snapshot.data as Map);
+          return body();
         } else if (snapshot.hasError) {
-          return const Text('sviper load err');
+          return Text('sviper load err\n$rowMapRowView');
         } else {
           children = const <Widget>[
             SizedBox(

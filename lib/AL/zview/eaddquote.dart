@@ -9,8 +9,6 @@ import '../../DL/dl.dart';
 
 import '../alib/selectiondialogs/selectone.dart';
 
-import '_cardsswiper.dart';
-
 import 'aacommon.dart';
 import 'cedit/quoteedit.dart';
 
