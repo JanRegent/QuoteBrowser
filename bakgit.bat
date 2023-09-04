@@ -13,7 +13,7 @@ rem     git remote add master  https://github.com/JanRegent/QuoteBrowser
 
 rem call backendPull.bat
 
-echo String buildDate = ' %datetimef% ';  > lib/DL/build.dart
+echo String buildDate = ' %datetimef% ';  > lib/DL/buildDate.dart
 
 call git add .
 call git status

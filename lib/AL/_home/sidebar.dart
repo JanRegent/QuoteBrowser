@@ -10,7 +10,7 @@ import '../../BL/bl.dart';
 import '../../BL/locdbsembast/rows2db.dart';
 import '../../BL/locdbsembast/rows2dbpage.dart';
 
-import '../../DL/build.dart';
+import '../../DL/buildDate.dart';
 import '../filters/simplef/dateinsert1.dart';
 import '../zview/eaddquote.dart';
 
