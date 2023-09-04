@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:highlight_text/highlight_text.dart';
 
-import 'aacommon.dart';
+import '../../BL/bl.dart';
 
 // ignore: must_be_immutable
 class QuoteView extends StatefulWidget {
@@ -24,7 +24,7 @@ class _QuoteViewState extends State<QuoteView> {
   Map<String, HighlightedWord> highlightedWord = {};
   void highlightedWordFill() {
     List<String> tagsWords =
-        currentRow.tags.value.trim().split(RegExp(r'[|,.\s]'));
+        bl.orm.currentRow.tags.value.trim().split(RegExp(r'[|,.\s]'));
     highlightedWord.clear();
     if (tagsWords.length < 2) return;
     for (String word in tagsWords) {
@@ -48,7 +48,7 @@ class _QuoteViewState extends State<QuoteView> {
   TextHighlight quoteField() {
     highlightedWordFill();
     return TextHighlight(
-        text: currentRow.quote.value,
+        text: bl.orm.currentRow.quote.value,
         words: highlightedWord,
         matchCase: false,
         textStyle: const TextStyle(
@@ -66,12 +66,12 @@ class _QuoteViewState extends State<QuoteView> {
       child: ListView(children: [
         ListTile(
           tileColor: const Color.fromARGB(255, 232, 216, 142),
-          leading: Text(currentRow.dateinsert),
-          title: Text(currentRow.sheetName.value),
+          leading: Text(bl.orm.currentRow.dateinsert),
+          title: Text(bl.orm.currentRow.sheetName.value),
         ),
         ListTile(
           title: quoteField(),
-          leading: Text(currentRow.rowNo.value),
+          leading: Text(bl.orm.currentRow.rowNo.value),
         ),
       ]),
     );

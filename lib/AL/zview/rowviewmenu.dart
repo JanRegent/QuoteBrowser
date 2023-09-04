@@ -2,8 +2,9 @@ import 'package:clipboard/clipboard.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 
+import '../../BL/bl.dart';
+import '../../BL/orm.dart';
 import '../alib/alib.dart';
-import 'aacommon.dart';
 
 PopupMenuButton rowViewMenu(
     Map rowmap, Map configRow, VoidCallback swiperSetstate) {
@@ -53,7 +54,7 @@ PopupMenuButton rowViewMenu(
               onTap: () async {
                 // ignore: use_build_context_synchronously //Icons.open_in_browser
                 await al.openDoc(
-                    currentRow.fileId, context, 'Open source sheet');
+                    bl.orm.currentRow.fileId, context, 'Open source sheet');
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
                 // ignore: use_build_context_synchronously

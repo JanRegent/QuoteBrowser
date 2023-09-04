@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
+import '../../../BL/bl.dart';
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
-import '../aacommon.dart';
 import 'quoteedit.dart';
 
 // ignore: must_be_immutable
@@ -29,7 +29,7 @@ class _AttrEditState extends State<AttrEdit> {
         ListTile(
           tileColor: Colors.lime,
           leading: ALicons.attrIcons.tagIcon,
-          title: Obx(() => Text(currentRow.tags.value)),
+          title: Obx(() => Text(bl.orm.currentRow.tags.value)),
         ),
         ListTile(title: QuoteEdit(true, widget.setstateRowView))
       ];
@@ -68,9 +68,13 @@ class _AttrEditState extends State<AttrEdit> {
 
   Future setCell(String columnName, String cellContent, String rowNo) async {
     debugPrint('setCell $columnName $rowNo');
-    List respData = await dl.httpService.setCell(currentRow.sheetName.value,
-        currentRow.fileId, columnName, cellContent, rowNo);
-    currentRow.rowNo.value = respData[0].toString();
+    List respData = await dl.httpService.setCell(
+        bl.orm.currentRow.sheetName.value,
+        bl.orm.currentRow.fileId,
+        columnName,
+        cellContent,
+        rowNo);
+    bl.orm.currentRow.rowNo.value = respData[0].toString();
     respStatus = 'row:${respData[0]}';
     setState(() {});
   }
@@ -81,17 +85,17 @@ class _AttrEditState extends State<AttrEdit> {
       respStatus = 'status:?';
     });
     debugPrint('1post--rowMapRowView[quote]].isEmpty');
-    if (currentRow.quote.isEmpty) {
+    if (bl.orm.currentRow.quote.isEmpty) {
       emptyDialog('Quote /n ${'quote'}');
       return [];
     }
 
-    if (currentRow.sheetName.isEmpty) {
+    if (bl.orm.currentRow.sheetName.isEmpty) {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCell('quote', currentRow.quote.value, '');
-    currentRow.dateinsert = '${blUti.todayStr()}.';
+    await setCell('quote', bl.orm.currentRow.quote.value, '');
+    bl.orm.currentRow.dateinsert = '${blUti.todayStr()}.';
     //update(widget.sheet);
   }
 

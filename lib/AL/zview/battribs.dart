@@ -7,7 +7,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../BL/bl.dart';
 import '../alib/alicons.dart';
-import 'aacommon.dart';
 
 // ignore: must_be_immutable
 class QuoteAttribs extends StatefulWidget {
@@ -23,7 +22,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
     super.initState();
 
     expandedCard = expandedWidgets1();
-    expandedWidgets2urls(currentRow.quote.value);
+    expandedWidgets2urls(bl.orm.currentRow.quote.value);
   }
 
   //------------------------------------------------------------------expand
@@ -34,39 +33,42 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.authorIcon,
-      title: Text(currentRow.author.value),
+      title: Text(bl.orm.currentRow.author.value),
     ));
 
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.bookIcon,
-      title: Text(currentRow.book.value),
+      title: Text(bl.orm.currentRow.book.value),
     ));
     expandedCard.add(ListTile(
       tileColor: Colors.white,
       leading: ALicons.attrIcons.parPageIcon,
-      title: Text(currentRow.parPage.value),
+      title: Text(bl.orm.currentRow.parPage.value),
     ));
     expandedCard.add(ListTile(
       tileColor: Colors.lime,
       leading: ALicons.attrIcons.tagIcon,
-      title: Text(currentRow.tags.value.replaceAll(',', ',\n')),
+      title: Text(bl.orm.currentRow.tags.value.replaceAll(',', ',\n')),
     ));
 
     for (String columnName in bl.orm.optionalFields) {
-      if (currentRow.optionalFields[columnName] == null) continue;
-      if (currentRow.optionalFields[columnName].toString().isEmpty) continue;
+      if (bl.orm.currentRow.optionalFields[columnName] == null) continue;
+      if (bl.orm.currentRow.optionalFields[columnName].toString().isEmpty) {
+        continue;
+      }
 
       expandedCard.add(ListTile(
         tileColor: Colors.white,
         leading: Text(columnName),
-        title: currentRow.optionalFields[columnName]
+        title: bl.orm.currentRow.optionalFields[columnName]
                 .toString()
                 .startsWith('https:')
             ? TextButton(
-                child: Text(currentRow.optionalFields[columnName]),
-                onPressed: () => _onOpen(currentRow.optionalFields[columnName]))
-            : Text(currentRow.optionalFields[columnName]),
+                child: Text(bl.orm.currentRow.optionalFields[columnName]),
+                onPressed: () =>
+                    _onOpen(bl.orm.currentRow.optionalFields[columnName]))
+            : Text(bl.orm.currentRow.optionalFields[columnName]),
       ));
     }
 

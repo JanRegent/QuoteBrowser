@@ -1,8 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
+import '../../BL/orm.dart';
 import '_rowviewpage.dart';
-import 'aacommon.dart';
 
 // import '../../../2business_layer/appdata/approotdata.dart';
 
