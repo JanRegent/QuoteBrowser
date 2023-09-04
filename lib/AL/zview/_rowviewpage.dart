@@ -30,6 +30,7 @@ class _RowViewPageState extends State<RowViewPage> {
   Widget tabs() {
     return DefaultTabController(
       length: 5,
+      initialIndex: 1, //refresh 1st page
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
