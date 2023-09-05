@@ -6,8 +6,7 @@ import '../../BL/bl.dart';
 import '../../BL/orm.dart';
 import '../alib/alib.dart';
 
-PopupMenuButton rowViewMenu(
-    Map configRow, VoidCallback swiperSetstate) {
+PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
   List<PopupMenuItem<String>> gotoItems = [];
   void gotoItemsBuild() {
     int localIdsLength = 25;
@@ -91,11 +90,11 @@ PopupMenuButton rowViewMenu(
                   [',b', 3.1, 42],
                   ['n\n']
                 ]);
-                List<String> row = ['ID?', rowmap['sheetName'], rowmap['ID']];
-                for (var element in rowmap.entries) {
-                  if (element.key == 'ID') continue;
-                  row.add('${element.value}');
-                }
+                List<String> row = [bl.orm.currentRow.sheetName.value];
+                // for (var element in rowmap.entries) {
+                //   if (element.key == 'ID') continue;
+                //   row.add('${element.value}');
+                // }
                 const conv = ListToCsvConverter(fieldDelimiter: '|');
                 res = conv.convert([row]);
                 FlutterClipboard.copy(res).then((value) => {});
@@ -109,7 +108,8 @@ PopupMenuButton rowViewMenu(
                 child: InkWell(
               child: const Text('Copy current quote'),
               onTap: () async {
-                FlutterClipboard.copy(rowmap['quote']).then((value) => {});
+                FlutterClipboard.copy(bl.orm.currentRow.quote.value)
+                    .then((value) => {});
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
                 // ignore: use_build_context_synchronously

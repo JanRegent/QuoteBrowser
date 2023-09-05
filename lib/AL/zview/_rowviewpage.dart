@@ -5,6 +5,7 @@ import 'cedit/attredit.dart';
 import 'battribs.dart';
 
 import 'aquoteview.dart';
+import 'rowviewmenu.dart';
 
 // ignore: must_be_immutable
 class RowViewPage extends StatefulWidget {

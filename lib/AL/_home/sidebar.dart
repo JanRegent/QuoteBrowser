@@ -2,7 +2,7 @@ import 'dart:math' as math show pi;
 
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
-import 'package:quotebrowser/AL/alib/alicons.dart';
+
 import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../BL/bl.dart';
@@ -10,7 +10,7 @@ import '../../BL/bl.dart';
 import '../../BL/locdbsembast/rows2db.dart';
 import '../../BL/locdbsembast/rows2dbpage.dart';
 
-import '../../DL/buildDate.dart';
+import '../../DL/builddate.dart';
 import '../filters/simplef/dateinsert1.dart';
 import '../zview/eaddquote.dart';
 
