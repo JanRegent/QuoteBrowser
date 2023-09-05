@@ -48,6 +48,9 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
           },
           itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
             PopupMenuItem<String>(
+                child: Text(
+                    '${bl.orm.currentRow.sheetName.value},${bl.orm.currentRow.rowNo}\n${bl.orm.currentRow.dateinsert}')),
+            PopupMenuItem<String>(
                 child: InkWell(
               child: const Text('Open source sheet'),
               onTap: () async {

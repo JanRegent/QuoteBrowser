@@ -2,7 +2,12 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
 import '../../BL/orm.dart';
-import '_rowviewpage.dart';
+
+import 'aquoteview.dart';
+import 'battribs.dart';
+import 'cedit/attredit.dart';
+
+import 'rowviewmenu.dart';
 
 // import '../../../2business_layer/appdata/approotdata.dart';
 
@@ -31,12 +36,6 @@ class _CardSwiperState extends State<CardSwiper> {
     super.initState();
   }
 
-  //Map Bad state: read only
-  Future<String> getData() async {
-    await currentRowSet();
-    return 'ok';
-  }
-
   @override
   dispose() {
     controller.dispose();
@@ -44,28 +43,48 @@ class _CardSwiperState extends State<CardSwiper> {
   }
   //---------------------------------------------------------- int startRow
 
-  void currentRowIndexFromBookmarksGet() {
-   
-  }
+  void currentRowIndexFromBookmarksGet() {}
 
-  void onIndexChanged(int rowIndex) {
+  void onIndexChanged(int rowIndex) async {
     currentRowIndex = rowIndex;
+    await currentRowSet();
     setState(() {});
-
-    // if (widget.configRow['__bookmarkLastRowVisitSave__'] == '') {
-    //   return;
-    // }
-    // try {
-    //   String sheetName = widget.configRow['sheetName'];
-    //   appData.setString(
-    //       '${sheetName}__bookmarkLastRowVisit', currentRowIndex.toString());
-    // } catch (__) {}
   }
 
   void swiperSetstate() {
-    setState(() {
-      //startRow changed
-    });
+    setState(() {});
+  }
+
+  bool readOnlyView = false;
+  Widget tabs() {
+    return DefaultTabController(
+      length: 3,
+      initialIndex: 1, //refresh 1st page
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: [rowViewMenu({}, swiperSetstate)],
+          bottom: TabBar(
+            tabs: [
+              const Tab(child: Icon(Icons.view_agenda)),
+              Tab(
+                  child: readOnlyView
+                      ? const Icon(Icons.format_quote)
+                      : const Icon(Icons.edit)),
+              const Tab(text: '##'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            const QuoteAttribs(),
+            readOnlyView ? const QuoteView() : AttrEdit(swiperSetstate),
+            const Text('##'),
+          ],
+        ),
+      ),
+    );
   }
 
   ConstrainedBox body() {
@@ -78,7 +97,7 @@ class _CardSwiperState extends State<CardSwiper> {
           //https://github.com/TheAnkurPanchani/card_swiper/
 
           itemBuilder: (BuildContext context, int rowIndex) {
-            return RowViewPage(widget.title, swiperSetstate);
+            return tabs(); // RowViewPage(widget.title, swiperSetstate);
           },
           itemCount: swiperSheetRownoKeys.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
@@ -92,38 +111,6 @@ class _CardSwiperState extends State<CardSwiper> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        // appBar: AppBar(
-        //   title: SheetviewMenu(const {}, const {}, swiperSetstate),
-        // ),
-        body: FutureBuilder<String>(
-      future: getData(), // a previously-obtained Future<String> or null
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        List<Widget> children;
-        if (snapshot.hasData) {
-          return body();
-        } else if (snapshot.hasError) {
-          return const Text('sviper load err');
-        } else {
-          children = const <Widget>[
-            SizedBox(
-              width: 60,
-              height: 60,
-              child: CircularProgressIndicator(),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: Text('Awaiting result...'),
-            ),
-          ];
-        }
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: children,
-          ),
-        );
-      },
-    ));
+    return Scaffold(body: body());
   }
 }

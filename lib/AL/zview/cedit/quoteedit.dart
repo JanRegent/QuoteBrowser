@@ -87,11 +87,11 @@ class QuoteEdit extends StatelessWidget {
                       icon: ALicons.attrIcons.bookIcon,
                       onPressed: () => attribSet('book')),
                   IconButton(
-                      icon: ALicons.attrIcons.tagIcon,
-                      onPressed: () => attribSet('tags')),
-                  IconButton(
                       icon: ALicons.attrIcons.parPageIcon,
                       onPressed: () => attribSet('parPage')),
+                  IconButton(
+                      icon: ALicons.attrIcons.tagIcon,
+                      onPressed: () => attribSet('tags')),
                 ],
               )
             : Row(
