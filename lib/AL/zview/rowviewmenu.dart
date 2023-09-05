@@ -7,7 +7,7 @@ import '../../BL/orm.dart';
 import '../alib/alib.dart';
 
 PopupMenuButton rowViewMenu(
-    Map rowmap, Map configRow, VoidCallback swiperSetstate) {
+    Map configRow, VoidCallback swiperSetstate) {
   List<PopupMenuItem<String>> gotoItems = [];
   void gotoItemsBuild() {
     int localIdsLength = 25;

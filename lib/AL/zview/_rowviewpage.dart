@@ -33,7 +33,7 @@ class _RowViewPageState extends State<RowViewPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          //actions: [rowViewMenu(rowMapRowView, {}, widget.setstateSviper)],
+          actions: [rowViewMenu({}, widget.setstateSviper)],
           bottom: const TabBar(
             tabs: [
               Tab(child: Icon(Icons.format_quote)),

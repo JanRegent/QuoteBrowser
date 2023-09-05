@@ -45,27 +45,7 @@ class _CardSwiperState extends State<CardSwiper> {
   //---------------------------------------------------------- int startRow
 
   void currentRowIndexFromBookmarksGet() {
-    // try {
-    //   if (widget.configRow['sheetName'] == null) {
-    //     widget.configRow['__bookmarkLastRowVisitSave__'] = '';
-    //   }
-    // } catch (_) {
-    //   widget.configRow['__bookmarkLastRowVisitSave__'] = '';
-    //   return;
-    // }
-    // if (widget.configRow['__bookmarkLastRowVisitSave__'] == null) {
-    //   widget.configRow['__bookmarkLastRowVisitSave__'] = '';
-    // }
-    // if (widget.configRow['__bookmarkLastRowVisitSave__'] == '') {
-    //   return;
-    // }
-    // try {
-    //   String? startRowStr = appData
-    //       .getString('${widget.configRow['sheetName']}__bookmarkLastRowVisit');
-    //   currentRowIndex = int.tryParse(startRowStr!)!;
-    // } catch (_) {
-    //   currentRowIndex = 0;
-    // }
+   
   }
 
   void onIndexChanged(int rowIndex) {
