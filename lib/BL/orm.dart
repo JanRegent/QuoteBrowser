@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import 'bl.dart';
-import 'bluti.dart';
+
 import 'params/params.dart';
 
 class Orm {
@@ -52,29 +52,14 @@ class Orm {
     'folder',
     'original'
   ];
-
-  Map newRowMap() {
-    Map rowMap = {
-      'sheetName': '',
-      'rowNo': '',
-      'fileId': dataSheetId,
-      'dateinsert': '${blUti.todayStr()}.'
-    };
-
-    try {
-      for (var fieldName in bl.orm.mandatoryFields) {
-        rowMap[fieldName] = '';
-      }
-    } catch (_) {}
-
-    //return checkMap(rowMap);
-    return rowMap;
-  }
 }
 
 List<Map> swiperSheetRownoKeys = [];
 
 int currentRowIndex = 0;
+void currentRowNew() {
+  bl.orm.currentRow = CurrentRow()..fileId = dataSheetId;
+}
 
 class CurrentRow {
   RxString quote = ''.obs;

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../BL/orm.dart';
 
-import 'aquoteview.dart';
-import 'battribs.dart';
-import 'cedit/attredit.dart';
+import 'zquoteview.dart';
+import 'aattribs.dart';
+import 'bedit/attredit.dart';
 
 import 'rowviewmenu.dart';
 

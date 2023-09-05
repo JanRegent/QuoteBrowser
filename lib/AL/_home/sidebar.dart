@@ -12,7 +12,7 @@ import '../../BL/locdbsembast/rows2dbpage.dart';
 
 import '../../DL/builddate.dart';
 import '../filters/simplef/dateinsert1.dart';
-import '../zview/eaddquote.dart';
+import '../zview/addquote.dart';
 
 class SidebarPage extends StatefulWidget {
   const SidebarPage({super.key});

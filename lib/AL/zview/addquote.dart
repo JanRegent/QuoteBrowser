@@ -6,11 +6,12 @@ import 'package:quotebrowser/BL/locdbsembast/rows2db.dart';
 
 import '../../BL/bl.dart';
 
+import '../../BL/orm.dart';
 import '../../DL/dl.dart';
 
 import '../alib/selectiondialogs/selectone.dart';
 
-import 'cedit/quoteedit.dart';
+import 'bedit/quoteedit.dart';
 
 // ignore: must_be_immutable
 class AddQuote extends StatefulWidget {
@@ -24,7 +25,7 @@ class _AddQuoteState extends State<AddQuote> {
   @override
   initState() {
     super.initState();
-    bl.orm.newRowMap();
+    currentRowNew();
   }
 
   void setstate() {
@@ -51,7 +52,9 @@ class _AddQuoteState extends State<AddQuote> {
                 icon: const Icon(Icons.add),
                 onPressed: () async {
                   setState(() {
-                    bl.orm.newRowMap();
+                    String sheetNameLast = bl.orm.currentRow.sheetName.value;
+                    currentRowNew();
+                    bl.orm.currentRow.sheetName.value = sheetNameLast;
                     bl.orm.currentRow.quote.value = '';
                   });
                 }),
@@ -102,15 +105,17 @@ class _AddQuoteState extends State<AddQuote> {
     );
   }
 
-  Future setCell(String columnName, String cellContent, String rowNo) async {
+  Future setCellAppendRow(
+      String columnName, String cellContent, String rowNo) async {
     debugPrint('5 pred post');
     List respData = await dl.httpService.setCell(
         bl.orm.currentRow.sheetName.value,
         bl.orm.currentRow.fileId,
         columnName,
         cellContent,
-        rowNo);
+        '');
     bl.orm.currentRow.rowNo.value = respData[0].toString();
+
     respStatus = 'row:${respData[0]}';
     setState(() {});
   }
@@ -129,9 +134,9 @@ class _AddQuoteState extends State<AddQuote> {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCell('quote', bl.orm.currentRow.quote.value, '');
+    await setCellAppendRow('quote', bl.orm.currentRow.quote.value, '');
     bl.orm.currentRow.dateinsert = '${blUti.todayStr()}.';
-    //swiperSheetRownoKeys.add(rowMapRowView);
+
     //update(widget.sheet);
   }
 

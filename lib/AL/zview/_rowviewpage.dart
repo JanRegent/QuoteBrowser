@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'eaddquote.dart';
-import 'cedit/attredit.dart';
-import 'battribs.dart';
+import 'addquote.dart';
+import 'bedit/attredit.dart';
+import 'aattribs.dart';
 
-import 'aquoteview.dart';
+import 'zquoteview.dart';
 import 'rowviewmenu.dart';
 
 // ignore: must_be_immutable
