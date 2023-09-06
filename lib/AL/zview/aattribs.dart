@@ -59,19 +59,18 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
       if (bl.orm.currentRow.optionalFields[columnName].toString().isEmpty) {
         continue;
       }
-
+      print('--$columnName');
       expandedCard.add(ListTile(
         tileColor: Colors.white,
-        leading: Obx(() => Text(columnName)),
+        leading: Text(columnName),
         title: bl.orm.currentRow.optionalFields[columnName]
                 .toString()
                 .startsWith('https:')
             ? TextButton(
-                child: Obx(
-                    () => Text(bl.orm.currentRow.optionalFields[columnName])),
+                child: Text(bl.orm.currentRow.optionalFields[columnName]),
                 onPressed: () =>
                     _onOpen(bl.orm.currentRow.optionalFields[columnName]))
-            : Obx(() => Text(bl.orm.currentRow.optionalFields[columnName])),
+            : Text(bl.orm.currentRow.optionalFields[columnName]),
       ));
     }
 

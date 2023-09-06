@@ -75,9 +75,22 @@ class CurrentRow {
   String fileId = '';
   String dateinsert = '';
   //--------------------------optional user fields
+  List<String> cols = [];
   Map optionalFields = {};
 }
 
+void pureTags() {
+  List<String> tagsList = bl.orm.currentRow.tags.value.split(',');
+  Set tagsSet = tagsList.toSet();
+  List<String> tags = [];
+  for (var tag in tagsSet) {
+    if (tag.toString().isEmpty) continue;
+    tags.add(tag);
+  }
+  bl.orm.currentRow.tags.value = tags.join(',');
+}
+
+List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
 Future currentRowSet() async {
   Map rowMapRowView =
       await bl.crud.readBySheetRowNo(swiperSheetRownoKeys[currentRowIndex]);
@@ -87,17 +100,27 @@ Future currentRowSet() async {
   bl.orm.currentRow.book.value = rowMapRowView['book'] ?? '';
   bl.orm.currentRow.parPage.value = rowMapRowView['parPage'] ?? '';
   bl.orm.currentRow.tags.value = rowMapRowView['tags'] ?? '';
+  pureTags();
 
   bl.orm.currentRow.original = '';
 
   //--------------------------ids
-  bl.orm.currentRow.sheetName.value = rowMapRowView['sheetName'] ?? '';
+  String sheetName = rowMapRowView['sheetName'] ?? '';
+  bl.orm.currentRow.sheetName.value = sheetName;
   bl.orm.currentRow.rowNo.value = rowMapRowView['rowNo'] ?? '';
   bl.orm.currentRow.fileId = rowMapRowView['fileId'] ?? '';
   bl.orm.currentRow.dateinsert = rowMapRowView['dateinsert'] ?? '';
   //--------------------------optional user fields
+  bl.orm.currentRow.cols = await bl.crud.readColRowsOfSheetName(sheetName);
   bl.orm.currentRow.optionalFields = {};
 
+  for (var columnName in rowMapRowView.keys) {
+    if (columnName == 'ID') continue;
+    if (columnName == 'RowNo') continue;
+    if (colsMain.contains(columnName)) continue;
+
+    bl.orm.currentRow.optionalFields[columnName] = rowMapRowView[columnName];
+  }
   debugPrint('-----------------------$currentRowIndex');
   debugPrint(swiperSheetRownoKeys[currentRowIndex].toString());
 }

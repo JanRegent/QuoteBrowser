@@ -10,7 +10,9 @@ import '../../alib/alicons.dart';
 class QuoteEdit extends StatelessWidget {
   final bool isAttrEdit;
   Function setstate;
-  QuoteEdit(this.isAttrEdit, this.setstate, {super.key});
+  // ignore: use_key_in_widget_constructors
+  QuoteEdit(this.isAttrEdit, this.setstate);
+
   final TextEditingController _controller = TextEditingController();
 
   Future setCellAttr(
@@ -27,10 +29,17 @@ class QuoteEdit extends StatelessWidget {
   }
 
   void attribSet(String attribName) async {
-    String selected = _controller.text.substring(
-        _controller.selection.baseOffset, _controller.selection.extentOffset);
+    String selected = '';
 
-    if (selected.isEmpty) return;
+    try {
+      selected = _controller.text.substring(
+          _controller.selection.baseOffset, _controller.selection.extentOffset);
+      if (selected.isEmpty) return;
+    } catch (_) {
+      return;
+    }
+    selected =
+        selected.replaceAll('.', '').replaceAll(',', ' ').replaceAll('\n', ' ');
 
     switch (attribName) {
       case 'author':
@@ -50,9 +59,13 @@ class QuoteEdit extends StatelessWidget {
         break;
       case 'tags':
         bl.orm.currentRow.tags.value += ',$selected';
+        pureTags();
         await setCellAttr(attribName, bl.orm.currentRow.tags.value,
             bl.orm.currentRow.rowNo.value);
         break;
+      case '__othersFields__':
+        return;
+
       default:
         return;
     }
@@ -71,6 +84,29 @@ class QuoteEdit extends StatelessWidget {
     setstate();
   }
 
+  Row buttRow() {
+    return Row(
+      children: [
+        IconButton(
+            icon: ALicons.attrIcons.authorIcon,
+            onPressed: () => attribSet('author')),
+        IconButton(
+            icon: ALicons.attrIcons.bookIcon,
+            onPressed: () => attribSet('book')),
+        IconButton(
+            icon: ALicons.attrIcons.parPageIcon,
+            onPressed: () => attribSet('parPage')),
+        IconButton(
+            icon: ALicons.attrIcons.tagIcon,
+            onPressed: () => attribSet('tags')),
+        const Text('    '),
+        TextButton(
+            child: const Text(' >>'),
+            onPressed: () => attribSet('__othersFields__')),
+      ],
+    );
+  }
+
   @override //printSelectedText()
   Widget build(BuildContext context) {
     _controller.text = bl.orm.currentRow.quote.value;
@@ -78,22 +114,7 @@ class QuoteEdit extends StatelessWidget {
     return Column(
       children: [
         isAttrEdit
-            ? Row(
-                children: [
-                  IconButton(
-                      icon: ALicons.attrIcons.authorIcon,
-                      onPressed: () => attribSet('author')),
-                  IconButton(
-                      icon: ALicons.attrIcons.bookIcon,
-                      onPressed: () => attribSet('book')),
-                  IconButton(
-                      icon: ALicons.attrIcons.parPageIcon,
-                      onPressed: () => attribSet('parPage')),
-                  IconButton(
-                      icon: ALicons.attrIcons.tagIcon,
-                      onPressed: () => attribSet('tags')),
-                ],
-              )
+            ? buttRow()
             : Row(
                 children: [
                   IconButton(
@@ -111,7 +132,8 @@ class QuoteEdit extends StatelessWidget {
           onChanged: (value) async {
             bl.orm.currentRow.quote.value = value;
           },
-        )
+        ),
+        isAttrEdit ? buttRow() : const Text(' ')
       ],
     );
   }
