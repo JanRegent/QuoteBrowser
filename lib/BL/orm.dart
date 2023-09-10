@@ -95,8 +95,11 @@ void pureTags() {
 }
 
 List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
+
 List sheetkeyData = [];
 Map colsSet = {};
+
+List setCellRowUpdatedOnCloud = [];
 
 Future currentRowSet() async {
   // Map rowMapRowView =
@@ -134,8 +137,6 @@ Future currentRowSet() async {
 }
 
 Future<Map> row2map(int rowIndex) async {
-  List cols = colsSet['EMTdaily'];
-
   Map rowMap = {};
   rowMap['shetnameRowNoKey'] = sheetkeyData[rowIndex][0];
   List<String> sheetRowno = sheetkeyData[rowIndex][0].toString().split('__|__');
@@ -147,6 +148,7 @@ Future<Map> row2map(int rowIndex) async {
   rowkey['RowNo'] = rowMap['rowNo'];
   rowkey['fileId'] = dataSheetId;
   swiperSheetRownoKeys.add(rowkey);
+  List cols = colsSet[rowMap['sheetName']];
   for (var i = 0; i < cols.length; i++) {
     rowMap[cols[i]] = sheetkeyData[rowIndex][1][i];
   }

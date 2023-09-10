@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../BL/bluti.dart';
 
+import '../BL/orm.dart';
 import '../BL/params/params.dart';
 import 'backendurl.dart';
 
@@ -67,6 +68,8 @@ class HttpService {
         'rowNo': rowNo
       },
     );
+
+    setCellRowUpdatedOnCloud = response.data['data'];
 
     return response.data['data'];
   }

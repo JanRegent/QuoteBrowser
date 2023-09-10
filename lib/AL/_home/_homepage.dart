@@ -34,6 +34,7 @@ class _SidebarHomeState extends State<SidebarHome> {
                     const CircularProgressIndicator(
                       color: Colors.red,
                     ),
+                    const Text('  '),
                     Obx(() => Text(loadingTitle.value)),
                   ],
                 )

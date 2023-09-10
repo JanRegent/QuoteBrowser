@@ -35,7 +35,7 @@ Future dateinsersLast(BuildContext context) async {
 Future filterByDateInsert(String dateinsert, BuildContext context) async {
   // swiperSheetRownoKeys =
   //     await bl.crud.searchByFieldSheetRowNo('dateinsert', '$dateinsert.');
-  print('start');
+
   List respData = await dl.httpService.searchSS(dateinsert);
 
   sheetkeyData = respData[0] as List;
