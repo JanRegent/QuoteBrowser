@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:searchable_listview/searchable_listview.dart';
 
-import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
 
 import '../../../BL/orm.dart';
+import '../../../DL/dl.dart';
 import '../../zview/_cardsswiper.dart';
 
 import '../emptyview.dart';
@@ -33,14 +33,17 @@ Future dateinsersLast(BuildContext context) async {
 }
 
 Future filterByDateInsert(String dateinsert, BuildContext context) async {
-  swiperSheetRownoKeys =
-      await bl.crud.searchByFieldSheetRowNo('dateinsert', '$dateinsert.');
+  // swiperSheetRownoKeys =
+  //     await bl.crud.searchByFieldSheetRowNo('dateinsert', '$dateinsert.');
+  print('start');
+  List respData = await dl.httpService.searchSS(dateinsert);
 
+  sheetkeyData = respData[0] as List;
+
+  colsSet = respData[1] as Map;
+  swiperSheetRownoKeys = [];
   await currentRowSet();
-  // List<int> keysInt =
-  //     await bl.crud.searchByFieldKeysInt('dateinsert', '$dateinsert.');
-  // if (swiperMaps.isEmpty) return;
-  // print(keysInt);
+
   // ignore: use_build_context_synchronously
   Navigator.push(
     context,

@@ -27,6 +27,17 @@ class HttpService {
     return response.data['data'];
   }
 
+  Future<List> searchSS(String searchText) async {
+    // The below request is the same as above.
+    // ignore: unused_local_variable
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {'action': 'searchSS', 'searchText': searchText},
+    );
+
+    return [response.data['data'], response.data['colsSet']];
+  }
+
   Future<List<String>> getDataSheets(String sheetId) async {
     Response response = await dio.get(
       backendUrl,

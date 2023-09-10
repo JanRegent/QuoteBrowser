@@ -59,7 +59,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
       if (bl.orm.currentRow.optionalFields[columnName].toString().isEmpty) {
         continue;
       }
-      print('--$columnName');
+
       expandedCard.add(ListTile(
         tileColor: Colors.white,
         leading: Text(columnName),

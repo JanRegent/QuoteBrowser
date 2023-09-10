@@ -99,7 +99,7 @@ class _CardSwiperState extends State<CardSwiper> {
           itemBuilder: (BuildContext context, int rowIndex) {
             return tabs(); // RowViewPage(widget.title, swiperSetstate);
           },
-          itemCount: swiperSheetRownoKeys.length,
+          itemCount: sheetkeyData.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
           pagination:
               const SwiperPagination(builder: SwiperPagination.fraction),

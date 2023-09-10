@@ -84,21 +84,30 @@ void pureTags() {
   Set tagsSet = tagsList.toSet();
   List<String> tags = [];
   for (var tag in tagsSet) {
-    if (tag.toString().isEmpty) continue;
+    try {
+      if (tag.toString().isEmpty) continue;
+    } catch (_) {
+      continue;
+    }
     tags.add(tag);
   }
   bl.orm.currentRow.tags.value = tags.join(',');
 }
 
 List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
+List sheetkeyData = [];
+Map colsSet = {};
+
 Future currentRowSet() async {
-  Map rowMapRowView =
-      await bl.crud.readBySheetRowNo(swiperSheetRownoKeys[currentRowIndex]);
+  // Map rowMapRowView =
+  //     await bl.crud.readBySheetRowNo(swiperSheetRownoKeys[currentRowIndex]);
+
+  Map rowMapRowView = await row2map(currentRowIndex);
 
   bl.orm.currentRow.quote.value = rowMapRowView['quote'] ?? '';
   bl.orm.currentRow.author.value = rowMapRowView['author'] ?? '';
   bl.orm.currentRow.book.value = rowMapRowView['book'] ?? '';
-  bl.orm.currentRow.parPage.value = rowMapRowView['parPage'] ?? '';
+  bl.orm.currentRow.parPage.value = rowMapRowView['parPage'].toString();
   bl.orm.currentRow.tags.value = rowMapRowView['tags'] ?? '';
   pureTags();
 
@@ -117,12 +126,31 @@ Future currentRowSet() async {
   for (var columnName in rowMapRowView.keys) {
     if (columnName == 'ID') continue;
     if (columnName == 'RowNo') continue;
-    if (colsMain.contains(columnName)) continue;
 
     bl.orm.currentRow.optionalFields[columnName] = rowMapRowView[columnName];
   }
   debugPrint('-----------------------$currentRowIndex');
   debugPrint(swiperSheetRownoKeys[currentRowIndex].toString());
+}
+
+Future<Map> row2map(int rowIndex) async {
+  List cols = colsSet['EMTdaily'];
+
+  Map rowMap = {};
+  rowMap['shetnameRowNoKey'] = sheetkeyData[rowIndex][0];
+  List<String> sheetRowno = sheetkeyData[rowIndex][0].toString().split('__|__');
+  rowMap['sheetName'] = sheetRowno[0];
+  rowMap['rowNo'] = sheetRowno[1];
+
+  Map rowkey = {};
+  rowkey['sheetName'] = rowMap['sheetName'];
+  rowkey['RowNo'] = rowMap['rowNo'];
+  swiperSheetRownoKeys.add(rowkey);
+  for (var i = 0; i < cols.length; i++) {
+    rowMap[cols[i]] = sheetkeyData[rowIndex][1][i];
+  }
+
+  return rowMap;
 }
 
 Future currentRowUpdate() async {
