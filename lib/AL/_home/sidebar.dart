@@ -14,8 +14,10 @@ import '../../DL/builddate.dart';
 import '../filters/simplef/dateinsert1.dart';
 import '../zview/addquote.dart';
 
+// ignore: must_be_immutable
 class SidebarPage extends StatefulWidget {
-  const SidebarPage({super.key});
+  Function setstateHome;
+  SidebarPage(this.setstateHome, {super.key});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -49,7 +51,11 @@ class _SidebarPageState extends State<SidebarPage> {
               text: 'Today',
               icon: Icons.date_range,
               onPressed: () async {
+                loadingTitle.value = 'Search for ${blUti.todayStr()}';
+                widget.setstateHome();
                 await filterByDateInsert(blUti.todayStr(), context);
+                loadingTitle.value = '';
+                widget.setstateHome();
               },
               onHold: () => ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Date filters"))),

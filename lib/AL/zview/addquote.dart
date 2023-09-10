@@ -109,11 +109,7 @@ class _AddQuoteState extends State<AddQuote> {
       String columnName, String cellContent, String rowNo) async {
     debugPrint('5 pred post');
     List respData = await dl.httpService.setCell(
-        bl.orm.currentRow.sheetName.value,
-        bl.orm.currentRow.fileId,
-        columnName,
-        cellContent,
-        '');
+        bl.orm.currentRow.sheetName.value, columnName, cellContent, '');
     bl.orm.currentRow.rowNo.value = respData[0].toString();
 
     respStatus = 'row:${respData[0]}';

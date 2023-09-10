@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../../BL/bl.dart';
+
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
@@ -69,11 +70,7 @@ class _AttrEditState extends State<AttrEdit> {
   Future setCell(String columnName, String cellContent, String rowNo) async {
     debugPrint('setCell $columnName $rowNo');
     List respData = await dl.httpService.setCell(
-        bl.orm.currentRow.sheetName.value,
-        bl.orm.currentRow.fileId,
-        columnName,
-        cellContent,
-        rowNo);
+        bl.orm.currentRow.sheetName.value, columnName, cellContent, rowNo);
     bl.orm.currentRow.rowNo.value = respData[0].toString();
     respStatus = 'row:${respData[0]}';
     setState(() {});

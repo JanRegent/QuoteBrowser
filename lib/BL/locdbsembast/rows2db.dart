@@ -36,7 +36,7 @@ Future rows2db() async {
   int sheetsLenStart = await bl.crud.readLenght();
 
   if (sheetsLenStart != 0) {
-    loadingTitle.value = 'Data UpToDate devmode:${bl.devMode}';
+    loadingTitle.value = '';
 
     return;
   }

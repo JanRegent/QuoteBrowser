@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../BL/bluti.dart';
 
+import '../BL/params/params.dart';
 import 'backendurl.dart';
 
 //CORS
@@ -32,7 +33,11 @@ class HttpService {
     // ignore: unused_local_variable
     Response response = await dio.get(
       backendUrl,
-      queryParameters: {'action': 'searchSS', 'searchText': searchText},
+      queryParameters: {
+        'action': 'searchSS',
+        'searchText': searchText,
+        'ssId': dataSheetId
+      },
     );
 
     return [response.data['data'], response.data['colsSet']];
@@ -47,8 +52,8 @@ class HttpService {
     return blUti.toListString(response.data['data']);
   }
 
-  Future<List> setCell(String sheetName, String sheetId, String columnName,
-      String cellContent, String rowNo) async {
+  Future<List> setCell(String sheetName, String columnName, String cellContent,
+      String rowNo) async {
     // The below request is the same as above.
     // ignore: unused_local_variable
     Response response = await dio.get(
@@ -56,7 +61,7 @@ class HttpService {
       queryParameters: {
         'action': 'setCell',
         'sheetName': sheetName,
-        'sheetId': sheetId,
+        'sheetId': dataSheetId,
         'columnName': columnName,
         'cellContent': cellContent,
         'rowNo': rowNo

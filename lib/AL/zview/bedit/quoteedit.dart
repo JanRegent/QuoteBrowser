@@ -3,6 +3,7 @@ import 'package:translator_plus/translator_plus.dart';
 
 import '../../../BL/bl.dart';
 import '../../../BL/orm.dart';
+
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
@@ -19,11 +20,7 @@ class QuoteEdit extends StatelessWidget {
       String columnName, String cellContent, String rowNo) async {
     debugPrint('setCell $columnName $rowNo');
     List respData = await dl.httpService.setCell(
-        bl.orm.currentRow.sheetName.value,
-        bl.orm.currentRow.fileId,
-        columnName,
-        cellContent,
-        rowNo);
+        bl.orm.currentRow.sheetName.value, columnName, cellContent, rowNo);
     await currentRowUpdate();
     debugPrint('row: $respData');
   }

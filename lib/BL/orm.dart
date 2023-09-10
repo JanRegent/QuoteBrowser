@@ -145,6 +145,7 @@ Future<Map> row2map(int rowIndex) async {
   Map rowkey = {};
   rowkey['sheetName'] = rowMap['sheetName'];
   rowkey['RowNo'] = rowMap['rowNo'];
+  rowkey['fileId'] = dataSheetId;
   swiperSheetRownoKeys.add(rowkey);
   for (var i = 0; i < cols.length; i++) {
     rowMap[cols[i]] = sheetkeyData[rowIndex][1][i];

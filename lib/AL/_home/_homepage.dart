@@ -19,15 +19,28 @@ class _SidebarHomeState extends State<SidebarHome> {
         debugShowCheckedModeBanner: false, home: homeBody(context));
   }
 
+  void setstateHome() {
+    setState(() {});
+  }
+
   Widget homeBody(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Obx(() => Text(loadingTitle.value)),
+          title: loadingTitle.value.isNotEmpty
+              ? Row(
+                  children: [
+                    const CircularProgressIndicator(
+                      color: Colors.red,
+                    ),
+                    Obx(() => Text(loadingTitle.value)),
+                  ],
+                )
+              : (const Text('Select a sidebar menu item')),
           actions: const [],
         ),
-        body: const SidebarPage(),
+        body: SidebarPage(setstateHome),
       ),
     );
   }
