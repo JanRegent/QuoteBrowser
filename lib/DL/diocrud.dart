@@ -40,6 +40,7 @@ class HttpService {
     );
     responseData.keyrowsSet(response.data['data']);
     responseData.colsSet = response.data['colsSet'];
+
     return [];
   }
 
@@ -67,8 +68,10 @@ class HttpService {
         'rowNo': rowNo
       },
     );
+    responseData.keyrows[currentRowIndex] =
+        blUti.toListString(response.data['data'][1]);
 
-    return response.data['data'];
+    return [];
   }
 
   // Future<int?> postAppendRow(

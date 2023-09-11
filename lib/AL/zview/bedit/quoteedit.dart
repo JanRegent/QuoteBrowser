@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:translator_plus/translator_plus.dart';
 
 import '../../../BL/bl.dart';
-import '../../../BL/bluti.dart';
+
 import '../../../BL/orm.dart';
 
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
 Future setCellAttr(String columnName, String cellContent, String rowNo) async {
-  // ignore: unused_local_variable
-  List responseRow = await dl.httpService.setCellDL(
-      bl.orm.currentRow.sheetName.value, columnName, cellContent, rowNo);
   try {
-    responseData.keyrows[currentRowIndex] = blUti.toListString(responseRow);
+    await dl.httpService.setCellDL(
+        bl.orm.currentRow.sheetName.value, columnName, cellContent, rowNo);
   } catch (e) {
     debugPrint('setCellBL( \n$e');
   }
-  await currentRowUpdate();
+  //await currentRowUpdate();
 }
 
 // ignore: must_be_immutable

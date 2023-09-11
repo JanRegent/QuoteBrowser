@@ -143,30 +143,12 @@ Future currentRowSet() async {
   // }
 
   debugPrint('----currentRowSet-------------------$currentRowIndex');
-  debugPrint(responseData.keyrows[currentRowIndex].toString());
 }
-
-// Future<Map> row2map() async {
-//   debugPrint('----row2map-------------------$currentRowIndex');
-//   Map rowMap = {};
-
-//   List<String> keys =
-//       responseData.keyrows[currentRowIndex][0].toString().split('__|__');
-//   rowMap['sheetName'] = keys[0];
-//   rowMap['rowNo'] = keys[1];
-
-//   Map rowkey = {};
-//   rowkey['sheetName'] = rowMap['sheetName'];
-//   rowkey['RowNo'] = rowMap['rowNo'];
-//   rowkey['fileId'] = dataSheetId;
 
 //   List cols = responseData.colsSet[rowMap['sheetName']];
 //   for (var i = 0; i < cols.length; i++) {
 //     rowMap[cols[i]] = responseData.keyrows[currentRowIndex][1][i];
 //   }
-//   print(rowMap);
-//   return rowMap;
-// }
 
 Future currentRowUpdate() async {
   Map tempRow = {};
