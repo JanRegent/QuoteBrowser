@@ -7,16 +7,35 @@ import 'bl.dart';
 import 'params/params.dart';
 
 List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
+ResponseData responseData = ResponseData();
 
-List sheetkeyData = [];
-Map colsSet = {};
+class ResponseData {
+  List<List<String>> keyrows = [];
+  List<String> sheetNames = [];
+  List<String> rowNos = [];
+  Map colsSet = {};
+
+  void keyrowsSet(List keyrowsDyn) {
+    for (List row in keyrowsDyn) {
+      keyrows.add(blUti.toListString(row[1]));
+
+      List<String> sheetNo = row[0].toString().split('__|__');
+      sheetNames.add(sheetNo[0]);
+      rowNos.add(sheetNo[1]);
+    }
+  }
+
+  List<String> colsGet() {
+    return blUti.toListString(colsSet[sheetNames[currentRowIndex]]);
+  }
+}
 
 class Orm {
   CurrentRow currentRow = CurrentRow();
 
   Future<List<String>> map2row(Map rowMap) async {
     String sheetName = rowMap['sheetName'];
-    List<String> cols = colsSet[sheetName];
+    List<String> cols = responseData.colsSet[sheetName];
 
     List<String> row = [];
 
@@ -83,25 +102,37 @@ void pureTags() {
 
 Future currentRowSet() async {
   debugPrint('----currentRowSet-----$currentRowIndex');
-  Map rowMapRowView = await row2map();
+  //Map rowMapRowView = await row2map();
+  bl.orm.currentRow.cols = responseData.colsGet();
+  String valueGet(String columnName) {
+    int fieldIndex = bl.orm.currentRow.cols.indexOf(columnName);
+    if (fieldIndex == -1) return '';
+    try {
+      String value = responseData.keyrows[currentRowIndex][fieldIndex];
+      return value;
+    } catch (_) {
+      return '';
+    }
+  }
 
-  bl.orm.currentRow.quote.value = rowMapRowView['quote'] ?? '';
-  bl.orm.currentRow.author.value = rowMapRowView['author'] ?? '';
-  bl.orm.currentRow.book.value = rowMapRowView['book'] ?? '';
-  bl.orm.currentRow.parPage.value = rowMapRowView['parPage'].toString();
-  bl.orm.currentRow.tags.value = rowMapRowView['tags'] ?? '';
+  bl.orm.currentRow.quote.value = valueGet('quote');
+  bl.orm.currentRow.author.value = valueGet('author');
+  bl.orm.currentRow.book.value = valueGet('book');
+  bl.orm.currentRow.parPage.value = valueGet('parPage');
+  bl.orm.currentRow.tags.value = valueGet('tags');
   pureTags();
 
   bl.orm.currentRow.original = '';
 
   //--------------------------ids
-  String sheetName = rowMapRowView['sheetName'] ?? '';
+  String sheetName = responseData.sheetNames[currentRowIndex];
   bl.orm.currentRow.sheetName.value = sheetName;
-  bl.orm.currentRow.rowNo.value = rowMapRowView['rowNo'] ?? '';
-  bl.orm.currentRow.fileId = rowMapRowView['fileId'] ?? '';
-  bl.orm.currentRow.dateinsert = rowMapRowView['dateinsert'] ?? '';
+  bl.orm.currentRow.rowNo.value =
+      responseData.rowNos[currentRowIndex].toString();
+  bl.orm.currentRow.fileId = valueGet('fileId');
+  bl.orm.currentRow.dateinsert = valueGet('dateinsert');
   //--------------------------optional user fields
-  bl.orm.currentRow.cols = blUti.toListString(colsSet[sheetName]);
+
   bl.orm.currentRow.optionalFields = {};
 
   // for (var columnName in rowMapRowView.keys) {
@@ -111,33 +142,31 @@ Future currentRowSet() async {
   //   bl.orm.currentRow.optionalFields[columnName] = rowMapRowView[columnName];
   // }
 
-  bl.orm.currentRow.tags =
-      sheetkeyData[currentRowIndex][1][bl.orm.currentRow.cols.indexOf('tags')];
   debugPrint('----currentRowSet-------------------$currentRowIndex');
-  debugPrint(sheetkeyData[currentRowIndex].toString());
+  debugPrint(responseData.keyrows[currentRowIndex].toString());
 }
 
-Future<Map> row2map() async {
-  debugPrint('----row2map-------------------$currentRowIndex');
-  Map rowMap = {};
+// Future<Map> row2map() async {
+//   debugPrint('----row2map-------------------$currentRowIndex');
+//   Map rowMap = {};
 
-  List<String> keys =
-      sheetkeyData[currentRowIndex][0].toString().split('__|__');
-  rowMap['sheetName'] = keys[0];
-  rowMap['rowNo'] = keys[1];
+//   List<String> keys =
+//       responseData.keyrows[currentRowIndex][0].toString().split('__|__');
+//   rowMap['sheetName'] = keys[0];
+//   rowMap['rowNo'] = keys[1];
 
-  Map rowkey = {};
-  rowkey['sheetName'] = rowMap['sheetName'];
-  rowkey['RowNo'] = rowMap['rowNo'];
-  rowkey['fileId'] = dataSheetId;
+//   Map rowkey = {};
+//   rowkey['sheetName'] = rowMap['sheetName'];
+//   rowkey['RowNo'] = rowMap['rowNo'];
+//   rowkey['fileId'] = dataSheetId;
 
-  List cols = colsSet[rowMap['sheetName']];
-  for (var i = 0; i < cols.length; i++) {
-    rowMap[cols[i]] = sheetkeyData[currentRowIndex][1][i];
-  }
-  print(rowMap);
-  return rowMap;
-}
+//   List cols = responseData.colsSet[rowMap['sheetName']];
+//   for (var i = 0; i < cols.length; i++) {
+//     rowMap[cols[i]] = responseData.keyrows[currentRowIndex][1][i];
+//   }
+//   print(rowMap);
+//   return rowMap;
+// }
 
 Future currentRowUpdate() async {
   Map tempRow = {};

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../BL/bluti.dart';
 
+import '../BL/orm.dart';
 import '../BL/params/params.dart';
 import 'backendurl.dart';
 
@@ -29,8 +30,6 @@ class HttpService {
   }
 
   Future<List> searchSS(String searchText) async {
-    // The below request is the same as above.
-    // ignore: unused_local_variable
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
@@ -39,8 +38,9 @@ class HttpService {
         'ssId': dataSheetId
       },
     );
-
-    return [response.data['data'], response.data['colsSet']];
+    responseData.keyrowsSet(response.data['data']);
+    responseData.colsSet = response.data['colsSet'];
+    return [];
   }
 
   Future<List<String>> getDataSheets(String sheetId) async {

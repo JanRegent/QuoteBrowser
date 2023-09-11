@@ -33,11 +33,8 @@ Future dateinsersLast(BuildContext context) async {
 }
 
 Future filterByDateInsert(String dateinsert, BuildContext context) async {
-  List respData = await dl.httpService.searchSS(dateinsert);
+  await dl.httpService.searchSS(dateinsert);
 
-  sheetkeyData = respData[0];
-
-  colsSet = respData[1] as Map;
   currentRowIndex = 0;
   await currentRowSet();
 

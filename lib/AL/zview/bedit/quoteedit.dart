@@ -10,30 +10,15 @@ import '../../alib/alicons.dart';
 
 Future setCellAttr(String columnName, String cellContent, String rowNo) async {
   // ignore: unused_local_variable
-  List respData = await dl.httpService.setCellDL(
+  List responseRow = await dl.httpService.setCellDL(
       bl.orm.currentRow.sheetName.value, columnName, cellContent, rowNo);
   try {
-    sheetkeyData[currentRowIndex] = blUti.toListString(respData);
+    responseData.keyrows[currentRowIndex] = blUti.toListString(responseRow);
   } catch (e) {
     debugPrint('setCellBL( \n$e');
   }
   await currentRowUpdate();
 }
-
-// Future setCellBL(String columnName, String cellContent, String rowNo) async {
-//   print('setCellBL 1');
-//   List respData = await dl.httpService.setCellDL(
-//       bl.orm.currentRow.sheetName.value, columnName, cellContent, rowNo);
-//   print('setCellBL 2');
-//   try {
-//     print(respData);
-//     sheetkeyData[currentRowIndex] = blUti.toListString(respData);
-//     print(sheetkeyData[currentRowIndex][5]);
-//   } catch (e) {
-//     debugPrint('setCellBL( \n$e');
-//   }
-//   setState(() {});
-// }
 
 // ignore: must_be_immutable
 class QuoteEdit extends StatelessWidget {
