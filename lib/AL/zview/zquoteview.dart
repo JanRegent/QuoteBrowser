@@ -32,9 +32,7 @@ class _QuoteViewState extends State<QuoteView> {
       if (word.length < 2) continue;
       word = word.replaceAll("'", "").replaceAll('"', '');
       highlightedWord[word] = HighlightedWord(
-        onTap: () {
-          debugPrint(word);
-        },
+        onTap: () {},
         textStyle: textStyle,
       );
     }

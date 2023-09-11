@@ -107,8 +107,7 @@ class _AddQuoteState extends State<AddQuote> {
 
   Future setCellAppendRow(
       String columnName, String cellContent, String rowNo) async {
-    debugPrint('5 pred post');
-    List respData = await dl.httpService.setCell(
+    List respData = await dl.httpService.setCellDL(
         bl.orm.currentRow.sheetName.value, columnName, cellContent, '');
     bl.orm.currentRow.rowNo.value = respData[0].toString();
 

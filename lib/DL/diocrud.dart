@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 
 import '../BL/bluti.dart';
 
-import '../BL/orm.dart';
 import '../BL/params/params.dart';
 import 'backendurl.dart';
 
@@ -53,8 +52,8 @@ class HttpService {
     return blUti.toListString(response.data['data']);
   }
 
-  Future<List> setCell(String sheetName, String columnName, String cellContent,
-      String rowNo) async {
+  Future<List> setCellDL(String sheetName, String columnName,
+      String cellContent, String rowNo) async {
     // The below request is the same as above.
     // ignore: unused_local_variable
     Response response = await dio.get(
@@ -68,8 +67,6 @@ class HttpService {
         'rowNo': rowNo
       },
     );
-
-    setCellRowUpdatedOnCloud = response.data['data'];
 
     return response.data['data'];
   }

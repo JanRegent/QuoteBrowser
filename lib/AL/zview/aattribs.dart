@@ -80,7 +80,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
   Future<void> _onOpen(String url) async {
     LinkableElement link = LinkableElement('Link in text', url);
     if (!await launchUrl(Uri.parse(link.url))) {
-      debugPrint('_onOpen--Could not launch ${link.url}');
+      //ebugPrint('_onOpen--Could not launch ${link.url}');
     }
   }
 

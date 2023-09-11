@@ -4,8 +4,6 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../../BL/bl.dart';
 
-import '../../../BL/orm.dart';
-import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
 import 'quoteedit.dart';
@@ -68,27 +66,12 @@ class _AttrEditState extends State<AttrEdit> {
     );
   }
 
-  Future setCell(String columnName, String cellContent, String rowNo) async {
-    List respData = await dl.httpService.setCell(
-        bl.orm.currentRow.sheetName.value, columnName, cellContent, rowNo);
-    print('--$rowNo');
-    bl.orm.currentRow.rowNo.value = respData[0].toString();
-    try {
-      int? rowNoInt = int.tryParse(rowNo);
-      print(rowNoInt);
-      sheetkeyData[rowNoInt!][1] = blUti.toListString(setCellRowUpdatedOnCloud);
-    } catch (e) {
-      print(e);
-    }
-    setState(() {});
-  }
-
   String? respStatus = 'status:new';
   Future saveQuote() async {
     setState(() {
       respStatus = 'status:?';
     });
-    debugPrint('1post--rowMapRowView[quote]].isEmpty');
+
     if (bl.orm.currentRow.quote.isEmpty) {
       emptyDialog('Quote /n ${'quote'}');
       return [];
@@ -98,7 +81,7 @@ class _AttrEditState extends State<AttrEdit> {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCell('quote', bl.orm.currentRow.quote.value, '');
+    await setCellAttr('quote', bl.orm.currentRow.quote.value, '');
     bl.orm.currentRow.dateinsert = '${blUti.todayStr()}.';
     //update(widget.sheet);
   }

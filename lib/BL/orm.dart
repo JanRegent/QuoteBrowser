@@ -1,34 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/BL/bluti.dart';
 
 import 'bl.dart';
 
 import 'params/params.dart';
 
+List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
+
+List sheetkeyData = [];
+Map colsSet = {};
+
 class Orm {
   CurrentRow currentRow = CurrentRow();
 
-  Map<String, dynamic> row2map(List<String> cols, List<String> row,
-      String sheetName, String rowNo, String fileId) {
-    Map<String, dynamic> rowMap = {};
-    rowMap["sheetName"] = sheetName;
-    rowMap["rowNo"] = rowNo;
-    if (rowNo == '1') {
-      rowMap["colRow"] = cols;
-      return rowMap;
-    }
-
-    for (var i = 0; i < cols.length; i++) {
-      rowMap[cols[i]] = row[i];
-    }
-    rowMap["fileId"] = fileId;
-    return rowMap;
-  }
-
   Future<List<String>> map2row(Map rowMap) async {
     String sheetName = rowMap['sheetName'];
-    List<String> cols = await bl.crud.readColRowsOfSheetName(sheetName);
-    debugPrint(cols.toString());
+    List<String> cols = colsSet[sheetName];
+
     List<String> row = [];
 
     for (var i = 0; i < cols.length; i++) {
@@ -53,8 +42,6 @@ class Orm {
     'original'
   ];
 }
-
-List<Map> swiperSheetRownoKeys = [];
 
 int currentRowIndex = 0;
 void currentRowNew() {
@@ -94,18 +81,9 @@ void pureTags() {
   bl.orm.currentRow.tags.value = tags.join(',');
 }
 
-List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
-
-List sheetkeyData = [];
-Map colsSet = {};
-
-List setCellRowUpdatedOnCloud = [];
-
 Future currentRowSet() async {
-  // Map rowMapRowView =
-  //     await bl.crud.readBySheetRowNo(swiperSheetRownoKeys[currentRowIndex]);
-
-  Map rowMapRowView = await row2map(currentRowIndex);
+  debugPrint('----currentRowSet-----$currentRowIndex');
+  Map rowMapRowView = await row2map();
 
   bl.orm.currentRow.quote.value = rowMapRowView['quote'] ?? '';
   bl.orm.currentRow.author.value = rowMapRowView['author'] ?? '';
@@ -123,36 +101,41 @@ Future currentRowSet() async {
   bl.orm.currentRow.fileId = rowMapRowView['fileId'] ?? '';
   bl.orm.currentRow.dateinsert = rowMapRowView['dateinsert'] ?? '';
   //--------------------------optional user fields
-  bl.orm.currentRow.cols = await bl.crud.readColRowsOfSheetName(sheetName);
+  bl.orm.currentRow.cols = blUti.toListString(colsSet[sheetName]);
   bl.orm.currentRow.optionalFields = {};
 
-  for (var columnName in rowMapRowView.keys) {
-    if (columnName == 'ID') continue;
-    if (columnName == 'RowNo') continue;
+  // for (var columnName in rowMapRowView.keys) {
+  //   if (columnName == 'ID') continue;
+  //   if (columnName == 'RowNo') continue;
 
-    bl.orm.currentRow.optionalFields[columnName] = rowMapRowView[columnName];
-  }
-  debugPrint('-----------------------$currentRowIndex');
-  debugPrint(swiperSheetRownoKeys[currentRowIndex].toString());
+  //   bl.orm.currentRow.optionalFields[columnName] = rowMapRowView[columnName];
+  // }
+
+  bl.orm.currentRow.tags =
+      sheetkeyData[currentRowIndex][1][bl.orm.currentRow.cols.indexOf('tags')];
+  debugPrint('----currentRowSet-------------------$currentRowIndex');
+  debugPrint(sheetkeyData[currentRowIndex].toString());
 }
 
-Future<Map> row2map(int rowIndex) async {
+Future<Map> row2map() async {
+  debugPrint('----row2map-------------------$currentRowIndex');
   Map rowMap = {};
-  rowMap['shetnameRowNoKey'] = sheetkeyData[rowIndex][0];
-  List<String> sheetRowno = sheetkeyData[rowIndex][0].toString().split('__|__');
-  rowMap['sheetName'] = sheetRowno[0];
-  rowMap['rowNo'] = sheetRowno[1];
+
+  List<String> keys =
+      sheetkeyData[currentRowIndex][0].toString().split('__|__');
+  rowMap['sheetName'] = keys[0];
+  rowMap['rowNo'] = keys[1];
 
   Map rowkey = {};
   rowkey['sheetName'] = rowMap['sheetName'];
   rowkey['RowNo'] = rowMap['rowNo'];
   rowkey['fileId'] = dataSheetId;
-  swiperSheetRownoKeys.add(rowkey);
+
   List cols = colsSet[rowMap['sheetName']];
   for (var i = 0; i < cols.length; i++) {
-    rowMap[cols[i]] = sheetkeyData[rowIndex][1][i];
+    rowMap[cols[i]] = sheetkeyData[currentRowIndex][1][i];
   }
-
+  print(rowMap);
   return rowMap;
 }
 

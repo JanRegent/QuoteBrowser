@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import 'package:quotebrowser/BL/params/params.dart';
@@ -31,7 +30,7 @@ void clearLoadingStats() {
 }
 
 Future rows2db() async {
-  debugPrint('-------------------------------refresh start');
+  if (1 == 1) return;
 
   int sheetsLenStart = await bl.crud.readLenght();
 
@@ -59,7 +58,6 @@ Future rows2db() async {
       if (index == 5) break;
     }
   }
-  debugPrint('-------------------------------refresh done');
 
   loadingTitle.value = 'Refresh done devmode:${bl.devMode}';
 }

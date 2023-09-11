@@ -9,9 +9,9 @@ class CRUDsembast {
       String rowNo, String fileId) async {
     await sembastDb.transaction((txn) async {
       // You can specify a key
-      await sheetStore
-          .record('$sheetName,$rowNo')
-          .put(txn, bl.orm.row2map(cols, row, sheetName, rowNo, fileId));
+      // await sheetStore
+      //     .record('$sheetName,$rowNo')
+      //     .put(txn, bl.orm. row2map(cols, row, sheetName, rowNo, fileId));
     });
   }
 
