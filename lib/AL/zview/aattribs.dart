@@ -51,7 +51,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
       tileColor: Colors.lime,
       leading: ALicons.attrIcons.tagIcon,
       title:
-          Obx(() => Text(bl.orm.currentRow.tags.value.replaceAll(',', ',\n'))),
+          Obx(() => Text(bl.orm.currentRow.tags.value.replaceAll('#', '\n'))),
     ));
 
     for (String columnName in bl.orm.optionalFields) {

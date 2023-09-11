@@ -86,7 +86,7 @@ class CurrentRow {
 }
 
 void pureTags() {
-  List<String> tagsList = bl.orm.currentRow.tags.value.split(',');
+  List<String> tagsList = bl.orm.currentRow.tags.value.split('#');
   Set tagsSet = tagsList.toSet();
   List<String> tags = [];
   for (var tag in tagsSet) {
@@ -97,7 +97,7 @@ void pureTags() {
     }
     tags.add(tag);
   }
-  bl.orm.currentRow.tags.value = tags.join(',');
+  bl.orm.currentRow.tags.value = tags.join('#');
 }
 
 Future currentRowSet() async {
@@ -150,13 +150,3 @@ Future currentRowSet() async {
 //     rowMap[cols[i]] = responseData.keyrows[currentRowIndex][1][i];
 //   }
 
-Future currentRowUpdate() async {
-  Map tempRow = {};
-
-  tempRow['book'] = bl.orm.currentRow.book.value;
-  tempRow['author'] = bl.orm.currentRow.author.value;
-  tempRow['tags'] = bl.orm.currentRow.tags.value;
-  tempRow['parPage'] = bl.orm.currentRow.parPage.value;
-
-  await bl.crud.updateOrInsert(tempRow);
-}

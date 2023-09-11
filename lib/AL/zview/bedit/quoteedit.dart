@@ -37,8 +37,6 @@ class QuoteEdit extends StatelessWidget {
     } catch (_) {
       return;
     }
-    selected =
-        selected.replaceAll('.', '').replaceAll(',', ' ').replaceAll('\n', ' ');
 
     switch (attribName) {
       case 'author':
@@ -57,7 +55,7 @@ class QuoteEdit extends StatelessWidget {
             bl.orm.currentRow.rowNo.value);
         break;
       case 'tags':
-        bl.orm.currentRow.tags.value += ',$selected';
+        bl.orm.currentRow.tags.value += '#$selected';
         pureTags();
         await setCellAttr(attribName, bl.orm.currentRow.tags.value,
             bl.orm.currentRow.rowNo.value);
