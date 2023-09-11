@@ -123,6 +123,7 @@ class QuoteEdit extends StatelessWidget {
               ),
         TextField(
           controller: _controller,
+          readOnly: true,
           style: const TextStyle(
             fontSize: 20.0,
             color: Colors.black,
