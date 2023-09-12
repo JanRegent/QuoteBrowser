@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../BL/orm.dart';
 
 import 'zquoteview.dart';
-import 'aattribs.dart';
+import 'attribs/_attribs.dart';
 import 'bedit/attredit.dart';
 
 import 'rowviewmenu.dart';

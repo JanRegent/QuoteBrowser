@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'addquote.dart';
 import 'bedit/attredit.dart';
-import 'aattribs.dart';
+import 'attribs/_attribs.dart';
 
 import 'zquoteview.dart';
 import 'rowviewmenu.dart';
