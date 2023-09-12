@@ -121,7 +121,7 @@ Future currentRowSet() async {
   bl.orm.currentRow.parPage.value = valueGet('parPage');
   bl.orm.currentRow.tags.value = valueGet('tags');
   bl.orm.currentRow.stars.value = valueGet('stars');
-  bl.orm.currentRow.fav.value = valueGet('fav');
+  bl.orm.currentRow.fav.value = valueGet('favorite');
   pureTags();
 
   bl.orm.currentRow.original = '';

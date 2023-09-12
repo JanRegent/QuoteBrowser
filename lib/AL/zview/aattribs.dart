@@ -33,7 +33,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
   }
 
   Widget favButt() {
-    if (!bl.orm.currentRow.cols.contains('fav')) {
+    if (!bl.orm.currentRow.cols.contains('favorite')) {
       return const Text('');
     }
     Icon favIcon = const Icon(Icons.favorite_outline);
@@ -52,7 +52,7 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
             bl.orm.currentRow.fav.value = '';
           }
 
-          await setCellAttr('fav', bl.orm.currentRow.fav.value,
+          await setCellAttr('favorite', bl.orm.currentRow.fav.value,
               bl.orm.currentRow.rowNo.value);
         });
   }

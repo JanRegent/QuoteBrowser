@@ -23,10 +23,6 @@ class _AttrEditState extends State<AttrEdit> {
     super.initState();
   }
 
-  void setstateAattribs() {
-    setState(() {});
-  }
-
   // Widget starsButt() {
   //   if (!bl.orm.currentRow.cols.contains('stars')) {
   //     return const Text('');
