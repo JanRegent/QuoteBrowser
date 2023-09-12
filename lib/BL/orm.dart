@@ -75,6 +75,8 @@ class CurrentRow {
   RxString book = ''.obs;
   RxString parPage = ''.obs;
   RxString tags = ''.obs;
+  RxString stars = ''.obs;
+  RxString fav = ''.obs;
   //--------------------------ids
   RxString sheetName = ''.obs;
   RxString rowNo = ''.obs;
@@ -101,8 +103,6 @@ void pureTags() {
 }
 
 Future currentRowSet() async {
-  debugPrint('----currentRowSet-----$currentRowIndex');
-  //Map rowMapRowView = await row2map();
   bl.orm.currentRow.cols = responseData.colsGet();
   String valueGet(String columnName) {
     int fieldIndex = bl.orm.currentRow.cols.indexOf(columnName);
@@ -120,6 +120,8 @@ Future currentRowSet() async {
   bl.orm.currentRow.book.value = valueGet('book');
   bl.orm.currentRow.parPage.value = valueGet('parPage');
   bl.orm.currentRow.tags.value = valueGet('tags');
+  bl.orm.currentRow.stars.value = valueGet('stars');
+  bl.orm.currentRow.fav.value = valueGet('fav');
   pureTags();
 
   bl.orm.currentRow.original = '';
@@ -141,12 +143,4 @@ Future currentRowSet() async {
 
   //   bl.orm.currentRow.optionalFields[columnName] = rowMapRowView[columnName];
   // }
-
-  debugPrint('----currentRowSet-------------------$currentRowIndex');
 }
-
-//   List cols = responseData.colsSet[rowMap['sheetName']];
-//   for (var i = 0; i < cols.length; i++) {
-//     rowMap[cols[i]] = responseData.keyrows[currentRowIndex][1][i];
-//   }
-
