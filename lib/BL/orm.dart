@@ -52,14 +52,6 @@ class Orm {
   }
 
   List<String> mandatoryFields = ['quote', 'author', 'book', 'tags'];
-  List<String> optionalFields = [
-    'category',
-    'sourceUrl',
-    'fileUrl',
-    'categoryChapterPB',
-    'folder',
-    'original'
-  ];
 }
 
 int currentRowIndex = 0;
@@ -137,10 +129,16 @@ Future currentRowSet() async {
 
   bl.orm.currentRow.optionalFields = {};
 
-  // for (var columnName in rowMapRowView.keys) {
-  //   if (columnName == 'ID') continue;
-  //   if (columnName == 'RowNo') continue;
-
-  //   bl.orm.currentRow.optionalFields[columnName] = rowMapRowView[columnName];
-  // }
+  for (var columnName in bl.orm.currentRow.cols) {
+    if (columnName == 'ID') continue;
+    if (columnName == 'RowNo') continue;
+    if (columnName == 'quote') continue;
+    if (columnName == 'author') continue;
+    if (columnName == 'book') continue;
+    if (columnName == 'parPage') continue;
+    if (columnName == 'tags') continue;
+    if (columnName == 'stars') continue;
+    if (columnName == 'favorite') continue;
+    bl.orm.currentRow.optionalFields[columnName] = valueGet(columnName);
+  }
 }
