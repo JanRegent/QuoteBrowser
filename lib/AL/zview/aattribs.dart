@@ -8,6 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../BL/bl.dart';
 import '../alib/alicons.dart';
+import 'bedit/quoteedit.dart';
+import 'bedit/stars.dart';
 
 // ignore: must_be_immutable
 class QuoteAttribs extends StatefulWidget {
@@ -24,6 +26,35 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
 
     expandedCard = expandedWidgets1();
     expandedWidgets2urls(bl.orm.currentRow.quote.value);
+  }
+
+  void setstateAattribs() {
+    setState(() {});
+  }
+
+  Widget favButt() {
+    if (!bl.orm.currentRow.cols.contains('fav')) {
+      return const Text('');
+    }
+    Icon favIcon = const Icon(Icons.favorite_outline);
+
+    if (bl.orm.currentRow.fav.value.isEmpty) {
+      favIcon = const Icon(Icons.favorite_outline);
+    } else {
+      favIcon = const Icon(Icons.favorite);
+    }
+    return IconButton(
+        icon: favIcon,
+        onPressed: () async {
+          if (bl.orm.currentRow.fav.value.isEmpty) {
+            bl.orm.currentRow.fav.value = 'f';
+          } else {
+            bl.orm.currentRow.fav.value = '';
+          }
+
+          await setCellAttr('fav', bl.orm.currentRow.fav.value,
+              bl.orm.currentRow.rowNo.value);
+        });
   }
 
   //------------------------------------------------------------------expand
@@ -46,6 +77,11 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
       tileColor: Colors.white,
       leading: ALicons.attrIcons.parPageIcon,
       title: Obx(() => Text(bl.orm.currentRow.parPage.value)),
+    ));
+    expandedCard.add(ListTile(
+      tileColor: Colors.white,
+      leading: favButt(),
+      title: RatingStarsPage(setstateAattribs),
     ));
     expandedCard.add(ListTile(
       tileColor: Colors.lime,

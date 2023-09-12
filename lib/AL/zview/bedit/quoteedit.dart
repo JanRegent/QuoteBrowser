@@ -81,20 +81,6 @@ class QuoteEdit extends StatelessWidget {
     setstate();
   }
 
-  Widget favButt() {
-    if (!bl.orm.currentRow.cols.contains('fav')) {
-      return const Text('');
-    }
-    Icon favIcon = const Icon(Icons.favorite_outline);
-
-    if (bl.orm.currentRow.fav.value.isEmpty) {
-      favIcon = const Icon(Icons.favorite_outline);
-    } else {
-      favIcon = const Icon(Icons.favorite);
-    }
-    return IconButton(icon: favIcon, onPressed: () {});
-  }
-
   Row buttRow() {
     return Row(
       children: [
@@ -115,7 +101,6 @@ class QuoteEdit extends StatelessWidget {
             child: const Text(' >>'),
             onPressed: () => attribSet('__othersFields__')),
         const Spacer(),
-        favButt(),
       ],
     );
   }

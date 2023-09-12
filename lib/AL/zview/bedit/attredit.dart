@@ -23,31 +23,35 @@ class _AttrEditState extends State<AttrEdit> {
     super.initState();
   }
 
-  Widget starsButt() {
-    if (!bl.orm.currentRow.cols.contains('stars')) {
-      return const Text('');
-    }
-    String stars =
-        '*************'.substring(0, bl.orm.currentRow.stars.value.length);
-    if (bl.orm.currentRow.stars.value.isEmpty) {
-      stars = 'stars';
-    }
-    return TextButton(
-        child: Text(
-          stars,
-          style: const TextStyle(fontSize: 25),
-        ),
-        onPressed: () {});
+  void setstateAattribs() {
+    setState(() {});
   }
+
+  // Widget starsButt() {
+  //   if (!bl.orm.currentRow.cols.contains('stars')) {
+  //     return const Text('');
+  //   }
+  //   String stars =
+  //       '*************'.substring(0, bl.orm.currentRow.stars.value.length);
+  //   if (bl.orm.currentRow.stars.value.isEmpty) {
+  //     stars = 'stars';
+  //   }
+  //   return TextButton(
+  //       child: Text(
+  //         stars,
+  //         style: const TextStyle(fontSize: 25),
+  //       ),
+  //       onPressed: () {});
+  // }
 
   Card card(BuildContext context) {
     List<ListTile> listTilesGet() {
       List<ListTile> listtiles = [
         ListTile(
-            tileColor: Colors.lime,
-            leading: ALicons.attrIcons.tagIcon,
-            title: Obx(() => Text(bl.orm.currentRow.tags.value)),
-            trailing: starsButt()),
+          tileColor: Colors.lime,
+          leading: ALicons.attrIcons.tagIcon,
+          title: Obx(() => Text(bl.orm.currentRow.tags.value)),
+        ),
         ListTile(title: QuoteEdit(true, widget.setstateRowView))
       ];
 

@@ -7,6 +7,11 @@ import '../../BL/orm.dart';
 import '../alib/alib.dart';
 
 PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
+  void setstateGoto() async {
+    await currentRowSet();
+    swiperSetstate();
+  }
+
   List<PopupMenuItem<String>> gotoItems = [];
   void gotoItemsBuild() {
     int localIdsLength = 25;
@@ -15,7 +20,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
       child: Text('$localIdsLength >|'),
       onTap: () async {
         currentRowIndex = localIdsLength - 1;
-        swiperSetstate();
+        setstateGoto();
       },
     ));
     for (int i = 0; i < localIdsLength; i = i + 10) {
@@ -23,7 +28,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
         child: i > 0 ? Text((i + 1).toString()) : const Text('1  |<'),
         onTap: () async {
           currentRowIndex = i;
-          swiperSetstate();
+          setstateGoto();
         },
       ));
     }
@@ -31,7 +36,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
       child: Text('$localIdsLength >|'),
       onTap: () async {
         currentRowIndex = localIdsLength - 1;
-        swiperSetstate();
+        setstateGoto();
       },
     ));
   }
