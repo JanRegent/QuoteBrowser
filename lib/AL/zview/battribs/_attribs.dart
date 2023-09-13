@@ -5,6 +5,7 @@ import 'package:expandable/expandable.dart';
 import 'aheadfields.dart';
 import 'btags.dart';
 import 'cothers.dart';
+import 'dcatcolumn.dart';
 
 // ignore: must_be_immutable
 class QuoteAttribs extends StatefulWidget {
@@ -34,9 +35,14 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
             ],
           ),
         ),
-        body: const TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: [MainFields(), TagsTab(), OthersFields(), Text('category')],
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            const MainFields(),
+            const TagsTab(),
+            const OthersFields(),
+            catTabs()
+          ],
         ),
       ),
     );

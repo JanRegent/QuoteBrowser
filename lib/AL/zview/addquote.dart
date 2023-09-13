@@ -11,7 +11,7 @@ import '../../DL/dl.dart';
 
 import '../alib/selectiondialogs/selectone.dart';
 
-import 'bedit/quoteedit.dart';
+import 'aedit/quoteedit.dart';
 
 // ignore: must_be_immutable
 class AddQuote extends StatefulWidget {

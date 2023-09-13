@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'addquote.dart';
-import 'bedit/attredit.dart';
-import 'attribs/_attribs.dart';
+import 'aedit/attredit.dart';
+import 'battribs/_attribs.dart';
 
 import 'zquoteview.dart';
 

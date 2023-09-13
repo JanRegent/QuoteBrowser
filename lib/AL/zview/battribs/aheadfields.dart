@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/AL/zview/bedit/stars.dart';
+import 'package:quotebrowser/AL/zview/aedit/stars.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../BL/bl.dart';
 import '../../alib/alicons.dart';
-import '../bedit/quoteedit.dart';
+import '../aedit/quoteedit.dart';
 
 class MainFields extends StatefulWidget {
   const MainFields({super.key});
