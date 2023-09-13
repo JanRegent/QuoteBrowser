@@ -5,7 +5,6 @@ import 'bedit/attredit.dart';
 import 'attribs/_attribs.dart';
 
 import 'zquoteview.dart';
-import 'rowviewmenu.dart';
 
 // ignore: must_be_immutable
 class RowViewPage extends StatefulWidget {
@@ -30,23 +29,7 @@ class _RowViewPageState extends State<RowViewPage> {
   Widget tabs() {
     return DefaultTabController(
       length: 5,
-      initialIndex: 1, //refresh 1st page
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          actions: [rowViewMenu({}, widget.setstateSviper)],
-          bottom: const TabBar(
-            tabs: [
-              Tab(child: Icon(Icons.format_quote)),
-              Tab(child: Icon(Icons.view_agenda)),
-              Tab(child: Icon(Icons.edit)),
-              Tab(
-                text: '##',
-              ),
-              Tab(icon: Icon(Icons.add)),
-            ],
-          ),
-        ),
         body: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
           children: [

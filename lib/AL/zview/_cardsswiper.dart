@@ -45,65 +45,105 @@ class _CardSwiperState extends State<CardSwiper> {
 
   void currentRowIndexFromBookmarksGet() {}
 
-  void onIndexChanged(int rowIndex) async {
+  void indexChanged(int rowIndex) async {
     currentRowIndex = rowIndex;
+    if (currentRowIndex > responseData.keyrows.length) {
+      currentRowIndex = 0;
+    }
+    if (currentRowIndex < 0) {
+      currentRowIndex = 0;
+    }
     await currentRowSet();
     setState(() {});
+  }
+
+  void onIndexChanged(int rowIndex) async {
+    indexChanged(rowIndex);
   }
 
   void swiperSetstate() {
     setState(() {});
   }
 
+  Widget titleArrowsRow() {
+    return Row(children: [
+      Text(widget.title),
+      const Spacer(),
+      ElevatedButton(
+        onPressed: () {
+          currentRowIndex -= 1;
+          indexChanged(currentRowIndex);
+        },
+        style: ElevatedButton.styleFrom(
+          shape: const CircleBorder(),
+          padding: const EdgeInsets.all(20),
+          backgroundColor: Colors.blue, // <-- Button color
+          foregroundColor: Colors.red, // <-- Splash color
+        ),
+        child: const Icon(Icons.arrow_back_rounded, color: Colors.white),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          currentRowIndex += 1;
+          indexChanged(currentRowIndex);
+        },
+        style: ElevatedButton.styleFrom(
+          shape: const CircleBorder(),
+          padding: const EdgeInsets.all(20),
+          backgroundColor: Colors.blue, // <-- Button color
+          foregroundColor: Colors.red, // <-- Splash color
+        ),
+        child: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+      ),
+    ]);
+  }
+
   bool readOnlyView = false;
   Widget tabs() {
     return DefaultTabController(
-      length: 3,
-      initialIndex: 1, //refresh 1st page
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: titleArrowsRow(),
+          centerTitle: true,
           actions: [rowViewMenu({}, swiperSetstate)],
           bottom: TabBar(
             tabs: [
-              const Tab(child: Icon(Icons.view_agenda)),
               Tab(
                   child: readOnlyView
                       ? const Icon(Icons.format_quote)
                       : const Icon(Icons.edit)),
-              const Tab(text: '##'),
+              const Tab(child: Icon(Icons.view_agenda)),
             ],
           ),
         ),
         body: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            const QuoteAttribs(),
             readOnlyView ? const QuoteView() : AttrEdit(swiperSetstate),
-            const Text('##'),
+            const QuoteAttribs()
           ],
         ),
       ),
     );
   }
 
-  ConstrainedBox body() {
+  SwiperControl swiperControl = const SwiperControl();
+  ConstrainedBox bodySwiper() {
     return ConstrainedBox(
         constraints: BoxConstraints.loose(Size(
             MediaQuery.of(context).size.width,
             MediaQuery.of(context).size.height)),
         child: Swiper(
-          //https://pub.dev/packages/card_swiper
-          //https://github.com/TheAnkurPanchani/card_swiper/
-
           itemBuilder: (BuildContext context, int rowIndex) {
             return tabs(); // RowViewPage(widget.title, swiperSetstate);
           },
           itemCount: responseData.keyrows.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
-          pagination:
-              const SwiperPagination(builder: SwiperPagination.fraction),
-          control: const SwiperControl(),
+          pagination: const SwiperPagination(
+              builder: SwiperPagination.fraction,
+              alignment: Alignment.bottomCenter),
+          //control: const SwiperControl(),
           index: currentRowIndex,
           controller: controller,
         ));
@@ -111,6 +151,22 @@ class _CardSwiperState extends State<CardSwiper> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: body());
+    return bodySwiper();
+    // return Scaffold(
+    //     appBar: AppBar(
+    //       title: Row(children: [
+    //         IconButton(
+    //             icon: const Icon(Icons.arrow_back),
+    //             onPressed: () {
+    //               SwiperController().previous();
+    //             }),
+    //         IconButton(
+    //             icon: const Icon(Icons.arrow_forward),
+    //             onPressed: () {
+    //               SwiperController().next();
+    //             })
+    //       ]),
+    //     ),
+    //     body: body());
   }
 }

@@ -19,23 +19,24 @@ class _QuoteAttribsState extends State<QuoteAttribs> {
 
   Widget tabs() {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 195, 240, 209),
+          backgroundColor: const Color.fromRGBO(206, 230, 239, 1),
           leading: const Text(' '),
           bottom: const TabBar(
             tabs: [
-              Tab(child: Icon(Icons.headset_rounded)),
-              Tab(child: Icon(Icons.tag)),
-              Tab(child: Icon(Icons.devices_other)),
+              Tab(child: Icon(Icons.headset_rounded, color: Colors.black)),
+              Tab(child: Icon(Icons.tag, color: Colors.black)),
+              Tab(child: Icon(Icons.devices_other, color: Colors.black)),
+              Tab(child: Icon(Icons.category, color: Colors.black)),
             ],
           ),
         ),
         body: const TabBarView(
           physics: NeverScrollableScrollPhysics(),
-          children: [MainFields(), TagsTab(), OthersFields()],
+          children: [MainFields(), TagsTab(), OthersFields(), Text('category')],
         ),
       ),
     );

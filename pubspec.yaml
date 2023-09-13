@@ -13,6 +13,8 @@ dependencies:
   #============================================================================AL
   ##----layout
   card_swiper: ^3.0.1                     #https://pub.dev/packages/card_swiper
+  
+  
   searchable_listview: ^2.5.0             #https://pub.dev/packages/searchable_listview
   expandable: ^5.0.1                      #https://pub.dev/packages/expandable
   pluto_menu_bar: ^3.0.1                  #https://pub.dev/packages/pluto_menu_bar
