@@ -69,6 +69,7 @@ class CurrentRow {
   RxString tags = ''.obs;
   RxString stars = ''.obs;
   RxString fav = ''.obs;
+  RxString categories = ''.obs;
   //--------------------------ids
   RxString sheetName = ''.obs;
   RxString rowNo = ''.obs;
@@ -114,6 +115,7 @@ Future currentRowSet() async {
   bl.orm.currentRow.tags.value = valueGet('tags');
   bl.orm.currentRow.stars.value = valueGet('stars');
   bl.orm.currentRow.fav.value = valueGet('favorite');
+  bl.orm.currentRow.fav.value = valueGet('categories');
   pureTags();
 
   bl.orm.currentRow.original = '';
@@ -139,6 +141,7 @@ Future currentRowSet() async {
     if (columnName == 'tags') continue;
     if (columnName == 'stars') continue;
     if (columnName == 'favorite') continue;
+    if (columnName == 'categories') continue;
     bl.orm.currentRow.optionalFields[columnName] = valueGet(columnName);
   }
 }

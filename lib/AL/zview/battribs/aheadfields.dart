@@ -54,6 +54,18 @@ class _MainFieldsState extends State<MainFields> {
         });
   }
 
+  Widget categories() {
+    if (!bl.orm.currentRow.cols.contains('categories')) {
+      return const Text('');
+    }
+    Icon catIcon = const Icon(Icons.category);
+
+    return ListTile(
+      leading: catIcon,
+      title: Text(bl.orm.currentRow.categories.value),
+    );
+  }
+
   Future<void> _onOpen(String url) async {
     LinkableElement link = LinkableElement('Link in text', url);
     if (!await launchUrl(Uri.parse(link.url))) {
@@ -102,6 +114,7 @@ class _MainFieldsState extends State<MainFields> {
       leading: favButt(),
       title: RatingStarsPage(setstateAattribs),
     ));
+    expandedCardMain.add(categories());
 
     return expandedCardMain;
   }

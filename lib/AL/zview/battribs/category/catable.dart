@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:quotebrowser/AL/zview/battribs/category/catsmock.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
+import '../../../../BL/bl.dart';
 import '../../../filters/emptyview.dart';
+import '../../aedit/quoteedit.dart';
 
 class CatablePage extends StatefulWidget {
   const CatablePage({Key? key}) : super(key: key);
@@ -20,12 +22,27 @@ class _CatablePageState extends State<CatablePage> {
     catPaths = catPaths.isEmpty ? catsMock.split('\n') : catPaths;
   }
 
+  String selectedCats = '';
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: Column(
         children: [
+          ListTile(
+            leading: const Icon(Icons.cancel),
+            title: Text(selectedCats),
+            trailing: IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: () async {
+                bl.orm.currentRow.categories.value = selectedCats;
+                await setCellAttr(
+                    'categories',
+                    bl.orm.currentRow.categories.value,
+                    bl.orm.currentRow.rowNo.value);
+              },
+            ),
+          ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -52,10 +69,17 @@ class _CatablePageState extends State<CatablePage> {
   Widget renderAsynchSearchableListview() {
     return SearchableList<String>.async(
       builder: (displayedList, itemIndex, item) {
-        return Text(displayedList[itemIndex]);
+        return ListTile(
+          title: Text(displayedList[itemIndex]),
+          onTap: () {
+            setState(() {
+              selectedCats += '${displayedList[itemIndex]}\n';
+            });
+          },
+        );
       },
       asyncListCallback: () async {
-        await Future.delayed(const Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 1));
         return catPaths;
       },
       asyncListFilter: (query, list) {
