@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:searchable_listview/searchable_listview.dart';
+//import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../BL/bluti.dart';
 
@@ -8,7 +8,7 @@ import '../../../BL/orm.dart';
 import '../../../DL/dl.dart';
 import '../../zview/_cardsswiper.dart';
 
-import '../emptyview.dart';
+//import '../emptyview.dart';
 import '../sheetnames.dart';
 
 Future dateinsersDo(BuildContext context) async {
@@ -64,40 +64,40 @@ class _Dateinsert1State extends State<Dateinsert1> {
 
   final TextEditingController textEditingController = TextEditingController();
 
-  Widget bodyLv2(BuildContext context) {
-    return SearchableList<String>(
-      initialList: widget.dateinserts,
-      builder: (index) => Card(
-          child: InkWell(
-        child: Text(widget.dateinserts[index]),
-        onTap: () {
-          filterByDateInsert(widget.dateinserts[index], context);
-        },
-      )),
-      filter: (value) => widget.dateinserts
-          .where(
-            (element) => element.toLowerCase().contains(value),
-          )
-          .toList(),
-      emptyWidget: const EmptyView(),
-      inputDecoration: InputDecoration(
-        fillColor: Colors.white,
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.blue,
-            width: 1.0,
-          ),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
-  }
+  // Widget bodyLv2(BuildContext context) {
+  //   return SearchableList<String>(
+  //     initialList: widget.dateinserts,
+  //     builder: (index) => Card(
+  //         child: InkWell(
+  //       child: Text(widget.dateinserts[index!!]),
+  //       onTap: () {
+  //         filterByDateInsert(widget.dateinserts[index], context);
+  //       },
+  //     )),
+  //     filter: (value) => widget.dateinserts
+  //         .where(
+  //           (element) => element.toLowerCase().contains(value),
+  //         )
+  //         .toList(),
+  //     emptyWidget: const EmptyView(),
+  //     inputDecoration: InputDecoration(
+  //       fillColor: Colors.white,
+  //       focusedBorder: OutlineInputBorder(
+  //         borderSide: const BorderSide(
+  //           color: Colors.blue,
+  //           width: 1.0,
+  //         ),
+  //         borderRadius: BorderRadius.circular(10.0),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('By Autojr and books)')),
-      body: bodyLv2(context),
+      body: const Text('bodyLv2(context)'),
     );
   }
 

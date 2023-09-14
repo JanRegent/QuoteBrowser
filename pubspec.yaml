@@ -15,7 +15,7 @@ dependencies:
   card_swiper: ^3.0.1                     #https://pub.dev/packages/card_swiper
   
   
-  searchable_listview: ^2.5.0             #https://pub.dev/packages/searchable_listview
+  searchable_listview: ^2.7.0             #https://pub.dev/packages/searchable_listview
   expandable: ^5.0.1                      #https://pub.dev/packages/expandable
   pluto_menu_bar: ^3.0.1                  #https://pub.dev/packages/pluto_menu_bar
   
@@ -24,9 +24,6 @@ dependencies:
   ##----text
   highlight_text: ^1.7.0                  #https://pub.dev/packages/highlight_text
 
-  ##----tree
-  categorized_dropdown: ^1.0.0            #https://pub.dev/packages/categorized_dropdown
-  animated_tree_view: ^2.1.0              #https://pub.dev/packages/animated_tree_view
 
   ##----elements
   dropdown_button2: ^2.3.8                #https://pub.dev/packages/dropdown_button2
