@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quotebrowser/AL/zview/battribs/category/catsmock.dart';
+
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../../BL/bl.dart';
@@ -19,7 +19,11 @@ class _CatablePageState extends State<CatablePage> {
   @override
   void initState() {
     super.initState();
-    catPaths = catPaths.isEmpty ? catsMock.split('\n') : catPaths;
+    if (catPaths.isEmpty) {
+      bl.catsCRUD.readAll().then((value) => catPaths = value);
+    }
+
+    //catsMock.split('\n') : catPaths;
   }
 
   String selectedCats = '';
@@ -30,7 +34,14 @@ class _CatablePageState extends State<CatablePage> {
       child: Column(
         children: [
           ListTile(
-            leading: const Icon(Icons.cancel),
+            leading: IconButton(
+              icon: const Icon(Icons.cancel),
+              onPressed: () {
+                setState(() {
+                  selectedCats = '';
+                });
+              },
+            ),
             title: Text(selectedCats),
             trailing: IconButton(
               icon: const Icon(Icons.save),
@@ -49,13 +60,6 @@ class _CatablePageState extends State<CatablePage> {
               child: renderAsynchSearchableListview(),
             ),
           ),
-          Align(
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              onPressed: addActor,
-              child: const Text('Add actor'),
-            ),
-          )
         ],
       ),
     );
