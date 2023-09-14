@@ -5,11 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:quotebrowser/BL/bluti.dart';
 
-import '../../BL/bl.dart';
-
-import '../../BL/locdbsembast/rows2db.dart';
-import '../../BL/locdbsembast/rows2dbpage.dart';
-
+import '../../BL/orm.dart';
 import '../../DL/builddate.dart';
 import '../filters/simplef/dateinsert1.dart';
 import '../zview/addquote.dart';
@@ -33,7 +29,7 @@ class _SidebarPageState extends State<SidebarPage> {
     super.initState();
     _items = _generateItems;
     _headline = _items.firstWhere((item) => item.isSelected).text;
-    sheetNamesInit();
+    //sheetNamesInit();
   }
 
   List<CollapsibleItem> get _generateItems {
@@ -75,10 +71,10 @@ class _SidebarPageState extends State<SidebarPage> {
               text: 'Refresh data',
               icon: Icons.refresh,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Rows2dbPage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const Rows2dbPage()),
+                // );
               },
               onHold: () => ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Refresh data"))),
@@ -104,12 +100,12 @@ class _SidebarPageState extends State<SidebarPage> {
         icon: Icons.search,
         onPressed: () async {
           setState(() => _headline = 'Search');
-          List<String> result = await bl.crud
-              .searchByFieldSheetRowKeys('dateinsert', '2023-08-23.');
-          for (var i = 0; i < result.length; i++) {
-            // print('-------------------------------------------$i');
-            // print(result[i]);
-          }
+          // List<String> result = await bl.crud
+          //     .searchByFieldSheetRowKeys('dateinsert', '2023-08-23.');
+          // for (var i = 0; i < result.length; i++) {
+          //   // print('-------------------------------------------$i');
+          //   // print(result[i]);
+          // }
         },
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Search"))),
@@ -129,11 +125,11 @@ class _SidebarPageState extends State<SidebarPage> {
         text: 'Settings',
         icon: Icons.settings,
         onPressed: () async {
-          List<Map> result = await bl.crud.readColRows();
-          for (var i = 0; i < result.length; i++) {
-            // print('-------------------------------------------$i');
-            // print(result[i]);
-          }
+          // List<Map> result = await bl.crud.readColRows();
+          // for (var i = 0; i < result.length; i++) {
+          //   // print('-------------------------------------------$i');
+          //   // print(result[i]);
+          // }
         },
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Settings"))),

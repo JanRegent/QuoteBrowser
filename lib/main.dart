@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'AL/_home/_homepage.dart';
 import 'BL/bl.dart';
 
-import 'BL/locdbsembast/rows2db.dart';
-import 'BL/locdbsembast/rows2dbpage.dart';
-
 import 'DL/dl.dart';
 
 // flutter run -d windows  --dart-define=devmode=1
@@ -15,8 +12,8 @@ void main() async {
 
   await bl.init();
   await dl.init();
-  await sheetNamesInit();
-  rows2db();
+  //await sheetNamesInit();
+  //rows2db();
 
   runApp(const SidebarHome());
 }
@@ -36,15 +33,7 @@ class _MainAppState extends State<MainApp> {
         body: Column(
           children: [
             const Text('Hello World!4'),
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Rows2dbPage()),
-                  );
-                },
-                icon: const Icon(Icons.abc))
+            IconButton(onPressed: () {}, icon: const Icon(Icons.abc))
           ],
         ),
       ),

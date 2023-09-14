@@ -8,6 +8,8 @@ import 'params/params.dart';
 
 List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
 ResponseData responseData = ResponseData();
+RxString loadingTitle = ''.obs;
+List<String> sheetNames = [];
 
 class ResponseData {
   List<List<String>> keyrows = [];

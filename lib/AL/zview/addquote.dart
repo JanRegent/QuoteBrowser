@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
-import 'package:quotebrowser/BL/locdbsembast/rows2db.dart';
-
 import '../../BL/bl.dart';
 
 import '../../BL/orm.dart';
 import '../../DL/dl.dart';
-
-import '../alib/selectiondialogs/selectone.dart';
 
 import 'aedit/quoteedit.dart';
 
@@ -33,10 +29,10 @@ class _AddQuoteState extends State<AddQuote> {
   }
 
   Future sheetNameSet(BuildContext context) async {
-    String sheetName = await selectOne(sheetNames, context);
-    if (sheetName.isEmpty) return;
+    // String sheetName = await selectOne(sheetNames, context);
+    // if (sheetName.isEmpty) return;
 
-    bl.orm.currentRow.sheetName.value = sheetName;
+    // bl.orm.currentRow.sheetName.value = sheetName;
   }
 
   Card card(BuildContext context) {
