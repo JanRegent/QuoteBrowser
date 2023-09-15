@@ -4,11 +4,18 @@ import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
 import 'categories/catscrud.dart';
+import 'filters/filterscrud.dart';
 import 'orm.dart';
 import 'sheetrows/sheetcolscrud.dart';
 import 'sheetrows/sheetrowscrud.dart';
 
 Bl bl = Bl();
+List<IsarGeneratedSchema> schemas = [
+  CatSchema,
+  SheetRowSchema,
+  SheetColSchema,
+  SimpleFilterSchema
+];
 
 class Bl {
   bool devMode = false;
@@ -17,12 +24,13 @@ class Bl {
   CatsCRUD catsCRUD = CatsCRUD();
   SheetrowsCRUD sheetrowsCRUD = SheetrowsCRUD();
   SheetcolsCRUD sheetcolsCRUD = SheetcolsCRUD();
+  FiltersCRUD filtersCRUD = FiltersCRUD();
   //CRUDsembast crud = CRUDsembast();
 
   Future init() async {
     await isarOpen();
 
-    isar = Isar.get(schemas: [CatSchema, SheetRowSchema, SheetColSchema]);
+    isar = Isar.get(schemas: schemas);
     await bl.catsCRUD.update();
 
     devModeSet();
@@ -49,7 +57,7 @@ Future isarOpen() async {
   const docsPath = kIsWeb ? Isar.sqliteInMemory : '../';
 
   isar = await Isar.openAsync(
-      schemas: [CatSchema, SheetRowSchema, SheetColSchema],
+      schemas: schemas,
       directory: docsPath,
       engine: kIsWeb ? IsarEngine.sqlite : IsarEngine.isar,
       inspector: true);

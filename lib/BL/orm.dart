@@ -18,16 +18,22 @@ class ResponseData {
   Map colsSet = {};
 
   void keyrowsSet(List keyrowsDyn) async {
+    List<String> sheetRownoKeys = [];
     for (List row in keyrowsDyn) {
       List<String> rowArr = blUti.toListString(row[1]);
       keyrows.add(rowArr);
 
-      List<String> sheetNo = row[0].toString().split('__|__');
+      String sheetRownoKey = row[0];
+      List<String> sheetNo = sheetRownoKey.toString().split('__|__');
       sheetNames.add(sheetNo[0]);
       rowNos.add(sheetNo[1]);
 
-      await bl.sheetrowsCRUD.updateRow(row[0], rowArr);
+      await bl.sheetrowsCRUD.updateRow(sheetRownoKey, rowArr);
+      sheetRownoKeys.add(sheetRownoKey);
     }
+    String filterKey = '${blUti.todayStr()}.';
+    bl.filtersCRUD
+        .updateFilter(filterKey, 'dainsert $filterKey', sheetRownoKeys);
   }
 
   List<String> colsGet() {
