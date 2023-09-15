@@ -17,13 +17,16 @@ class ResponseData {
   List<String> rowNos = [];
   Map colsSet = {};
 
-  void keyrowsSet(List keyrowsDyn) {
+  void keyrowsSet(List keyrowsDyn) async {
     for (List row in keyrowsDyn) {
-      keyrows.add(blUti.toListString(row[1]));
+      List<String> rowArr = blUti.toListString(row[1]);
+      keyrows.add(rowArr);
 
       List<String> sheetNo = row[0].toString().split('__|__');
       sheetNames.add(sheetNo[0]);
       rowNos.add(sheetNo[1]);
+
+      await bl.sheetrowsCRUD.updateRow(row[0], rowArr);
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../BL/bl.dart';
 import '../BL/bluti.dart';
 
 import '../BL/orm.dart';
@@ -39,7 +40,9 @@ class HttpService {
       },
     );
     responseData.keyrowsSet(response.data['data']);
+
     responseData.colsSet = response.data['colsSet'];
+    bl.sheetcolsCRUD.updateColSet(responseData.colsSet);
 
     return [];
   }

@@ -5,6 +5,8 @@ import 'package:isar/isar.dart';
 
 import 'categories/catscrud.dart';
 import 'orm.dart';
+import 'sheetrows/sheetcolscrud.dart';
+import 'sheetrows/sheetrowscrud.dart';
 
 Bl bl = Bl();
 
@@ -13,6 +15,8 @@ class Bl {
 
   Orm orm = Orm();
   CatsCRUD catsCRUD = CatsCRUD();
+  SheetrowsCRUD sheetrowsCRUD = SheetrowsCRUD();
+  SheetcolsCRUD sheetcolsCRUD = SheetcolsCRUD();
   //CRUDsembast crud = CRUDsembast();
 
   Future init() async {
@@ -41,10 +45,11 @@ Future isarOpen() async {
   const docsPath = kIsWeb ? Isar.sqliteInMemory : '../';
 
   isar = Isar.open(
-    schemas: [CatSchema],
-    directory: docsPath,
-    engine: IsarEngine.sqlite,
-  );
+      schemas: [CatSchema, SheetRowSchema, SheetColSchema],
+      directory: docsPath,
+      engine: kIsWeb ? IsarEngine.sqlite : IsarEngine.isar,
+      inspector: true);
 
+  isar = Isar.get(schemas: [CatSchema, SheetRowSchema, SheetColSchema]);
   await bl.catsCRUD.update();
 }
