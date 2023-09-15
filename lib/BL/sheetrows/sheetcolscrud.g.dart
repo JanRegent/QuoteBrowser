@@ -17,16 +17,16 @@ extension GetSheetColCollection on Isar {
 const SheetColSchema = IsarGeneratedSchema(
   schema: IsarSchema(
     name: 'SheetCol',
-    idName: 'sheetRownoKey',
+    idName: 'sheetName',
     embedded: false,
     properties: [
       IsarPropertySchema(
-        name: 'sheetRownoKey',
+        name: 'sheetName',
         type: IsarType.string,
       ),
       IsarPropertySchema(
         name: 'cols',
-        type: IsarType.string,
+        type: IsarType.stringList,
       ),
     ],
     indexes: [],
@@ -41,16 +41,38 @@ const SheetColSchema = IsarGeneratedSchema(
 
 @isarProtected
 int serializeSheetCol(IsarWriter writer, SheetCol object) {
-  IsarCore.writeString(writer, 1, object.sheetRownoKey);
-  IsarCore.writeString(writer, 2, object.cols);
-  return Isar.fastHash(object.sheetRownoKey);
+  IsarCore.writeString(writer, 1, object.sheetName);
+  {
+    final list = object.cols;
+    final listWriter = IsarCore.beginList(writer, 2, list.length);
+    for (var i = 0; i < list.length; i++) {
+      IsarCore.writeString(listWriter, i, list[i]);
+    }
+    IsarCore.endList(writer, listWriter);
+  }
+  return Isar.fastHash(object.sheetName);
 }
 
 @isarProtected
 SheetCol deserializeSheetCol(IsarReader reader) {
   final object = SheetCol();
-  object.sheetRownoKey = IsarCore.readString(reader, 1) ?? '';
-  object.cols = IsarCore.readString(reader, 2) ?? '';
+  object.sheetName = IsarCore.readString(reader, 1) ?? '';
+  {
+    final length = IsarCore.readList(reader, 2, IsarCore.readerPtrPtr);
+    {
+      final reader = IsarCore.readerPtr;
+      if (reader.isNull) {
+        object.cols = const <String>[];
+      } else {
+        final list = List<String>.filled(length, '', growable: true);
+        for (var i = 0; i < length; i++) {
+          list[i] = IsarCore.readString(reader, i) ?? '';
+        }
+        IsarCore.freeReader(reader);
+        object.cols = list;
+      }
+    }
+  }
   return object;
 }
 
@@ -60,128 +82,30 @@ dynamic deserializeSheetColProp(IsarReader reader, int property) {
     case 1:
       return IsarCore.readString(reader, 1) ?? '';
     case 2:
-      return IsarCore.readString(reader, 2) ?? '';
+      {
+        final length = IsarCore.readList(reader, 2, IsarCore.readerPtrPtr);
+        {
+          final reader = IsarCore.readerPtr;
+          if (reader.isNull) {
+            return const <String>[];
+          } else {
+            final list = List<String>.filled(length, '', growable: true);
+            for (var i = 0; i < length; i++) {
+              list[i] = IsarCore.readString(reader, i) ?? '';
+            }
+            IsarCore.freeReader(reader);
+            return list;
+          }
+        }
+      }
     default:
       throw ArgumentError('Unknown property: $property');
   }
 }
 
-sealed class _SheetColUpdate {
-  bool call({
-    required String sheetRownoKey,
-    String? cols,
-  });
-}
-
-class _SheetColUpdateImpl implements _SheetColUpdate {
-  const _SheetColUpdateImpl(this.collection);
-
-  final IsarCollection<String, SheetCol> collection;
-
-  @override
-  bool call({
-    required String sheetRownoKey,
-    Object? cols = ignore,
-  }) {
-    return collection.updateProperties([
-          sheetRownoKey
-        ], {
-          if (cols != ignore) 2: cols as String?,
-        }) >
-        0;
-  }
-}
-
-sealed class _SheetColUpdateAll {
-  int call({
-    required List<String> sheetRownoKey,
-    String? cols,
-  });
-}
-
-class _SheetColUpdateAllImpl implements _SheetColUpdateAll {
-  const _SheetColUpdateAllImpl(this.collection);
-
-  final IsarCollection<String, SheetCol> collection;
-
-  @override
-  int call({
-    required List<String> sheetRownoKey,
-    Object? cols = ignore,
-  }) {
-    return collection.updateProperties(sheetRownoKey, {
-      if (cols != ignore) 2: cols as String?,
-    });
-  }
-}
-
-extension SheetColUpdate on IsarCollection<String, SheetCol> {
-  _SheetColUpdate get update => _SheetColUpdateImpl(this);
-
-  _SheetColUpdateAll get updateAll => _SheetColUpdateAllImpl(this);
-}
-
-sealed class _SheetColQueryUpdate {
-  int call({
-    String? cols,
-  });
-}
-
-class _SheetColQueryUpdateImpl implements _SheetColQueryUpdate {
-  const _SheetColQueryUpdateImpl(this.query, {this.limit});
-
-  final IsarQuery<SheetCol> query;
-  final int? limit;
-
-  @override
-  int call({
-    Object? cols = ignore,
-  }) {
-    return query.updateProperties(limit: limit, {
-      if (cols != ignore) 2: cols as String?,
-    });
-  }
-}
-
-extension SheetColQueryUpdate on IsarQuery<SheetCol> {
-  _SheetColQueryUpdate get updateFirst =>
-      _SheetColQueryUpdateImpl(this, limit: 1);
-
-  _SheetColQueryUpdate get updateAll => _SheetColQueryUpdateImpl(this);
-}
-
-class _SheetColQueryBuilderUpdateImpl implements _SheetColQueryUpdate {
-  const _SheetColQueryBuilderUpdateImpl(this.query, {this.limit});
-
-  final QueryBuilder<SheetCol, SheetCol, QOperations> query;
-  final int? limit;
-
-  @override
-  int call({
-    Object? cols = ignore,
-  }) {
-    final q = query.build();
-    try {
-      return q.updateProperties(limit: limit, {
-        if (cols != ignore) 2: cols as String?,
-      });
-    } finally {
-      q.close();
-    }
-  }
-}
-
-extension SheetColQueryBuilderUpdate
-    on QueryBuilder<SheetCol, SheetCol, QOperations> {
-  _SheetColQueryUpdate get updateFirst =>
-      _SheetColQueryBuilderUpdateImpl(this, limit: 1);
-
-  _SheetColQueryUpdate get updateAll => _SheetColQueryBuilderUpdateImpl(this);
-}
-
 extension SheetColQueryFilter
     on QueryBuilder<SheetCol, SheetCol, QFilterCondition> {
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetRownoKeyEqualTo(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetNameEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -196,8 +120,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition>
-      sheetRownoKeyGreaterThan(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetNameGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -213,7 +136,7 @@ extension SheetColQueryFilter
   }
 
   QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition>
-      sheetRownoKeyGreaterThanOrEqualTo(
+      sheetNameGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -228,7 +151,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetRownoKeyLessThan(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetNameLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -244,7 +167,7 @@ extension SheetColQueryFilter
   }
 
   QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition>
-      sheetRownoKeyLessThanOrEqualTo(
+      sheetNameLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -259,7 +182,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetRownoKeyBetween(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetNameBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -276,8 +199,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition>
-      sheetRownoKeyStartsWith(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -292,7 +214,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetRownoKeyEndsWith(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -307,7 +229,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetRownoKeyContains(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetNameContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -321,7 +243,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetRownoKeyMatches(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetNameMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -335,8 +257,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition>
-      sheetRownoKeyIsEmpty() {
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> sheetNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -348,7 +269,7 @@ extension SheetColQueryFilter
   }
 
   QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition>
-      sheetRownoKeyIsNotEmpty() {
+      sheetNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -359,7 +280,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsEqualTo(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsElementEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -374,7 +295,8 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsGreaterThan(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition>
+      colsElementGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -390,7 +312,7 @@ extension SheetColQueryFilter
   }
 
   QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition>
-      colsGreaterThanOrEqualTo(
+      colsElementGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -405,7 +327,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsLessThan(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsElementLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -420,7 +342,8 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsLessThanOrEqualTo(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition>
+      colsElementLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -435,7 +358,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsBetween(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsElementBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -452,7 +375,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsStartsWith(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsElementStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -467,7 +390,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsEndsWith(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsElementEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -482,7 +405,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsContains(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsElementContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -496,7 +419,7 @@ extension SheetColQueryFilter
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsMatches(
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsElementMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -505,29 +428,42 @@ extension SheetColQueryFilter
           property: 2,
           wildcard: pattern,
           caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 2,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition>
+      colsElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 2,
+          value: '',
         ),
       );
     });
   }
 
   QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 2,
-          value: '',
-        ),
-      );
-    });
+    return not().colsIsNotEmpty();
   }
 
   QueryBuilder<SheetCol, SheetCol, QAfterFilterCondition> colsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
-        const GreaterCondition(
-          property: 2,
-          value: '',
-        ),
+        const GreaterOrEqualCondition(property: 2, value: null),
       );
     });
   }
@@ -537,7 +473,7 @@ extension SheetColQueryObject
     on QueryBuilder<SheetCol, SheetCol, QFilterCondition> {}
 
 extension SheetColQuerySortBy on QueryBuilder<SheetCol, SheetCol, QSortBy> {
-  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> sortBySheetRownoKey(
+  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> sortBySheetName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -547,32 +483,11 @@ extension SheetColQuerySortBy on QueryBuilder<SheetCol, SheetCol, QSortBy> {
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> sortBySheetRownoKeyDesc(
+  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> sortBySheetNameDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
         1,
-        sort: Sort.desc,
-        caseSensitive: caseSensitive,
-      );
-    });
-  }
-
-  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> sortByCols(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(
-        2,
-        caseSensitive: caseSensitive,
-      );
-    });
-  }
-
-  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> sortByColsDesc(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(
-        2,
         sort: Sort.desc,
         caseSensitive: caseSensitive,
       );
@@ -582,54 +497,39 @@ extension SheetColQuerySortBy on QueryBuilder<SheetCol, SheetCol, QSortBy> {
 
 extension SheetColQuerySortThenBy
     on QueryBuilder<SheetCol, SheetCol, QSortThenBy> {
-  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> thenBySheetRownoKey(
+  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> thenBySheetName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(1, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> thenBySheetRownoKeyDesc(
+  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> thenBySheetNameDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(1, sort: Sort.desc, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> thenByCols(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<SheetCol, SheetCol, QAfterSortBy> thenByColsDesc(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 }
 
 extension SheetColQueryWhereDistinct
     on QueryBuilder<SheetCol, SheetCol, QDistinct> {
-  QueryBuilder<SheetCol, SheetCol, QAfterDistinct> distinctByCols(
-      {bool caseSensitive = true}) {
+  QueryBuilder<SheetCol, SheetCol, QAfterDistinct> distinctByCols() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(2, caseSensitive: caseSensitive);
+      return query.addDistinctBy(2);
     });
   }
 }
 
 extension SheetColQueryProperty1
     on QueryBuilder<SheetCol, SheetCol, QProperty> {
-  QueryBuilder<SheetCol, String, QAfterProperty> sheetRownoKeyProperty() {
+  QueryBuilder<SheetCol, String, QAfterProperty> sheetNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<SheetCol, String, QAfterProperty> colsProperty() {
+  QueryBuilder<SheetCol, List<String>, QAfterProperty> colsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });
@@ -638,13 +538,13 @@ extension SheetColQueryProperty1
 
 extension SheetColQueryProperty2<R>
     on QueryBuilder<SheetCol, R, QAfterProperty> {
-  QueryBuilder<SheetCol, (R, String), QAfterProperty> sheetRownoKeyProperty() {
+  QueryBuilder<SheetCol, (R, String), QAfterProperty> sheetNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<SheetCol, (R, String), QAfterProperty> colsProperty() {
+  QueryBuilder<SheetCol, (R, List<String>), QAfterProperty> colsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });
@@ -653,14 +553,13 @@ extension SheetColQueryProperty2<R>
 
 extension SheetColQueryProperty3<R1, R2>
     on QueryBuilder<SheetCol, (R1, R2), QAfterProperty> {
-  QueryBuilder<SheetCol, (R1, R2, String), QOperations>
-      sheetRownoKeyProperty() {
+  QueryBuilder<SheetCol, (R1, R2, String), QOperations> sheetNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<SheetCol, (R1, R2, String), QOperations> colsProperty() {
+  QueryBuilder<SheetCol, (R1, R2, List<String>), QOperations> colsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });

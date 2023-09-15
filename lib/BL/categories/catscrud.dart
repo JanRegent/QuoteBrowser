@@ -10,6 +10,7 @@ part 'catscrud.g.dart'; //dart run build_runner build
 class Cat {
   @Id()
   String catpath = '';
+  String catNeme = '__';
 }
 
 class CatsCRUD {
@@ -30,6 +31,7 @@ class CatsCRUD {
     });
 
     for (String catPath in catsRows) {
+      if (catPath.isEmpty) continue;
       final newCatpath = Cat()..catpath = catPath;
 
       isar.write((isar) async {

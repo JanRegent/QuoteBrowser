@@ -26,7 +26,7 @@ const SheetRowSchema = IsarGeneratedSchema(
       ),
       IsarPropertySchema(
         name: 'sheetRowArr',
-        type: IsarType.string,
+        type: IsarType.stringList,
       ),
     ],
     indexes: [],
@@ -42,7 +42,14 @@ const SheetRowSchema = IsarGeneratedSchema(
 @isarProtected
 int serializeSheetRow(IsarWriter writer, SheetRow object) {
   IsarCore.writeString(writer, 1, object.sheetRownoKey);
-  IsarCore.writeString(writer, 2, object.sheetRowArr);
+  {
+    final list = object.sheetRowArr;
+    final listWriter = IsarCore.beginList(writer, 2, list.length);
+    for (var i = 0; i < list.length; i++) {
+      IsarCore.writeString(listWriter, i, list[i]);
+    }
+    IsarCore.endList(writer, listWriter);
+  }
   return Isar.fastHash(object.sheetRownoKey);
 }
 
@@ -50,7 +57,22 @@ int serializeSheetRow(IsarWriter writer, SheetRow object) {
 SheetRow deserializeSheetRow(IsarReader reader) {
   final object = SheetRow();
   object.sheetRownoKey = IsarCore.readString(reader, 1) ?? '';
-  object.sheetRowArr = IsarCore.readString(reader, 2) ?? '';
+  {
+    final length = IsarCore.readList(reader, 2, IsarCore.readerPtrPtr);
+    {
+      final reader = IsarCore.readerPtr;
+      if (reader.isNull) {
+        object.sheetRowArr = const <String>[];
+      } else {
+        final list = List<String>.filled(length, '', growable: true);
+        for (var i = 0; i < length; i++) {
+          list[i] = IsarCore.readString(reader, i) ?? '';
+        }
+        IsarCore.freeReader(reader);
+        object.sheetRowArr = list;
+      }
+    }
+  }
   return object;
 }
 
@@ -60,123 +82,25 @@ dynamic deserializeSheetRowProp(IsarReader reader, int property) {
     case 1:
       return IsarCore.readString(reader, 1) ?? '';
     case 2:
-      return IsarCore.readString(reader, 2) ?? '';
+      {
+        final length = IsarCore.readList(reader, 2, IsarCore.readerPtrPtr);
+        {
+          final reader = IsarCore.readerPtr;
+          if (reader.isNull) {
+            return const <String>[];
+          } else {
+            final list = List<String>.filled(length, '', growable: true);
+            for (var i = 0; i < length; i++) {
+              list[i] = IsarCore.readString(reader, i) ?? '';
+            }
+            IsarCore.freeReader(reader);
+            return list;
+          }
+        }
+      }
     default:
       throw ArgumentError('Unknown property: $property');
   }
-}
-
-sealed class _SheetRowUpdate {
-  bool call({
-    required String sheetRownoKey,
-    String? sheetRowArr,
-  });
-}
-
-class _SheetRowUpdateImpl implements _SheetRowUpdate {
-  const _SheetRowUpdateImpl(this.collection);
-
-  final IsarCollection<String, SheetRow> collection;
-
-  @override
-  bool call({
-    required String sheetRownoKey,
-    Object? sheetRowArr = ignore,
-  }) {
-    return collection.updateProperties([
-          sheetRownoKey
-        ], {
-          if (sheetRowArr != ignore) 2: sheetRowArr as String?,
-        }) >
-        0;
-  }
-}
-
-sealed class _SheetRowUpdateAll {
-  int call({
-    required List<String> sheetRownoKey,
-    String? sheetRowArr,
-  });
-}
-
-class _SheetRowUpdateAllImpl implements _SheetRowUpdateAll {
-  const _SheetRowUpdateAllImpl(this.collection);
-
-  final IsarCollection<String, SheetRow> collection;
-
-  @override
-  int call({
-    required List<String> sheetRownoKey,
-    Object? sheetRowArr = ignore,
-  }) {
-    return collection.updateProperties(sheetRownoKey, {
-      if (sheetRowArr != ignore) 2: sheetRowArr as String?,
-    });
-  }
-}
-
-extension SheetRowUpdate on IsarCollection<String, SheetRow> {
-  _SheetRowUpdate get update => _SheetRowUpdateImpl(this);
-
-  _SheetRowUpdateAll get updateAll => _SheetRowUpdateAllImpl(this);
-}
-
-sealed class _SheetRowQueryUpdate {
-  int call({
-    String? sheetRowArr,
-  });
-}
-
-class _SheetRowQueryUpdateImpl implements _SheetRowQueryUpdate {
-  const _SheetRowQueryUpdateImpl(this.query, {this.limit});
-
-  final IsarQuery<SheetRow> query;
-  final int? limit;
-
-  @override
-  int call({
-    Object? sheetRowArr = ignore,
-  }) {
-    return query.updateProperties(limit: limit, {
-      if (sheetRowArr != ignore) 2: sheetRowArr as String?,
-    });
-  }
-}
-
-extension SheetRowQueryUpdate on IsarQuery<SheetRow> {
-  _SheetRowQueryUpdate get updateFirst =>
-      _SheetRowQueryUpdateImpl(this, limit: 1);
-
-  _SheetRowQueryUpdate get updateAll => _SheetRowQueryUpdateImpl(this);
-}
-
-class _SheetRowQueryBuilderUpdateImpl implements _SheetRowQueryUpdate {
-  const _SheetRowQueryBuilderUpdateImpl(this.query, {this.limit});
-
-  final QueryBuilder<SheetRow, SheetRow, QOperations> query;
-  final int? limit;
-
-  @override
-  int call({
-    Object? sheetRowArr = ignore,
-  }) {
-    final q = query.build();
-    try {
-      return q.updateProperties(limit: limit, {
-        if (sheetRowArr != ignore) 2: sheetRowArr as String?,
-      });
-    } finally {
-      q.close();
-    }
-  }
-}
-
-extension SheetRowQueryBuilderUpdate
-    on QueryBuilder<SheetRow, SheetRow, QOperations> {
-  _SheetRowQueryUpdate get updateFirst =>
-      _SheetRowQueryBuilderUpdateImpl(this, limit: 1);
-
-  _SheetRowQueryUpdate get updateAll => _SheetRowQueryBuilderUpdateImpl(this);
 }
 
 extension SheetRowQueryFilter
@@ -359,7 +283,8 @@ extension SheetRowQueryFilter
     });
   }
 
-  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition> sheetRowArrEqualTo(
+  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
+      sheetRowArrElementEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -375,7 +300,7 @@ extension SheetRowQueryFilter
   }
 
   QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
-      sheetRowArrGreaterThan(
+      sheetRowArrElementGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -391,7 +316,7 @@ extension SheetRowQueryFilter
   }
 
   QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
-      sheetRowArrGreaterThanOrEqualTo(
+      sheetRowArrElementGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -406,7 +331,8 @@ extension SheetRowQueryFilter
     });
   }
 
-  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition> sheetRowArrLessThan(
+  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
+      sheetRowArrElementLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -422,7 +348,7 @@ extension SheetRowQueryFilter
   }
 
   QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
-      sheetRowArrLessThanOrEqualTo(
+      sheetRowArrElementLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -437,7 +363,8 @@ extension SheetRowQueryFilter
     });
   }
 
-  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition> sheetRowArrBetween(
+  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
+      sheetRowArrElementBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -454,7 +381,8 @@ extension SheetRowQueryFilter
     });
   }
 
-  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition> sheetRowArrStartsWith(
+  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
+      sheetRowArrElementStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -469,7 +397,8 @@ extension SheetRowQueryFilter
     });
   }
 
-  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition> sheetRowArrEndsWith(
+  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
+      sheetRowArrElementEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -484,9 +413,8 @@ extension SheetRowQueryFilter
     });
   }
 
-  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition> sheetRowArrContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
+      sheetRowArrElementContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
@@ -498,9 +426,8 @@ extension SheetRowQueryFilter
     });
   }
 
-  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition> sheetRowArrMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
+      sheetRowArrElementMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
@@ -512,7 +439,8 @@ extension SheetRowQueryFilter
     });
   }
 
-  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition> sheetRowArrIsEmpty() {
+  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
+      sheetRowArrElementIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -524,13 +452,26 @@ extension SheetRowQueryFilter
   }
 
   QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
-      sheetRowArrIsNotEmpty() {
+      sheetRowArrElementIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
           property: 2,
           value: '',
         ),
+      );
+    });
+  }
+
+  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition> sheetRowArrIsEmpty() {
+    return not().sheetRowArrIsNotEmpty();
+  }
+
+  QueryBuilder<SheetRow, SheetRow, QAfterFilterCondition>
+      sheetRowArrIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterOrEqualCondition(property: 2, value: null),
       );
     });
   }
@@ -560,27 +501,6 @@ extension SheetRowQuerySortBy on QueryBuilder<SheetRow, SheetRow, QSortBy> {
       );
     });
   }
-
-  QueryBuilder<SheetRow, SheetRow, QAfterSortBy> sortBySheetRowArr(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(
-        2,
-        caseSensitive: caseSensitive,
-      );
-    });
-  }
-
-  QueryBuilder<SheetRow, SheetRow, QAfterSortBy> sortBySheetRowArrDesc(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(
-        2,
-        sort: Sort.desc,
-        caseSensitive: caseSensitive,
-      );
-    });
-  }
 }
 
 extension SheetRowQuerySortThenBy
@@ -598,28 +518,13 @@ extension SheetRowQuerySortThenBy
       return query.addSortBy(1, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
-
-  QueryBuilder<SheetRow, SheetRow, QAfterSortBy> thenBySheetRowArr(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<SheetRow, SheetRow, QAfterSortBy> thenBySheetRowArrDesc(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, sort: Sort.desc, caseSensitive: caseSensitive);
-    });
-  }
 }
 
 extension SheetRowQueryWhereDistinct
     on QueryBuilder<SheetRow, SheetRow, QDistinct> {
-  QueryBuilder<SheetRow, SheetRow, QAfterDistinct> distinctBySheetRowArr(
-      {bool caseSensitive = true}) {
+  QueryBuilder<SheetRow, SheetRow, QAfterDistinct> distinctBySheetRowArr() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(2, caseSensitive: caseSensitive);
+      return query.addDistinctBy(2);
     });
   }
 }
@@ -632,7 +537,7 @@ extension SheetRowQueryProperty1
     });
   }
 
-  QueryBuilder<SheetRow, String, QAfterProperty> sheetRowArrProperty() {
+  QueryBuilder<SheetRow, List<String>, QAfterProperty> sheetRowArrProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });
@@ -647,7 +552,8 @@ extension SheetRowQueryProperty2<R>
     });
   }
 
-  QueryBuilder<SheetRow, (R, String), QAfterProperty> sheetRowArrProperty() {
+  QueryBuilder<SheetRow, (R, List<String>), QAfterProperty>
+      sheetRowArrProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });
@@ -663,7 +569,8 @@ extension SheetRowQueryProperty3<R1, R2>
     });
   }
 
-  QueryBuilder<SheetRow, (R1, R2, String), QOperations> sheetRowArrProperty() {
+  QueryBuilder<SheetRow, (R1, R2, List<String>), QOperations>
+      sheetRowArrProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });

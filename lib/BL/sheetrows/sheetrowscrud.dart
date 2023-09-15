@@ -9,7 +9,7 @@ part 'sheetrowscrud.g.dart'; //dart run build_runner build
 class SheetRow {
   @Id()
   String sheetRownoKey = '';
-  String sheetRowArr = '';
+  List<String> sheetRowArr = [];
 }
 
 class SheetrowsCRUD {
@@ -24,12 +24,13 @@ class SheetrowsCRUD {
 
   //------------------------------------------------------------------update
   Future updateRow(String sheetRownoKey, List<String> rowArr) async {
-    final newsheetRow = SheetRow()
-      ..sheetRownoKey = sheetRownoKey
-      ..sheetRowArr = rowArr.join('__|__');
+    final sheetrow = SheetRow();
+    sheetrow.sheetRownoKey = sheetRownoKey;
+    sheetrow.sheetRowArr = rowArr;
+    // rowArr.join('__|__');
 
-    await isar.writeAsync((isar) async {
-      isar.sheetRows.put(newsheetRow);
+    isar.write((isar) async {
+      isar.sheetRows.put(sheetrow);
     });
   }
 

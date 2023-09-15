@@ -21,6 +21,10 @@ class Bl {
 
   Future init() async {
     await isarOpen();
+
+    isar = Isar.get(schemas: [CatSchema, SheetRowSchema, SheetColSchema]);
+    await bl.catsCRUD.update();
+
     devModeSet();
   }
 
@@ -44,12 +48,11 @@ Future isarOpen() async {
 
   const docsPath = kIsWeb ? Isar.sqliteInMemory : '../';
 
-  isar = Isar.open(
+  isar = await Isar.openAsync(
       schemas: [CatSchema, SheetRowSchema, SheetColSchema],
       directory: docsPath,
       engine: kIsWeb ? IsarEngine.sqlite : IsarEngine.isar,
       inspector: true);
 
-  isar = Isar.get(schemas: [CatSchema, SheetRowSchema, SheetColSchema]);
-  await bl.catsCRUD.update();
+  debugPrint('Isar open ${isar.isOpen}');
 }
