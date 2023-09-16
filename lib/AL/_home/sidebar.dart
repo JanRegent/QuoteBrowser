@@ -49,7 +49,7 @@ class _SidebarPageState extends State<SidebarPage> {
               onPressed: () async {
                 loadingTitle.value = 'Search for ${blUti.todayStr()}';
                 widget.setstateHome();
-                await filterByDateInsert(blUti.todayStr(), context);
+                await filterByDateInsert('${blUti.todayStr()}.', context);
                 loadingTitle.value = '';
                 widget.setstateHome();
               },

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:searchable_listview/searchable_listview.dart';
 
 //import 'package:searchable_listview/searchable_listview.dart';
 
+import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
 
 import '../../../BL/orm.dart';
 import '../../../DL/dl.dart';
+import '../../alib/alert/circullarsnack.dart';
 import '../../zview/_cardsswiper.dart';
 
 //import '../emptyview.dart';
+import '../emptyview.dart';
 import '../sheetnames.dart';
 
 Future dateinsersDo(BuildContext context) async {
@@ -33,6 +37,10 @@ Future dateinsersLast(BuildContext context) async {
 }
 
 Future filterByDateInsert(String dateinsert, BuildContext context) async {
+  circularSnack(context, 25, 'Querying cloud [gdrive]');
+  debugPrint(dateinsert);
+  List<String>? sheetRownoKeys = await bl.filtersCRUD.readFilter(dateinsert);
+  debugPrint(sheetRownoKeys.toString());
   await dl.httpService.searchSS(dateinsert);
 
   currentRowIndex = 0;
@@ -64,40 +72,51 @@ class _Dateinsert1State extends State<Dateinsert1> {
 
   final TextEditingController textEditingController = TextEditingController();
 
-  // Widget bodyLv2(BuildContext context) {
-  //   return SearchableList<String>(
-  //     initialList: widget.dateinserts,
-  //     builder: (index) => Card(
-  //         child: InkWell(
-  //       child: Text(widget.dateinserts[index!!]),
-  //       onTap: () {
-  //         filterByDateInsert(widget.dateinserts[index], context);
-  //       },
-  //     )),
-  //     filter: (value) => widget.dateinserts
-  //         .where(
-  //           (element) => element.toLowerCase().contains(value),
-  //         )
-  //         .toList(),
-  //     emptyWidget: const EmptyView(),
-  //     inputDecoration: InputDecoration(
-  //       fillColor: Colors.white,
-  //       focusedBorder: OutlineInputBorder(
-  //         borderSide: const BorderSide(
-  //           color: Colors.blue,
-  //           width: 1.0,
-  //         ),
-  //         borderRadius: BorderRadius.circular(10.0),
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget bodyLv2(BuildContext context) {
+    return SearchableList<String>.async(
+      builder: (displayedList, itemIndex, item) {
+        return ListTile(
+          title: Text(displayedList[itemIndex]),
+          onTap: () async {
+            await filterByDateInsert(
+                '${widget.dateinserts[itemIndex]}.', context);
+          },
+        );
+      },
+      asyncListCallback: () async {
+        await Future.delayed(const Duration(seconds: 1));
+        return widget.dateinserts;
+      },
+      asyncListFilter: (query, list) {
+        return widget.dateinserts
+            .where((element) =>
+                element.toString().toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      },
+      seperatorBuilder: (context, index) {
+        return const Divider();
+      },
+      style: const TextStyle(fontSize: 25),
+      emptyWidget: const EmptyView(),
+      inputDecoration: InputDecoration(
+        labelText: "Search dateinsert",
+        fillColor: Colors.white,
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.blue,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('By Autojr and books)')),
-      body: const Text('bodyLv2(context)'),
+      body: bodyLv2(context),
     );
   }
 

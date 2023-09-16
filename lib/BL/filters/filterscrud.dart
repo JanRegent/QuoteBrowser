@@ -24,6 +24,20 @@ class SimpleFilter {
 }
 
 class FiltersCRUD {
+  //------------------------------------------------------------------read
+  Future<List<String>?> readFilter(String filterKey) async {
+    try {
+      List<String>? keys = isar.simpleFilters
+          .where()
+          .filterKeyEqualTo(filterKey)
+          .sheetRownoKeysProperty()
+          .findFirst();
+      return keys;
+    } catch (_) {
+      return [];
+    }
+  }
+
   //------------------------------------------------------------------update
   Future updateFilter(
       String filterKey, String filterName, List<String> sheetRownoKeys) async {

@@ -56,7 +56,8 @@ Future isarOpen() async {
 
   const docsPath = kIsWeb ? Isar.sqliteInMemory : '../';
 
-  isar = await Isar.openAsync(
+  isar = Isar.open(
+      //Isar.open if kIsWeb
       schemas: schemas,
       directory: docsPath,
       engine: kIsWeb ? IsarEngine.sqlite : IsarEngine.isar,
