@@ -51,7 +51,7 @@ class _SidebarPageState extends State<SidebarPage> {
                 loadingTitle.value = 'Search for ${blUti.todayStr()}';
                 widget.setstateHome();
                 String dateinsert = '${blUti.todayStr()}.';
-                filterByDateInsert(dateinsert).then((value) {
+                filterByDateInsert(dateinsert, context).then((value) {
                   loadingTitle.value = '';
                   widget.setstateHome();
                   Navigator.push(

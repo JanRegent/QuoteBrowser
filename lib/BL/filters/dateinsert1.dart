@@ -3,6 +3,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 
 //import 'package:searchable_listview/searchable_listview.dart';
 
+import '../../AL/alib/alert/circullarsnack.dart';
 import '../bl.dart';
 import '../bluti.dart';
 
@@ -12,6 +13,23 @@ import '../../DL/dl.dart';
 //import '../emptyview.dart';
 import '../../AL/filters/emptyview.dart';
 import '../../AL/filters/sheetnames.dart';
+
+void sheetRowsSave(List rowsArrDyn) async {
+  List<String> sheetRownoKeys = [];
+  for (List row in rowsArrDyn) {
+    List<String> rowArr = blUti.toListString(row[1]);
+
+    String sheetRownoKey = row[0];
+    List<String> sheetNo = sheetRownoKey.toString().split('__|__');
+    sheetNames.add(sheetNo[0]);
+    //rowNos.add(sheetNo[1]);
+
+    await bl.sheetrowsCRUD.updateRow(sheetRownoKey, rowArr);
+    sheetRownoKeys.add(sheetRownoKey);
+  }
+  String filterKey = '${blUti.todayStr()}.';
+  bl.filtersCRUD.updateFilter(filterKey, 'dainsert $filterKey', sheetRownoKeys);
+}
 
 Future dateinsersDo(BuildContext context) async {
   List<String> dateinserts = [];
@@ -34,19 +52,20 @@ Future dateinsersLast(BuildContext context) async {
   );
 }
 
-Future filterByDateInsert(String dateinsert) async {
+Future filterByDateInsert(String dateinsert, BuildContext context) async {
   currentfilterKey = dateinsert;
   currentRowIndex = 0;
 
   debugPrint(dateinsert);
-  List<String>? sheetRownoKeys = await bl.filtersCRUD.readFilter(dateinsert);
-  //if (sheetRownoKeys == null || sheetRownoKeys.isEmpty) {
-  // ignore: use_build_context_synchronously
-  //circularSnack(context, 25, 'Querying cloud [gdrive]');
+  responseData.keys = (await bl.filtersCRUD.readFilter(dateinsert))!;
+  if (responseData.keys.isEmpty) {
+    //ignore: use_build_context_synchronously
+    circularSnack(context, 25, 'Querying cloud [gdrive]');
 
-  await dl.httpService.searchSS(dateinsert);
-  debugPrint(sheetRownoKeys.toString());
-  //}
+    await dl.httpService.searchSS(dateinsert);
+    responseData.keys = (await bl.filtersCRUD.readFilter(dateinsert))!;
+    debugPrint(responseData.keys.toString());
+  }
 
   await currentRowSet();
 
@@ -78,7 +97,8 @@ class _Dateinsert1State extends State<Dateinsert1> {
         return ListTile(
           title: Text(displayedList[itemIndex]),
           onTap: () async {
-            await filterByDateInsert('${widget.dateinserts[itemIndex]}.');
+            await filterByDateInsert(
+                '${widget.dateinserts[itemIndex]}.', context);
           },
         );
       },

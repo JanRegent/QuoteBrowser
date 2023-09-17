@@ -3,7 +3,8 @@ import 'package:dio/dio.dart';
 import '../BL/bl.dart';
 import '../BL/bluti.dart';
 
-import '../BL/orm.dart';
+import '../BL/filters/dateinsert1.dart';
+
 import '../BL/params/params.dart';
 import 'backendurl.dart';
 
@@ -39,10 +40,8 @@ class HttpService {
         'ssId': dataSheetId
       },
     );
-    responseData.keyrowsSet(response.data['data']);
-
-    responseData.colsSet = response.data['colsSet'];
-    bl.sheetcolsCRUD.updateColSet(responseData.colsSet);
+    sheetRowsSave(response.data['data']);
+    bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
 
     return [];
   }
@@ -71,8 +70,9 @@ class HttpService {
         'rowNo': rowNo
       },
     );
-    responseData.keyrows[currentRowIndex] =
-        blUti.toListString(response.data['data'][1]);
+    String sheetRownoKey = response.data['data'][0];
+    List<String> updatedRow = blUti.toListString(response.data['data'][1]);
+    bl.sheetrowsCRUD.updateRow(sheetRownoKey, updatedRow);
 
     return [];
   }

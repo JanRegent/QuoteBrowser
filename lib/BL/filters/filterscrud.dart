@@ -25,6 +25,7 @@ class SimpleFilter {
 
 class FiltersCRUD {
   //------------------------------------------------------------------read
+
   Future<List<String>?> readFilter(String filterKey) async {
     try {
       List<String>? keys = isar.simpleFilters

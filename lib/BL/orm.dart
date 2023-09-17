@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/BL/bluti.dart';
 
 import 'bl.dart';
 
@@ -12,33 +11,8 @@ RxString loadingTitle = ''.obs;
 List<String> sheetNames = [];
 
 class ResponseData {
-  List<List<String>> keyrows = [];
+  List<String> keys = [];
   List<String> sheetNames = [];
-  List<String> rowNos = [];
-  Map colsSet = {};
-
-  void keyrowsSet(List keyrowsDyn) async {
-    List<String> sheetRownoKeys = [];
-    for (List row in keyrowsDyn) {
-      List<String> rowArr = blUti.toListString(row[1]);
-      keyrows.add(rowArr);
-
-      String sheetRownoKey = row[0];
-      List<String> sheetNo = sheetRownoKey.toString().split('__|__');
-      sheetNames.add(sheetNo[0]);
-      rowNos.add(sheetNo[1]);
-
-      await bl.sheetrowsCRUD.updateRow(sheetRownoKey, rowArr);
-      sheetRownoKeys.add(sheetRownoKey);
-    }
-    String filterKey = '${blUti.todayStr()}.';
-    bl.filtersCRUD
-        .updateFilter(filterKey, 'dainsert $filterKey', sheetRownoKeys);
-  }
-
-  List<String> colsGet() {
-    return blUti.toListString(colsSet[sheetNames[currentRowIndex]]);
-  }
 }
 
 class Orm {
@@ -46,11 +20,11 @@ class Orm {
 
   Future<List<String>> map2row(Map rowMap) async {
     String sheetName = rowMap['sheetName'];
-    List<String> cols = responseData.colsSet[sheetName];
+    List<String>? cols = await bl.sheetcolsCRUD.readColsBySheetName(sheetName);
 
     List<String> row = [];
 
-    for (var i = 0; i < cols.length; i++) {
+    for (var i = 0; i < cols!.length; i++) {
       try {
         row.add(rowMap[cols[i]]);
       } catch (e) {

@@ -47,7 +47,7 @@ class _CardSwiperState extends State<CardSwiper> {
 
   void indexChanged(int rowIndex) async {
     currentRowIndex = rowIndex;
-    if (currentRowIndex > responseData.keyrows.length) {
+    if (currentRowIndex > responseData.keys.length) {
       currentRowIndex = 0;
     }
     if (currentRowIndex < 0) {
@@ -138,7 +138,7 @@ class _CardSwiperState extends State<CardSwiper> {
           itemBuilder: (BuildContext context, int rowIndex) {
             return tabs(); // RowViewPage(widget.title, swiperSetstate);
           },
-          itemCount: responseData.keyrows.length,
+          itemCount: responseData.keys.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
           pagination: const SwiperPagination(
               builder: SwiperPagination.fraction,
