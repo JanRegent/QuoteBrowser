@@ -6,13 +6,15 @@ import 'bl.dart';
 import 'params/params.dart';
 
 List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
-ResponseData responseData = ResponseData();
+CurrentSS currentSS = CurrentSS();
 RxString loadingTitle = ''.obs;
-List<String> sheetNames = [];
 
-class ResponseData {
+class CurrentSS {
+  String filterKey = '';
   List<String> keys = [];
   List<String> sheetNames = [];
+
+  int swiperIndex = 0;
 }
 
 class Orm {
@@ -39,8 +41,6 @@ class Orm {
   List<String> mandatoryFields = ['quote', 'author', 'book', 'tags'];
 }
 
-int currentRowIndex = 0;
-String currentfilterKey = '';
 void currentRowNew() {
   bl.orm.currentRow = CurrentRow()..fileId = dataSheetId;
 }
@@ -84,7 +84,7 @@ void pureTags() {
 Future currentRowSet() async {
   //getRowArrByCurrentIndexColsbl.orm.currentRow.cols = responseData.colsGet();
   List<String> rowArr = await bl.sheetrowsCRUD
-      .getRowArrByCurrentIndex(currentfilterKey, currentRowIndex);
+      .getRowArrByCurrentIndex(currentSS.filterKey, currentSS.swiperIndex);
   bl.orm.currentRow.cols = bl.sheetrowsCRUD.getRowArrByCurrentIndexCols;
   String sheetName = bl.sheetrowsCRUD.getRowArrByCurrentIndexSheetName;
   String valueGet(String columnName) {

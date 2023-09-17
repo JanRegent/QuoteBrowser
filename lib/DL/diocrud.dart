@@ -3,8 +3,7 @@ import 'package:dio/dio.dart';
 import '../BL/bl.dart';
 import '../BL/bluti.dart';
 
-import '../BL/filters/dateinsert1.dart';
-
+import '../BL/filters/searchss.dart';
 import '../BL/params/params.dart';
 import 'backendurl.dart';
 
@@ -31,7 +30,7 @@ class HttpService {
     return response.data['data'];
   }
 
-  Future<List> searchSS(String searchText) async {
+  Future<List<String>> searchSS(String searchText) async {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
@@ -41,9 +40,9 @@ class HttpService {
       },
     );
 
-    await sheetRowsSave(response.data['data']);
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    return [];
+
+    return await sheetRowsSaveGetKeys(response.data['data']);
   }
 
   Future<List<String>> getDataSheets(String sheetId) async {

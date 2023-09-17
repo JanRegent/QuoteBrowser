@@ -19,7 +19,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
     gotoItems.add(PopupMenuItem(
       child: Text('$localIdsLength >|'),
       onTap: () async {
-        currentRowIndex = localIdsLength - 1;
+        currentSS.swiperIndex = localIdsLength - 1;
         setstateGoto();
       },
     ));
@@ -27,7 +27,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
       gotoItems.add(PopupMenuItem(
         child: i > 0 ? Text((i + 1).toString()) : const Text('1  |<'),
         onTap: () async {
-          currentRowIndex = i;
+          currentSS.swiperIndex = i;
           setstateGoto();
         },
       ));
@@ -35,7 +35,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
     gotoItems.add(PopupMenuItem(
       child: Text('$localIdsLength >|'),
       onTap: () async {
-        currentRowIndex = localIdsLength - 1;
+        currentSS.swiperIndex = localIdsLength - 1;
         setstateGoto();
       },
     ));

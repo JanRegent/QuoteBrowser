@@ -53,7 +53,7 @@ class _SheetNameSelectState extends State<SheetNameSelect> {
             ),
           ],
         ),
-        items: sheetNames
+        items: currentSS.sheetNames
             .map((String item) => DropdownMenuItem<String>(
                   value: item,
                   child: Text(

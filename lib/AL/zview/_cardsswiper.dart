@@ -46,12 +46,12 @@ class _CardSwiperState extends State<CardSwiper> {
   void currentRowIndexFromBookmarksGet() {}
 
   void indexChanged(int rowIndex) async {
-    currentRowIndex = rowIndex;
-    if (currentRowIndex > responseData.keys.length) {
-      currentRowIndex = 0;
+    currentSS.swiperIndex = rowIndex;
+    if (currentSS.swiperIndex > currentSS.keys.length) {
+      currentSS.swiperIndex = 0;
     }
-    if (currentRowIndex < 0) {
-      currentRowIndex = 0;
+    if (currentSS.swiperIndex < 0) {
+      currentSS.swiperIndex = 0;
     }
     await currentRowSet();
     setState(() {});
@@ -71,8 +71,8 @@ class _CardSwiperState extends State<CardSwiper> {
       const Spacer(),
       ElevatedButton(
         onPressed: () {
-          currentRowIndex -= 1;
-          indexChanged(currentRowIndex);
+          currentSS.swiperIndex -= 1;
+          indexChanged(currentSS.swiperIndex);
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
@@ -84,8 +84,8 @@ class _CardSwiperState extends State<CardSwiper> {
       ),
       ElevatedButton(
         onPressed: () {
-          currentRowIndex += 1;
-          indexChanged(currentRowIndex);
+          currentSS.swiperIndex += 1;
+          indexChanged(currentSS.swiperIndex);
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
@@ -138,13 +138,13 @@ class _CardSwiperState extends State<CardSwiper> {
           itemBuilder: (BuildContext context, int rowIndex) {
             return tabs(); // RowViewPage(widget.title, swiperSetstate);
           },
-          itemCount: responseData.keys.length,
+          itemCount: currentSS.keys.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
           pagination: const SwiperPagination(
               builder: SwiperPagination.fraction,
               alignment: Alignment.bottomCenter),
           //control: const SwiperControl(),
-          index: currentRowIndex,
+          index: currentSS.swiperIndex,
           controller: controller,
         ));
   }

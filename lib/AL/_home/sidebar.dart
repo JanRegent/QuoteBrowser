@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 
 import 'package:quotebrowser/BL/bluti.dart';
 
+import '../../BL/filters/searchss.dart';
 import '../../BL/orm.dart';
 import '../../DL/builddate.dart';
-import '../../BL/filters/dateinsert1.dart';
+
+import '../filterspages/dateselect.dart';
 import '../zview/_cardsswiper.dart';
 import '../zview/addquote.dart';
 
@@ -33,6 +35,23 @@ class _SidebarPageState extends State<SidebarPage> {
     //sheetNamesInit();
   }
 
+  Future searchText(String searchText) async {
+    loadingTitle.value = 'Search: $searchText';
+    widget.setstateHome();
+
+    filterSearchText(searchText, context).then((value) async {
+      loadingTitle.value = '';
+      widget.setstateHome();
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CardSwiper(searchText, const {})),
+      );
+    }, onError: (e) {
+      debugPrint(e);
+    });
+  }
+
   List<CollapsibleItem> get _generateItems {
     return [
       //-----------------------------------------------------------------date
@@ -48,20 +67,7 @@ class _SidebarPageState extends State<SidebarPage> {
               text: 'Today',
               icon: Icons.date_range,
               onPressed: () async {
-                loadingTitle.value = 'Search for ${blUti.todayStr()}';
-                widget.setstateHome();
-                String dateinsert = '${blUti.todayStr()}.';
-                filterByDateInsert(dateinsert, context).then((value) async {
-                  loadingTitle.value = '';
-                  widget.setstateHome();
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CardSwiper(dateinsert, const {})),
-                  );
-                }, onError: (e) {
-                  debugPrint(e);
-                });
+                await searchText('${blUti.todayStr()}.');
               },
               onHold: () => ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Date filters"))),
@@ -70,8 +76,16 @@ class _SidebarPageState extends State<SidebarPage> {
             CollapsibleItem(
               text: 'Last days',
               icon: Icons.date_range_outlined,
-              onPressed: () {
-                dateinsersLast(context);
+              onPressed: () async {
+                String searchDate = '';
+                try {
+                  searchDate = await dateSelect(context);
+                } catch (_) {
+                  return;
+                }
+
+                if (searchDate.isEmpty) return;
+                await searchText(searchDate);
               },
               onHold: () => ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Last days"))),
