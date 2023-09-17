@@ -40,9 +40,9 @@ class HttpService {
         'ssId': dataSheetId
       },
     );
-    sheetRowsSave(response.data['data']);
-    bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
 
+    await sheetRowsSave(response.data['data']);
+    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
     return [];
   }
 

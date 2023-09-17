@@ -51,10 +51,10 @@ class _SidebarPageState extends State<SidebarPage> {
                 loadingTitle.value = 'Search for ${blUti.todayStr()}';
                 widget.setstateHome();
                 String dateinsert = '${blUti.todayStr()}.';
-                filterByDateInsert(dateinsert, context).then((value) {
+                filterByDateInsert(dateinsert, context).then((value) async {
                   loadingTitle.value = '';
                   widget.setstateHome();
-                  Navigator.push(
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => CardSwiper(dateinsert, const {})),

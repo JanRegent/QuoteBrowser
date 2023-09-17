@@ -14,7 +14,7 @@ import '../../DL/dl.dart';
 import '../../AL/filters/emptyview.dart';
 import '../../AL/filters/sheetnames.dart';
 
-void sheetRowsSave(List rowsArrDyn) async {
+Future sheetRowsSave(List rowsArrDyn) async {
   List<String> sheetRownoKeys = [];
   for (List row in rowsArrDyn) {
     List<String> rowArr = blUti.toListString(row[1]);
@@ -28,7 +28,8 @@ void sheetRowsSave(List rowsArrDyn) async {
     sheetRownoKeys.add(sheetRownoKey);
   }
   String filterKey = '${blUti.todayStr()}.';
-  bl.filtersCRUD.updateFilter(filterKey, 'dainsert $filterKey', sheetRownoKeys);
+  await bl.filtersCRUD
+      .updateFilter(filterKey, 'dainsert $filterKey', sheetRownoKeys);
 }
 
 Future dateinsersDo(BuildContext context) async {
@@ -57,13 +58,15 @@ Future filterByDateInsert(String dateinsert, BuildContext context) async {
   currentRowIndex = 0;
 
   debugPrint(dateinsert);
-  responseData.keys = (await bl.filtersCRUD.readFilter(dateinsert))!;
+  try {
+    responseData.keys = (await bl.filtersCRUD.readFilter(dateinsert));
+  } catch (_) {}
   if (responseData.keys.isEmpty) {
     //ignore: use_build_context_synchronously
     circularSnack(context, 25, 'Querying cloud [gdrive]');
 
     await dl.httpService.searchSS(dateinsert);
-    responseData.keys = (await bl.filtersCRUD.readFilter(dateinsert))!;
+    responseData.keys = await bl.filtersCRUD.readFilter(dateinsert);
     debugPrint(responseData.keys.toString());
   }
 
