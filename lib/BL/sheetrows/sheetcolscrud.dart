@@ -23,11 +23,24 @@ class SheetCol {
 }
 
 class SheetcolsCRUD {
-  Future<List<String>> readAllKeys() async {
+  Future<List<String>> readSheetnames() async {
     try {
       return isar.sheetCols.where().sheetNameProperty().findAll();
     } catch (e) {
       debugPrint('sheetrowsCRUD().readAll()\n$e');
+      return [];
+    }
+  }
+
+  Future<List<String>?> readColsBySheetName(String sheetName) async {
+    try {
+      return isar.sheetCols
+          .where()
+          .sheetNameEqualTo(sheetName)
+          .colsProperty()
+          .findFirst();
+    } catch (e) {
+      debugPrint('sheetrowsCRUD().readColsBySheetName($sheetName)\n$e');
       return [];
     }
   }

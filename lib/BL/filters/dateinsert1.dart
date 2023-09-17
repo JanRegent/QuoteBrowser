@@ -3,17 +3,15 @@ import 'package:searchable_listview/searchable_listview.dart';
 
 //import 'package:searchable_listview/searchable_listview.dart';
 
-import '../../../BL/bl.dart';
-import '../../../BL/bluti.dart';
+import '../bl.dart';
+import '../bluti.dart';
 
-import '../../../BL/orm.dart';
-import '../../../DL/dl.dart';
-import '../../alib/alert/circullarsnack.dart';
-import '../../zview/_cardsswiper.dart';
+import '../orm.dart';
+import '../../DL/dl.dart';
 
 //import '../emptyview.dart';
-import '../emptyview.dart';
-import '../sheetnames.dart';
+import '../../AL/filters/emptyview.dart';
+import '../../AL/filters/sheetnames.dart';
 
 Future dateinsersDo(BuildContext context) async {
   List<String> dateinserts = [];
@@ -36,21 +34,23 @@ Future dateinsersLast(BuildContext context) async {
   );
 }
 
-Future filterByDateInsert(String dateinsert, BuildContext context) async {
-  circularSnack(context, 25, 'Querying cloud [gdrive]');
+Future filterByDateInsert(String dateinsert) async {
+  currentfilterKey = dateinsert;
+  currentRowIndex = 0;
+
   debugPrint(dateinsert);
   List<String>? sheetRownoKeys = await bl.filtersCRUD.readFilter(dateinsert);
-  debugPrint(sheetRownoKeys.toString());
-  await dl.httpService.searchSS(dateinsert);
+  //if (sheetRownoKeys == null || sheetRownoKeys.isEmpty) {
+  // ignore: use_build_context_synchronously
+  //circularSnack(context, 25, 'Querying cloud [gdrive]');
 
-  currentRowIndex = 0;
+  await dl.httpService.searchSS(dateinsert);
+  debugPrint(sheetRownoKeys.toString());
+  //}
+
   await currentRowSet();
 
   // ignore: use_build_context_synchronously
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => CardSwiper(dateinsert, const {})),
-  );
 }
 
 class Dateinsert1 extends StatefulWidget {
@@ -78,8 +78,7 @@ class _Dateinsert1State extends State<Dateinsert1> {
         return ListTile(
           title: Text(displayedList[itemIndex]),
           onTap: () async {
-            await filterByDateInsert(
-                '${widget.dateinserts[itemIndex]}.', context);
+            await filterByDateInsert('${widget.dateinserts[itemIndex]}.');
           },
         );
       },

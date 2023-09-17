@@ -38,6 +38,20 @@ class FiltersCRUD {
     }
   }
 
+  Future<String> readFilterAtCurrentindex(
+      String filterKey, int currentIndex) async {
+    try {
+      String keys = isar.simpleFilters
+          .where()
+          .filterKeyEqualTo(filterKey)
+          .sheetRownoKeysProperty()
+          .findFirst()![currentIndex];
+      return keys;
+    } catch (_) {
+      return '';
+    }
+  }
+
   //------------------------------------------------------------------update
   Future updateFilter(
       String filterKey, String filterName, List<String> sheetRownoKeys) async {

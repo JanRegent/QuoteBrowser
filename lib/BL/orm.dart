@@ -66,6 +66,7 @@ class Orm {
 }
 
 int currentRowIndex = 0;
+String currentfilterKey = '';
 void currentRowNew() {
   bl.orm.currentRow = CurrentRow()..fileId = dataSheetId;
 }
@@ -107,12 +108,17 @@ void pureTags() {
 }
 
 Future currentRowSet() async {
-  bl.orm.currentRow.cols = responseData.colsGet();
+  //getRowArrByCurrentIndexColsbl.orm.currentRow.cols = responseData.colsGet();
+  List<String> rowArr = await bl.sheetrowsCRUD
+      .getRowArrByCurrentIndex(currentfilterKey, currentRowIndex);
+  bl.orm.currentRow.cols = bl.sheetrowsCRUD.getRowArrByCurrentIndexCols;
+  String sheetName = bl.sheetrowsCRUD.getRowArrByCurrentIndexSheetName;
   String valueGet(String columnName) {
     int fieldIndex = bl.orm.currentRow.cols.indexOf(columnName);
     if (fieldIndex == -1) return '';
     try {
-      String value = responseData.keyrows[currentRowIndex][fieldIndex];
+      String value = rowArr[fieldIndex];
+      //responseData.keyrows[currentRowIndex][fieldIndex];
       return value;
     } catch (_) {
       return '';
@@ -132,10 +138,10 @@ Future currentRowSet() async {
   bl.orm.currentRow.original = '';
 
   //--------------------------ids
-  String sheetName = responseData.sheetNames[currentRowIndex];
+  //String sheetName = responseData.sheetNames[currentRowIndex];
   bl.orm.currentRow.sheetName.value = sheetName;
-  bl.orm.currentRow.rowNo.value =
-      responseData.rowNos[currentRowIndex].toString();
+  bl.orm.currentRow.rowNo.value = bl.sheetrowsCRUD.getRowArrByCurrentIndexRowNo;
+  //responseData.rowNos[currentRowIndex].toString();
   bl.orm.currentRow.fileId = valueGet('fileId');
   bl.orm.currentRow.dateinsert = valueGet('dateinsert');
   //--------------------------optional user fields

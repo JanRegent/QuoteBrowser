@@ -7,7 +7,8 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../BL/orm.dart';
 import '../../DL/builddate.dart';
-import '../filters/simplef/dateinsert1.dart';
+import '../../BL/filters/dateinsert1.dart';
+import '../zview/_cardsswiper.dart';
 import '../zview/addquote.dart';
 
 // ignore: must_be_immutable
@@ -49,9 +50,18 @@ class _SidebarPageState extends State<SidebarPage> {
               onPressed: () async {
                 loadingTitle.value = 'Search for ${blUti.todayStr()}';
                 widget.setstateHome();
-                await filterByDateInsert('${blUti.todayStr()}.', context);
-                loadingTitle.value = '';
-                widget.setstateHome();
+                String dateinsert = '${blUti.todayStr()}.';
+                filterByDateInsert(dateinsert).then((value) {
+                  loadingTitle.value = '';
+                  widget.setstateHome();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CardSwiper(dateinsert, const {})),
+                  );
+                }, onError: (e) {
+                  debugPrint(e);
+                });
               },
               onHold: () => ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Date filters"))),
