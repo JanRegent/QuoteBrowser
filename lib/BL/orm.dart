@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'bl.dart';
@@ -12,6 +12,7 @@ RxString loadingTitle = ''.obs;
 class CurrentSS {
   String filterKey = '';
   List<String> keys = [];
+  late Icon filterIcon;
   List<String> sheetNames = [];
 
   int swiperIndex = 0;

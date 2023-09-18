@@ -23,7 +23,7 @@ dependencies:
   
   ##----text
   highlight_text: ^1.7.0                  #https://pub.dev/packages/highlight_text
-
+  input_dialog: ^0.1.1                    #https://pub.dev/packages/input_dialog
 
   ##----elements
   dropdown_button2: ^2.3.8                #https://pub.dev/packages/dropdown_button2

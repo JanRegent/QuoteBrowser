@@ -2,6 +2,7 @@ import 'dart:math' as math show pi;
 
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
+import 'package:input_dialog/input_dialog.dart';
 
 import 'package:quotebrowser/BL/bluti.dart';
 
@@ -36,12 +37,15 @@ class _SidebarPageState extends State<SidebarPage> {
   }
 
   Future searchText(String searchText) async {
-    loadingTitle.value = 'Search: $searchText';
+    loadingTitle.value = searchText;
     widget.setstateHome();
 
     filterSearchText(searchText, context).then((value) async {
       loadingTitle.value = '';
       widget.setstateHome();
+
+      if (value == 0) return;
+
       await Navigator.push(
         context,
         MaterialPageRoute(
@@ -67,6 +71,7 @@ class _SidebarPageState extends State<SidebarPage> {
               text: 'Today',
               icon: Icons.date_range,
               onPressed: () async {
+                currentSS.filterIcon = const Icon(Icons.date_range);
                 await searchText('${blUti.todayStr()}.');
               },
               onHold: () => ScaffoldMessenger.of(context)
@@ -78,6 +83,7 @@ class _SidebarPageState extends State<SidebarPage> {
               icon: Icons.date_range_outlined,
               onPressed: () async {
                 String searchDate = '';
+                currentSS.filterIcon = const Icon(Icons.date_range);
                 try {
                   searchDate = await dateSelect(context);
                 } catch (_) {
@@ -91,45 +97,27 @@ class _SidebarPageState extends State<SidebarPage> {
                   .showSnackBar(const SnackBar(content: Text("Last days"))),
               isSelected: true,
             ),
-            CollapsibleItem(
-              text: 'Refresh data',
-              icon: Icons.refresh,
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const Rows2dbPage()),
-                // );
-              },
-              onHold: () => ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text("Refresh data"))),
-              isSelected: true,
-            ),
           ]),
-      //-----------------------------------------------------------------new
-      CollapsibleItem(
-        text: 'Add quote',
-        icon: Icons.add,
-        onPressed: () async {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddQuote()),
-          );
-        },
-        onHold: () => ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Search"))),
-      ),
+
       //-----------------------------------------------------------------search
       CollapsibleItem(
         text: 'Search',
-        icon: Icons.search,
+        icon: Icons.wordpress,
         onPressed: () async {
-          setState(() => _headline = 'Search');
-          // List<String> result = await bl.crud
-          //     .searchByFieldSheetRowKeys('dateinsert', '2023-08-23.');
-          // for (var i = 0; i < result.length; i++) {
-          //   // print('-------------------------------------------$i');
-          //   // print(result[i]);
-          // }
+          currentSS.filterIcon = const Icon(Icons.wordpress);
+
+          final word = await InputDialog.show(
+            context: context,
+            title: 'Enter word', // The default.
+            okText: 'OK', // The default.
+            cancelText: 'Cancel', // The default.
+          );
+          try {
+            if (word!.isEmpty) return;
+          } catch (_) {
+            return;
+          }
+          await searchText(word);
         },
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Search"))),
@@ -148,13 +136,7 @@ class _SidebarPageState extends State<SidebarPage> {
       CollapsibleItem(
         text: 'Settings',
         icon: Icons.settings,
-        onPressed: () async {
-          // List<Map> result = await bl.crud.readColRows();
-          // for (var i = 0; i < result.length; i++) {
-          //   // print('-------------------------------------------$i');
-          //   // print(result[i]);
-          // }
-        },
+        onPressed: () async {},
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Settings"))),
       ),
@@ -192,6 +174,20 @@ class _SidebarPageState extends State<SidebarPage> {
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Email"))),
       ),
+      //-----------------------------------------------------------------add quote
+      CollapsibleItem(
+        text: 'Add quote',
+        icon: Icons.add,
+        onPressed: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddQuote()),
+          );
+        },
+        onHold: () => ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Search"))),
+      ),
+      //-----------------------------------------------------------------app
       CollapsibleItem(
           text: 'News',
           onPressed: () => setState(() => _headline = 'News'),

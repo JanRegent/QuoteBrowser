@@ -67,7 +67,9 @@ class _CardSwiperState extends State<CardSwiper> {
 
   Widget titleArrowsRow() {
     return Row(children: [
+      currentSS.filterIcon,
       Text(widget.title),
+      const Text('  '),
       const Spacer(),
       ElevatedButton(
         onPressed: () {
@@ -152,21 +154,5 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   Widget build(BuildContext context) {
     return bodySwiper();
-    // return Scaffold(
-    //     appBar: AppBar(
-    //       title: Row(children: [
-    //         IconButton(
-    //             icon: const Icon(Icons.arrow_back),
-    //             onPressed: () {
-    //               SwiperController().previous();
-    //             }),
-    //         IconButton(
-    //             icon: const Icon(Icons.arrow_forward),
-    //             onPressed: () {
-    //               SwiperController().next();
-    //             })
-    //       ]),
-    //     ),
-    //     body: body());
   }
 }
