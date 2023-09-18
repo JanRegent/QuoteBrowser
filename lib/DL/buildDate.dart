@@ -1,1 +1,1 @@
-String buildDate = ' 2023_09_18__ 9_58_build_BL---filterSearchText-InputDialog ';  
+String buildDate = ' 2023_09_18__10_48_build_BL---filterSearchText-wordSelect ';  

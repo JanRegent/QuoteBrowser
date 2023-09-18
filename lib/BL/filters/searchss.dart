@@ -15,11 +15,13 @@ Future<int> filterSearchText(String searchText, BuildContext context) async {
   try {
     currentSS.keys = (await bl.filtersCRUD.readFilter(searchText));
   } catch (_) {}
+
   if (currentSS.keys.isEmpty) {
     //ignore: use_build_context_synchronously
     circularSnack(context, 25, 'Querying cloud [gdrive]');
 
     currentSS.keys = await dl.httpService.searchSS(searchText);
+
     await bl.filtersCRUD
         .updateFilter(searchText, 'searchText: $searchText', currentSS.keys);
   }

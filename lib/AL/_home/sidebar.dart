@@ -11,6 +11,7 @@ import '../../BL/orm.dart';
 import '../../DL/builddate.dart';
 
 import '../filterspages/dateselect.dart';
+import '../filterspages/wordselect.dart';
 import '../zview/_cardsswiper.dart';
 import '../zview/addquote.dart';
 
@@ -99,29 +100,60 @@ class _SidebarPageState extends State<SidebarPage> {
             ),
           ]),
 
-      //-----------------------------------------------------------------search
-      CollapsibleItem(
-        text: 'Search',
-        icon: Icons.wordpress,
-        onPressed: () async {
-          currentSS.filterIcon = const Icon(Icons.wordpress);
+      //------------------------------------------------------------search word
 
-          final word = await InputDialog.show(
-            context: context,
-            title: 'Enter word', // The default.
-            okText: 'OK', // The default.
-            cancelText: 'Cancel', // The default.
-          );
-          try {
-            if (word!.isEmpty) return;
-          } catch (_) {
-            return;
-          }
-          await searchText(word);
-        },
-        onHold: () => ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Search"))),
-      ),
+      CollapsibleItem(
+          text: 'Word filters',
+          icon: Icons.wordpress,
+          onPressed: () => setState(() => _headline = 'Word filters'),
+          onHold: () => ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("Word filters"))),
+          isSelected: true,
+          subItems: [
+            CollapsibleItem(
+              text: 'New word search',
+              icon: Icons.wordpress,
+              onPressed: () async {
+                currentSS.filterIcon = const Icon(Icons.wordpress);
+
+                final word = await InputDialog.show(
+                  context: context,
+                  title: 'Enter word', // The default.
+                  okText: 'OK', // The default.
+                  cancelText: 'Cancel', // The default.
+                );
+                try {
+                  if (word!.isEmpty) return;
+                } catch (_) {
+                  return;
+                }
+                await searchText(word);
+              },
+              onHold: () => ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Word filter"))),
+              isSelected: true,
+            ),
+            CollapsibleItem(
+              text: 'Stored words',
+              icon: Icons.date_range_outlined,
+              onPressed: () async {
+                String searchWord = '';
+                currentSS.filterIcon = const Icon(Icons.wordpress);
+                try {
+                  searchWord = await wordSelect(context);
+                  print(searchWord);
+                } catch (_) {
+                  return;
+                }
+
+                if (searchWord.isEmpty) return;
+                await searchText(searchWord);
+              },
+              onHold: () => ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Stored words"))),
+              isSelected: true,
+            ),
+          ]),
 
       CollapsibleItem(
         text: 'Notifications',
