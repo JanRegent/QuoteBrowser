@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'filterscrud.dart';
+part of 'simplefilter.dart';
 
 // **************************************************************************
 // _IsarCollectionGenerator
@@ -17,11 +17,11 @@ extension GetSimpleFilterCollection on Isar {
 const SimpleFilterSchema = IsarGeneratedSchema(
   schema: IsarSchema(
     name: 'SimpleFilter',
-    idName: 'filterKey',
+    idName: 'wordKey',
     embedded: false,
     properties: [
       IsarPropertySchema(
-        name: 'filterKey',
+        name: 'wordKey',
         type: IsarType.string,
       ),
       IsarPropertySchema(
@@ -41,7 +41,7 @@ const SimpleFilterSchema = IsarGeneratedSchema(
 
 @isarProtected
 int serializeSimpleFilter(IsarWriter writer, SimpleFilter object) {
-  IsarCore.writeString(writer, 1, object.filterKey);
+  IsarCore.writeString(writer, 1, object.wordKey);
   {
     final list = object.sheetRownoKeys;
     final listWriter = IsarCore.beginList(writer, 2, list.length);
@@ -50,13 +50,13 @@ int serializeSimpleFilter(IsarWriter writer, SimpleFilter object) {
     }
     IsarCore.endList(writer, listWriter);
   }
-  return Isar.fastHash(object.filterKey);
+  return Isar.fastHash(object.wordKey);
 }
 
 @isarProtected
 SimpleFilter deserializeSimpleFilter(IsarReader reader) {
   final object = SimpleFilter();
-  object.filterKey = IsarCore.readString(reader, 1) ?? '';
+  object.wordKey = IsarCore.readString(reader, 1) ?? '';
   {
     final length = IsarCore.readList(reader, 2, IsarCore.readerPtrPtr);
     {
@@ -106,7 +106,7 @@ dynamic deserializeSimpleFilterProp(IsarReader reader, int property) {
 extension SimpleFilterQueryFilter
     on QueryBuilder<SimpleFilter, SimpleFilter, QFilterCondition> {
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyEqualTo(
+      wordKeyEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -122,7 +122,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyGreaterThan(
+      wordKeyGreaterThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -138,7 +138,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyGreaterThanOrEqualTo(
+      wordKeyGreaterThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -154,7 +154,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyLessThan(
+      wordKeyLessThan(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -170,7 +170,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyLessThanOrEqualTo(
+      wordKeyLessThanOrEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -186,7 +186,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyBetween(
+      wordKeyBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -204,7 +204,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyStartsWith(
+      wordKeyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -220,7 +220,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyEndsWith(
+      wordKeyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -236,7 +236,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyContains(String value, {bool caseSensitive = true}) {
+      wordKeyContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         ContainsCondition(
@@ -249,7 +249,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyMatches(String pattern, {bool caseSensitive = true}) {
+      wordKeyMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         MatchesCondition(
@@ -262,7 +262,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyIsEmpty() {
+      wordKeyIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -274,7 +274,7 @@ extension SimpleFilterQueryFilter
   }
 
   QueryBuilder<SimpleFilter, SimpleFilter, QAfterFilterCondition>
-      filterKeyIsNotEmpty() {
+      wordKeyIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -486,7 +486,7 @@ extension SimpleFilterQueryObject
 
 extension SimpleFilterQuerySortBy
     on QueryBuilder<SimpleFilter, SimpleFilter, QSortBy> {
-  QueryBuilder<SimpleFilter, SimpleFilter, QAfterSortBy> sortByFilterKey(
+  QueryBuilder<SimpleFilter, SimpleFilter, QAfterSortBy> sortByWordKey(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -496,7 +496,7 @@ extension SimpleFilterQuerySortBy
     });
   }
 
-  QueryBuilder<SimpleFilter, SimpleFilter, QAfterSortBy> sortByFilterKeyDesc(
+  QueryBuilder<SimpleFilter, SimpleFilter, QAfterSortBy> sortByWordKeyDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -510,14 +510,14 @@ extension SimpleFilterQuerySortBy
 
 extension SimpleFilterQuerySortThenBy
     on QueryBuilder<SimpleFilter, SimpleFilter, QSortThenBy> {
-  QueryBuilder<SimpleFilter, SimpleFilter, QAfterSortBy> thenByFilterKey(
+  QueryBuilder<SimpleFilter, SimpleFilter, QAfterSortBy> thenByWordKey(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(1, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<SimpleFilter, SimpleFilter, QAfterSortBy> thenByFilterKeyDesc(
+  QueryBuilder<SimpleFilter, SimpleFilter, QAfterSortBy> thenByWordKeyDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(1, sort: Sort.desc, caseSensitive: caseSensitive);
@@ -537,7 +537,7 @@ extension SimpleFilterQueryWhereDistinct
 
 extension SimpleFilterQueryProperty1
     on QueryBuilder<SimpleFilter, SimpleFilter, QProperty> {
-  QueryBuilder<SimpleFilter, String, QAfterProperty> filterKeyProperty() {
+  QueryBuilder<SimpleFilter, String, QAfterProperty> wordKeyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
@@ -553,7 +553,7 @@ extension SimpleFilterQueryProperty1
 
 extension SimpleFilterQueryProperty2<R>
     on QueryBuilder<SimpleFilter, R, QAfterProperty> {
-  QueryBuilder<SimpleFilter, (R, String), QAfterProperty> filterKeyProperty() {
+  QueryBuilder<SimpleFilter, (R, String), QAfterProperty> wordKeyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
@@ -569,8 +569,7 @@ extension SimpleFilterQueryProperty2<R>
 
 extension SimpleFilterQueryProperty3<R1, R2>
     on QueryBuilder<SimpleFilter, (R1, R2), QAfterProperty> {
-  QueryBuilder<SimpleFilter, (R1, R2, String), QOperations>
-      filterKeyProperty() {
+  QueryBuilder<SimpleFilter, (R1, R2, String), QOperations> wordKeyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });

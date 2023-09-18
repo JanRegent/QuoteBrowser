@@ -2,18 +2,18 @@ import 'package:isar/isar.dart';
 
 import '../bl.dart';
 
-part 'filterscrud.g.dart'; //dart run build_runner build
+part 'simplefilter.g.dart'; //dart run build_runner build
 
 @collection
 class SimpleFilter {
   @Id()
-  String filterKey = '';
+  String wordKey = '';
   List<String> sheetRownoKeys = [];
 
   @override
   toString() {
     return '''
-    ------------------------------DateFilter--$filterKey
+    ------------------------------SimpleFilter--$wordKey
     $sheetRownoKeys
   ''';
   }
@@ -25,7 +25,7 @@ class FiltersCRUD {
   Future<List<String>> readWords() async {
     try {
       List<String>? keys =
-          isar.simpleFilters.where().filterKeyProperty().findAll();
+          isar.simpleFilters.where().wordKeyProperty().findAll();
       List<String> words = [];
       for (String key in keys) {
         if (key.startsWith('20')) continue;
@@ -41,7 +41,7 @@ class FiltersCRUD {
     try {
       List<String>? keys = isar.simpleFilters
           .where()
-          .filterKeyEqualTo(filterKey)
+          .wordKeyEqualTo(filterKey)
           .sheetRownoKeysProperty()
           .findFirst();
 
@@ -56,7 +56,7 @@ class FiltersCRUD {
     try {
       String keys = isar.simpleFilters
           .where()
-          .filterKeyEqualTo(filterKey)
+          .wordKeyEqualTo(filterKey)
           .sheetRownoKeysProperty()
           .findFirst()![currentIndex];
       return keys;
@@ -72,7 +72,7 @@ class FiltersCRUD {
     if (sheetRownoKeys.isEmpty) return;
     isar.write((isar) async {
       SimpleFilter sFilter = SimpleFilter();
-      sFilter.filterKey = filterKey;
+      sFilter.wordKey = filterKey;
       sFilter.sheetRownoKeys = sheetRownoKeys;
 
       isar.simpleFilters.put(sFilter);

@@ -59,10 +59,10 @@ class _SidebarPageState extends State<SidebarPage> {
 
   List<CollapsibleItem> get _generateItems {
     return [
-      //-----------------------------------------------------------------date
+      //---------------------------------------------------------Simple filters
       CollapsibleItem(
-          text: 'Date filters',
-          icon: Icons.date_range,
+          text: 'Simple filters',
+          icon: Icons.filter,
           onPressed: () => setState(() => _headline = 'Date filters'),
           onHold: () => ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("Date filters"))),
@@ -98,18 +98,6 @@ class _SidebarPageState extends State<SidebarPage> {
                   .showSnackBar(const SnackBar(content: Text("Last days"))),
               isSelected: true,
             ),
-          ]),
-
-      //------------------------------------------------------------search word
-
-      CollapsibleItem(
-          text: 'Word filters',
-          icon: Icons.wordpress,
-          onPressed: () => setState(() => _headline = 'Word filters'),
-          onHold: () => ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("Word filters"))),
-          isSelected: true,
-          subItems: [
             CollapsibleItem(
               text: 'New word search',
               icon: Icons.wordpress,
@@ -135,13 +123,12 @@ class _SidebarPageState extends State<SidebarPage> {
             ),
             CollapsibleItem(
               text: 'Stored words',
-              icon: Icons.date_range_outlined,
+              icon: Icons.wordpress,
               onPressed: () async {
                 String searchWord = '';
                 currentSS.filterIcon = const Icon(Icons.wordpress);
                 try {
                   searchWord = await wordSelect(context);
-                  print(searchWord);
                 } catch (_) {
                   return;
                 }
@@ -154,6 +141,17 @@ class _SidebarPageState extends State<SidebarPage> {
               isSelected: true,
             ),
           ]),
+
+      //------------------------------------------------------------search word
+
+      CollapsibleItem(
+          text: 'Authors\n& words',
+          icon: Icons.person,
+          onPressed: () => setState(() => _headline = 'Authors & words'),
+          onHold: () => ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("Authors && words"))),
+          isSelected: true,
+          subItems: []),
 
       CollapsibleItem(
         text: 'Notifications',
