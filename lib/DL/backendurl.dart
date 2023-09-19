@@ -1,2 +1,2 @@
 String backendUrl =
-    'https://script.google.com/macros/s/AKfycbxxxzThJvvfZleprXLveVC-GQP-gygE7jHtwX3DuRhG2XgoAAWcbGT4tiDpW2t3s21M/exec';
+    'https://script.google.com/macros/s/AKfycbx9pbhLpv4HPwS_YeWkNwWjIOxxXQXc5QrBIqMySeYIcPzON1FYIS5tQYrGLjxmb353/exec';
