@@ -2,7 +2,7 @@ import 'package:isar/isar.dart';
 
 import '../bl.dart';
 
-part 'authorwordfilter.g.dart'; //dart run build_runner build
+part '../filters/authorwordfilter.g.dart'; //dart run build_runner build
 
 @collection
 class AuthorWordFilter {

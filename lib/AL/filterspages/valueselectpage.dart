@@ -1,39 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
-//import 'package:searchable_listview/searchable_listview.dart';
-
-import '../../BL/bl.dart';
-
 import 'emptyview.dart';
-import 'sheetnames.dart';
 
-Future<String> wordSelect(BuildContext context) async {
-  List<String> words = await bl.filtersCRUD.readWords();
-  // ignore: use_build_context_synchronously
-  return await Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => WordSelectPage(words)),
-  );
-}
+class ValueSelectPage extends StatefulWidget {
+  final List<String> values;
+  final String title;
 
-class WordSelectPage extends StatefulWidget {
-  final List<String> words;
-
-  const WordSelectPage(this.words, {super.key});
+  const ValueSelectPage(this.values, this.title, {super.key});
 
   @override
-  State<WordSelectPage> createState() => _WordSelectPageState();
+  State<ValueSelectPage> createState() => _ValueSelectPageState();
 }
 
-class _WordSelectPageState extends State<WordSelectPage> {
-  Row titleRow() {
-    return const Row(children: [
-      Text('  '),
-      SheetNameSelect(),
-    ]);
-  }
-
+class _ValueSelectPageState extends State<ValueSelectPage> {
   final TextEditingController textEditingController = TextEditingController();
 
   Widget bodyLv2(BuildContext context) {
@@ -42,16 +22,16 @@ class _WordSelectPageState extends State<WordSelectPage> {
         return ListTile(
           title: Text(displayedList[itemIndex]),
           onTap: () async {
-            Navigator.pop(context, widget.words[itemIndex]);
+            Navigator.pop(context, displayedList[itemIndex]);
           },
         );
       },
       asyncListCallback: () async {
         await Future.delayed(const Duration(seconds: 1));
-        return widget.words;
+        return widget.values;
       },
       asyncListFilter: (query, list) {
-        return widget.words
+        return widget.values
             .where((element) =>
                 element.toString().toLowerCase().contains(query.toLowerCase()))
             .toList();
@@ -78,17 +58,10 @@ class _WordSelectPageState extends State<WordSelectPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('By word)')),
+      appBar: AppBar(title: Text(widget.title)),
       body: bodyLv2(context),
     );
   }
 
   //-------------------------------------------------------sheetNames
-}
-
-class FilterParams {
-  String filterScopesBasic;
-  String value1;
-
-  FilterParams(this.filterScopesBasic, this.value1);
 }

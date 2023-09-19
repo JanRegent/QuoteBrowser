@@ -6,12 +6,13 @@ import 'package:input_dialog/input_dialog.dart';
 
 import 'package:quotebrowser/BL/bluti.dart';
 
+import '../../BL/bl.dart';
 import '../../BL/filters/searchss.dart';
 import '../../BL/orm.dart';
 import '../../DL/builddate.dart';
 
-import '../filterspages/dateselect.dart';
-import '../filterspages/wordselect.dart';
+import '../filterspages/_selectview.dart';
+
 import '../zview/_cardsswiper.dart';
 import '../zview/addquote.dart';
 
@@ -57,7 +58,38 @@ class _SidebarPageState extends State<SidebarPage> {
     });
   }
 
+  Future searchAuthorText(String author, String searchText) async {
+    loadingTitle.value = searchText;
+    widget.setstateHome();
+    await bl.authorWordFilterCRUD
+        .updateFilter(author, searchText, [author, searchText]);
+    // filterSearchText(searchText, context).then((value) async {
+    //   loadingTitle.value = '';
+    //   widget.setstateHome();
+
+    //   if (value == 0) return;
+
+    //   await Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => CardSwiper(searchText, const {})),
+    //   );
+    // }, onError: (e) {
+    //   debugPrint(e);
+    // });
+  }
+
   List<CollapsibleItem> get _generateItems {
+    Future<String> inputWord() async {
+      final word = await InputDialog.show(
+        context: context,
+        title: 'Enter word', // The default.
+        okText: 'OK', // The default.
+        cancelText: 'Cancel', // The default.
+      );
+      return word!;
+    }
+
     return [
       //---------------------------------------------------------Simple filters
       CollapsibleItem(
@@ -103,15 +135,9 @@ class _SidebarPageState extends State<SidebarPage> {
               icon: Icons.wordpress,
               onPressed: () async {
                 currentSS.filterIcon = const Icon(Icons.wordpress);
-
-                final word = await InputDialog.show(
-                  context: context,
-                  title: 'Enter word', // The default.
-                  okText: 'OK', // The default.
-                  cancelText: 'Cancel', // The default.
-                );
+                String word = await inputWord();
                 try {
-                  if (word!.isEmpty) return;
+                  if (word.isEmpty) return;
                 } catch (_) {
                   return;
                 }
@@ -151,7 +177,43 @@ class _SidebarPageState extends State<SidebarPage> {
           onHold: () => ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("Authors && words"))),
           isSelected: true,
-          subItems: []),
+          subItems: [
+            CollapsibleItem(
+              text: 'Author&Word',
+              icon: Icons.person,
+              onPressed: () async {
+                currentSS.filterIcon = const Icon(Icons.person);
+                String author = '';
+                try {
+                  author = await authorSelect(context);
+                } catch (_) {
+                  return;
+                }
+                if (author.isEmpty) {
+                  loadingTitle.value = '';
+                  setState(() {});
+                  return;
+                }
+                String searchWord = '';
+                try {
+                  searchWord = await inputWord();
+                } catch (_) {
+                  return;
+                }
+                if (searchWord.isEmpty) {
+                  loadingTitle.value = '';
+                  setState(() {});
+                  return;
+                }
+                await searchAuthorText(author, searchWord);
+                loadingTitle.value = '';
+                setState(() {});
+              },
+              onHold: () => ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Date filters"))),
+              isSelected: true,
+            ),
+          ]),
 
       CollapsibleItem(
         text: 'Notifications',

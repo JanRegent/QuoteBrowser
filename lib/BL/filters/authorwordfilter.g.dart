@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'authorwordfilter.dart';
+part of '../authors/authorwordfilter.dart';
 
 // **************************************************************************
 // _IsarCollectionGenerator
