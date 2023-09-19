@@ -6,7 +6,6 @@ import 'package:input_dialog/input_dialog.dart';
 
 import 'package:quotebrowser/BL/bluti.dart';
 
-import '../../BL/bl.dart';
 import '../../BL/filters/searchss.dart';
 import '../../BL/orm.dart';
 import '../../DL/builddate.dart';
@@ -58,25 +57,28 @@ class _SidebarPageState extends State<SidebarPage> {
     });
   }
 
-  Future searchAuthorText(String author, String searchText) async {
+  //Future
+  Future searchColumnQuote(
+      String columnName, String columnValue, String searchText) async {
     loadingTitle.value = searchText;
     widget.setstateHome();
-    await bl.authorWordFilterCRUD
-        .updateFilter(author, searchText, [author, searchText]);
-    // filterSearchText(searchText, context).then((value) async {
-    //   loadingTitle.value = '';
-    //   widget.setstateHome();
 
-    //   if (value == 0) return;
+    searchColumnAndQuote(columnName, columnValue, searchText, context).then(
+        (value) async {
+      loadingTitle.value = '';
+      widget.setstateHome();
 
-    //   await Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => CardSwiper(searchText, const {})),
-    //   );
-    // }, onError: (e) {
-    //   debugPrint(e);
-    // });
+      if (value == 0) return;
+
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                CardSwiper('$columnValue & $searchText', const {})),
+      );
+    }, onError: (e) {
+      debugPrint(e);
+    });
   }
 
   List<CollapsibleItem> get _generateItems {
@@ -171,15 +173,15 @@ class _SidebarPageState extends State<SidebarPage> {
       //------------------------------------------------------------search word
 
       CollapsibleItem(
-          text: 'Authors\n& words',
+          text: 'Authors|Books\n& words',
           icon: Icons.person,
-          onPressed: () => setState(() => _headline = 'Authors & words'),
-          onHold: () => ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("Authors && words"))),
+          onPressed: () => setState(() => _headline = 'Authors|Books\n& words'),
+          onHold: () => ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Authors|Books\n& words"))),
           isSelected: true,
           subItems: [
             CollapsibleItem(
-              text: 'Author&Word',
+              text: 'Author&text',
               icon: Icons.person,
               onPressed: () async {
                 currentSS.filterIcon = const Icon(Icons.person);
@@ -205,12 +207,12 @@ class _SidebarPageState extends State<SidebarPage> {
                   setState(() {});
                   return;
                 }
-                await searchAuthorText(author, searchWord);
+                await searchColumnQuote('author', author, searchWord);
                 loadingTitle.value = '';
                 setState(() {});
               },
-              onHold: () => ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text("Date filters"))),
+              onHold: () => ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Author&text filters"))),
               isSelected: true,
             ),
           ]),

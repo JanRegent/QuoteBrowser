@@ -45,6 +45,25 @@ class HttpService {
     return await sheetRowsSaveGetKeys(response.data['data']);
   }
 
+  Future<List<String>> searchColumnAndQuote(
+      String searchText, String columnName, columnValue) async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {
+        'action': 'searchColumnAndQuote',
+        'searchText': searchText,
+        'ssId': dataSheetId,
+        'author': columnName == 'author' ? columnValue : '',
+        'book': columnName == 'book' ? columnValue : '',
+        'tag': columnName == 'tag' ? columnValue : ''
+      },
+    );
+
+    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+
+    return await sheetRowsSaveGetKeys(response.data['data']);
+  }
+
   Future<List<String>> getDataSheets(String sheetId) async {
     Response response = await dio.get(
       backendUrl,

@@ -32,6 +32,34 @@ Future<int> filterSearchText(String searchText, BuildContext context) async {
   return currentSS.keys.length;
 }
 
+Future<int> searchColumnAndQuote(String columnName, String columnValue,
+    String searchText, BuildContext context) async {
+  currentSS.filterKey = searchText;
+  currentSS.swiperIndex = 0;
+
+  debugPrint(searchText);
+  try {
+    currentSS.keys = (await bl.authorWordFilterCRUD
+        .readFilter('$columnValue __|__$searchText'));
+  } catch (_) {}
+
+  if (currentSS.keys.isEmpty) {
+    //ignore: use_build_context_synchronously
+    circularSnack(context, 25, 'Querying cloud [gdrive]');
+
+    currentSS.keys = await dl.httpService
+        .searchColumnAndQuote(searchText, columnName, columnValue);
+
+    await bl.authorWordFilterCRUD
+        .updateFilter(searchText, 'searchText: $searchText', currentSS.keys);
+  }
+  if (currentSS.keys.isEmpty) {
+    return 0;
+  }
+  await currentRowSet();
+  return currentSS.keys.length;
+}
+
 Future<List<String>> sheetRowsSaveGetKeys(List rowsArrDyn) async {
   List<String> sheetRownoKeys = [];
   for (List row in rowsArrDyn) {
