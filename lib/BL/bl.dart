@@ -3,9 +3,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
-import 'authors/authorscrud.dart';
 import 'categories/catscrud.dart';
-import 'authors/authorwordfilter.dart';
+
+import 'columntext/authorscrud.dart';
+import 'columntext/columntextfilter.dart';
 import 'filters/simplefilter.dart';
 import 'orm.dart';
 import 'sheetrows/sheetcolscrud.dart';
@@ -17,7 +18,7 @@ List<IsarGeneratedSchema> schemas = [
   SheetRowSchema,
   SheetColSchema,
   SimpleFilterSchema,
-  AuthorWordFilterSchema,
+  ColumnTextFilterSchema,
   AuthorSchema
 ];
 
@@ -29,7 +30,7 @@ class Bl {
   SheetrowsCRUD sheetrowsCRUD = SheetrowsCRUD();
   SheetcolsCRUD sheetcolsCRUD = SheetcolsCRUD();
   FiltersCRUD filtersCRUD = FiltersCRUD();
-  AuthorWordFilterCRUD authorWordFilterCRUD = AuthorWordFilterCRUD();
+  ColumnTextFilterCRUD columnTextFilterCRUD = ColumnTextFilterCRUD();
   AuthorCRUD authorCRUD = AuthorCRUD();
   //CRUDsembast crud = CRUDsembast();
 

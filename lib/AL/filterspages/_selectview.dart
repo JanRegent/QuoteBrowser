@@ -35,3 +35,13 @@ Future<String> authorSelect(BuildContext context) async {
         builder: (context) => ValueSelectPage(authors, 'Select author')),
   );
 }
+
+Future<String> authorTextSelect(BuildContext context) async {
+  List<String> words = await bl.columnTextFilterCRUD.readColumnTextKeys();
+  // ignore: use_build_context_synchronously
+  return await Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => ValueSelectPage(words, 'Select Author|text ')),
+  );
+}

@@ -57,6 +57,26 @@ class _SidebarPageState extends State<SidebarPage> {
     });
   }
 
+  Future searchColumnText(String columnTextKey) async {
+    loadingTitle.value = columnTextKey;
+    widget.setstateHome();
+
+    columnTextShow(columnTextKey, context).then((value) async {
+      loadingTitle.value = '';
+      widget.setstateHome();
+
+      if (value == 0) return;
+
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CardSwiper(columnTextKey, const {})),
+      );
+    }, onError: (e) {
+      debugPrint(e);
+    });
+  }
+
   //Future
   Future searchColumnQuote(
       String columnName, String columnValue, String searchText) async {
@@ -170,7 +190,7 @@ class _SidebarPageState extends State<SidebarPage> {
             ),
           ]),
 
-      //------------------------------------------------------------search word
+      //----------------------------------------------------- columnText
 
       CollapsibleItem(
           text: 'Authors|Books\n& words',
@@ -181,7 +201,7 @@ class _SidebarPageState extends State<SidebarPage> {
           isSelected: true,
           subItems: [
             CollapsibleItem(
-              text: 'Author&text',
+              text: 'New Author&text',
               icon: Icons.person,
               onPressed: () async {
                 currentSS.filterIcon = const Icon(Icons.person);
@@ -213,6 +233,25 @@ class _SidebarPageState extends State<SidebarPage> {
               },
               onHold: () => ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Author&text filters"))),
+              isSelected: true,
+            ),
+            CollapsibleItem(
+              text: 'Stored Author&text',
+              icon: Icons.wordpress,
+              onPressed: () async {
+                String columnTextKey = '';
+                currentSS.filterIcon = const Icon(Icons.wordpress);
+                try {
+                  columnTextKey = await authorTextSelect(context);
+                } catch (_) {
+                  return;
+                }
+
+                if (columnTextKey.isEmpty) return;
+                await searchColumnText(columnTextKey);
+              },
+              onHold: () => ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Stored words"))),
               isSelected: true,
             ),
           ]),

@@ -2,35 +2,36 @@ import 'package:isar/isar.dart';
 
 import '../bl.dart';
 
-part '../filters/authorwordfilter.g.dart'; //dart run build_runner build
+part 'columntextfilter.g.dart'; //dart run build_runner build
 
 @collection
-class AuthorWordFilter {
+class ColumnTextFilter {
   @Id()
-  String authorWordKey = '';
-  String author = '';
-  String word = '';
+  String columnTextKey = '';
+  String columnName = '';
+  String columnValue = '';
+  String searchText = '';
   List<String> sheetRownoKeys = [];
 
   @override
   toString() {
     return '''
-    ------------------------------DateFilter--$authorWordKey
+    ------------------------------DateFilter--$columnTextKey
     $sheetRownoKeys
   ''';
   }
 }
 
-class AuthorWordFilterCRUD {
+class ColumnTextFilterCRUD {
   //------------------------------------------------------------------read
 
-  Future<List<String>> readWords() async {
+  Future<List<String>> readColumnTextKeys() async {
     try {
       List<String>? keys =
-          isar.authorWordFilters.where().authorWordKeyProperty().findAll();
+          isar.columnTextFilters.where().columnTextKeyProperty().findAll();
+
       List<String> words = [];
       for (String key in keys) {
-        if (key.startsWith('20')) continue;
         words.add(key);
       }
       return words;
@@ -41,9 +42,9 @@ class AuthorWordFilterCRUD {
 
   Future<List<String>> readFilter(String filterKey) async {
     try {
-      List<String>? keys = isar.authorWordFilters
+      List<String>? keys = isar.columnTextFilters
           .where()
-          .authorWordKeyEqualTo(filterKey)
+          .columnTextKeyEqualTo(filterKey)
           .sheetRownoKeysProperty()
           .findFirst();
 
@@ -56,9 +57,9 @@ class AuthorWordFilterCRUD {
   Future<String> readFilterAtCurrentindex(
       String filterKey, int currentIndex) async {
     try {
-      String keys = isar.authorWordFilters
+      String keys = isar.columnTextFilters
           .where()
-          .authorWordKeyEqualTo(filterKey)
+          .columnTextKeyEqualTo(filterKey)
           .sheetRownoKeysProperty()
           .findFirst()![currentIndex];
       return keys;
@@ -68,17 +69,18 @@ class AuthorWordFilterCRUD {
   }
 
   //------------------------------------------------------------------update
-  Future updateFilter(
-      String author, String word, List<String> sheetRownoKeys) async {
-    if (author.isEmpty) return;
+  Future updateFilter(String columnName, String columnValue, String word,
+      List<String> sheetRownoKeys) async {
+    if (columnValue.isEmpty) return;
     if (word.isEmpty) return;
     if (sheetRownoKeys.isEmpty) return;
     isar.write((isar) async {
-      AuthorWordFilter sFilter = AuthorWordFilter();
-      sFilter.authorWordKey = '$author __|__$word';
+      ColumnTextFilter sFilter = ColumnTextFilter();
+      sFilter.columnTextKey = '$columnValue __|__$word';
+      sFilter.columnName = columnName;
       sFilter.sheetRownoKeys = sheetRownoKeys;
 
-      isar.authorWordFilters.put(sFilter);
+      isar.columnTextFilters.put(sFilter);
     });
   }
 }

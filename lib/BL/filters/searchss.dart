@@ -32,6 +32,20 @@ Future<int> filterSearchText(String searchText, BuildContext context) async {
   return currentSS.keys.length;
 }
 
+Future<int> columnTextShow(String columnTextKey, BuildContext context) async {
+  currentSS.filterKey = columnTextKey;
+  currentSS.swiperIndex = 0;
+
+  currentSS.keys = await bl.columnTextFilterCRUD.readFilter(columnTextKey);
+
+  if (currentSS.keys.isEmpty) {
+    return 0;
+  }
+  currentSS.swiperIndex = 0;
+  await currentRowSet();
+  return currentSS.keys.length;
+}
+
 Future<int> searchColumnAndQuote(String columnName, String columnValue,
     String searchText, BuildContext context) async {
   currentSS.filterKey = searchText;
@@ -39,7 +53,7 @@ Future<int> searchColumnAndQuote(String columnName, String columnValue,
 
   debugPrint(searchText);
   try {
-    currentSS.keys = (await bl.authorWordFilterCRUD
+    currentSS.keys = (await bl.columnTextFilterCRUD
         .readFilter('$columnValue __|__$searchText'));
   } catch (_) {}
 
@@ -50,8 +64,8 @@ Future<int> searchColumnAndQuote(String columnName, String columnValue,
     currentSS.keys = await dl.httpService
         .searchColumnAndQuote(searchText, columnName, columnValue);
 
-    await bl.authorWordFilterCRUD
-        .updateFilter(searchText, 'searchText: $searchText', currentSS.keys);
+    await bl.columnTextFilterCRUD
+        .updateFilter(columnName, columnValue, searchText, currentSS.keys);
   }
   if (currentSS.keys.isEmpty) {
     return 0;
