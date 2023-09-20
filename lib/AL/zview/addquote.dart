@@ -7,6 +7,7 @@ import '../../BL/bl.dart';
 import '../../BL/orm.dart';
 import '../../DL/dl.dart';
 
+import '../alib/selectiondialogs/selectone.dart';
 import 'aedit/quoteedit.dart';
 
 // ignore: must_be_immutable
@@ -18,9 +19,13 @@ class AddQuote extends StatefulWidget {
 }
 
 class _AddQuoteState extends State<AddQuote> {
+  List<String> sheetNames = [];
   @override
   initState() {
     super.initState();
+    dl.httpService
+        .getDataSheets(bl.orm.currentRow.fileId)
+        .then((value) => blUti.toListString(value));
     currentRowNew();
   }
 
@@ -29,10 +34,10 @@ class _AddQuoteState extends State<AddQuote> {
   }
 
   Future sheetNameSet(BuildContext context) async {
-    // String sheetName = await selectOne(sheetNames, context);
-    // if (sheetName.isEmpty) return;
+    String sheetName = await selectOne(sheetNames, context);
+    if (sheetName.isEmpty) return;
 
-    // bl.orm.currentRow.sheetName.value = sheetName;
+    bl.orm.currentRow.sheetName.value = sheetName;
   }
 
   Card card(BuildContext context) {

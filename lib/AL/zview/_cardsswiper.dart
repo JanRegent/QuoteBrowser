@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../BL/orm.dart';
 
-import 'zquoteview.dart';
+import 'zcoloredview.dart';
 import 'battribs/_attribs.dart';
 import 'aedit/attredit.dart';
 
@@ -112,9 +112,21 @@ class _CardSwiperState extends State<CardSwiper> {
           bottom: TabBar(
             tabs: [
               Tab(
-                  child: readOnlyView
-                      ? const Icon(Icons.format_quote)
-                      : const Icon(Icons.edit)),
+                  child: !readOnlyView
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() {
+                              readOnlyView = !readOnlyView;
+                            });
+                          },
+                          icon: const Icon(Icons.edit))
+                      : IconButton(
+                          onPressed: () {
+                            setState(() {
+                              readOnlyView = !readOnlyView;
+                            });
+                          },
+                          icon: const Icon(Icons.format_quote))),
               const Tab(child: Icon(Icons.view_agenda)),
             ],
           ),
@@ -122,7 +134,7 @@ class _CardSwiperState extends State<CardSwiper> {
         body: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            readOnlyView ? const QuoteView() : AttrEdit(swiperSetstate),
+            readOnlyView ? const ColoredView() : AttrEdit(swiperSetstate),
             const QuoteAttribs()
           ],
         ),

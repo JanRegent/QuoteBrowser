@@ -6,14 +6,14 @@ import 'package:highlight_text/highlight_text.dart';
 import '../../BL/bl.dart';
 
 // ignore: must_be_immutable
-class QuoteView extends StatefulWidget {
-  const QuoteView({super.key});
+class ColoredView extends StatefulWidget {
+  const ColoredView({super.key});
 
   @override
-  State<QuoteView> createState() => _QuoteViewState();
+  State<ColoredView> createState() => _ColoredViewState();
 }
 
-class _QuoteViewState extends State<QuoteView> {
+class _ColoredViewState extends State<ColoredView> {
   @override
   initState() {
     super.initState();
@@ -24,8 +24,8 @@ class _QuoteViewState extends State<QuoteView> {
   //------------------------------------------------------------------highlight
   Map<String, HighlightedWord> highlightedWord = {};
   void highlightedWordFill() {
-    List<String> tagsWords =
-        bl.orm.currentRow.tags.value.trim().split(RegExp(r'[|,.\s]'));
+    List<String> tagsWords = bl.orm.currentRow.tags.value.trim().split('#');
+    //bl.orm.currentRow.tags.value.trim().split(RegExp(r'[|,.\s]'));
     highlightedWord.clear();
     if (tagsWords.length < 2) return;
     for (String word in tagsWords) {
