@@ -50,8 +50,7 @@ class _MainFieldsState extends State<MainFields> {
             bl.orm.currentRow.fav.value = '';
           }
 
-          await setCellAttr('favorite', bl.orm.currentRow.fav.value,
-              bl.orm.currentRow.rowNo.value);
+          await setCellBL('favorite', bl.orm.currentRow.fav.value);
         });
   }
 

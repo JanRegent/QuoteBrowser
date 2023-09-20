@@ -99,7 +99,7 @@ class _AttrEditState extends State<AttrEdit> {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCellAttr('quote', bl.orm.currentRow.quote.value, '');
+    await setCellBL('quote', bl.orm.currentRow.quote.value);
     bl.orm.currentRow.dateinsert = '${blUti.todayStr()}.';
     //update(widget.sheet);
   }

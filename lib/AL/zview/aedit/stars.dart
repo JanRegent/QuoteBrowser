@@ -43,8 +43,7 @@ class _RatingStarsPageState extends State<RatingStarsPage> {
     if (value == 1) {
       bl.orm.currentRow.stars.value = '*';
     }
-    await setCellAttr(
-        'stars', bl.orm.currentRow.stars.value, bl.orm.currentRow.rowNo.value);
+    await setCellBL('stars', bl.orm.currentRow.stars.value);
     widget.setstateAattribs();
   }
 

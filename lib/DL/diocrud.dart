@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:quotebrowser/BL/orm.dart';
 
 import '../BL/bl.dart';
 import '../BL/bluti.dart';
@@ -91,7 +92,7 @@ class HttpService {
     String sheetRownoKey = response.data['data'][0];
     List<String> updatedRow = blUti.toListString(response.data['data'][1]);
     bl.sheetrowsCRUD.updateRow(sheetRownoKey, updatedRow);
-
+    await currentRowSet();
     return [];
   }
 

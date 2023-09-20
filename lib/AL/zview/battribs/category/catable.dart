@@ -48,10 +48,8 @@ class _CatablePageState extends State<CatablePage> {
               icon: const Icon(Icons.save),
               onPressed: () async {
                 bl.orm.currentRow.categories.value = selectedCats;
-                await setCellAttr(
-                    'categories',
-                    bl.orm.currentRow.categories.value,
-                    bl.orm.currentRow.rowNo.value);
+                await setCellBL(
+                    'categories', bl.orm.currentRow.categories.value);
               },
             ),
           ),

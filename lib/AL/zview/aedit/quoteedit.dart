@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 
@@ -8,14 +9,14 @@ import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 import '../fieldpopup.dart';
 
-Future setCellAttr(String columnName, String cellContent, String rowNo) async {
+Future setCellBL(String columnName, String cellContent) async {
+  if (cellContent.isEmpty) return;
   try {
-    await dl.httpService.setCellDL(
-        bl.orm.currentRow.sheetName.value, columnName, cellContent, rowNo);
+    await dl.httpService.setCellDL(bl.orm.currentRow.sheetName.value,
+        columnName, cellContent, bl.orm.currentRow.rowNo.value);
   } catch (e) {
     debugPrint('setCellBL( \n$e');
   }
-  //await currentRowUpdate();
 }
 
 // ignore: must_be_immutable
@@ -41,33 +42,24 @@ class QuoteEdit extends StatelessWidget {
     switch (attribName) {
       case 'author':
         bl.orm.currentRow.author.value = selected;
-        await setCellAttr(attribName, bl.orm.currentRow.author.value,
-            bl.orm.currentRow.rowNo.value);
+        await setCellBL('author', bl.orm.currentRow.author.value);
         break;
       case 'book':
         bl.orm.currentRow.book.value = selected;
-        await setCellAttr(attribName, bl.orm.currentRow.book.value,
-            bl.orm.currentRow.rowNo.value);
+        await setCellBL('book', bl.orm.currentRow.book.value);
         break;
       case 'parPage':
         bl.orm.currentRow.parPage.value += ' $selected';
-        await setCellAttr(attribName, bl.orm.currentRow.parPage.value,
-            bl.orm.currentRow.rowNo.value);
+        await setCellBL(attribName, bl.orm.currentRow.parPage.value);
         break;
       case 'tags':
         bl.orm.currentRow.tags.value += '#$selected';
         pureTags();
-        await setCellAttr(attribName, bl.orm.currentRow.tags.value,
-            bl.orm.currentRow.rowNo.value);
+        await setCellBL(attribName, bl.orm.currentRow.tags.value);
         break;
 
-      case 'quote':
-        await setCellAttr(attribName, bl.orm.currentRow.quote.value,
-            bl.orm.currentRow.rowNo.value);
-        return;
       case 'original':
-        await setCellAttr(attribName, bl.orm.currentRow.original,
-            bl.orm.currentRow.rowNo.value);
+        await setCellBL(attribName, bl.orm.currentRow.original);
         return;
       case '__othersFields__':
         return;
@@ -76,11 +68,6 @@ class QuoteEdit extends StatelessWidget {
         return;
     }
 
-    setstate();
-  }
-
-  Future transl() async {
-    translPopup(false);
     setstate();
   }
 
@@ -114,15 +101,7 @@ class QuoteEdit extends StatelessWidget {
 
     return Column(
       children: [
-        isAttrEdit
-            ? buttRow()
-            : Row(
-                children: [
-                  IconButton(
-                      icon: const Icon(Icons.translate),
-                      onPressed: () => transl()),
-                ],
-              ),
+        buttRow(),
         TextField(
           controller: _controller,
           readOnly: true,
