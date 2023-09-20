@@ -1,11 +1,9 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
-import '../../BL/bl.dart';
 import 'aedit/quoteedit.dart';
 
-PopupMenuButton fieldPopupMenu(String fieldValue, String columnName,
-    {String? original2trans}) {
+PopupMenuButton fieldPopupMenu(String fieldValue, String columnName) {
   List<PopupMenuItem> menu(BuildContext context) {
     List<PopupMenuItem> menu1 = [
       PopupMenuItem(
@@ -21,13 +19,24 @@ PopupMenuButton fieldPopupMenu(String fieldValue, String columnName,
       ),
     ];
 
-    if (fieldValue.isEmpty && ['quote'].contains(columnName)) {
+    if (fieldValue.isEmpty && 'quote' == columnName) {
       menu1.add(PopupMenuItem(
         value: '/original2cloud',
         child: const Text("Original from clipboard to cloud"),
         onTap: () async {
           FlutterClipboard.paste().then((value) async {
             await setCellBL('original', value);
+          });
+        },
+      ));
+    }
+    if (fieldValue.isEmpty && 'fileUrl' == columnName) {
+      menu1.add(PopupMenuItem(
+        value: '/fileUrl',
+        child: const Text("fileUrl from clipboard"),
+        onTap: () async {
+          FlutterClipboard.paste().then((value) async {
+            await setCellBL('fileUrl', value);
           });
         },
       ));

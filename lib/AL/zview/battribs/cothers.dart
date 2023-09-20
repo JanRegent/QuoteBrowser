@@ -52,7 +52,7 @@ class _OthersFieldsState extends State<OthersFields> {
                 : Text(bl.orm.currentRow.optionalFields[columnName]),
             trailing: fieldPopupMenu(
               bl.orm.currentRow.optionalFields[columnName],
-              'original',
+              columnName,
             )),
       );
     }
