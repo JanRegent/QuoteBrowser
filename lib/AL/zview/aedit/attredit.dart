@@ -6,7 +6,7 @@ import '../../../BL/bl.dart';
 
 import '../../alib/alicons.dart';
 
-import '../battribs/cfieldpopup.dart';
+import '../fieldpopup.dart';
 import 'quoteedit.dart';
 
 // ignore: must_be_immutable
@@ -48,7 +48,7 @@ class _AttrEditState extends State<AttrEdit> {
             tileColor: Colors.lime,
             leading: ALicons.attrIcons.tagIcon,
             title: Obx(() => Text(bl.orm.currentRow.tags.value)),
-            trailing: fieldPopupMenu(bl.orm.currentRow.tags.value)),
+            trailing: fieldPopupMenu(bl.orm.currentRow.tags.value, '')),
         ListTile(title: QuoteEdit(true, widget.setstateRowView))
       ];
 

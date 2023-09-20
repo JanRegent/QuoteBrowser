@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../BL/bl.dart';
 import '../../alib/alicons.dart';
 import '../aedit/quoteedit.dart';
-import 'cfieldpopup.dart';
+import '../fieldpopup.dart';
 
 class MainFields extends StatefulWidget {
   const MainFields({super.key});
@@ -64,7 +64,7 @@ class _MainFieldsState extends State<MainFields> {
     return ListTile(
         leading: catIcon,
         title: Text(bl.orm.currentRow.categories.value),
-        trailing: fieldPopupMenu(bl.orm.currentRow.categories.value));
+        trailing: fieldPopupMenu(bl.orm.currentRow.categories.value, ''));
   }
 
   Future<void> _onOpen(String url) async {
@@ -86,7 +86,7 @@ class _MainFieldsState extends State<MainFields> {
             tileColor: Colors.white,
             title: TextButton(child: Text(url), onPressed: () => _onOpen(url)),
             leading: const Icon(Icons.link),
-            trailing: fieldPopupMenu(url)),
+            trailing: fieldPopupMenu(url, '')),
       );
     }
   }
@@ -98,18 +98,18 @@ class _MainFieldsState extends State<MainFields> {
         tileColor: Colors.white,
         leading: ALicons.attrIcons.authorIcon,
         title: Obx(() => Text(bl.orm.currentRow.author.value)),
-        trailing: fieldPopupMenu(bl.orm.currentRow.author.value)));
+        trailing: fieldPopupMenu(bl.orm.currentRow.author.value, '')));
 
     headCard.add(ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.bookIcon,
         title: Obx(() => Text(bl.orm.currentRow.book.value)),
-        trailing: fieldPopupMenu(bl.orm.currentRow.book.value)));
+        trailing: fieldPopupMenu(bl.orm.currentRow.book.value, '')));
     headCard.add(ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.parPageIcon,
         title: Obx(() => Text(bl.orm.currentRow.parPage.value)),
-        trailing: fieldPopupMenu(bl.orm.currentRow.parPage.value)));
+        trailing: fieldPopupMenu(bl.orm.currentRow.parPage.value, '')));
     headCard.add(ListTile(
       tileColor: Colors.white,
       leading: favButt(),

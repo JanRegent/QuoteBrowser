@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../BL/bl.dart';
-import 'cfieldpopup.dart';
+import '../fieldpopup.dart';
 
 class TagsTab extends StatefulWidget {
   const TagsTab({super.key});
@@ -27,8 +27,8 @@ class _TagsTabState extends State<TagsTab> {
     List<String> tags = bl.orm.currentRow.tags.value.split('#');
 
     for (int i = 0; i < tags.length; i++) {
-      expandedCardTags.add(
-          ListTile(title: Text(tags[i]), trailing: fieldPopupMenu(tags[i])));
+      expandedCardTags.add(ListTile(
+          title: Text(tags[i]), trailing: fieldPopupMenu(tags[i], '')));
     }
     return expandedCardTags;
   }

@@ -27,6 +27,8 @@ class AuthorCRUD {
 
   //-----------------------------------------------------------------update
   Future updateAuthors() async {
+    if (isar.authors.count() > 0) return;
+
     List authorsDyn =
         await dl.httpService.getAllrows('__Authors__', dataSheetId);
     List<String> auth = blUti.toListString(authorsDyn);
@@ -43,12 +45,12 @@ class AuthorCRUD {
       isar.authors.clear();
     });
 
-    for (String catPath in authorsRows) {
-      if (catPath.isEmpty) continue;
-      final newCatpath = Author()..auhor = catPath;
+    for (String author in authorsRows) {
+      if (author.isEmpty) continue;
+      final newAuthor = Author()..auhor = author;
 
       isar.write((isar) async {
-        isar.authors.put(newCatpath);
+        isar.authors.put(newAuthor);
       });
     }
   }

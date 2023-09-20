@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:translator_plus/translator_plus.dart';
 
 import '../../../BL/bl.dart';
 
@@ -7,7 +6,7 @@ import '../../../BL/orm.dart';
 
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
-import '../battribs/cfieldpopup.dart';
+import '../fieldpopup.dart';
 
 Future setCellAttr(String columnName, String cellContent, String rowNo) async {
   try {
@@ -61,6 +60,15 @@ class QuoteEdit extends StatelessWidget {
         await setCellAttr(attribName, bl.orm.currentRow.tags.value,
             bl.orm.currentRow.rowNo.value);
         break;
+
+      case 'quote':
+        await setCellAttr(attribName, bl.orm.currentRow.quote.value,
+            bl.orm.currentRow.rowNo.value);
+        return;
+      case 'original':
+        await setCellAttr(attribName, bl.orm.currentRow.original,
+            bl.orm.currentRow.rowNo.value);
+        return;
       case '__othersFields__':
         return;
 
@@ -72,13 +80,7 @@ class QuoteEdit extends StatelessWidget {
   }
 
   Future transl() async {
-    final translator = GoogleTranslator();
-
-    var translation =
-        await translator.translate(bl.orm.currentRow.quote.value, to: 'cs');
-    bl.orm.currentRow.original = bl.orm.currentRow.quote.value;
-    bl.orm.currentRow.quote.value = translation.text;
-
+    translPopup(false);
     setstate();
   }
 
@@ -99,7 +101,7 @@ class QuoteEdit extends StatelessWidget {
             onPressed: () => attribSet('tags')),
         const Spacer(),
         TextButton(
-            child: fieldPopupMenu(bl.orm.currentRow.quote.value),
+            child: fieldPopupMenu(bl.orm.currentRow.quote.value, 'quote'),
             onPressed: () => attribSet('__othersFields__')),
         const Spacer(),
       ],

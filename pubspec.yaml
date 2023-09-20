@@ -24,7 +24,9 @@ dependencies:
   ##----text
   highlight_text: ^1.7.0                  #https://pub.dev/packages/highlight_text
   input_dialog: ^0.1.1                    #https://pub.dev/packages/input_dialog
-
+  clipboard: ^0.1.3                       #https://pub.dev/packages/clipboard
+  translator_plus: ^1.0.1                 #https://pub.dev/packages/translator_plus
+  
   ##----elements
   dropdown_button2: ^2.3.8                #https://pub.dev/packages/dropdown_button2
   flutter_rating_stars: ^1.0.3+4          #https://pub.dev/packages/flutter_rating_stars
@@ -32,8 +34,8 @@ dependencies:
   ##----url
   flutter_linkify: ^6.0.0                 #https://pub.dev/packages/flutter_linkify
   url_launcher: ^6.1.12                   #https://pub.dev/packages/url_launcher
-  clipboard: ^0.1.3                       #https://pub.dev/packages/clipboard
-  translator_plus: ^1.0.1                 #https://pub.dev/packages/translator_plus
+
+  
  
   #============================================================================BL  
   ##-----bl status
