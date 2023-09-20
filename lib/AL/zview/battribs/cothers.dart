@@ -4,6 +4,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../BL/bl.dart';
+import 'cfieldpopup.dart';
 
 class OthersFields extends StatefulWidget {
   const OthersFields({super.key});
@@ -37,18 +38,21 @@ class _OthersFieldsState extends State<OthersFields> {
         continue;
       }
 
-      othersFieldsWidgets.add(ListTile(
-        tileColor: Colors.white,
-        leading: Text(columnName),
-        title: bl.orm.currentRow.optionalFields[columnName]
-                .toString()
-                .startsWith('https:')
-            ? TextButton(
-                child: Text(bl.orm.currentRow.optionalFields[columnName]),
-                onPressed: () =>
-                    _onOpen(bl.orm.currentRow.optionalFields[columnName]))
-            : Text(bl.orm.currentRow.optionalFields[columnName]),
-      ));
+      othersFieldsWidgets.add(
+        ListTile(
+            tileColor: Colors.white,
+            leading: Text(columnName),
+            title: bl.orm.currentRow.optionalFields[columnName]
+                    .toString()
+                    .startsWith('https:')
+                ? TextButton(
+                    child: Text(bl.orm.currentRow.optionalFields[columnName]),
+                    onPressed: () =>
+                        _onOpen(bl.orm.currentRow.optionalFields[columnName]))
+                : Text(bl.orm.currentRow.optionalFields[columnName]),
+            trailing:
+                fieldPopupMenu(bl.orm.currentRow.optionalFields[columnName])),
+      );
     }
 
     return othersFieldsWidgets;

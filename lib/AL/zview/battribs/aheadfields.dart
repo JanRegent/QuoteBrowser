@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../BL/bl.dart';
 import '../../alib/alicons.dart';
 import '../aedit/quoteedit.dart';
+import 'cfieldpopup.dart';
 
 class MainFields extends StatefulWidget {
   const MainFields({super.key});
@@ -16,12 +17,12 @@ class MainFields extends StatefulWidget {
 }
 
 class _MainFieldsState extends State<MainFields> {
-  List<Widget> expandedCardMain = [];
+  List<Widget> headCard = [];
   @override
   initState() {
     super.initState();
 
-    expandedCardMain = expandedMainFields();
+    headCard = headFields();
     expandedWidgets2urls(bl.orm.currentRow.quote.value);
   }
 
@@ -61,9 +62,9 @@ class _MainFieldsState extends State<MainFields> {
     Icon catIcon = const Icon(Icons.category);
 
     return ListTile(
-      leading: catIcon,
-      title: Text(bl.orm.currentRow.categories.value),
-    );
+        leading: catIcon,
+        title: Text(bl.orm.currentRow.categories.value),
+        trailing: fieldPopupMenu(bl.orm.currentRow.categories.value));
   }
 
   Future<void> _onOpen(String url) async {
@@ -80,43 +81,43 @@ class _MainFieldsState extends State<MainFields> {
     for (var match in matches) {
       String url = text.substring(match.start, match.end);
       if (!url.startsWith('http')) continue;
-      expandedCardMain.add(
+      headCard.add(
         ListTile(
-          tileColor: Colors.white,
-          title: TextButton(child: Text(url), onPressed: () => _onOpen(url)),
-          leading: const Icon(Icons.link),
-        ),
+            tileColor: Colors.white,
+            title: TextButton(child: Text(url), onPressed: () => _onOpen(url)),
+            leading: const Icon(Icons.link),
+            trailing: fieldPopupMenu(url)),
       );
     }
   }
 
-  List<Widget> expandedMainFields() {
-    expandedCardMain = [];
+  List<Widget> headFields() {
+    headCard = [];
 
-    expandedCardMain.add(ListTile(
-      tileColor: Colors.white,
-      leading: ALicons.attrIcons.authorIcon,
-      title: Obx(() => Text(bl.orm.currentRow.author.value)),
-    ));
+    headCard.add(ListTile(
+        tileColor: Colors.white,
+        leading: ALicons.attrIcons.authorIcon,
+        title: Obx(() => Text(bl.orm.currentRow.author.value)),
+        trailing: fieldPopupMenu(bl.orm.currentRow.author.value)));
 
-    expandedCardMain.add(ListTile(
-      tileColor: Colors.white,
-      leading: ALicons.attrIcons.bookIcon,
-      title: Obx(() => Text(bl.orm.currentRow.book.value)),
-    ));
-    expandedCardMain.add(ListTile(
-      tileColor: Colors.white,
-      leading: ALicons.attrIcons.parPageIcon,
-      title: Obx(() => Text(bl.orm.currentRow.parPage.value)),
-    ));
-    expandedCardMain.add(ListTile(
+    headCard.add(ListTile(
+        tileColor: Colors.white,
+        leading: ALicons.attrIcons.bookIcon,
+        title: Obx(() => Text(bl.orm.currentRow.book.value)),
+        trailing: fieldPopupMenu(bl.orm.currentRow.book.value)));
+    headCard.add(ListTile(
+        tileColor: Colors.white,
+        leading: ALicons.attrIcons.parPageIcon,
+        title: Obx(() => Text(bl.orm.currentRow.parPage.value)),
+        trailing: fieldPopupMenu(bl.orm.currentRow.parPage.value)));
+    headCard.add(ListTile(
       tileColor: Colors.white,
       leading: favButt(),
       title: RatingStarsPage(setstateAattribs),
     ));
-    expandedCardMain.add(categories());
+    headCard.add(categories());
 
-    return expandedCardMain;
+    return headCard;
   }
 
   @override
@@ -125,11 +126,11 @@ class _MainFieldsState extends State<MainFields> {
         margin: const EdgeInsets.symmetric(vertical: 5),
         color: const Color.fromARGB(255, 122, 203, 243),
         child: ListView.separated(
-          itemCount: expandedCardMain.length,
+          itemCount: headCard.length,
           separatorBuilder: (BuildContext context, int index) =>
               const Divider(),
           itemBuilder: (BuildContext context, int index) {
-            return expandedCardMain[index];
+            return headCard[index];
           },
         ));
   }

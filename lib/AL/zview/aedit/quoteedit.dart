@@ -7,6 +7,7 @@ import '../../../BL/orm.dart';
 
 import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
+import '../battribs/cfieldpopup.dart';
 
 Future setCellAttr(String columnName, String cellContent, String rowNo) async {
   try {
@@ -96,9 +97,9 @@ class QuoteEdit extends StatelessWidget {
         IconButton(
             icon: ALicons.attrIcons.tagIcon,
             onPressed: () => attribSet('tags')),
-        const Text('    '),
+        const Spacer(),
         TextButton(
-            child: const Text(' >>'),
+            child: fieldPopupMenu(bl.orm.currentRow.quote.value),
             onPressed: () => attribSet('__othersFields__')),
         const Spacer(),
       ],
