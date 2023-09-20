@@ -8,24 +8,22 @@ import '../../BL/orm.dart';
 import '../../DL/dl.dart';
 
 import '../alib/selectiondialogs/selectone.dart';
-import 'aedit/quoteedit.dart';
+import '../zview/aedit/quoteedit.dart';
 
 // ignore: must_be_immutable
 class AddQuote extends StatefulWidget {
-  const AddQuote({super.key});
+  List<String> sheetNames = [];
+  AddQuote(this.sheetNames, {super.key});
 
   @override
   State<AddQuote> createState() => _AddQuoteState();
 }
 
 class _AddQuoteState extends State<AddQuote> {
-  List<String> sheetNames = [];
   @override
   initState() {
     super.initState();
-    dl.httpService
-        .getDataSheets(bl.orm.currentRow.fileId)
-        .then((value) => blUti.toListString(value));
+
     currentRowNew();
   }
 
@@ -34,7 +32,7 @@ class _AddQuoteState extends State<AddQuote> {
   }
 
   Future sheetNameSet(BuildContext context) async {
-    String sheetName = await selectOne(sheetNames, context);
+    String sheetName = await selectOne(widget.sheetNames, context);
     if (sheetName.isEmpty) return;
 
     bl.orm.currentRow.sheetName.value = sheetName;

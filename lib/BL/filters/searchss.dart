@@ -77,6 +77,8 @@ Future<int> searchColumnAndQuote(String columnName, String columnValue,
 Future<List<String>> sheetRowsSaveGetKeys(List rowsArrDyn) async {
   List<String> sheetRownoKeys = [];
   for (List row in rowsArrDyn) {
+    print(row[0]);
+    print(row[1]);
     List<String> rowArr = blUti.toListString(row[1]);
 
     String sheetRownoKey = row[0];
@@ -88,4 +90,22 @@ Future<List<String>> sheetRowsSaveGetKeys(List rowsArrDyn) async {
     sheetRownoKeys.add(sheetRownoKey);
   }
   return sheetRownoKeys;
+}
+
+Future<int> getLastRows(String sheetName, BuildContext context) async {
+  currentSS.filterKey = '';
+  currentSS.swiperIndex = 0;
+
+  debugPrint(sheetName);
+
+  //ignore: use_build_context_synchronously
+  circularSnack(context, 25, 'Querying cloud [gdrive]');
+
+  currentSS.keys = await dl.httpService.getLastRows(sheetName);
+
+  if (currentSS.keys.isEmpty) {
+    return 0;
+  }
+  await currentRowSet();
+  return currentSS.keys.length;
 }

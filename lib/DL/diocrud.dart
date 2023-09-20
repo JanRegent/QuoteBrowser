@@ -46,6 +46,21 @@ class HttpService {
     return await sheetRowsSaveGetKeys(response.data['data']);
   }
 
+  Future<List<String>> getLastRows(String sheetName) async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {
+        'action': 'getLastRows',
+        'sheetName': sheetName,
+        'sheetId': dataSheetId
+      },
+    );
+
+    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+
+    return await sheetRowsSaveGetKeys(response.data['data']);
+  }
+
   Future<List<String>> searchColumnAndQuote(
       String searchText, String columnName, columnValue) async {
     Response response = await dio.get(

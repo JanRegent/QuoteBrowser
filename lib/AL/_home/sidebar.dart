@@ -8,12 +8,15 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../BL/filters/searchss.dart';
 import '../../BL/orm.dart';
+import '../../BL/params/params.dart';
 import '../../DL/builddate.dart';
 
+import '../../DL/dl.dart';
+import '../alib/selectiondialogs/selectone.dart';
 import '../filterspages/_selectview.dart';
 
 import '../zview/_cardsswiper.dart';
-import '../zview/addquote.dart';
+import '../filterspages/addquote.dart';
 
 // ignore: must_be_immutable
 class SidebarPage extends StatefulWidget {
@@ -255,7 +258,33 @@ class _SidebarPageState extends State<SidebarPage> {
               isSelected: true,
             ),
           ]),
+//-----------------------------------------------------------------add quote
+      CollapsibleItem(
+        text: 'Last 10 rows',
+        icon: Icons.add,
+        onPressed: () async {
+          currentSS.filterIcon = const Icon(Icons.last_page);
+          List<String> sheetNames =
+              await dl.httpService.getDataSheets(dataSheetId);
 
+          // ignore: use_build_context_synchronously
+          String sheetName = await selectOne(sheetNames, context);
+          if (sheetName.isEmpty) return;
+
+          // ignore: use_build_context_synchronously
+          await getLastRows(sheetName, context);
+
+          // ignore: use_build_context_synchronously
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    CardSwiper('Lat 10 of $sheetName', const {})),
+          );
+        },
+        onHold: () => ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Search"))),
+      ),
       CollapsibleItem(
         text: 'Notifications',
         icon: Icons.notifications,
@@ -312,9 +341,13 @@ class _SidebarPageState extends State<SidebarPage> {
         text: 'Add quote',
         icon: Icons.add,
         onPressed: () async {
-          Navigator.push(
+          List<String> sheetNames =
+              await dl.httpService.getDataSheets(dataSheetId);
+
+          // ignore: use_build_context_synchronously
+          await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddQuote()),
+            MaterialPageRoute(builder: (context) => AddQuote(sheetNames)),
           );
         },
         onHold: () => ScaffoldMessenger.of(context)
@@ -322,8 +355,8 @@ class _SidebarPageState extends State<SidebarPage> {
       ),
       //-----------------------------------------------------------------app
       CollapsibleItem(
-          text: 'News',
-          onPressed: () => setState(() => _headline = 'News'),
+          text: 'App info',
+          onPressed: () => setState(() => _headline = 'App info'),
           onHold: () => ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("News"))),
           subItems: [
