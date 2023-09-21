@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/BL/bluti.dart';
@@ -61,7 +62,9 @@ class _AddQuoteState extends State<AddQuote> {
                 ],
               ),
               onTap: () async {
-                await sheetNameSet(context);
+                try {
+                  await sheetNameSet(context);
+                } catch (_) {}
 
                 setState(() {});
               },
@@ -70,7 +73,7 @@ class _AddQuoteState extends State<AddQuote> {
                 ? IconButton(
                     icon: const Icon(Icons.add),
                     onPressed: () async {
-                      await savenewQuote();
+                      await savenewOriginalFromClipboard();
                       setState(() {});
                       // setState(() {
                       //   String sheetNameLast = bl.orm.currentRow.sheetName.value;
@@ -82,7 +85,7 @@ class _AddQuoteState extends State<AddQuote> {
                 : const Text(' '),
           ),
           //----------------------------------------------------quoteEdit row
-          bl.orm.currentRow.rowNo.value.toString().isNotEmpty
+          bl.orm.currentRow.quote.value.toString().isNotEmpty
               ? ListTile(
                   title: QuoteEdit(false, setstate),
                   leading: Obx(() => Text(bl.orm.currentRow.rowNo.value)),
@@ -125,23 +128,28 @@ class _AddQuoteState extends State<AddQuote> {
   }
 
   String? respStatus = 'status:new';
-  Future savenewQuote() async {
+  Future savenewOriginalFromClipboard() async {
     setState(() {
       respStatus = 'status:?';
     });
-    // if (bl.orm.currentRow.quote.value.isEmpty) {
-    //   emptyDialog('Quote /n ${'quote'}');
-    //   return [];
-    // }
 
     if (bl.orm.currentRow.sheetName.value.isEmpty) {
       emptyDialog('Sheetname');
       return [];
     }
     await setCellAppendRow();
+    bl.orm.currentRow.quote.value = '';
     bl.orm.currentRow.dateinsert = '${blUti.todayStr()}.';
 
-    //update(widget.sheet);
+    await FlutterClipboard.paste().then((value) async {
+      String sheetRownoKey = await dl.httpService.setCellDL(
+          bl.orm.currentRow.sheetName.value,
+          'original',
+          value,
+          bl.orm.currentRow.rowNo.value);
+      await currentRowSet(sheetRownoKey);
+    });
+    setState(() {});
   }
 
   @override

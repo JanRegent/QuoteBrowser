@@ -28,7 +28,6 @@ PopupMenuButton fieldPopupMenu(String fieldValue, String columnName) {
         child: const Text("Original from clipboard to cloud"),
         onTap: () async {
           FlutterClipboard.paste().then((value) async {
-            print(value);
             //await setCellBL('original', value);
             String sheetRownoKey = await dl.httpService.setCellDL(
                 bl.orm.currentRow.sheetName.value,
