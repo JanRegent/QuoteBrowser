@@ -90,7 +90,7 @@ class HttpService {
   }
 
   //----------------------------------------------------------------------set
-  Future<List> setCellDL(String sheetName, String columnName,
+  Future<String> setCellDL(String sheetName, String columnName,
       String cellContent, String rowNo) async {
     // The below request is the same as above.
     // ignore: unused_local_variable
@@ -108,8 +108,8 @@ class HttpService {
     String sheetRownoKey = response.data['data'][0];
     List<String> updatedRow = blUti.toListString(response.data['data'][1]);
     bl.sheetrowsCRUD.updateRow(sheetRownoKey, updatedRow);
-    await currentRowSet();
-    return [];
+    if (rowNo != '') await currentRowSet();
+    return sheetRownoKey;
   }
 
   // Future<int?> postAppendRow(

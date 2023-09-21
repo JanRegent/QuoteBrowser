@@ -43,7 +43,9 @@ class Orm {
 }
 
 void currentRowNew() {
-  bl.orm.currentRow = CurrentRow()..fileId = dataSheetId;
+  bl.orm.currentRow = CurrentRow()
+    ..fileId = dataSheetId
+    ..quote.value = '';
 }
 
 class CurrentRow {

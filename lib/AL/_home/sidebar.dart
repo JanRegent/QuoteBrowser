@@ -8,10 +8,9 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../BL/filters/searchss.dart';
 import '../../BL/orm.dart';
-import '../../BL/params/params.dart';
+
 import '../../DL/builddate.dart';
 
-import '../../DL/dl.dart';
 import '../alib/selectiondialogs/selectone.dart';
 import '../filterspages/_selectview.dart';
 
@@ -264,11 +263,9 @@ class _SidebarPageState extends State<SidebarPage> {
         icon: Icons.add,
         onPressed: () async {
           currentSS.filterIcon = const Icon(Icons.last_page);
-          List<String> sheetNames =
-              await dl.httpService.getDataSheets(dataSheetId);
 
           // ignore: use_build_context_synchronously
-          String sheetName = await selectOne(sheetNames, context);
+          String sheetName = await selectOne(currentSS.sheetNames, context);
           if (sheetName.isEmpty) return;
 
           // ignore: use_build_context_synchronously
@@ -341,13 +338,11 @@ class _SidebarPageState extends State<SidebarPage> {
         text: 'Add quote',
         icon: Icons.add,
         onPressed: () async {
-          List<String> sheetNames =
-              await dl.httpService.getDataSheets(dataSheetId);
-
           // ignore: use_build_context_synchronously
           await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddQuote(sheetNames)),
+            MaterialPageRoute(
+                builder: (context) => AddQuote(currentSS.sheetNames)),
           );
         },
         onHold: () => ScaffoldMessenger.of(context)

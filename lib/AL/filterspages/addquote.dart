@@ -45,6 +45,7 @@ class _AddQuoteState extends State<AddQuote> {
       child: SingleChildScrollView(
           child: Column(
         children: [
+          //----------------------------------------------------------sheetRow
           ListTile(
             tileColor: Colors.white,
             leading: IconButton(
@@ -72,7 +73,7 @@ class _AddQuoteState extends State<AddQuote> {
                   await saveQuote();
                 }),
           ),
-
+          //----------------------------------------------------quoteEdit row
           ListTile(
             title: QuoteEdit(false, setstate),
             leading: Obx(() => Text(bl.orm.currentRow.rowNo.value)),
@@ -104,13 +105,12 @@ class _AddQuoteState extends State<AddQuote> {
     );
   }
 
-  Future setCellAppendRow(
-      String columnName, String cellContent, String rowNo) async {
-    List respData = await dl.httpService.setCellDL(
-        bl.orm.currentRow.sheetName.value, columnName, cellContent, '');
-    bl.orm.currentRow.rowNo.value = respData[0].toString();
+  Future setCellAppendRow() async {
+    String sheetRownoKey = await dl.httpService
+        .setCellDL(bl.orm.currentRow.sheetName.value, 'quote', '?', '');
+    bl.orm.currentRow.rowNo.value = sheetRownoKey.split('__|__')[1];
 
-    respStatus = 'row:${respData[0]}';
+    respStatus = 'row:${bl.orm.currentRow.rowNo.value}';
     setState(() {});
   }
 
@@ -119,16 +119,16 @@ class _AddQuoteState extends State<AddQuote> {
     setState(() {
       respStatus = 'status:?';
     });
-    if (bl.orm.currentRow.quote.value.isEmpty) {
-      emptyDialog('Quote /n ${'quote'}');
-      return [];
-    }
+    // if (bl.orm.currentRow.quote.value.isEmpty) {
+    //   emptyDialog('Quote /n ${'quote'}');
+    //   return [];
+    // }
 
     if (bl.orm.currentRow.sheetName.value.isEmpty) {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCellAppendRow('quote', bl.orm.currentRow.quote.value, '');
+    await setCellAppendRow();
     bl.orm.currentRow.dateinsert = '${blUti.todayStr()}.';
 
     //update(widget.sheet);
@@ -136,6 +136,10 @@ class _AddQuoteState extends State<AddQuote> {
 
   @override
   Widget build(BuildContext context) {
-    return card(context);
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("Add quote"),
+        ),
+        body: card(context));
   }
 }

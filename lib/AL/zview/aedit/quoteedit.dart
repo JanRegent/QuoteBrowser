@@ -9,7 +9,8 @@ import '../../alib/alicons.dart';
 import '../fieldpopup.dart';
 
 Future setCellBL(String columnName, String cellContent) async {
-  if (cellContent.isEmpty) return;
+  if (columnName.isEmpty) return;
+  if (bl.orm.currentRow.sheetName.value.isEmpty) return;
   try {
     await dl.httpService.setCellDL(bl.orm.currentRow.sheetName.value,
         columnName, cellContent, bl.orm.currentRow.rowNo.value);

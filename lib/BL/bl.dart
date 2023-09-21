@@ -3,12 +3,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
+import '../DL/dl.dart';
 import 'categories/catscrud.dart';
 
 import 'columntext/authorscrud.dart';
 import 'columntext/columntextfilter.dart';
 import 'filters/simplefilter.dart';
 import 'orm.dart';
+import 'params/params.dart';
 import 'sheetrows/sheetcolscrud.dart';
 import 'sheetrows/sheetrowscrud.dart';
 
@@ -43,6 +45,10 @@ class Bl {
     devModeSet();
 
     authorCRUD.updateAuthors();
+
+    dl.httpService
+        .getDataSheets(dataSheetId)
+        .then((values) => currentSS.sheetNames = values);
   }
 
   void devModeSet() {
