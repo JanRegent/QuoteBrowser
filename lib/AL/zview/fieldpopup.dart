@@ -1,6 +1,9 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
+import '../../BL/bl.dart';
+import '../../BL/orm.dart';
+import '../../DL/dl.dart';
 import 'aedit/quoteedit.dart';
 
 PopupMenuButton fieldPopupMenu(String fieldValue, String columnName) {
@@ -25,7 +28,14 @@ PopupMenuButton fieldPopupMenu(String fieldValue, String columnName) {
         child: const Text("Original from clipboard to cloud"),
         onTap: () async {
           FlutterClipboard.paste().then((value) async {
-            await setCellBL('original', value);
+            print(value);
+            //await setCellBL('original', value);
+            String sheetRownoKey = await dl.httpService.setCellDL(
+                bl.orm.currentRow.sheetName.value,
+                'original',
+                value,
+                bl.orm.currentRow.rowNo.value);
+            await currentRowSet(sheetRownoKey);
           });
         },
       ));

@@ -28,7 +28,7 @@ Future<int> filterSearchText(String searchText, BuildContext context) async {
   if (currentSS.keys.isEmpty) {
     return 0;
   }
-  await currentRowSet();
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
   return currentSS.keys.length;
 }
 
@@ -42,7 +42,7 @@ Future<int> columnTextShow(String columnTextKey, BuildContext context) async {
     return 0;
   }
   currentSS.swiperIndex = 0;
-  await currentRowSet();
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
   return currentSS.keys.length;
 }
 
@@ -70,7 +70,7 @@ Future<int> searchColumnAndQuote(String columnName, String columnValue,
   if (currentSS.keys.isEmpty) {
     return 0;
   }
-  await currentRowSet();
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
   return currentSS.keys.length;
 }
 
@@ -104,6 +104,6 @@ Future<int> getLastRows(String sheetName, BuildContext context) async {
   if (currentSS.keys.isEmpty) {
     return 0;
   }
-  await currentRowSet();
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
   return currentSS.keys.length;
 }

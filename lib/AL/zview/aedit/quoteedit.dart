@@ -12,8 +12,12 @@ Future setCellBL(String columnName, String cellContent) async {
   if (columnName.isEmpty) return;
   if (bl.orm.currentRow.sheetName.value.isEmpty) return;
   try {
-    await dl.httpService.setCellDL(bl.orm.currentRow.sheetName.value,
-        columnName, cellContent, bl.orm.currentRow.rowNo.value);
+    String sheetRownokey = await dl.httpService.setCellDL(
+        bl.orm.currentRow.sheetName.value,
+        columnName,
+        cellContent,
+        bl.orm.currentRow.rowNo.value);
+    await currentRowSet(sheetRownokey);
   } catch (e) {
     debugPrint('setCellBL( \n$e');
   }

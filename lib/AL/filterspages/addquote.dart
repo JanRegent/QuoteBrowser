@@ -48,36 +48,46 @@ class _AddQuoteState extends State<AddQuote> {
           //----------------------------------------------------------sheetRow
           ListTile(
             tileColor: Colors.white,
-            leading: IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () async {
-                  setState(() {
-                    String sheetNameLast = bl.orm.currentRow.sheetName.value;
-                    currentRowNew();
-                    bl.orm.currentRow.sheetName.value = sheetNameLast;
-                    bl.orm.currentRow.quote.value = '';
-                  });
-                }),
             title: InkWell(
-              child: Obx(() =>
-                  Text('sheetName: ${bl.orm.currentRow.sheetName.value}')),
+              child: Row(
+                children: [
+                  Obx(() =>
+                      Text('sheetName: ${bl.orm.currentRow.sheetName.value}')),
+                  // IconButton(
+                  //     icon: const Icon(Icons.save),
+                  //     onPressed: () async {
+                  //       await savenewQuote();
+                  //     })
+                ],
+              ),
               onTap: () async {
                 await sheetNameSet(context);
 
                 setState(() {});
               },
             ),
-            trailing: IconButton(
-                icon: const Icon(Icons.save),
-                onPressed: () async {
-                  await saveQuote();
-                }),
+            trailing: bl.orm.currentRow.sheetName.value.toString().isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () async {
+                      await savenewQuote();
+                      setState(() {});
+                      // setState(() {
+                      //   String sheetNameLast = bl.orm.currentRow.sheetName.value;
+                      //   currentRowNew();
+                      //   bl.orm.currentRow.sheetName.value = sheetNameLast;
+                      //   bl.orm.currentRow.quote.value = '';
+                      // });
+                    })
+                : const Text(' '),
           ),
           //----------------------------------------------------quoteEdit row
-          ListTile(
-            title: QuoteEdit(false, setstate),
-            leading: Obx(() => Text(bl.orm.currentRow.rowNo.value)),
-          ),
+          bl.orm.currentRow.rowNo.value.toString().isNotEmpty
+              ? ListTile(
+                  title: QuoteEdit(false, setstate),
+                  leading: Obx(() => Text(bl.orm.currentRow.rowNo.value)),
+                )
+              : const Text(' '),
 
           //----------------------------------------------------last buttons row
         ],
@@ -115,7 +125,7 @@ class _AddQuoteState extends State<AddQuote> {
   }
 
   String? respStatus = 'status:new';
-  Future saveQuote() async {
+  Future savenewQuote() async {
     setState(() {
       respStatus = 'status:?';
     });

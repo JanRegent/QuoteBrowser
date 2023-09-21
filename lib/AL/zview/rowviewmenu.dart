@@ -8,7 +8,7 @@ import '../alib/alib.dart';
 
 PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
   void setstateGoto() async {
-    await currentRowSet();
+    await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
     swiperSetstate();
   }
 

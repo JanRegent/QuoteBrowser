@@ -84,8 +84,8 @@ void pureTags() {
   bl.orm.currentRow.tags.value = tags.join('#');
 }
 
-Future currentRowSet() async {
-  String sheetRownoKey = currentSS.keys[currentSS.swiperIndex];
+Future currentRowSet(String sheetRownoKey) async {
+  //String sheetRownoKey = currentSS.keys[currentSS.swiperIndex];
   List<String> rowArr = await bl.sheetrowsCRUD.getRowArr(sheetRownoKey);
   String sheetName = sheetRownoKey.split('__|__')[0];
   bl.orm.currentRow.cols =

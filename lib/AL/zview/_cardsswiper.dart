@@ -53,7 +53,7 @@ class _CardSwiperState extends State<CardSwiper> {
     if (currentSS.swiperIndex < 0) {
       currentSS.swiperIndex = 0;
     }
-    await currentRowSet();
+    await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
     setState(() {});
   }
 
