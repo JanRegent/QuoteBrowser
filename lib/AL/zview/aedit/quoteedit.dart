@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
 import '../../../BL/bl.dart';
@@ -5,7 +6,9 @@ import '../../../BL/bl.dart';
 import '../../../BL/orm.dart';
 
 import '../../../DL/dl.dart';
+
 import '../../alib/alicons.dart';
+import '../../filterspages/addquote.dart';
 import '../fieldpopup.dart';
 
 Future setCellBL(String columnName, String cellContent) async {
@@ -26,9 +29,10 @@ Future setCellBL(String columnName, String cellContent) async {
 // ignore: must_be_immutable
 class QuoteEdit extends StatelessWidget {
   final bool isAttrEdit;
-  Function setstate;
+  Function swiperSetstate;
+  BuildContext context;
   // ignore: use_key_in_widget_constructors
-  QuoteEdit(this.isAttrEdit, this.setstate);
+  QuoteEdit(this.isAttrEdit, this.swiperSetstate, this.context);
 
   final TextEditingController _controller = TextEditingController();
 
@@ -72,7 +76,27 @@ class QuoteEdit extends StatelessWidget {
         return;
     }
 
-    setstate();
+    swiperSetstate();
+  }
+
+  IconButton fromClip() {
+    return IconButton(
+        onPressed: () {
+          FlutterClipboard.paste().then((value) async {
+            if (value.isEmpty) return;
+
+            String sheetRownoKey = await dl.httpService.setCellDL(
+                bl.orm.currentRow.sheetName.value,
+                'original',
+                value,
+                bl.orm.currentRow.rowNo.value);
+            await currentRowSet(sheetRownoKey);
+          });
+          swiperSetstate();
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Switch tabs to refresh')));
+        },
+        icon: const Icon(Icons.paste));
   }
 
   Row buttRow() {
@@ -91,6 +115,15 @@ class QuoteEdit extends StatelessWidget {
             icon: ALicons.attrIcons.tagIcon,
             onPressed: () => attribSet('tags')),
         const Spacer(),
+        currentSS.addQuoteMode ? fromClip() : const Text(' '),
+        currentSS.addQuoteMode
+            ? IconButton(
+                onPressed: () async {
+                  await appendrowCurrentRowSet(context);
+                  swiperSetstate();
+                },
+                icon: const Icon(Icons.add))
+            : const Text(' '),
         TextButton(
             child: fieldPopupMenu(bl.orm.currentRow.quote.value, 'quote'),
             onPressed: () => attribSet('__othersFields__')),

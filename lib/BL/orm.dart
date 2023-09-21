@@ -14,7 +14,7 @@ class CurrentSS {
   List<String> keys = [];
   late Icon filterIcon;
   List<String> sheetNames = [];
-
+  bool addQuoteMode = false;
   int swiperIndex = 0;
 }
 

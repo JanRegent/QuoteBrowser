@@ -327,24 +327,30 @@ class _SidebarPageState extends State<SidebarPage> {
             .showSnackBar(const SnackBar(content: Text("No Icon"))),
       ),
       CollapsibleItem(
-        text: 'Email',
+        text: 'Add quotes',
         icon: Icons.email,
-        onPressed: () => setState(() => _headline = 'Email'),
+        onPressed: () async {
+          currentSS.filterIcon = const Icon(Icons.add);
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //     const SnackBar(content: Text('Creating empty quote')));
+          await appendrowCurrentRowSet(context);
+          currentSS.addQuoteMode = true;
+          // ignore: use_build_context_synchronously
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const CardSwiper('Add quotes', {})),
+          );
+          currentSS.addQuoteMode = false;
+        },
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Email"))),
       ),
       //-----------------------------------------------------------------add quote
       CollapsibleItem(
-        text: 'Add quote',
+        text: 'vvvvv',
         icon: Icons.add,
-        onPressed: () async {
-          // ignore: use_build_context_synchronously
-          await Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => AddQuote(currentSS.sheetNames)),
-          );
-        },
+        onPressed: () async {},
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Search"))),
       ),

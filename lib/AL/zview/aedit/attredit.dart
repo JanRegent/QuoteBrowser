@@ -11,8 +11,8 @@ import 'quoteedit.dart';
 
 // ignore: must_be_immutable
 class AttrEdit extends StatefulWidget {
-  VoidCallback setstateRowView;
-  AttrEdit(this.setstateRowView, {super.key});
+  VoidCallback swiperSetstate;
+  AttrEdit(this.swiperSetstate, {super.key});
 
   @override
   State<AttrEdit> createState() => _AttrEditState();
@@ -49,7 +49,7 @@ class _AttrEditState extends State<AttrEdit> {
             leading: ALicons.attrIcons.tagIcon,
             title: Obx(() => Text(bl.orm.currentRow.tags.value)),
             trailing: fieldPopupMenu(bl.orm.currentRow.tags.value, '')),
-        ListTile(title: QuoteEdit(true, widget.setstateRowView))
+        ListTile(title: QuoteEdit(true, widget.swiperSetstate, context))
       ];
 
       return listtiles;

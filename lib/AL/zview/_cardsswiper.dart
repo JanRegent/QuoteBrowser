@@ -142,7 +142,7 @@ class _CardSwiperState extends State<CardSwiper> {
     );
   }
 
-  SwiperControl swiperControl = const SwiperControl();
+  //SwiperControl swiperControl = const SwiperControl();
   ConstrainedBox bodySwiper() {
     return ConstrainedBox(
         constraints: BoxConstraints.loose(Size(
