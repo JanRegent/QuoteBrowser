@@ -6,7 +6,7 @@ import '../../../BL/bl.dart';
 
 import '../../alib/alicons.dart';
 
-import '../fieldpopup.dart';
+import 'fieldpopup.dart';
 import 'quoteedit.dart';
 
 // ignore: must_be_immutable

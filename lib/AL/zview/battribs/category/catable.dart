@@ -5,7 +5,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 import '../../../../BL/bl.dart';
 import '../../aedit/addquote/emptyview.dart';
 import '../../aedit/quoteedit.dart';
-import '../../fieldpopup.dart';
+import '../../aedit/fieldpopup.dart';
 
 class CatablePage extends StatefulWidget {
   const CatablePage({Key? key}) : super(key: key);

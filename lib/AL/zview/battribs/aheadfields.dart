@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../BL/bl.dart';
 import '../../alib/alicons.dart';
 import '../aedit/quoteedit.dart';
-import '../fieldpopup.dart';
+import '../aedit/fieldpopup.dart';
 
 class MainFields extends StatefulWidget {
   const MainFields({super.key});

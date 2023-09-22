@@ -1,1 +1,1 @@
-String buildDate = ' 2023_09_22__15_19_build_DL-backend-setByBooks--- ';  
+String buildDate = ' 2023_09_22__18_26_build_AL---addQuoteRow-vydal ';  

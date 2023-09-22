@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 
@@ -8,8 +9,8 @@ import '../../../DL/dl.dart';
 
 import '../../alib/alicons.dart';
 
-import '../fieldpopup.dart';
 import 'addquote/addquoterow.dart';
+import 'fieldpopup.dart';
 
 Future setCellBL(String columnName, String cellContent) async {
   if (columnName.isEmpty) return;
@@ -36,32 +37,34 @@ class QuoteEdit extends StatelessWidget {
 
   final TextEditingController _controller = TextEditingController();
 
+  RxString selected = ''.obs;
   void attribSet(String attribName) async {
-    String selected = '';
-
     try {
-      selected = _controller.text.substring(
+      selected.value = _controller.text.substring(
           _controller.selection.baseOffset, _controller.selection.extentOffset);
-      if (selected.isEmpty) return;
+      if (selected.value.isEmpty) return;
     } catch (_) {
       return;
     }
 
     switch (attribName) {
       case 'author':
-        bl.orm.currentRow.author.value = selected;
+        bl.orm.currentRow.author.value = selected.value;
         await setCellBL('author', bl.orm.currentRow.author.value);
         break;
       case 'book':
-        bl.orm.currentRow.book.value = selected;
+        bl.orm.currentRow.book.value = selected.value;
         await setCellBL('book', bl.orm.currentRow.book.value);
         break;
       case 'parPage':
-        bl.orm.currentRow.parPage.value += ' $selected';
+        bl.orm.currentRow.parPage.value += ' ${selected.value}';
         await setCellBL(attribName, bl.orm.currentRow.parPage.value);
         break;
+      case 'vydal':
+        await setCellBL(attribName, selected.value);
+        break;
       case 'tags':
-        bl.orm.currentRow.tags.value += '#$selected';
+        bl.orm.currentRow.tags.value += '#${selected.value}';
         pureTags();
         await setCellBL(attribName, bl.orm.currentRow.tags.value);
         break;
@@ -95,6 +98,9 @@ class QuoteEdit extends StatelessWidget {
             icon: ALicons.attrIcons.tagIcon,
             onPressed: () => attribSet('tags')),
         const Spacer(),
+        IconButton(
+            icon: const Icon(Icons.publish_rounded),
+            onPressed: () => attribSet('vydal')),
         TextButton(
             child: fieldPopupMenu(bl.orm.currentRow.quote.value, 'quote'),
             onPressed: () => attribSet('__othersFields__')),
@@ -103,11 +109,13 @@ class QuoteEdit extends StatelessWidget {
     );
   }
 
+  String onEdit = '';
   @override //printSelectedText()
   Widget build(BuildContext context) {
     _controller.text = bl.orm.currentRow.quote.value;
 
     List<Widget> colItems = [
+      Obx(() => Text(selected.value)),
       buttRow(),
       TextField(
         controller: _controller,
