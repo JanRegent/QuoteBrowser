@@ -63,7 +63,7 @@ class _MainFieldsState extends State<MainFields> {
     return ListTile(
         leading: catIcon,
         title: Text(bl.orm.currentRow.categories.value),
-        trailing: fieldPopupMenu(bl.orm.currentRow.categories.value, ''));
+        trailing: fieldPopupMenu(bl.orm.currentRow.categories.value, 'cat'));
   }
 
   Future<void> _onOpen(String url) async {
@@ -97,18 +97,18 @@ class _MainFieldsState extends State<MainFields> {
         tileColor: Colors.white,
         leading: ALicons.attrIcons.authorIcon,
         title: Obx(() => Text(bl.orm.currentRow.author.value)),
-        trailing: fieldPopupMenu(bl.orm.currentRow.author.value, '')));
+        trailing: fieldPopupMenu(bl.orm.currentRow.author.value, 'author')));
 
     headCard.add(ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.bookIcon,
         title: Obx(() => Text(bl.orm.currentRow.book.value)),
-        trailing: fieldPopupMenu(bl.orm.currentRow.book.value, '')));
+        trailing: fieldPopupMenu(bl.orm.currentRow.book.value, 'book')));
     headCard.add(ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.parPageIcon,
         title: Obx(() => Text(bl.orm.currentRow.parPage.value)),
-        trailing: fieldPopupMenu(bl.orm.currentRow.parPage.value, '')));
+        trailing: fieldPopupMenu(bl.orm.currentRow.parPage.value, 'parPage')));
     headCard.add(ListTile(
       tileColor: Colors.white,
       leading: favButt(),

@@ -48,7 +48,7 @@ class _AttrEditState extends State<AttrEdit> {
             tileColor: Colors.lime,
             leading: ALicons.attrIcons.tagIcon,
             title: Obx(() => Text(bl.orm.currentRow.tags.value)),
-            trailing: fieldPopupMenu(bl.orm.currentRow.tags.value, '')),
+            trailing: fieldPopupMenu(bl.orm.currentRow.tags.value, 'tags')),
         ListTile(title: QuoteEdit(true, widget.swiperSetstate, context))
       ];
 
