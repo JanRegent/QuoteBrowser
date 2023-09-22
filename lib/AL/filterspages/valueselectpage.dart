@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
-import 'emptyview.dart';
+import '../zview/aedit/addquote/emptyview.dart';
 
 class ValueSelectPage extends StatefulWidget {
   final List<String> values;

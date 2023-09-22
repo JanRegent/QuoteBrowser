@@ -1,4 +1,3 @@
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
 import '../../../BL/bl.dart';
@@ -8,8 +7,9 @@ import '../../../BL/orm.dart';
 import '../../../DL/dl.dart';
 
 import '../../alib/alicons.dart';
-import '../../filterspages/addquote.dart';
+
 import '../fieldpopup.dart';
+import 'addquote/addquote.dart';
 
 Future setCellBL(String columnName, String cellContent) async {
   if (columnName.isEmpty) return;
@@ -79,26 +79,6 @@ class QuoteEdit extends StatelessWidget {
     swiperSetstate();
   }
 
-  IconButton fromClip() {
-    return IconButton(
-        onPressed: () {
-          FlutterClipboard.paste().then((value) async {
-            if (value.isEmpty) return;
-
-            String sheetRownoKey = await dl.httpService.setCellDL(
-                bl.orm.currentRow.sheetName.value,
-                'original',
-                value,
-                bl.orm.currentRow.rowNo.value);
-            await currentRowSet(sheetRownoKey);
-          });
-          swiperSetstate();
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Switch tabs to refresh')));
-        },
-        icon: const Icon(Icons.paste));
-  }
-
   Row buttRow() {
     return Row(
       children: [
@@ -115,15 +95,6 @@ class QuoteEdit extends StatelessWidget {
             icon: ALicons.attrIcons.tagIcon,
             onPressed: () => attribSet('tags')),
         const Spacer(),
-        currentSS.addQuoteMode ? fromClip() : const Text(' '),
-        currentSS.addQuoteMode
-            ? IconButton(
-                onPressed: () async {
-                  await appendrowCurrentRowSet(context);
-                  swiperSetstate();
-                },
-                icon: const Icon(Icons.add))
-            : const Text(' '),
         TextButton(
             child: fieldPopupMenu(bl.orm.currentRow.quote.value, 'quote'),
             onPressed: () => attribSet('__othersFields__')),
@@ -136,23 +107,26 @@ class QuoteEdit extends StatelessWidget {
   Widget build(BuildContext context) {
     _controller.text = bl.orm.currentRow.quote.value;
 
-    return Column(
-      children: [
-        buttRow(),
-        TextField(
-          controller: _controller,
-          readOnly: true,
-          style: const TextStyle(
-            fontSize: 20.0,
-            color: Colors.black,
-          ),
-          maxLines: 20,
-          onChanged: (value) async {
-            bl.orm.currentRow.quote.value = value;
-          },
+    List<Widget> colItems = [
+      buttRow(),
+      TextField(
+        controller: _controller,
+        readOnly: true,
+        style: const TextStyle(
+          fontSize: 20.0,
+          color: Colors.black,
         ),
-        isAttrEdit ? buttRow() : const Text(' ')
-      ],
-    );
+        maxLines: 20,
+        onChanged: (value) async {
+          bl.orm.currentRow.quote.value = value;
+        },
+      ),
+      isAttrEdit ? buttRow() : const Text(' ')
+    ];
+    if (currentSS.addQuoteMode) {
+      colItems.insert(0, addQuoteRow(context, swiperSetstate));
+    }
+
+    return Column(children: colItems);
   }
 }

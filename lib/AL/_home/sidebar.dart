@@ -15,7 +15,7 @@ import '../alib/selectiondialogs/selectone.dart';
 import '../filterspages/_selectview.dart';
 
 import '../zview/_cardsswiper.dart';
-import '../filterspages/addquote.dart';
+import '../zview/aedit/addquote/addquote.dart';
 
 // ignore: must_be_immutable
 class SidebarPage extends StatefulWidget {
@@ -260,7 +260,7 @@ class _SidebarPageState extends State<SidebarPage> {
 //-----------------------------------------------------------------add quote
       CollapsibleItem(
         text: 'Last 10 rows',
-        icon: Icons.add,
+        icon: Icons.last_page,
         onPressed: () async {
           currentSS.filterIcon = const Icon(Icons.last_page);
 
@@ -299,36 +299,36 @@ class _SidebarPageState extends State<SidebarPage> {
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Settings"))),
       ),
-      CollapsibleItem(
-        text: 'Alarm',
-        icon: Icons.access_alarm,
-        onPressed: () => setState(() => _headline = 'Alarm'),
-        onHold: () => ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Alarm"))),
-      ),
-      CollapsibleItem(
-        text: 'Eco',
-        icon: Icons.eco,
-        onPressed: () => setState(() => _headline = 'Eco'),
-        onHold: () => ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Eco"))),
-      ),
-      CollapsibleItem(
-        text: 'Event',
-        icon: Icons.event,
-        onPressed: () => setState(() => _headline = 'Event'),
-        onHold: () => ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Event"))),
-      ),
-      CollapsibleItem(
-        text: 'No Icon',
-        onPressed: () => setState(() => _headline = 'No Icon'),
-        onHold: () => ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("No Icon"))),
-      ),
+      // CollapsibleItem(
+      //   text: 'Alarm',
+      //   icon: Icons.access_alarm,
+      //   onPressed: () => setState(() => _headline = 'Alarm'),
+      //   onHold: () => ScaffoldMessenger.of(context)
+      //       .showSnackBar(const SnackBar(content: Text("Alarm"))),
+      // ),
+      // CollapsibleItem(
+      //   text: 'Eco',
+      //   icon: Icons.eco,
+      //   onPressed: () => setState(() => _headline = 'Eco'),
+      //   onHold: () => ScaffoldMessenger.of(context)
+      //       .showSnackBar(const SnackBar(content: Text("Eco"))),
+      // ),
+      // CollapsibleItem(
+      //   text: 'Event',
+      //   icon: Icons.event,
+      //   onPressed: () => setState(() => _headline = 'Event'),
+      //   onHold: () => ScaffoldMessenger.of(context)
+      //       .showSnackBar(const SnackBar(content: Text("Event"))),
+      // ),
+      // CollapsibleItem(
+      //   text: 'No Icon',
+      //   onPressed: () => setState(() => _headline = 'No Icon'),
+      //   onHold: () => ScaffoldMessenger.of(context)
+      //       .showSnackBar(const SnackBar(content: Text("No Icon"))),
+      // ),
       CollapsibleItem(
         text: 'Add quotes',
-        icon: Icons.email,
+        icon: Icons.add,
         onPressed: () async {
           currentSS.filterIcon = const Icon(Icons.add);
           // ScaffoldMessenger.of(context).showSnackBar(
@@ -346,14 +346,7 @@ class _SidebarPageState extends State<SidebarPage> {
         onHold: () => ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Email"))),
       ),
-      //-----------------------------------------------------------------add quote
-      CollapsibleItem(
-        text: 'vvvvv',
-        icon: Icons.add,
-        onPressed: () async {},
-        onHold: () => ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Search"))),
-      ),
+
       //-----------------------------------------------------------------app
       CollapsibleItem(
           text: 'App info',
@@ -415,13 +408,13 @@ class _SidebarPageState extends State<SidebarPage> {
                   .showSnackBar(const SnackBar(content: Text("New News"))),
             ),
           ]),
-      CollapsibleItem(
-        text: 'Face',
-        icon: Icons.face,
-        onPressed: () => setState(() => _headline = 'Face'),
-        onHold: () => ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Face"))),
-      ),
+      // CollapsibleItem(
+      //   text: 'Face',
+      //   icon: Icons.face,
+      //   onPressed: () => setState(() => _headline = 'Face'),
+      //   onHold: () => ScaffoldMessenger.of(context)
+      //       .showSnackBar(const SnackBar(content: Text("Face"))),
+      // ),
     ];
   }
 
