@@ -60,6 +60,7 @@ Widget addQuoteRow(BuildContext context, Function swiperSetstate) {
                 'original',
                 value,
                 bl.orm.currentRow.rowNo.value);
+            debugPrint('sheetRownoKey $sheetRownoKey');
             await currentRowSet(sheetRownoKey);
           });
           swiperSetstate();

@@ -109,6 +109,8 @@ class HttpService {
     List<String> updatedRow = blUti.toListString(response.data['data'][1]);
     bl.sheetrowsCRUD.updateRow(sheetRownoKey, updatedRow);
 
+    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+
     return sheetRownoKey;
   }
 
