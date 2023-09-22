@@ -9,7 +9,7 @@ import '../../../DL/dl.dart';
 import '../../alib/alicons.dart';
 
 import '../fieldpopup.dart';
-import 'addquote/addquote.dart';
+import 'addquote/addquoterow.dart';
 
 Future setCellBL(String columnName, String cellContent) async {
   if (columnName.isEmpty) return;

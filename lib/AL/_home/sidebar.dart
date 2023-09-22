@@ -15,7 +15,7 @@ import '../alib/selectiondialogs/selectone.dart';
 import '../filterspages/_selectview.dart';
 
 import '../zview/_cardsswiper.dart';
-import '../zview/aedit/addquote/addquote.dart';
+import '../zview/aedit/addquote/addquoterow.dart';
 
 // ignore: must_be_immutable
 class SidebarPage extends StatefulWidget {
