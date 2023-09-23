@@ -39,7 +39,7 @@ List<PopupMenuItem> listPopupMenu(
           String result = await noYes(
               'Clear this field?\nIt will be cleared even in the cloud!',
               context);
-          print(result);
+
           if (result == 'no') return;
           clearField(columnName);
           // ignore: use_build_context_synchronously
@@ -49,7 +49,7 @@ List<PopupMenuItem> listPopupMenu(
     )
   ];
 
-  if (fieldValue.isEmpty && 'fileUrl' == columnName) {
+  if ('fileUrl' == columnName) {
     menu1.add(PopupMenuItem(
       value: '/fileUrl',
       child: const Text("fileUrl from clipboard"),
@@ -60,12 +60,21 @@ List<PopupMenuItem> listPopupMenu(
       },
     ));
   }
-
+  if ('original' == columnName) {
+    menu1.add(PopupMenuItem(
+      value: '/Original',
+      child: const Text("Original from clipboard"),
+      onTap: () async {
+        FlutterClipboard.paste().then((value) async {
+          await setCellBL('original', value);
+        });
+      },
+    ));
+  }
   return menu1;
 }
 
 void clearField(String attribName) async {
-  print(attribName);
   switch (attribName) {
     case 'author':
       bl.orm.currentRow.author.value = '';
