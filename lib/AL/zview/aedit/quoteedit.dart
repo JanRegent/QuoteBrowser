@@ -49,24 +49,38 @@ class QuoteEdit extends StatelessWidget {
 
     switch (attribName) {
       case 'author':
+        selected.value;
+        attribTitleRedo.value = selected.value;
+        attribPrevRedo.value = bl.orm.currentRow.author.value;
         bl.orm.currentRow.author.value = selected.value;
         await setCellBL('author', bl.orm.currentRow.author.value);
+        attribNameRedo.value = attribName;
         break;
       case 'book':
+        attribTitleRedo.value = selected.value;
+        attribPrevRedo.value = bl.orm.currentRow.book.value;
         bl.orm.currentRow.book.value = selected.value;
         await setCellBL('book', bl.orm.currentRow.book.value);
+        attribNameRedo.value = attribName;
         break;
       case 'parPage':
+        attribTitleRedo.value = selected.value;
+        attribPrevRedo.value = bl.orm.currentRow.parPage.value;
         bl.orm.currentRow.parPage.value += ' ${selected.value}';
         await setCellBL(attribName, bl.orm.currentRow.parPage.value);
+        attribNameRedo.value = attribName;
         break;
       case 'vydal':
+        attribTitleRedo.value = selected.value;
         await setCellBL(attribName, selected.value);
         break;
       case 'tags':
+        attribTitleRedo.value = selected.value;
+        attribPrevRedo.value = bl.orm.currentRow.tags.value;
         bl.orm.currentRow.tags.value += '#${selected.value}';
         pureTags();
         await setCellBL(attribName, bl.orm.currentRow.tags.value);
+        attribNameRedo.value = attribName;
         break;
 
       case 'original':
@@ -115,7 +129,6 @@ class QuoteEdit extends StatelessWidget {
     _controller.text = bl.orm.currentRow.quote.value;
 
     List<Widget> colItems = [
-      Obx(() => Text(selected.value)),
       buttRow(),
       TextField(
         controller: _controller,

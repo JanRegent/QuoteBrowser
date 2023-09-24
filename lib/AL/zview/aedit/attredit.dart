@@ -4,8 +4,6 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../../BL/bl.dart';
 
-import '../../alib/alicons.dart';
-
 import 'fieldpopup.dart';
 import 'quoteedit.dart';
 
@@ -46,9 +44,11 @@ class _AttrEditState extends State<AttrEdit> {
       List<ListTile> listtiles = [
         ListTile(
             tileColor: Colors.lime,
-            leading: ALicons.attrIcons.tagIcon,
-            title: Obx(() => Text(bl.orm.currentRow.tags.value)),
-            trailing: fieldPopupMenu(bl.orm.currentRow.tags.value, 'tags')),
+            leading: Obx(() => Text(attribNameRedo.value)),
+            title: Obx(() => Text(attribTitleRedo.value)),
+            trailing: attribNameRedo.value.isNotEmpty
+                ? redoButton()
+                : const Text(' ')),
         ListTile(title: QuoteEdit(true, widget.swiperSetstate, context))
       ];
 

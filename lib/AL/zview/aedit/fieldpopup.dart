@@ -1,5 +1,6 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 import '../../alib/alert/alertok.dart';
@@ -104,5 +105,60 @@ void clearField(String attribName) async {
 
     default:
       return;
+  }
+}
+
+RxString attribNameRedo = ''.obs;
+RxString attribPrevRedo = ''.obs;
+RxString attribTitleRedo = ''.obs;
+
+IconButton redoButton() {
+  return IconButton(
+      onPressed: () {
+        redoAttrib();
+      },
+      icon: const Icon(Icons.redo));
+}
+
+void redoAttrib() async {
+  if (attribNameRedo.value.toString().trim().isEmpty) return;
+
+  switch (attribNameRedo.value) {
+    case 'author':
+      bl.orm.currentRow.author.value = attribPrevRedo.value;
+      await setCellBL('author', bl.orm.currentRow.author.value);
+      attribNameRedo.value = '';
+      attribPrevRedo.value = '';
+      attribTitleRedo.value = '';
+      //, 'attribValuePrev': '', 'attribTitle': ''};
+      break;
+    case 'book':
+      bl.orm.currentRow.book.value = attribPrevRedo.value;
+      await setCellBL('book', bl.orm.currentRow.book.value);
+      attribNameRedo.value = '';
+      attribPrevRedo.value = '';
+      attribTitleRedo.value = '';
+
+      break;
+    case 'parPage':
+      bl.orm.currentRow.parPage.value = attribPrevRedo.value;
+      await setCellBL('parPage', bl.orm.currentRow.parPage.value);
+      attribNameRedo.value = '';
+      attribPrevRedo.value = '';
+      attribTitleRedo.value = '';
+
+      break;
+    case 'tags':
+      bl.orm.currentRow.tags.value = attribPrevRedo.value;
+      await setCellBL('tags', bl.orm.currentRow.tags.value);
+      attribNameRedo.value = '';
+      attribPrevRedo.value = '';
+      attribTitleRedo.value = '';
+
+      break;
+    default:
+      attribNameRedo.value = '';
+      attribPrevRedo.value = '';
+      attribTitleRedo.value = '';
   }
 }
