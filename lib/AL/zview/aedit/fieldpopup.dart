@@ -32,7 +32,10 @@ List<PopupMenuItem> listPopupMenu(
         },
       ),
     ),
-    PopupMenuItem(
+  ];
+
+  if (columnName.isNotEmpty) {
+    menu1.add(PopupMenuItem(
       value: '/clearField',
       child: IconButton(
         icon: const Icon(Icons.cancel),
@@ -47,9 +50,8 @@ List<PopupMenuItem> listPopupMenu(
           Navigator.of(context).pop();
         },
       ),
-    )
-  ];
-
+    ));
+  }
   if ('fileUrl' == columnName) {
     menu1.add(PopupMenuItem(
       value: '/fileUrl',
