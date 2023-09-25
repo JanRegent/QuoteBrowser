@@ -52,6 +52,7 @@ class _QuoteEditState extends State<QuoteEdit> {
     } catch (_) {
       return;
     }
+    attribNameRedo.value = '';
     setState(() {
       bl.orm.currentRow.setCellDLOn = true;
     });

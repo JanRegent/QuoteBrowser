@@ -26,17 +26,22 @@ class _AttrEditState extends State<AttrEdit> {
     setState(() {});
   }
 
+  ListTile redorowAL() {
+    return ListTile(
+        tileColor: Colors.lime,
+        leading: Obx(() => Text(attribNameRedo.value)),
+        title: Obx(() => Text(attribTitleRedo.value)),
+        trailing: attribNameRedo.value.isNotEmpty
+            ? redoButton(attreditSetstate)
+            : const Text(' '));
+  }
+
   Card card(BuildContext context) {
     List<ListTile> listTilesGet() {
       List<ListTile> listtiles = [
-        ListTile(
-            tileColor: Colors.lime,
-            leading: Obx(() => Text(attribNameRedo.value)),
-            title: Obx(() => Text(attribTitleRedo.value)),
-            trailing: attribNameRedo.value.isNotEmpty
-                ? redoButton(attreditSetstate)
-                : const Text(' ')),
-        ListTile(title: QuoteEdit(true, widget.swiperSetstate, context))
+        redorowAL(),
+        ListTile(title: QuoteEdit(true, widget.swiperSetstate, context)),
+        redorowAL()
       ];
 
       return listtiles;

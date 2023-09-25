@@ -36,6 +36,7 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   void initState() {
     super.initState();
+    redoClear();
   }
 
   @override
