@@ -1,0 +1,31 @@
+<script>
+	/*
+  *THIS FUNCTION CALL THE getData() FUNCTION IN THE Code.gs FILE, 
+  *AND PASS RETURNED DATA TO showData() FUNCTION
+  */
+  google.script.run.withSuccessHandler(showData).getData();
+
+
+  function logi(msg, value) {
+    var viewConfig = SpreadsheetApp.getActive().getSheetByName('viewConfig')
+    viewConfig.appendRow([ '----------------', msg ])
+    viewConfig.appendRow([ value])
+  }
+
+  //THIS FUNCTION GENERATE THE DATA TABLE FROM THE DATA ARRAY
+  function showData(dataArray){
+    console.log('dataArrayJS',dataArray)
+    var cols = [];
+    for (let i = 0; i < dataArray[0].length; i++) {
+      cols.push({"title":dataArray[0][i]});
+    }
+    console.log('colsJS', cols.len)
+    $(document).ready(function(){
+      $('#data-table').DataTable({
+        data: dataArray,
+        //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
+        columns: cols
+      });
+    });
+  }
+</script>
