@@ -31,7 +31,7 @@ class _AttrEditState extends State<AttrEdit> {
         tileColor: Colors.lime,
         leading: Obx(() => Text(attribNameRedo.value)),
         title: Obx(() => Text(attribTitleRedo.value)),
-        trailing: attribNameRedo.value.isNotEmpty
+        trailing: attribPrevRedo.value.isNotEmpty
             ? redoButton(attreditSetstate)
             : const Text(' '));
   }
