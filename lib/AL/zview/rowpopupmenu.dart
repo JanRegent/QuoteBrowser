@@ -46,15 +46,17 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
     child: const Icon(Icons.menu),
     itemBuilder: (BuildContext context) => <PopupMenuEntry<PopupMenuButton>>[
       PopupMenuItem(
+        child: PopupMenuItem<String>(
+            child: Text(
+                '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}\n${bl.orm.currentRow.dateinsert}')),
+      ),
+      PopupMenuItem(
         child: PopupMenuButton(
           child: const Text('File'),
           onSelected: (String result) {
             Navigator.pop(context);
           },
           itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-            PopupMenuItem<String>(
-                child: Text(
-                    '${bl.orm.currentRow.sheetName.value},${bl.orm.currentRow.rowNo}\n${bl.orm.currentRow.dateinsert}')),
             PopupMenuItem<String>(
                 child: InkWell(
               child: const Text('Open source sheet'),

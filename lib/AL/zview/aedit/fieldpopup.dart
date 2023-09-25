@@ -71,6 +71,16 @@ List<PopupMenuItem> listPopupMenu(
         });
       },
     ));
+    menu1.add(PopupMenuItem(
+      value: '/OriginalFromTitle',
+      child: const Text("Original from title"),
+      onTap: () async {
+        try {
+          await setCellBL(
+              'original', bl.orm.currentRow.optionalFields['title']);
+        } catch (_) {}
+      },
+    ));
   }
   return menu1;
 }
