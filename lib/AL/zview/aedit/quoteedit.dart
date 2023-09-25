@@ -28,16 +28,22 @@ Future setCellBL(String columnName, String cellContent) async {
 }
 
 // ignore: must_be_immutable
-class QuoteEdit extends StatelessWidget {
+class QuoteEdit extends StatefulWidget {
   final bool isAttrEdit;
   Function swiperSetstate;
   BuildContext context;
   // ignore: use_key_in_widget_constructors
   QuoteEdit(this.isAttrEdit, this.swiperSetstate, this.context);
 
+  @override
+  State<QuoteEdit> createState() => _QuoteEditState();
+}
+
+class _QuoteEditState extends State<QuoteEdit> {
   final TextEditingController _controller = TextEditingController();
 
   RxString selected = ''.obs;
+
   void attribSet(String attribName) async {
     try {
       selected.value = _controller.text.substring(
@@ -46,6 +52,9 @@ class QuoteEdit extends StatelessWidget {
     } catch (_) {
       return;
     }
+    setState(() {
+      bl.orm.currentRow.setCellDLOn = true;
+    });
 
     switch (attribName) {
       case 'author':
@@ -92,38 +101,51 @@ class QuoteEdit extends StatelessWidget {
       default:
         return;
     }
+    setState(() {
+      bl.orm.currentRow.setCellDLOn = false;
+    });
 
-    swiperSetstate();
+    widget.swiperSetstate();
   }
 
-  Row buttRow() {
-    return Row(
-      children: [
-        IconButton(
-            icon: ALicons.attrIcons.authorIcon,
-            onPressed: () => attribSet('author')),
-        IconButton(
-            icon: ALicons.attrIcons.bookIcon,
-            onPressed: () => attribSet('book')),
-        IconButton(
-            icon: ALicons.attrIcons.parPageIcon,
-            onPressed: () => attribSet('parPage')),
-        IconButton(
-            icon: ALicons.attrIcons.tagIcon,
-            onPressed: () => attribSet('tags')),
-        const Spacer(),
-        IconButton(
-            icon: const Icon(Icons.publish_rounded),
-            onPressed: () => attribSet('vydal')),
-        TextButton(
-            child: fieldPopupMenu(bl.orm.currentRow.quote.value, 'quote'),
-            onPressed: () => attribSet('__othersFields__')),
-        const Spacer(),
-      ],
-    );
+  Container buttRow() {
+    return Container(
+        margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            color: Colors.yellow[100],
+            border: Border.all(
+              color: bl.orm.currentRow.setCellDLOn ? Colors.red : Colors.white,
+              width: 5,
+            )),
+        child: Row(
+          children: [
+            IconButton(
+                icon: ALicons.attrIcons.authorIcon,
+                onPressed: () => attribSet('author')),
+            IconButton(
+                icon: ALicons.attrIcons.bookIcon,
+                onPressed: () => attribSet('book')),
+            IconButton(
+                icon: ALicons.attrIcons.parPageIcon,
+                onPressed: () => attribSet('parPage')),
+            IconButton(
+                icon: ALicons.attrIcons.tagIcon,
+                onPressed: () => attribSet('tags')),
+            const Spacer(),
+            IconButton(
+                icon: const Icon(Icons.publish_rounded),
+                onPressed: () => attribSet('vydal')),
+            TextButton(
+                child: fieldPopupMenu(bl.orm.currentRow.quote.value, 'quote'),
+                onPressed: () => attribSet('__othersFields__')),
+            const Spacer(),
+          ],
+        ));
   }
 
   String onEdit = '';
+
   @override //printSelectedText()
   Widget build(BuildContext context) {
     _controller.text = bl.orm.currentRow.quote.value;
@@ -142,10 +164,10 @@ class QuoteEdit extends StatelessWidget {
           bl.orm.currentRow.quote.value = value;
         },
       ),
-      isAttrEdit ? buttRow() : const Text(' ')
+      widget.isAttrEdit ? buttRow() : const Text(' ')
     ];
     if (currentSS.addQuoteMode) {
-      colItems.insert(0, addQuoteRow(context, swiperSetstate));
+      colItems.insert(0, addQuoteRow(context, widget.swiperSetstate));
     }
 
     return Column(children: colItems);

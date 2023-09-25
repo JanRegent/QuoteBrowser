@@ -50,6 +50,7 @@ void currentRowNew() {
 }
 
 class CurrentRow {
+  bool setCellDLOn = false;
   RxString quote = ''.obs;
   String original = '';
   //-----------------------attribs
@@ -84,6 +85,8 @@ void pureTags() {
   }
   bl.orm.currentRow.tags.value = tags.join('#');
 }
+
+final ValueNotifier<bool?> checkboxState = ValueNotifier<bool>(false);
 
 Future currentRowSet(String sheetRownoKey) async {
   //String sheetRownoKey = currentSS.keys[currentSS.swiperIndex];

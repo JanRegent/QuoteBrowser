@@ -104,13 +104,13 @@ class HttpService {
         'rowNo': rowNo
       },
     );
-
+    bl.orm.currentRow.setCellDLOn = true;
     String sheetRownoKey = response.data['data'][0];
     List<String> updatedRow = blUti.toListString(response.data['data'][1]);
     bl.sheetrowsCRUD.updateRow(sheetRownoKey, updatedRow);
 
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-
+    bl.orm.currentRow.setCellDLOn = false;
     return sheetRownoKey;
   }
 

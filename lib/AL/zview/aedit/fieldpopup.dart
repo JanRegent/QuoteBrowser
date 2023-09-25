@@ -112,53 +112,51 @@ RxString attribNameRedo = ''.obs;
 RxString attribPrevRedo = ''.obs;
 RxString attribTitleRedo = ''.obs;
 
-IconButton redoButton() {
+void redoClear() {
+  attribNameRedo.value = '';
+  attribPrevRedo.value = '';
+  attribTitleRedo.value = '';
+}
+
+IconButton redoButton(Function attreditSetstate) {
   return IconButton(
       onPressed: () {
-        redoAttrib();
+        redoAttrib(attreditSetstate);
       },
       icon: const Icon(Icons.redo));
 }
 
-void redoAttrib() async {
+void redoAttrib(Function attreditSetstate) async {
   if (attribNameRedo.value.toString().trim().isEmpty) return;
-
+  bl.orm.currentRow.setCellDLOn = true;
+  attreditSetstate();
   switch (attribNameRedo.value) {
     case 'author':
       bl.orm.currentRow.author.value = attribPrevRedo.value;
       await setCellBL('author', bl.orm.currentRow.author.value);
-      attribNameRedo.value = '';
-      attribPrevRedo.value = '';
-      attribTitleRedo.value = '';
-      //, 'attribValuePrev': '', 'attribTitle': ''};
+      redoClear();
       break;
     case 'book':
       bl.orm.currentRow.book.value = attribPrevRedo.value;
       await setCellBL('book', bl.orm.currentRow.book.value);
-      attribNameRedo.value = '';
-      attribPrevRedo.value = '';
-      attribTitleRedo.value = '';
+      redoClear();
 
       break;
     case 'parPage':
       bl.orm.currentRow.parPage.value = attribPrevRedo.value;
       await setCellBL('parPage', bl.orm.currentRow.parPage.value);
-      attribNameRedo.value = '';
-      attribPrevRedo.value = '';
-      attribTitleRedo.value = '';
+      redoClear();
 
       break;
     case 'tags':
       bl.orm.currentRow.tags.value = attribPrevRedo.value;
       await setCellBL('tags', bl.orm.currentRow.tags.value);
-      attribNameRedo.value = '';
-      attribPrevRedo.value = '';
-      attribTitleRedo.value = '';
+      redoClear();
 
       break;
     default:
-      attribNameRedo.value = '';
-      attribPrevRedo.value = '';
-      attribTitleRedo.value = '';
+      redoClear();
   }
+  bl.orm.currentRow.setCellDLOn = false;
+  attreditSetstate();
 }

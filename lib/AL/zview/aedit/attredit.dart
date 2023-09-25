@@ -22,22 +22,9 @@ class _AttrEditState extends State<AttrEdit> {
     super.initState();
   }
 
-  // Widget starsButt() {
-  //   if (!bl.orm.currentRow.cols.contains('stars')) {
-  //     return const Text('');
-  //   }
-  //   String stars =
-  //       '*************'.substring(0, bl.orm.currentRow.stars.value.length);
-  //   if (bl.orm.currentRow.stars.value.isEmpty) {
-  //     stars = 'stars';
-  //   }
-  //   return TextButton(
-  //       child: Text(
-  //         stars,
-  //         style: const TextStyle(fontSize: 25),
-  //       ),
-  //       onPressed: () {});
-  // }
+  void attreditSetstate() {
+    setState(() {});
+  }
 
   Card card(BuildContext context) {
     List<ListTile> listTilesGet() {
@@ -47,7 +34,7 @@ class _AttrEditState extends State<AttrEdit> {
             leading: Obx(() => Text(attribNameRedo.value)),
             title: Obx(() => Text(attribTitleRedo.value)),
             trailing: attribNameRedo.value.isNotEmpty
-                ? redoButton()
+                ? redoButton(attreditSetstate)
                 : const Text(' ')),
         ListTile(title: QuoteEdit(true, widget.swiperSetstate, context))
       ];

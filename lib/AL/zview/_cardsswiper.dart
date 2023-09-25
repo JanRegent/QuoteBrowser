@@ -1,8 +1,10 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
+import '../../BL/bl.dart';
 import '../../BL/orm.dart';
 
+import 'aedit/fieldpopup.dart';
 import 'zcoloredview.dart';
 import 'battribs/_attribs.dart';
 import 'aedit/attredit.dart';
@@ -46,13 +48,18 @@ class _CardSwiperState extends State<CardSwiper> {
   void currentRowIndexFromBookmarksGet() {}
 
   void indexChanged(int rowIndex) async {
+    if (bl.orm.currentRow.setCellDLOn) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Wait second\nSaving chnge to cloud')));
+    }
     currentSS.swiperIndex = rowIndex;
-    if (currentSS.swiperIndex > currentSS.keys.length) {
+    if (currentSS.swiperIndex > currentSS.keys.length - 1) {
       currentSS.swiperIndex = 0;
     }
     if (currentSS.swiperIndex < 0) {
-      currentSS.swiperIndex = 0;
+      currentSS.swiperIndex = currentSS.keys.length - 1;
     }
+    redoClear();
     await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
     setState(() {});
   }
@@ -65,7 +72,7 @@ class _CardSwiperState extends State<CardSwiper> {
     setState(() {});
   }
 
-  Widget titleArrowsRow() {
+  Row titleArrowsRowOff() {
     return Row(children: [
       currentSS.filterIcon,
       Text(widget.title),
@@ -106,7 +113,7 @@ class _CardSwiperState extends State<CardSwiper> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: titleArrowsRow(),
+          title: titleArrowsRowOff(),
           centerTitle: true,
           actions: [rowViewMenu({}, swiperSetstate)],
           bottom: TabBar(
