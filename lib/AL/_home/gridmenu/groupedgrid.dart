@@ -2,6 +2,8 @@ import 'menudata.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_scroll_view/grouped_scroll_view.dart';
 
+import 'simplefilters.dart';
+
 class GridMenuPage extends StatelessWidget {
   final int crossAxisCount;
   final String title;
@@ -23,11 +25,10 @@ class GridMenuPage extends StatelessWidget {
     );
   }
 
-  void menuDo(MenuTile item) {
+  void menuDo(MenuTile item, BuildContext context) {
     switch (item.menuGroup) {
       case 'Simple filters':
-        debugPrint('--------------Simple filters');
-        debugPrint(item.tileName);
+        SimpleFiltersAL().doItem(item, context);
         break;
       case 'Column text filters':
         debugPrint('Column text filters');
@@ -73,20 +74,21 @@ class GridMenuPage extends StatelessWidget {
           color: Colors.lightGreen,
           padding: const EdgeInsets.all(8),
           child: Center(
-            child: ListTile(
-              leading: item.icon,
-              title: InkWell(
+              child: Column(
+            children: [
+              item.icon,
+              InkWell(
                 child: Text(
                   item.tileName,
                   style: const TextStyle(
                       fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
-                  menuDo(item);
+                  menuDo(item, context);
                 },
-              ),
-            ),
-          ),
+              )
+            ],
+          )),
         );
       },
       data: DataCache.instance.menus,
