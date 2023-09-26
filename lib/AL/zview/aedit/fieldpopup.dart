@@ -84,6 +84,22 @@ List<PopupMenuItem> listPopupMenu(
       },
     ));
   }
+
+  if (bl.orm.currentRow.dateinsert.toString().contains('__toRead__')) {
+    menu1.add(PopupMenuItem(
+      value: '/__toRead__',
+      child: const Text("__toRead__ remove"),
+      onTap: () async {
+        try {
+          await setCellBL(
+              'dateinsert',
+              bl.orm.currentRow.dateinsert
+                  .toString()
+                  .replaceAll('__toRead__', ''));
+        } catch (_) {}
+      },
+    ));
+  }
   return menu1;
 }
 

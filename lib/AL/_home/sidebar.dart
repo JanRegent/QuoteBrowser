@@ -155,6 +155,17 @@ class _SidebarPageState extends State<SidebarPage> {
               isSelected: true,
             ),
             CollapsibleItem(
+              text: '__toRead__',
+              icon: Icons.date_range,
+              onPressed: () async {
+                currentSS.filterIcon = const Icon(Icons.date_range);
+                await searchText('__toRead__');
+              },
+              onHold: () => ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Date filters"))),
+              isSelected: true,
+            ),
+            CollapsibleItem(
               text: 'New word search',
               icon: Icons.wordpress,
               onPressed: () async {
