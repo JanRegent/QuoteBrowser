@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../BL/orm.dart';
+import 'gridmenu/groupedgrid.dart';
 import 'sidebar.dart';
 
 class SidebarHome extends StatefulWidget {
@@ -40,7 +41,12 @@ class _SidebarHomeState extends State<SidebarHome> {
               : (const Text('Select a sidebar menu item')),
           actions: const [],
         ),
-        body: SidebarPage(setstateHome),
+        body: const GridMenuPage(
+          crossAxisCount: 3,
+          title: 'GroupedGrid',
+        ),
+
+        //SidebarPage(setstateHome),
       ),
     );
   }
