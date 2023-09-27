@@ -2,6 +2,14 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import 'package:flutter/material.dart';
 
+class NotUsed {
+  // Icons.filter;
+  // Icons.notifications
+  // Icons.access_alarm,
+  // Icons.eco,
+  // Icons.event
+}
+
 class ALicons {
   static AttrIcons attrIcons = AttrIcons();
   static EditIcons editIcons = EditIcons();
