@@ -4,13 +4,17 @@ import 'package:grouped_scroll_view/grouped_scroll_view.dart';
 
 import 'simplefilters.dart';
 
+// ignore: must_be_immutable
 class GridMenuPage extends StatelessWidget {
+  Function setstateHome;
+
   final int crossAxisCount;
   final String title;
   final bool grouped;
   final bool separated;
 
-  const GridMenuPage({
+  GridMenuPage(
+    this.setstateHome, {
     super.key,
     required this.title,
     this.crossAxisCount = 0,
@@ -28,7 +32,7 @@ class GridMenuPage extends StatelessWidget {
   void menuDo(MenuTile item, BuildContext context) {
     switch (item.menuGroup) {
       case 'Simple filters':
-        SimpleFiltersAL().doItem(item, context);
+        SimpleFiltersAL(setstateHome).doItem(item, context);
         break;
       case 'Column text filters':
         debugPrint('Column text filters');
@@ -40,6 +44,16 @@ class GridMenuPage extends StatelessWidget {
         debugPrint('Application');
         break;
       default:
+    }
+  }
+
+  Widget trailingMenu(MenuTile item, BuildContext context) {
+    switch (item.tileName) {
+      case 'To read':
+        return toReadPopupMenu(item, context);
+
+      default:
+        return const Text('__');
     }
   }
 
@@ -86,7 +100,10 @@ class GridMenuPage extends StatelessWidget {
                 onTap: () {
                   menuDo(item, context);
                 },
-              )
+              ),
+              item.isTrailingMenu
+                  ? trailingMenu(item, context)
+                  : const Text(' ')
             ],
           )),
         );

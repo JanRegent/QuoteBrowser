@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../BL/orm.dart';
 import 'gridmenu/groupedgrid.dart';
-import 'sidebar.dart';
 
 class SidebarHome extends StatefulWidget {
   const SidebarHome({super.key});
@@ -41,8 +40,9 @@ class _SidebarHomeState extends State<SidebarHome> {
               : (const Text('Select a sidebar menu item')),
           actions: const [],
         ),
-        body: const GridMenuPage(
+        body: GridMenuPage(
           crossAxisCount: 3,
+          setstateHome,
           title: 'GroupedGrid',
         ),
 

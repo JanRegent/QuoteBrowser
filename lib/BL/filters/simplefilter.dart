@@ -78,4 +78,12 @@ class FiltersCRUD {
       isar.simpleFilters.put(sFilter);
     });
   }
+
+  //------------------------------------------------------------------delete
+  Future deleteFilter(String wordKey) async {
+    if (wordKey.isEmpty) return;
+    isar.write((isar) async {
+      isar.simpleFilters.delete(wordKey);
+    });
+  }
 }
