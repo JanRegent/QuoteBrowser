@@ -1,25 +1,50 @@
-import 'package:flutter/material.dart';
-import 'package:quotebrowser/BL/filters/simplefilter.dart';
+// ignore_for_file: file_names
 
-import '../../../BL/bl.dart';
-import '../../../BL/bluti.dart';
+import 'package:flutter/material.dart';
+
 import '../../../BL/filters/searchss.dart';
 import '../../../BL/orm.dart';
-import '../../alib/alib.dart';
 import '../../filterspages/_selectview.dart';
 import '../../zview/_cardsswiper.dart';
 import 'common.dart';
 import 'menudata.dart';
 
-class SimpleFiltersAL {
+class ColumnTextFiltersAL {
   Function setstateHome;
-  SimpleFiltersAL(this.setstateHome);
+  ColumnTextFiltersAL(this.setstateHome);
 
   Future doItem(MenuTile item, BuildContext context) async {
     switch (item.tileName) {
-      case 'Today':
-        currentSS.filterIcon = const Icon(Icons.date_range);
-        await searchText('${blUti.todayStr()}.', context);
+      case 'New Author&text':
+        currentSS.filterIcon = const Icon(Icons.person);
+        String author = '';
+        try {
+          author = await authorSelect(context);
+        } catch (_) {
+          return;
+        }
+        if (author.isEmpty) {
+          loadingTitle.value = '';
+          setstateHome();
+          return;
+        }
+        String searchWord = '';
+        try {
+          // ignore: use_build_context_synchronously
+          searchWord = await inputWord(context);
+        } catch (_) {
+          return;
+        }
+        if (searchWord.isEmpty) {
+          loadingTitle.value = '';
+          setstateHome();
+          return;
+        }
+        loadingTitle.value = '$author & $searchWord';
+        // ignore: use_build_context_synchronously
+        await searchColumnQuote('author', author, searchWord, context);
+        loadingTitle.value = '';
+        setstateHome();
         break;
 
       case 'Last days':
@@ -35,13 +60,13 @@ class SimpleFiltersAL {
 
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchText(searchDate, context);
+        await searchText(searchDate, context, setstateHome);
         break;
 
       case 'To read':
         currentSS.filterIcon = const Icon(Icons.date_range);
         // ignore: use_build_context_synchronously
-        await searchText('__toRead__', context);
+        await searchText('__toRead__', context, setstateHome);
         break;
       case 'New word search':
         currentSS.filterIcon = const Icon(Icons.wordpress);
@@ -53,7 +78,7 @@ class SimpleFiltersAL {
           return;
         }
         // ignore: use_build_context_synchronously
-        await searchText(word, context);
+        await searchText(word, context, setstateHome);
         break;
 
       case 'Stored words searches':
@@ -68,20 +93,22 @@ class SimpleFiltersAL {
 
         if (searchWord.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchText(searchWord, context);
+        await searchText(searchWord, context, setstateHome);
         break;
 
       default:
     }
   }
 
-  //----------------------------------------------------------search/view
-
-  Future searchText(String searchText, BuildContext context) async {
-    loadingTitle.value = searchText;
+//Future
+  Future searchColumnQuote(String columnName, String columnValue,
+      String searchText, BuildContext context) async {
+    loadingTitle.value = '$columnValue & $searchText';
+    print(loadingTitle.value);
     setstateHome();
 
-    filterSearchText(searchText, context).then((value) async {
+    searchColumnAndQuote(columnName, columnValue, searchText, context).then(
+        (value) async {
       loadingTitle.value = '';
       setstateHome();
 
@@ -90,41 +117,11 @@ class SimpleFiltersAL {
       await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => CardSwiper(searchText, const {})),
+            builder: (context) =>
+                CardSwiper('$columnValue & $searchText', const {})),
       );
     }, onError: (e) {
       debugPrint(e);
     });
   }
-}
-
-//----------------------------------------------------------drawer
-PopupMenuButton toReadPopupMenu(MenuTile item, BuildContext context) {
-  return PopupMenuButton(
-    itemBuilder: (_) {
-      return [
-        PopupMenuItem(
-          child: const Text("Delete old To read list"),
-          onTap: () async {
-            await bl.filtersCRUD.deleteFilter('__toRead__');
-            // ignore: use_build_context_synchronously
-            al.message(context, 'Click on To read for refresh..');
-          },
-        ),
-        PopupMenuItem(
-          child: PopupMenuButton(
-            child: const Text("Nested Items"),
-            itemBuilder: (_) {
-              return [
-                const PopupMenuItem(
-                  child: Text("Delete old To read list"),
-                ),
-                const PopupMenuItem(child: Text("Item3"))
-              ];
-            },
-          ),
-        ),
-      ];
-    },
-  );
 }

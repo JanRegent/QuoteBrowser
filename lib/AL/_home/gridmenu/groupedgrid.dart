@@ -1,8 +1,9 @@
+import '2columntext.dart';
 import 'menudata.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_scroll_view/grouped_scroll_view.dart';
 
-import 'simplefilters.dart';
+import '1simplefilters.dart';
 
 // ignore: must_be_immutable
 class GridMenuPage extends StatelessWidget {
@@ -34,8 +35,8 @@ class GridMenuPage extends StatelessWidget {
       case 'Simple filters':
         SimpleFiltersAL(setstateHome).doItem(item, context);
         break;
-      case 'Column text filters':
-        debugPrint('Column text filters');
+      case 'Authors|Books & words':
+        ColumnTextFiltersAL(setstateHome).doItem(item, context);
         break;
       case 'Others':
         debugPrint('Others');

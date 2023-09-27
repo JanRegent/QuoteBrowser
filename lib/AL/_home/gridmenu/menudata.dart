@@ -15,6 +15,7 @@ class DataCache {
   static DataCache get instance => _instance;
 
   DataCache._() {
+    //-------------------------------------------------------------------simple
     menuList.add(MenuTile(
         'Today', 'Simple filters', const Icon(Icons.date_range), false));
     menuList.add(MenuTile(
@@ -25,12 +26,10 @@ class DataCache {
         const Icon(Icons.wordpress), false));
     menuList.add(MenuTile('Stored words searches', 'Simple filters',
         const Icon(Icons.wordpress), false));
-    for (String menuGroup in ['Column text filters', 'Others', 'Application']) {
-      for (int i = 0; i < 5; i++) {
-        menuList.add(MenuTile('name_$menuGroup$i 123 456', menuGroup,
-            const Icon(Icons.abc), false));
-      }
-    }
+    //----------------------------------------------------------------columnText
+
+    menuList.add(MenuTile('New Author&text', 'Authors|Books & words',
+        const Icon(Icons.person), false));
   }
 
   final List<MenuTile> menuList = [];
