@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../DL/builddate.dart';
+import '../../alib/alib.dart';
 import 'common.dart';
 
 class ApplicationMenu {
@@ -10,8 +11,7 @@ class ApplicationMenu {
       MenuTile item, BuildContext context, Function setstateHome) async {
     switch (item.tileName) {
       case 'About':
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(buildDate)));
+        al.messageFloating(context, 'Build', buildDate);
         break;
 
       case 'Settings':

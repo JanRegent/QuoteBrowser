@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 //import 'package:sheetviewer/uti/viewers/json_viewer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,7 +13,7 @@ class AL {
     await canLaunchUrl(url)
         ? await launchUrl(url)
         // ignore: use_build_context_synchronously
-        : message(context, 'could_not_launch_this_url\n $url');
+        : messageBottom(context, 'could_not_launch_this_url\n $url');
   }
 
   Widget linkIconOpenDoc(String fileid, BuildContext context, String label) {
@@ -210,7 +211,7 @@ class AL {
   //   );
   // }
 
-  void message(context, String text) {
+  void messageBottom(context, String text) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     final snackBar = SnackBar(
@@ -218,5 +219,22 @@ class AL {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void messageFloating(BuildContext context, String title, String mess) async {
+    final snackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        title: title,
+        message: mess,
+        contentType: ContentType.help,
+      ),
+    );
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
   }
 }

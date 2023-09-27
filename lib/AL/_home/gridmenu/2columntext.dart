@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../BL/orm.dart';
+import '../../alib/alib.dart';
 import '../../filterspages/_selectview.dart';
 
 import 'common.dart';
@@ -10,6 +11,7 @@ import 'common.dart';
 class ColumnTextFiltersAL {
   Future doItem(
       MenuTile item, BuildContext context, Function setstateHome) async {
+    loadingTitle.value = item.tileName;
     switch (item.tileName) {
       case 'New Author&text':
         currentSS.filterIcon = const Icon(Icons.person);
@@ -36,10 +38,8 @@ class ColumnTextFiltersAL {
           setstateHome();
           return;
         }
-        loadingTitle.value = '$author & $searchWord';
         // ignore: use_build_context_synchronously
-        await searchColumnQuote(
-            'author', author, searchWord, context, setstateHome);
+        await searchColumnQuote('author', author, searchWord, context);
         loadingTitle.value = '';
         setstateHome();
         break;

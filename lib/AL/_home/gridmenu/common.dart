@@ -38,15 +38,11 @@ Future searchText(
 }
 
 Future searchColumnQuote(String columnName, String columnValue,
-    String searchText, BuildContext context, Function setstateHome) async {
+    String searchText, BuildContext context) async {
   loadingTitle.value = '$columnValue & $searchText';
-  setstateHome();
 
   searchColumnAndQuote(columnName, columnValue, searchText, context).then(
       (value) async {
-    loadingTitle.value = '';
-    setstateHome();
-
     if (value == 0) return;
 
     await Navigator.push(

@@ -27,17 +27,11 @@ class _SidebarHomeState extends State<SidebarHome> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: loadingTitle.value.isNotEmpty
-              ? Row(
-                  children: [
-                    const CircularProgressIndicator(
-                      color: Colors.red,
-                    ),
-                    const Text('  '),
-                    Obx(() => Text(loadingTitle.value)),
-                  ],
-                )
-              : (const Text('Select a sidebar menu item')),
+          title: Row(
+            children: [
+              Obx(() => Text(loadingTitle.value)),
+            ],
+          ),
           actions: const [],
         ),
         body: GridMenuPage(

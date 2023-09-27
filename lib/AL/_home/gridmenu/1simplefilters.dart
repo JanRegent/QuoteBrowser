@@ -85,7 +85,7 @@ PopupMenuButton toReadPopupMenu(MenuTile item, BuildContext context) {
           onTap: () async {
             await bl.filtersCRUD.deleteFilter('__toRead__');
             // ignore: use_build_context_synchronously
-            al.message(context, 'Click on To read for refresh..');
+            al.messageBottom(context, 'Click on To read for refresh..');
           },
         ),
         PopupMenuItem(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../AL/alib/alert/circullarsnack.dart';
+import '../../AL/alib/alib.dart';
 import '../bl.dart';
 import '../bluti.dart';
 
@@ -18,7 +19,7 @@ Future<int> filterSearchText(String searchText, BuildContext context) async {
 
   if (currentSS.keys.isEmpty) {
     //ignore: use_build_context_synchronously
-    circularSnack(context, 25, 'Querying cloud [gdrive]');
+    al.messageFloating(context, 'Search', searchText);
 
     currentSS.keys = await dl.httpService.searchSS(searchText);
 
@@ -59,7 +60,7 @@ Future<int> searchColumnAndQuote(String columnName, String columnValue,
 
   if (currentSS.keys.isEmpty) {
     //ignore: use_build_context_synchronously
-    circularSnack(context, 25, 'Querying cloud [gdrive]');
+    al.messageFloating(context, 'Search', '$columnValue __|__$searchText');
 
     currentSS.keys = await dl.httpService
         .searchColumnAndQuote(searchText, columnName, columnValue);
@@ -97,7 +98,7 @@ Future<int> getLastRows(String sheetName, BuildContext context) async {
   debugPrint(sheetName);
 
   //ignore: use_build_context_synchronously
-  circularSnack(context, 25, 'Querying cloud [gdrive]');
+  al.messageFloating(context, 'Search', 'Get last rows of $sheetName');
 
   currentSS.keys = await dl.httpService.getLastRows(sheetName);
 
