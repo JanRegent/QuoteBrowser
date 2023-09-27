@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../BL/orm.dart';
-import 'gridmenu/groupedgrid.dart';
+import 'gridmenu/_groupedgrid.dart';
 
 class SidebarHome extends StatefulWidget {
   const SidebarHome({super.key});
@@ -41,8 +41,8 @@ class _SidebarHomeState extends State<SidebarHome> {
           actions: const [],
         ),
         body: GridMenuPage(
-          crossAxisCount: 3,
           setstateHome,
+          crossAxisCount: 3,
           title: 'GroupedGrid',
         ),
 

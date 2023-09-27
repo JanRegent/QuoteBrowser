@@ -360,7 +360,7 @@ class _SidebarPageState extends State<SidebarPage> {
 
       //-----------------------------------------------------------------app
       CollapsibleItem(
-          text: 'App info',
+          text: 'Application',
           onPressed: () => setState(() => _headline = 'App info'),
           onHold: () => ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("News"))),

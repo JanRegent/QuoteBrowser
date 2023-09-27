@@ -1,5 +1,8 @@
 import '2columntext.dart';
-import 'menudata.dart';
+import '3lastadd.dart';
+import '4application.dart';
+import 'common.dart';
+
 import 'package:flutter/material.dart';
 import 'package:grouped_scroll_view/grouped_scroll_view.dart';
 
@@ -36,13 +39,13 @@ class GridMenuPage extends StatelessWidget {
         SimpleFiltersAL(setstateHome).doItem(item, context);
         break;
       case 'Authors|Books & words':
-        ColumnTextFiltersAL(setstateHome).doItem(item, context);
+        ColumnTextFiltersAL().doItem(item, context, setstateHome);
         break;
-      case 'Others':
-        debugPrint('Others');
+      case 'Last rows && Add quote':
+        LastRowsAddQuote().doItem(item, context, setstateHome);
         break;
       case 'Application':
-        debugPrint('Application');
+        ApplicationMenu().doItem(item, context, setstateHome);
         break;
       default:
     }
