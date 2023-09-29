@@ -39,7 +39,6 @@ class HttpService {
         'ssId': dataSheetId
       },
     );
-
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
 
     return await sheetRowsSaveGetKeys(response.data['data']);

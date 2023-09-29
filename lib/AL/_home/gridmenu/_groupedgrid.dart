@@ -39,7 +39,7 @@ class GridMenuPage extends StatelessWidget {
         SimpleFiltersAL(setstateHome).doItem(item, context);
         break;
       case 'Authors|Books & words':
-        ColumnTextFiltersAL().doItem(item, context, setstateHome);
+        ColumnTextFiltersAL().doItem(item, context);
         break;
       case 'Last rows && Add quote':
         LastRowsAddQuote().doItem(item, context, setstateHome);

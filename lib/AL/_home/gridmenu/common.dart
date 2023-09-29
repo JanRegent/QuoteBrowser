@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:input_dialog/input_dialog.dart';
 
 import '../../../BL/filters/searchss.dart';
-import '../../../BL/orm.dart';
+import '../../alib/alib.dart';
 import '../../zview/_cardsswiper.dart';
 
 Future<String> inputWord(BuildContext context) async {
@@ -17,15 +17,10 @@ Future<String> inputWord(BuildContext context) async {
 
 //----------------------------------------------------------search/view
 
-Future searchText(
-    String searchText, BuildContext context, Function setstateHome) async {
-  loadingTitle.value = searchText;
-  setstateHome();
+Future searchText(String searchText, BuildContext context) async {
+  al.messageFloating(context, 'Searching in cloud', searchText);
 
   filterSearchText(searchText, context).then((value) async {
-    loadingTitle.value = '';
-    setstateHome();
-
     if (value == 0) return;
 
     await Navigator.push(
@@ -39,8 +34,8 @@ Future searchText(
 
 Future searchColumnQuote(String columnName, String columnValue,
     String searchText, BuildContext context) async {
-  loadingTitle.value = '$columnValue & $searchText';
-
+  al.messageFloating(
+      context, 'Searching in cloud', '$columnValue & $searchText');
   searchColumnAndQuote(columnName, columnValue, searchText, context).then(
       (value) async {
     if (value == 0) return;
@@ -56,15 +51,10 @@ Future searchColumnQuote(String columnName, String columnValue,
   });
 }
 
-Future searchColumnText(
-    String columnTextKey, BuildContext context, Function setstateHome) async {
-  loadingTitle.value = columnTextKey;
-  setstateHome();
+Future searchColumnText(String columnTextKey, BuildContext context) async {
+  al.messageFloating(context, 'Searching in cloud', columnTextKey);
 
   columnTextShow(columnTextKey, context).then((value) async {
-    loadingTitle.value = '';
-    setstateHome();
-
     if (value == 0) return;
 
     await Navigator.push(
@@ -101,8 +91,8 @@ class DataCache {
         'To read', 'Simple filters', const Icon(Icons.read_more), true));
     menuList.add(MenuTile('New word search', 'Simple filters',
         const Icon(Icons.wordpress), false));
-    menuList.add(MenuTile('Stored words searches', 'Simple filters',
-        const Icon(Icons.wordpress), false));
+    menuList.add(MenuTile(
+        'Stored words', 'Simple filters', const Icon(Icons.wordpress), false));
     //----------------------------------------------------------------columnText
 
     menuList.add(MenuTile('New Author&text', 'Authors|Books & words',

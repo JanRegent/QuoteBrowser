@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../AL/alib/alert/circullarsnack.dart';
 import '../../AL/alib/alib.dart';
 import '../bl.dart';
 import '../bluti.dart';
@@ -17,7 +16,8 @@ Future<int> filterSearchText(String searchText, BuildContext context) async {
     currentSS.keys = (await bl.filtersCRUD.readFilter(searchText));
   } catch (_) {}
 
-  if (currentSS.keys.isEmpty) {
+  // ignore: prefer_is_empty
+  if (currentSS.keys.length == 0) {
     //ignore: use_build_context_synchronously
     al.messageFloating(context, 'Search', searchText);
 

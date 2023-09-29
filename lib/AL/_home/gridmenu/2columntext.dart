@@ -3,15 +3,15 @@
 import 'package:flutter/material.dart';
 
 import '../../../BL/orm.dart';
+
 import '../../alib/alib.dart';
 import '../../filterspages/_selectview.dart';
 
 import 'common.dart';
 
 class ColumnTextFiltersAL {
-  Future doItem(
-      MenuTile item, BuildContext context, Function setstateHome) async {
-    loadingTitle.value = item.tileName;
+  Future doItem(MenuTile item, BuildContext context) async {
+    al.messageFloating(context, 'Searching in cloud', item.tileName);
     switch (item.tileName) {
       case 'New Author&text':
         currentSS.filterIcon = const Icon(Icons.person);
@@ -22,8 +22,6 @@ class ColumnTextFiltersAL {
           return;
         }
         if (author.isEmpty) {
-          loadingTitle.value = '';
-          setstateHome();
           return;
         }
         String searchWord = '';
@@ -34,14 +32,10 @@ class ColumnTextFiltersAL {
           return;
         }
         if (searchWord.isEmpty) {
-          loadingTitle.value = '';
-          setstateHome();
           return;
         }
         // ignore: use_build_context_synchronously
         await searchColumnQuote('author', author, searchWord, context);
-        loadingTitle.value = '';
-        setstateHome();
         break;
 
       case 'Stored Author&text':
@@ -56,7 +50,7 @@ class ColumnTextFiltersAL {
 
         if (columnTextKey.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchColumnText(columnTextKey, context, setstateHome);
+        await searchColumnText(columnTextKey, context);
         break;
 
       default:

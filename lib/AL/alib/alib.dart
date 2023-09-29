@@ -224,13 +224,18 @@ class AL {
   void messageFloating(BuildContext context, String title, String mess) async {
     final snackBar = SnackBar(
       elevation: 0,
+      duration: const Duration(seconds: 25),
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: title,
-        message: mess,
-        contentType: ContentType.help,
-      ),
+      content: SizedBox(
+          height: 200,
+          child: AwesomeSnackbarContent(
+            title: title,
+            titleFontSize: 20,
+            message: mess,
+            messageFontSize: 25,
+            contentType: ContentType.help,
+          )),
     );
 
     ScaffoldMessenger.of(context)

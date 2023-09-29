@@ -18,7 +18,7 @@ class SimpleFiltersAL {
     switch (item.tileName) {
       case 'Today':
         currentSS.filterIcon = const Icon(Icons.date_range);
-        await searchText('${blUti.todayStr()}.', context, setstateHome);
+        await searchText('${blUti.todayStr()}.', context);
         break;
 
       case 'Last days':
@@ -34,13 +34,13 @@ class SimpleFiltersAL {
 
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchText(searchDate, context, setstateHome);
+        await searchText(searchDate, context);
         break;
 
       case 'To read':
         currentSS.filterIcon = const Icon(Icons.date_range);
         // ignore: use_build_context_synchronously
-        await searchText('__toRead__', context, setstateHome);
+        await searchText('__toRead__', context);
         break;
       case 'New word search':
         currentSS.filterIcon = const Icon(Icons.wordpress);
@@ -52,10 +52,10 @@ class SimpleFiltersAL {
           return;
         }
         // ignore: use_build_context_synchronously
-        await searchText(word, context, setstateHome);
+        await searchText(word, context);
         break;
 
-      case 'Stored words searches':
+      case 'Stored words':
         String searchWord = '';
         currentSS.filterIcon = const Icon(Icons.wordpress);
         try {
@@ -67,7 +67,7 @@ class SimpleFiltersAL {
 
         if (searchWord.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchText(searchWord, context, setstateHome);
+        await searchText(searchWord, context);
         break;
 
       default:
