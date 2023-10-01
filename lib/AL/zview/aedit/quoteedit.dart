@@ -139,7 +139,7 @@ class _QuoteEditState extends State<QuoteEdit> {
                 onPressed: () => attribSet('vydal')),
             TextButton(
                 child: fieldPopupMenu(bl.orm.currentRow.quote.value, 'quote'),
-                onPressed: () => attribSet('__othersFields__')),
+                onPressed: () => attribSet('quote')),
             const Spacer(),
           ],
         ));

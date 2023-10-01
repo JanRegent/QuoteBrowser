@@ -63,6 +63,26 @@ List<PopupMenuItem> listPopupMenu(
       },
     ));
   }
+  if ('quote' == columnName) {
+    menu1.add(PopupMenuItem(
+      value: '/quoteIReplace',
+      child: const Text("quote from clipboard Replace"),
+      onTap: () async {
+        FlutterClipboard.paste().then((value) async {
+          await setCellBL('quote', value);
+        });
+      },
+    ));
+    menu1.add(PopupMenuItem(
+      value: '/quoteAppend',
+      child: const Text("quote from clipboard Append"),
+      onTap: () async {
+        FlutterClipboard.paste().then((value) async {
+          await setCellBL('quote', bl.orm.currentRow.quote + '\n\n' + value);
+        });
+      },
+    ));
+  }
   if ('original' == columnName) {
     menu1.add(PopupMenuItem(
       value: '/Original',
