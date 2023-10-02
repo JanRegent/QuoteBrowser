@@ -58,8 +58,8 @@ class _OthersFieldsState extends State<OthersFields> {
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.original.value, 'original'))
     ];
-
-    for (String columnName in bl.orm.currentRow.optionalFields.keys) {
+    for (var i = 0; i < bl.orm.currentRow.optionalColumNames.length; i++) {
+      String columnName = bl.orm.currentRow.optionalColumNames[i];
       if (columnName.toString().isEmpty) continue;
       if (columnName == 'fileUrl') continue;
       if (columnName == 'sourceUrl') continue;
@@ -69,16 +69,13 @@ class _OthersFieldsState extends State<OthersFields> {
         ListTile(
             tileColor: Colors.white,
             leading: Text(columnName),
-            title: bl.orm.currentRow.optionalFields[columnName]
-                    .toString()
-                    .startsWith('https:')
-                ? TextButton(
-                    child: Text(bl.orm.currentRow.optionalFields[columnName]),
-                    onPressed: () =>
-                        _onOpen(bl.orm.currentRow.optionalFields[columnName]))
-                : Text(bl.orm.currentRow.optionalFields[columnName]),
+            title: Row(children: [
+              TextButton(
+                  child: Obx(() => Text(bl.orm.currentRow.optionalvalues[i])),
+                  onPressed: () => _onOpen(bl.orm.currentRow.optionalvalues[i]))
+            ]),
             trailing: copyPasteClearPopupMenuButton(
-              bl.orm.currentRow.optionalFields[columnName],
+              bl.orm.currentRow.optionalvalues[i],
               columnName,
             )),
       );

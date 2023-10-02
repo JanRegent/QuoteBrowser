@@ -71,7 +71,9 @@ class CurrentRow {
   String dateinsert = '';
   //--------------------------optional user fields
   List<String> cols = [];
-  Map optionalFields = {};
+  //Map optionalFields = {};
+  RxList<String> optionalvalues = RxList<String>();
+  List<String> optionalColumNames = [];
 }
 
 void pureTags() {
@@ -133,7 +135,8 @@ Future currentRowSet(String sheetRownoKey) async {
   bl.orm.currentRow.dateinsert = valueGet('dateinsert');
   //--------------------------optional user fields
 
-  bl.orm.currentRow.optionalFields = {};
+  bl.orm.currentRow.optionalvalues = RxList<String>();
+  bl.orm.currentRow.optionalColumNames = [];
 
   for (var columnName in bl.orm.currentRow.cols) {
     if (columnName == 'ID') continue;
@@ -146,8 +149,7 @@ Future currentRowSet(String sheetRownoKey) async {
     if (columnName == 'stars') continue;
     if (columnName == 'favorite') continue;
     if (columnName == 'categories') continue;
-    bl.orm.currentRow.optionalFields[columnName] = valueGet(columnName);
-    print('------------$columnName');
-    print(bl.orm.currentRow.optionalFields[columnName]);
+    bl.orm.currentRow.optionalColumNames.add(columnName);
+    bl.orm.currentRow.optionalvalues.add(valueGet(columnName));
   }
 }
