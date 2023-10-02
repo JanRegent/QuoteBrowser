@@ -52,7 +52,7 @@ void currentRowNew() {
 class CurrentRow {
   bool setCellDLOn = false;
   RxString quote = ''.obs;
-  String original = '';
+  RxString original = ''.obs;
   //-----------------------attribs
   RxString author = ''.obs;
   RxString book = ''.obs;
@@ -61,6 +61,9 @@ class CurrentRow {
   RxString stars = ''.obs;
   RxString fav = ''.obs;
   RxString categories = ''.obs;
+  //--------------------------others
+  RxString sourceUrl = ''.obs;
+  RxString fileUrl = ''.obs;
   //--------------------------ids
   RxString sheetName = ''.obs;
   RxString rowNo = ''.obs;
@@ -107,6 +110,7 @@ Future currentRowSet(String sheetRownoKey) async {
   }
 
   bl.orm.currentRow.quote.value = valueGet('quote');
+
   bl.orm.currentRow.author.value = valueGet('author');
   bl.orm.currentRow.book.value = valueGet('book');
   bl.orm.currentRow.parPage.value = valueGet('parPage');
@@ -114,15 +118,17 @@ Future currentRowSet(String sheetRownoKey) async {
   bl.orm.currentRow.stars.value = valueGet('stars');
   bl.orm.currentRow.fav.value = valueGet('favorite');
   bl.orm.currentRow.fav.value = valueGet('categories');
+
+  bl.orm.currentRow.dateinsert = valueGet('dateinsert');
+  bl.orm.currentRow.sourceUrl.value = valueGet('sourceUrl');
+  bl.orm.currentRow.fileUrl.value = valueGet('fileUrl');
+  bl.orm.currentRow.original.value = valueGet('original');
   pureTags();
 
-  bl.orm.currentRow.original = '';
-
   //--------------------------ids
-  //String sheetName = responseData.sheetNames[currentRowIndex];
+
   bl.orm.currentRow.sheetName.value = sheetName;
   bl.orm.currentRow.rowNo.value = sheetRownoKey.split('__|__')[1];
-  //responseData.rowNos[currentRowIndex].toString();
   bl.orm.currentRow.fileId = valueGet('fileId');
   bl.orm.currentRow.dateinsert = valueGet('dateinsert');
   //--------------------------optional user fields
@@ -141,5 +147,7 @@ Future currentRowSet(String sheetRownoKey) async {
     if (columnName == 'favorite') continue;
     if (columnName == 'categories') continue;
     bl.orm.currentRow.optionalFields[columnName] = valueGet(columnName);
+    print('------------$columnName');
+    print(bl.orm.currentRow.optionalFields[columnName]);
   }
 }

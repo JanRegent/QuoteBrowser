@@ -1,6 +1,7 @@
 // ignore: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../BL/bl.dart';
@@ -31,12 +32,38 @@ class _OthersFieldsState extends State<OthersFields> {
   }
 
   List<Widget> expandedOthers() {
-    othersFieldsWidgets = [];
+    othersFieldsWidgets = [
+      ListTile(
+          tileColor: Colors.white,
+          leading: const Text('fileUrl'),
+          title: TextButton(
+              child: Obx(() => Text(bl.orm.currentRow.fileUrl.value)),
+              onPressed: () => _onOpen(bl.orm.currentRow.fileUrl.value)),
+          trailing: copyPasteClearPopupMenuButton(
+              bl.orm.currentRow.fileUrl.value, 'fileUrl')),
+      ListTile(
+          tileColor: Colors.white,
+          leading: const Text('sourceUrl'),
+          title: TextButton(
+              child: Obx(() => Text(bl.orm.currentRow.sourceUrl.value)),
+              onPressed: () => _onOpen(bl.orm.currentRow.sourceUrl.value)),
+          trailing: copyPasteClearPopupMenuButton(
+              bl.orm.currentRow.sourceUrl.value, 'sourceUrl')),
+      ListTile(
+          tileColor: Colors.white,
+          leading: const Text('original'),
+          title: TextButton(
+              child: Obx(() => Text(bl.orm.currentRow.original.value)),
+              onPressed: () {}),
+          trailing: copyPasteClearPopupMenuButton(
+              bl.orm.currentRow.original.value, 'original'))
+    ];
 
     for (String columnName in bl.orm.currentRow.optionalFields.keys) {
-      if (columnName.toString().isEmpty) {
-        continue;
-      }
+      if (columnName.toString().isEmpty) continue;
+      if (columnName == 'fileUrl') continue;
+      if (columnName == 'sourceUrl') continue;
+      if (columnName == 'original') continue;
 
       othersFieldsWidgets.add(
         ListTile(

@@ -98,8 +98,8 @@ void clearField(String attribName) async {
       await setCellBL('tags', bl.orm.currentRow.tags.value);
       break;
     case 'original':
-      bl.orm.currentRow.original = '';
-      await setCellBL('original', bl.orm.currentRow.original);
+      bl.orm.currentRow.original.value = '';
+      await setCellBL('original', bl.orm.currentRow.original.value);
       return;
     case '__othersFields__':
       return;

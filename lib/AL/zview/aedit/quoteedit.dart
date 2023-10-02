@@ -129,7 +129,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         break;
 
       case 'original':
-        await setCellBL(attribName, bl.orm.currentRow.original);
+        await setCellBL(attribName, bl.orm.currentRow.original.value);
         return;
       case '__othersFields__':
         return;
