@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,6 +44,40 @@ class _QuoteEditState extends State<QuoteEdit> {
   final TextEditingController _controller = TextEditingController();
 
   RxString selected = ''.obs;
+  List<PopupMenuItem> menu1 = [
+    copyPopupMenuItem(bl.orm.currentRow.quote.value),
+    PopupMenuItem(
+      value: '/quoteIReplace',
+      child: const Text("quote from clipboard Replace"),
+      onTap: () async {
+        FlutterClipboard.paste().then((value) async {
+          await setCellBL('quote', value);
+        });
+      },
+    ),
+    PopupMenuItem(
+      value: '/quoteAppend',
+      child: const Text("quote from clipboard Append"),
+      onTap: () async {
+        FlutterClipboard.paste().then((value) async {
+          await setCellBL('quote', bl.orm.currentRow.quote + '\n\n' + value);
+        });
+      },
+    ),
+    PopupMenuItem(
+      value: '/__toRead__',
+      child: const Text("__toRead__ remove"),
+      onTap: () async {
+        try {
+          await setCellBL(
+              'dateinsert',
+              bl.orm.currentRow.dateinsert
+                  .toString()
+                  .replaceAll('__toRead__', ''));
+        } catch (_) {}
+      },
+    )
+  ];
 
   void attribSet(String attribName) async {
     try {
@@ -137,10 +172,34 @@ class _QuoteEditState extends State<QuoteEdit> {
             IconButton(
                 icon: const Icon(Icons.publish_rounded),
                 onPressed: () => attribSet('vydal')),
-            TextButton(
-                child: fieldPopupMenu(bl.orm.currentRow.quote.value, 'quote'),
-                onPressed: () => attribSet('quote')),
-            const Spacer(),
+
+            PopupMenuButton(
+              itemBuilder: (BuildContext context) {
+                if (bl.orm.currentRow.dateinsert
+                    .toString()
+                    .contains('__toRead__')) {
+                  menu1.add(PopupMenuItem(
+                    value: '/__toRead__',
+                    child: const Text("__toRead__ remove"),
+                    onTap: () async {
+                      try {
+                        await setCellBL(
+                            'dateinsert',
+                            bl.orm.currentRow.dateinsert
+                                .toString()
+                                .replaceAll('__toRead__', ''));
+                      } catch (_) {}
+                    },
+                  ));
+                }
+                return menu1;
+              },
+            )
+
+            // TextButton(
+            //     child: fieldPopupMenu(bl.orm.currentRow.quote.value, 'quote'),
+            //     onPressed: () => attribSet('quote')),
+            // const Spacer(),
           ],
         ));
   }

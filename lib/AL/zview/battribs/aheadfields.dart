@@ -61,9 +61,10 @@ class _MainFieldsState extends State<MainFields> {
     Icon catIcon = const Icon(Icons.category);
 
     return ListTile(
-        leading: catIcon,
-        title: Text(bl.orm.currentRow.categories.value),
-        trailing: fieldPopupMenu(bl.orm.currentRow.categories.value, 'cat'));
+      leading: catIcon,
+      title: Text(bl.orm.currentRow.categories.value),
+      //trailing: fieldPopupMenu(bl.orm.currentRow.categories.value, 'cat')
+    );
   }
 
   Future<void> _onOpen(String url) async {
@@ -82,10 +83,11 @@ class _MainFieldsState extends State<MainFields> {
       if (!url.startsWith('http')) continue;
       headCard.add(
         ListTile(
-            tileColor: Colors.white,
-            title: TextButton(child: Text(url), onPressed: () => _onOpen(url)),
-            leading: const Icon(Icons.link),
-            trailing: fieldPopupMenu(url, '')),
+          tileColor: Colors.white,
+          title: TextButton(child: Text(url), onPressed: () => _onOpen(url)),
+          leading: const Icon(Icons.link),
+          //trailing: fieldPopupMenu(url, '')
+        ),
       );
     }
   }
@@ -97,18 +99,21 @@ class _MainFieldsState extends State<MainFields> {
         tileColor: Colors.white,
         leading: ALicons.attrIcons.authorIcon,
         title: Obx(() => Text(bl.orm.currentRow.author.value)),
-        trailing: fieldPopupMenu(bl.orm.currentRow.author.value, 'author')));
+        trailing: copyPasteClearPopupMenuButton(
+            bl.orm.currentRow.author.value, 'author')));
 
     headCard.add(ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.bookIcon,
         title: Obx(() => Text(bl.orm.currentRow.book.value)),
-        trailing: fieldPopupMenu(bl.orm.currentRow.book.value, 'book')));
+        trailing: copyPasteClearPopupMenuButton(
+            bl.orm.currentRow.book.value, 'book')));
     headCard.add(ListTile(
         tileColor: Colors.white,
         leading: ALicons.attrIcons.parPageIcon,
         title: Obx(() => Text(bl.orm.currentRow.parPage.value)),
-        trailing: fieldPopupMenu(bl.orm.currentRow.parPage.value, 'parPage')));
+        trailing: copyPasteClearPopupMenuButton(
+            bl.orm.currentRow.parPage.value, 'parPage')));
     headCard.add(ListTile(
       tileColor: Colors.white,
       leading: favButt(),

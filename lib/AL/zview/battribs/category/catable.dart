@@ -5,7 +5,6 @@ import 'package:searchable_listview/searchable_listview.dart';
 import '../../../../BL/bl.dart';
 import '../../aedit/addquote/emptyview.dart';
 import '../../aedit/quoteedit.dart';
-import '../../aedit/fieldpopup.dart';
 
 class CatablePage extends StatefulWidget {
   const CatablePage({Key? key}) : super(key: key);
@@ -73,13 +72,14 @@ class _CatablePageState extends State<CatablePage> {
     return SearchableList<String>.async(
       builder: (displayedList, itemIndex, item) {
         return ListTile(
-            title: Text(displayedList[itemIndex]),
-            onTap: () {
-              setState(() {
-                selectedCats += '${displayedList[itemIndex]}\n';
-              });
-            },
-            trailing: fieldPopupMenu(displayedList[itemIndex], ''));
+          title: Text(displayedList[itemIndex]),
+          onTap: () {
+            setState(() {
+              selectedCats += '${displayedList[itemIndex]}\n';
+            });
+          },
+          //trailing: fieldPopupMenu(displayedList[itemIndex], '')
+        );
       },
       asyncListCallback: () async {
         await Future.delayed(const Duration(seconds: 1));

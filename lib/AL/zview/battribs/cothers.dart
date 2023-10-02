@@ -50,7 +50,7 @@ class _OthersFieldsState extends State<OthersFields> {
                     onPressed: () =>
                         _onOpen(bl.orm.currentRow.optionalFields[columnName]))
                 : Text(bl.orm.currentRow.optionalFields[columnName]),
-            trailing: fieldPopupMenu(
+            trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.optionalFields[columnName],
               columnName,
             )),

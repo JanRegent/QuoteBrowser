@@ -28,7 +28,7 @@ class _TagsTabState extends State<TagsTab> {
 
     for (int i = 0; i < tags.length; i++) {
       expandedCardTags.add(ListTile(
-          title: Text(tags[i]), trailing: fieldPopupMenu(tags[i], '')));
+          title: Text(tags[i]), trailing: copyPopupMenuButton(tags[i])));
     }
     return expandedCardTags;
   }

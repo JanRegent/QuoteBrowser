@@ -6,120 +6,73 @@ import '../../../BL/bl.dart';
 import '../../alib/alert/alertok.dart';
 import 'quoteedit.dart';
 
-PopupMenuButton fieldPopupMenu(String fieldValue, String columnName) {
+PopupMenuItem copyPopupMenuItem(String fieldValue) {
+  return PopupMenuItem(
+    value: '/copy',
+    child: IconButton(
+      icon: const Icon(Icons.copy),
+      onPressed: () {
+        FlutterClipboard.copy(fieldValue).then((value) => {});
+      },
+    ),
+  );
+}
+
+PopupMenuButton copyPopupMenuButton(String fieldValue) {
   return PopupMenuButton(
-    onSelected: (value) {
-      // your logic
-    },
     itemBuilder: (BuildContext context) {
-      return listPopupMenu(context, fieldValue, columnName);
+      return [copyPopupMenuItem(fieldValue)];
     },
   );
 }
 
-List<PopupMenuItem> menu1 = [];
-List<PopupMenuItem> listPopupMenu(
-    BuildContext context, String fieldValue, String columnName) {
-  menu1 = [
-    PopupMenuItem(
-      value: '/copy',
-      child: IconButton(
-        icon: const Icon(Icons.copy),
-        onPressed: () {
-          FlutterClipboard.copy(fieldValue).then((value) => {});
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).pop();
-        },
-      ),
+PopupMenuItem pastePopupMenuItem(String columnName) {
+  return PopupMenuItem(
+    value: '/paste',
+    child: IconButton(
+      icon: const Icon(Icons.paste),
+      onPressed: () {
+        FlutterClipboard.paste().then((value) async {
+          await setCellBL(columnName, value);
+        });
+      },
     ),
+  );
+}
+
+PopupMenuItem clearPopupMenuItem(String columnName) {
+  return PopupMenuItem(
+    value: '/clearField',
+    child: IconButton(
+      icon: const Icon(Icons.cancel),
+      onPressed: () async {
+        String result = noYes(
+          'Clear this field?\nIt will be cleared even in the cloud!',
+        );
+
+        if (result == 'no') return;
+        clearField(columnName);
+      },
+    ),
+  );
+}
+
+PopupMenuButton copyPasteClearPopupMenuButton(
+    String fieldValue, String columnName) {
+  return PopupMenuButton(
+    itemBuilder: (BuildContext context) {
+      return copyPasteClearPopumMenuItem(fieldValue, columnName);
+    },
+  );
+}
+
+List<PopupMenuItem> copyPasteClearPopumMenuItem(
+    String fieldValue, String columnName) {
+  List<PopupMenuItem> menu1 = [
+    copyPopupMenuItem(fieldValue),
+    //clearPopupMenuItem(fieldValue)
+    pastePopupMenuItem(columnName)
   ];
-
-  if (columnName.isNotEmpty) {
-    menu1.add(PopupMenuItem(
-      value: '/clearField',
-      child: IconButton(
-        icon: const Icon(Icons.cancel),
-        onPressed: () async {
-          String result = await noYes(
-              'Clear this field?\nIt will be cleared even in the cloud!',
-              context);
-
-          if (result == 'no') return;
-          clearField(columnName);
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).pop();
-        },
-      ),
-    ));
-  }
-  if ('fileUrl' == columnName) {
-    menu1.add(PopupMenuItem(
-      value: '/fileUrl',
-      child: const Text("fileUrl from clipboard"),
-      onTap: () async {
-        FlutterClipboard.paste().then((value) async {
-          await setCellBL('fileUrl', value);
-        });
-      },
-    ));
-  }
-  if ('quote' == columnName) {
-    menu1.add(PopupMenuItem(
-      value: '/quoteIReplace',
-      child: const Text("quote from clipboard Replace"),
-      onTap: () async {
-        FlutterClipboard.paste().then((value) async {
-          await setCellBL('quote', value);
-        });
-      },
-    ));
-    menu1.add(PopupMenuItem(
-      value: '/quoteAppend',
-      child: const Text("quote from clipboard Append"),
-      onTap: () async {
-        FlutterClipboard.paste().then((value) async {
-          await setCellBL('quote', bl.orm.currentRow.quote + '\n\n' + value);
-        });
-      },
-    ));
-  }
-  if ('original' == columnName) {
-    menu1.add(PopupMenuItem(
-      value: '/Original',
-      child: const Text("Original from clipboard"),
-      onTap: () async {
-        FlutterClipboard.paste().then((value) async {
-          await setCellBL('original', value);
-        });
-      },
-    ));
-    menu1.add(PopupMenuItem(
-      value: '/OriginalFromTitle',
-      child: const Text("Original from title"),
-      onTap: () async {
-        try {
-          await setCellBL(
-              'original', bl.orm.currentRow.optionalFields['title']);
-        } catch (_) {}
-      },
-    ));
-  }
-
-  if (bl.orm.currentRow.dateinsert.toString().contains('__toRead__')) {
-    menu1.add(PopupMenuItem(
-      value: '/__toRead__',
-      child: const Text("__toRead__ remove"),
-      onTap: () async {
-        try {
-          await setCellBL(
-              'dateinsert',
-              bl.orm.currentRow.dateinsert
-                  .toString()
-                  .replaceAll('__toRead__', ''));
-        } catch (_) {}
-      },
-    ));
-  }
   return menu1;
 }
 
