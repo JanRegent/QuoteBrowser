@@ -37,7 +37,9 @@ class _OthersFieldsState extends State<OthersFields> {
           tileColor: Colors.white,
           leading: const Text('fileUrl'),
           title: TextButton(
-              child: Obx(() => Text(bl.orm.currentRow.fileUrl.value)),
+              child: Row(
+                children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
+              ),
               onPressed: () => _onOpen(bl.orm.currentRow.fileUrl.value)),
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.fileUrl.value, 'fileUrl')),
@@ -45,18 +47,12 @@ class _OthersFieldsState extends State<OthersFields> {
           tileColor: Colors.white,
           leading: const Text('sourceUrl'),
           title: TextButton(
-              child: Obx(() => Text(bl.orm.currentRow.sourceUrl.value)),
+              child: Row(
+                children: [Obx(() => Text(bl.orm.currentRow.sourceUrl.value))],
+              ),
               onPressed: () => _onOpen(bl.orm.currentRow.sourceUrl.value)),
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.sourceUrl.value, 'sourceUrl')),
-      ListTile(
-          tileColor: Colors.white,
-          leading: const Text('original'),
-          title: TextButton(
-              child: Obx(() => Text(bl.orm.currentRow.original.value)),
-              onPressed: () {}),
-          trailing: copyPasteClearPopupMenuButton(
-              bl.orm.currentRow.original.value, 'original'))
     ];
     for (var i = 0; i < bl.orm.currentRow.optionalColumNames.length; i++) {
       String columnName = bl.orm.currentRow.optionalColumNames[i];
@@ -71,11 +67,13 @@ class _OthersFieldsState extends State<OthersFields> {
             leading: Text(columnName),
             title: Row(children: [
               TextButton(
-                  child: Obx(() => Text(bl.orm.currentRow.optionalvalues[i])),
-                  onPressed: () => _onOpen(bl.orm.currentRow.optionalvalues[i]))
+                  child: Obx(
+                      () => Text(bl.orm.currentRow.optionalvalues[i].value)),
+                  onPressed: () =>
+                      _onOpen(bl.orm.currentRow.optionalvalues[i].value))
             ]),
             trailing: copyPasteClearPopupMenuButton(
-              bl.orm.currentRow.optionalvalues[i],
+              bl.orm.currentRow.optionalvalues[i].value,
               columnName,
             )),
       );
@@ -84,18 +82,96 @@ class _OthersFieldsState extends State<OthersFields> {
     return othersFieldsWidgets;
   }
 
+  Expanded originalText() {
+    return Expanded(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Obx(() => Text(
+              bl.orm.currentRow.original.value,
+              style: const TextStyle(fontSize: 20.0),
+            )),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        color: const Color.fromARGB(255, 122, 203, 243),
-        child: ListView.separated(
-          itemCount: othersFieldsWidgets.length,
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-          itemBuilder: (BuildContext context, int index) {
-            return othersFieldsWidgets[index];
-          },
-        ));
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: [
+                const Tab(text: 'Others'),
+                Tab(
+                    child: Row(
+                  children: [
+                    const Text('Original'),
+                    const Text('    '),
+                    copyPasteClearPopupMenuButton(
+                        bl.orm.currentRow.original.value, 'original')
+                  ],
+                ))
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: [
+              ListView(children: expandedOthers()),
+              ListView(
+                children: [originalText()],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Card(
+  //       margin: const EdgeInsets.symmetric(vertical: 5),
+  //       color: const Color.fromARGB(255, 122, 203, 243),
+  //       child: ListView.separated(
+  //         itemCount: othersFieldsWidgets.length,
+  //         separatorBuilder: (BuildContext context, int index) =>
+  //             const Divider(),
+  //         itemBuilder: (BuildContext context, int index) {
+  //           return othersFieldsWidgets[index];
+  //         },
+  //       ));
+  // }
+}
+
+class TabBarDemo extends StatelessWidget {
+  const TabBarDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.directions_car)),
+                Tab(icon: Icon(Icons.directions_transit)),
+                Tab(icon: Icon(Icons.directions_bike)),
+              ],
+            ),
+            title: const Text('Tabs Demo'),
+          ),
+          body: const TabBarView(
+            children: [
+              Icon(Icons.directions_car),
+              Icon(Icons.directions_transit),
+              Icon(Icons.directions_bike),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

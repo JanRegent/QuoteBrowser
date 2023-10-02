@@ -10,7 +10,7 @@ PopupMenuItem copyPopupMenuItem(String fieldValue) {
   return PopupMenuItem(
     value: '/copy',
     child: IconButton(
-      icon: const Icon(Icons.copy),
+      icon: const Icon(Icons.copy, color: Colors.black),
       onPressed: () {
         FlutterClipboard.copy(fieldValue).then((value) => {});
       },
@@ -30,7 +30,7 @@ PopupMenuItem pastePopupMenuItem(String columnName) {
   return PopupMenuItem(
     value: '/paste',
     child: IconButton(
-      icon: const Icon(Icons.paste),
+      icon: const Icon(Icons.paste, color: Colors.black),
       onPressed: () {
         FlutterClipboard.paste().then((value) async {
           await setCellBL(columnName, value);
