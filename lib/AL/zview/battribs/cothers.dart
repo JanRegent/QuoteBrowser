@@ -54,6 +54,26 @@ class _OthersFieldsState extends State<OthersFields> {
               onPressed: () => _onOpen(bl.orm.currentRow.sourceUrl.value)),
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.sourceUrl.value, 'sourceUrl')),
+      ListTile(
+          tileColor: Colors.white,
+          leading: const Text('vydal'),
+          title: TextButton(
+              child: Row(
+                children: [Obx(() => Text(bl.orm.currentRow.publisher.value))],
+              ),
+              onPressed: () => _onOpen(bl.orm.currentRow.publisher.value)),
+          trailing: copyPasteClearPopupMenuButton(
+              bl.orm.currentRow.publisher.value, 'vydal')),
+      ListTile(
+          tileColor: Colors.white,
+          leading: const Text('folder'),
+          title: TextButton(
+              child: Row(
+                children: [Obx(() => Text(bl.orm.currentRow.folder.value))],
+              ),
+              onPressed: () => _onOpen(bl.orm.currentRow.folder.value)),
+          trailing: copyPasteClearPopupMenuButton(
+              bl.orm.currentRow.sourceUrl.value, 'folder')),
     ];
     for (var i = 0; i < bl.orm.currentRow.optionalColumNames.length; i++) {
       String columnName = bl.orm.currentRow.optionalColumNames[i];
@@ -61,6 +81,8 @@ class _OthersFieldsState extends State<OthersFields> {
       if (columnName == 'fileUrl') continue;
       if (columnName == 'sourceUrl') continue;
       if (columnName == 'original') continue;
+      if (columnName == 'vydal') continue;
+      if (columnName == 'folder') continue;
 
       othersFieldsWidgets.add(
         ListTile(

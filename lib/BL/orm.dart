@@ -70,6 +70,9 @@ class CurrentRow {
   String fileId = '';
   String dateinsert = '';
   //--------------------------optional user fields
+  RxString publisher = ''.obs;
+  RxString folder = ''.obs;
+
   List<String> cols = [];
   //Map optionalFields = {};
   //List<RxString> optionalvalues = [];
@@ -126,6 +129,9 @@ Future currentRowSet(String sheetRownoKey) async {
   bl.orm.currentRow.sourceUrl.value = valueGet('sourceUrl');
   bl.orm.currentRow.fileUrl.value = valueGet('fileUrl');
   bl.orm.currentRow.original.value = valueGet('original');
+
+  bl.orm.currentRow.publisher.value = valueGet('vydal');
+  bl.orm.currentRow.folder.value = valueGet('folder');
   pureTags();
 
   //--------------------------ids
@@ -153,6 +159,9 @@ Future currentRowSet(String sheetRownoKey) async {
     if (columnName == 'original') continue;
     if (columnName == 'sourceUrl') continue;
     if (columnName == 'dateinsert') continue;
+    if (columnName == 'vydal') continue;
+    if (columnName == 'folder') continue;
+
     bl.orm.currentRow.optionalColumNames.add(columnName);
     bl.orm.currentRow.optionalvalues.add(valueGet(columnName).obs);
     bl.orm.currentRow.optionalvalues.refresh();
