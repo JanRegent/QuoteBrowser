@@ -221,7 +221,7 @@ class AL {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void messageFloating(BuildContext context, String title, String mess) async {
+  void messageLoading(BuildContext context, String title, String mess) async {
     final snackBar = SnackBar(
       elevation: 0,
       duration: const Duration(seconds: 25),
@@ -229,12 +229,30 @@ class AL {
       backgroundColor: Colors.transparent,
       content: SizedBox(
           height: 200,
-          child: AwesomeSnackbarContent(
-            title: title,
-            titleFontSize: 20,
-            message: mess,
-            messageFontSize: 25,
-            contentType: ContentType.help,
+          child: Column(
+            children: [
+              const CircularProgressIndicator(
+                color: Colors.red,
+              ),
+              AwesomeSnackbarContent(
+                title: title,
+                titleFontSize: 20,
+                message: mess,
+                messageFontSize: 25,
+                contentType: ContentType.help,
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: const SizedBox(
+                  height: 10,
+                  width: 300,
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.lime,
+                    color: Colors.red,
+                  ),
+                ),
+              )
+            ],
           )),
     );
 

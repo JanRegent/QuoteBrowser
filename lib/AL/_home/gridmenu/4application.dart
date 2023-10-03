@@ -11,7 +11,7 @@ class ApplicationMenu {
       MenuTile item, BuildContext context, Function setstateHome) async {
     switch (item.tileName) {
       case 'About':
-        al.messageFloating(context, 'Build', buildDate);
+        al.messageLoading(context, 'Build', buildDate);
         break;
 
       case 'Settings':

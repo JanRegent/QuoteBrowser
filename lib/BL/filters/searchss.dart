@@ -19,7 +19,7 @@ Future<int> filterSearchText(String searchText, BuildContext context) async {
   // ignore: prefer_is_empty
   if (currentSS.keys.length == 0) {
     //ignore: use_build_context_synchronously
-    al.messageFloating(context, 'Search', searchText);
+    al.messageLoading(context, 'Searching in cloud', searchText);
 
     currentSS.keys = await dl.httpService.searchSS(searchText);
 
@@ -60,7 +60,7 @@ Future<int> searchColumnAndQuote(String columnName, String columnValue,
 
   if (currentSS.keys.isEmpty) {
     //ignore: use_build_context_synchronously
-    al.messageFloating(context, 'Search', '$columnValue __|__$searchText');
+    al.messageLoading(context, 'Search', '$columnValue __|__$searchText');
 
     currentSS.keys = await dl.httpService
         .searchColumnAndQuote(searchText, columnName, columnValue);
@@ -98,7 +98,7 @@ Future<int> getLastRows(String sheetName, BuildContext context) async {
   debugPrint(sheetName);
 
   //ignore: use_build_context_synchronously
-  al.messageFloating(context, 'Search', 'Get last rows of $sheetName');
+  al.messageLoading(context, 'Search', 'Get last rows of $sheetName');
 
   currentSS.keys = await dl.httpService.getLastRows(sheetName);
 

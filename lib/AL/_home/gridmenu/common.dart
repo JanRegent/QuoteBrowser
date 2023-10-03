@@ -18,8 +18,6 @@ Future<String> inputWord(BuildContext context) async {
 //----------------------------------------------------------search/view
 
 Future searchText(String searchText, BuildContext context) async {
-  al.messageFloating(context, 'Searching in cloud', searchText);
-
   filterSearchText(searchText, context).then((value) async {
     if (value == 0) return;
 
@@ -34,7 +32,7 @@ Future searchText(String searchText, BuildContext context) async {
 
 Future searchColumnQuote(String columnName, String columnValue,
     String searchText, BuildContext context) async {
-  al.messageFloating(
+  al.messageLoading(
       context, 'Searching in cloud', '$columnValue & $searchText');
   searchColumnAndQuote(columnName, columnValue, searchText, context).then(
       (value) async {
@@ -52,7 +50,7 @@ Future searchColumnQuote(String columnName, String columnValue,
 }
 
 Future searchColumnText(String columnTextKey, BuildContext context) async {
-  al.messageFloating(context, 'Searching in cloud', columnTextKey);
+  al.messageLoading(context, 'Searching in cloud', columnTextKey);
 
   columnTextShow(columnTextKey, context).then((value) async {
     if (value == 0) return;
