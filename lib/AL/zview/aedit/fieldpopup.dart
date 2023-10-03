@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
+import '../../../BL/bluti.dart';
 import '../../alib/alert/alertok.dart';
 import 'quoteedit.dart';
 
@@ -26,31 +27,6 @@ PopupMenuButton copyPopupMenuButton(String fieldValue) {
   );
 }
 
-String pureHttpLink(String nopureVal) {
-  String pureLink = nopureVal.trim();
-
-  if (nopureVal.startsWith('http://')) {
-    pureLink = nopureVal
-        .substring(nopureVal.indexOf('http://') + 'http://'.length)
-        .trim();
-  }
-  if (pureLink.startsWith('https://')) {
-    pureLink = pureLink
-        .substring(pureLink.indexOf('https://') + 'https://'.length)
-        .trim();
-  }
-  if (pureLink.startsWith('docs.google.com/document/d/')) {
-    pureLink = pureLink
-        .substring(pureLink.indexOf('docs.google.com/document/d/') +
-            'docs.google.com/document/d/'.length)
-        .trim();
-    pureLink = pureLink.replaceAll('/edit', '');
-    pureLink = pureLink.replaceAll('/view', '');
-  }
-
-  return pureLink;
-}
-
 PopupMenuItem pastePopupMenuItem(String columnName) {
   return PopupMenuItem(
     value: '/paste',
@@ -58,7 +34,10 @@ PopupMenuItem pastePopupMenuItem(String columnName) {
       icon: const Icon(Icons.paste, color: Colors.black),
       onPressed: () {
         FlutterClipboard.paste().then((value) async {
-          await setCellBL(columnName, pureHttpLink(value));
+          if (['fileUrl', 'sourceUrl', 'folder'].contains(columnName)) {
+            value = blUti.pureHttpGDriveLink(value);
+          }
+          await setCellBL(columnName, value);
         });
       },
     ),

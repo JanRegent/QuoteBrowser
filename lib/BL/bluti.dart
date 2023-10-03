@@ -5,6 +5,7 @@ import 'package:dartx/dartx.dart';
 BLuti blUti = BLuti();
 
 class BLuti {
+  //---------------------------------------------------------------url/links
   String url2fileid(String url) {
     try {
       if (!url.startsWith('https://docs.')) return url;
@@ -18,6 +19,44 @@ class BLuti {
       return '';
     }
   }
+
+  String pureHttpGDriveLink(String nopureVal) {
+    String pureLink = pureStartHttp(nopureVal.trim());
+
+    if (pureLink.startsWith('docs.google.com/document/d/')) {
+      pureLink = pureLink
+          .substring(pureLink.indexOf('docs.google.com/document/d/') +
+              'docs.google.com/document/d/'.length)
+          .trim();
+      pureLink = pureLink.replaceAll('/edit', '');
+      pureLink = pureLink.replaceAll('/view', '');
+    }
+    if (pureLink.startsWith('drive.google.com/drive/u/0/folders/')) {
+      pureLink = pureLink
+          .substring(pureLink.indexOf('drive.google.com/drive/u/0/folders/') +
+              'drive.google.com/drive/u/0/folders/'.length)
+          .trim();
+    }
+    return pureLink;
+  }
+
+  String pureStartHttp(String nopureVal) {
+    String pureLink = nopureVal.trim();
+
+    if (nopureVal.startsWith('http://')) {
+      pureLink = nopureVal
+          .substring(nopureVal.indexOf('http://') + 'http://'.length)
+          .trim();
+    }
+    if (pureLink.startsWith('https://')) {
+      pureLink = pureLink
+          .substring(pureLink.indexOf('https://') + 'https://'.length)
+          .trim();
+    }
+
+    return pureLink;
+  }
+  //--------------------------------------------------------lang
 
   String transl(String key) {
     if (key == 'Loading') return 'Načítání';
@@ -52,7 +91,7 @@ class BLuti {
     //https://medium.com/@arrahmanbd/remove-html-tags-from-string-in-flutter-dart-with-regex-b824c613e82b
   }
 
-  //---------------------------------------------------------date
+  //---------------------------------------------------------************date
 
   String todayStr() {
     DateTime day = DateTime.now();

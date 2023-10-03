@@ -128,9 +128,15 @@ Future currentRowSet(String sheetRownoKey) async {
   bl.orm.currentRow.dateinsert = valueGet('dateinsert');
 
   bl.orm.currentRow.sourceUrl.value = valueGet('sourceUrl');
+  if (bl.orm.currentRow.sourceUrl.value.length > 10) {
+    if (!bl.orm.currentRow.sourceUrl.value.startsWith('http')) {
+      bl.orm.currentRow.sourceUrl.value =
+          'https://${bl.orm.currentRow.sourceUrl.value}';
+    }
+  }
 
   bl.orm.currentRow.fileUrl.value = valueGet('fileUrl');
-  if (!bl.orm.currentRow.sourceUrl.value.startsWith('http')) {
+  if (!bl.orm.currentRow.fileUrl.value.startsWith('http')) {
     bl.orm.currentRow.fileUrl.value =
         'https://docs.google.com/document/d/${bl.orm.currentRow.fileUrl.value}/view';
   }
@@ -138,7 +144,15 @@ Future currentRowSet(String sheetRownoKey) async {
   bl.orm.currentRow.original.value = valueGet('original');
 
   bl.orm.currentRow.publisher.value = valueGet('vydal');
+
   bl.orm.currentRow.folder.value = valueGet('folder');
+  if (bl.orm.currentRow.folder.value.isNotEmpty) {
+    if (!bl.orm.currentRow.folder.value.startsWith('http')) {
+      bl.orm.currentRow.folder.value =
+          'https://drive.google.com/drive/u/0/folders/${bl.orm.currentRow.folder.value}';
+    }
+  }
+
   pureTags();
 
   //--------------------------ids
