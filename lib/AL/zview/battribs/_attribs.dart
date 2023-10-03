@@ -9,7 +9,8 @@ import 'cothers.dart';
 
 // ignore: must_be_immutable
 class QuoteAttribs extends StatefulWidget {
-  const QuoteAttribs({super.key});
+  Function setStateSwiper;
+  QuoteAttribs(this.setStateSwiper, {super.key});
 
   @override
   State<QuoteAttribs> createState() => _QuoteAttribsState();

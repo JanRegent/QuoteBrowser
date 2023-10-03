@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../BL/bl.dart';
 import '../aedit/fieldpopup.dart';
+import 'coriginalview.dart';
 
 class OthersFields extends StatefulWidget {
   const OthersFields({super.key});
@@ -21,7 +22,7 @@ class _OthersFieldsState extends State<OthersFields> {
   initState() {
     super.initState();
 
-    expandedOthers();
+    expandedOthersBuild();
   }
 
   Future<void> _onOpen(String url) async {
@@ -31,7 +32,7 @@ class _OthersFieldsState extends State<OthersFields> {
     }
   }
 
-  List<Widget> expandedOthers() {
+  List<Widget> expandedOthersBuild() {
     othersFieldsWidgets = [
       ListTile(
           tileColor: Colors.white,
@@ -82,16 +83,18 @@ class _OthersFieldsState extends State<OthersFields> {
     return othersFieldsWidgets;
   }
 
-  Expanded originalText() {
-    return Expanded(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Obx(() => Text(
-              bl.orm.currentRow.original.value,
-              style: const TextStyle(fontSize: 20.0),
-            )),
-      ),
-    );
+  Card othersListview() {
+    return Card(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        color: const Color.fromARGB(255, 122, 203, 243),
+        child: ListView.separated(
+          itemCount: othersFieldsWidgets.length,
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+          itemBuilder: (BuildContext context, int index) {
+            return othersFieldsWidgets[index];
+          },
+        ));
   }
 
   @override
@@ -99,6 +102,7 @@ class _OthersFieldsState extends State<OthersFields> {
     return MaterialApp(
       home: DefaultTabController(
         length: 2,
+        initialIndex: 1,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
@@ -117,58 +121,7 @@ class _OthersFieldsState extends State<OthersFields> {
             ),
           ),
           body: TabBarView(
-            children: [
-              ListView(children: expandedOthers()),
-              ListView(
-                children: [originalText()],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Card(
-  //       margin: const EdgeInsets.symmetric(vertical: 5),
-  //       color: const Color.fromARGB(255, 122, 203, 243),
-  //       child: ListView.separated(
-  //         itemCount: othersFieldsWidgets.length,
-  //         separatorBuilder: (BuildContext context, int index) =>
-  //             const Divider(),
-  //         itemBuilder: (BuildContext context, int index) {
-  //           return othersFieldsWidgets[index];
-  //         },
-  //       ));
-  // }
-}
-
-class TabBarDemo extends StatelessWidget {
-  const TabBarDemo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: const TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.directions_transit)),
-                Tab(icon: Icon(Icons.directions_bike)),
-              ],
-            ),
-            title: const Text('Tabs Demo'),
-          ),
-          body: const TabBarView(
-            children: [
-              Icon(Icons.directions_car),
-              Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
-            ],
+            children: [othersListview(), const OriginalView()],
           ),
         ),
       ),

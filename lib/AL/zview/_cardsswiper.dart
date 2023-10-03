@@ -44,6 +44,10 @@ class _CardSwiperState extends State<CardSwiper> {
     controller.dispose();
     super.dispose();
   }
+
+  void setStateSwiper() {
+    setState(() {});
+  }
   //---------------------------------------------------------- int startRow
 
   void currentRowIndexFromBookmarksGet() {}
@@ -143,7 +147,7 @@ class _CardSwiperState extends State<CardSwiper> {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             readOnlyView ? const ColoredView() : AttrEdit(swiperSetstate),
-            const QuoteAttribs()
+            QuoteAttribs(setStateSwiper)
           ],
         ),
       ),
