@@ -231,9 +231,9 @@ class AL {
           height: 200,
           child: Column(
             children: [
-              const CircularProgressIndicator(
-                color: Colors.red,
-              ),
+              // const CircularProgressIndicator(
+              //   color: Colors.red,
+              // ),
               AwesomeSnackbarContent(
                 title: title,
                 titleFontSize: 20,

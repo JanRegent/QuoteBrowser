@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../BL/bl.dart';
 import '../BL/bluti.dart';
@@ -91,20 +92,33 @@ class HttpService {
   Future<String> setCellDL(String sheetName, String columnName,
       String cellContent, String rowNo) async {
     // The below request is the same as above.
-    // ignore: unused_local_variable
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {
-        'action': 'setCell',
-        'sheetName': sheetName,
-        'sheetId': dataSheetId,
-        'columnName': columnName,
-        'cellContent': cellContent,
-        'rowNo': rowNo
-      },
-    );
+    late Response response;
+    try {
+      // ignore: unused_local_variable
+      response = await dio.get(
+        backendUrl,
+        queryParameters: {
+          'action': 'setCell',
+          'sheetName': sheetName,
+          'sheetId': dataSheetId,
+          'columnName': columnName,
+          'cellContent': cellContent,
+          'rowNo': rowNo
+        },
+      );
+    } catch (_) {
+      return '';
+    }
+    String sheetRownoKey = '';
+    try {
+      sheetRownoKey = response.data['data'][0];
+    } catch (_) {
+      debugPrint(response.data['error']);
+      return '';
+    }
+
     bl.orm.currentRow.setCellDLOn = true;
-    String sheetRownoKey = response.data['data'][0];
+
     List<String> updatedRow = blUti.toListString(response.data['data'][1]);
     bl.sheetrowsCRUD.updateRow(sheetRownoKey, updatedRow);
 

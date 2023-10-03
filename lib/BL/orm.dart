@@ -126,8 +126,15 @@ Future currentRowSet(String sheetRownoKey) async {
   bl.orm.currentRow.fav.value = valueGet('categories');
 
   bl.orm.currentRow.dateinsert = valueGet('dateinsert');
+
   bl.orm.currentRow.sourceUrl.value = valueGet('sourceUrl');
+
   bl.orm.currentRow.fileUrl.value = valueGet('fileUrl');
+  if (!bl.orm.currentRow.sourceUrl.value.startsWith('http')) {
+    bl.orm.currentRow.fileUrl.value =
+        'https://docs.google.com/document/d/${bl.orm.currentRow.fileUrl.value}/view';
+  }
+
   bl.orm.currentRow.original.value = valueGet('original');
 
   bl.orm.currentRow.publisher.value = valueGet('vydal');

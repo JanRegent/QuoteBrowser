@@ -22,7 +22,9 @@ Future setCellBL(String columnName, String cellContent) async {
         columnName,
         cellContent,
         bl.orm.currentRow.rowNo.value);
-    await currentRowSet(sheetRownokey);
+    if (sheetRownokey.isNotEmpty) {
+      await currentRowSet(sheetRownokey);
+    }
   } catch (e) {
     debugPrint('setCellBL( \n$e');
   }
