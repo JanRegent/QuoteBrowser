@@ -66,12 +66,10 @@ class _ColoredViewState extends State<ColoredView> {
         ListTile(
           tileColor: const Color.fromARGB(255, 232, 216, 142),
           leading: Text(bl.orm.currentRow.dateinsert),
-          title: Text(bl.orm.currentRow.sheetName.value),
+          title: Obx(() => Text(
+              '${bl.orm.currentRow.sheetName.value}_|_${bl.orm.currentRow.rowNo.value}')),
         ),
-        ListTile(
-          title: quoteField(),
-          leading: Obx(() => Text(bl.orm.currentRow.rowNo.value)),
-        ),
+        ListTile(title: quoteField()),
       ]),
     );
   }

@@ -49,12 +49,10 @@ class _OriginalViewState extends State<OriginalView> {
         ListTile(
           tileColor: const Color.fromARGB(255, 232, 216, 142),
           leading: Text(bl.orm.currentRow.dateinsert),
-          title: Text(bl.orm.currentRow.sheetName.value),
+          title: Obx(() => Text(
+              '${bl.orm.currentRow.sheetName.value}_|_${bl.orm.currentRow.rowNo.value}')),
         ),
-        ListTile(
-          title: originalField(),
-          leading: Obx(() => Text(bl.orm.currentRow.rowNo.value)),
-        ),
+        ListTile(title: originalField()),
       ]),
     );
   }
