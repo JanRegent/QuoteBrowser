@@ -221,14 +221,45 @@ class AL {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void messageLoading(BuildContext context, String title, String mess) async {
+  void messageInfo(
+      BuildContext context, String title, String mess, int seconds) async {
     final snackBar = SnackBar(
       elevation: 0,
-      duration: const Duration(seconds: 25),
+      duration: Duration(seconds: seconds),
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       content: SizedBox(
-          height: 200,
+          height: 300,
+          child: Column(
+            children: [
+              // const CircularProgressIndicator(
+              //   color: Colors.red,
+              // ),
+              AwesomeSnackbarContent(
+                title: title,
+                titleFontSize: 20,
+                message: mess,
+                messageFontSize: 25,
+                contentType: ContentType.help,
+              ),
+            ],
+          )),
+    );
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
+  }
+
+  void messageLoading(
+      BuildContext context, String title, String mess, int seconds) async {
+    final snackBar = SnackBar(
+      elevation: 0,
+      duration: Duration(seconds: seconds),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: SizedBox(
+          height: 300,
           child: Column(
             children: [
               // const CircularProgressIndicator(

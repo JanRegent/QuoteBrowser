@@ -136,11 +136,14 @@ Future currentRowSet(String sheetRownoKey) async {
   }
 
   bl.orm.currentRow.fileUrl.value = valueGet('fileUrl');
-  if (!bl.orm.currentRow.fileUrl.value.startsWith('http')) {
-    bl.orm.currentRow.fileUrl.value =
-        'https://docs.google.com/document/d/${bl.orm.currentRow.fileUrl.value}/view';
+  if (bl.orm.currentRow.fileUrl.value.isNotEmpty) {
+    if (!bl.orm.currentRow.fileUrl.value.startsWith('fb')) {
+      if (!bl.orm.currentRow.fileUrl.value.startsWith('http')) {
+        bl.orm.currentRow.fileUrl.value =
+            'https://docs.google.com/document/d/${bl.orm.currentRow.fileUrl.value}/view';
+      }
+    }
   }
-
   bl.orm.currentRow.original.value = valueGet('original');
 
   bl.orm.currentRow.publisher.value = valueGet('vydal');

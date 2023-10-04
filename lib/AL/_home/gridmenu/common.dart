@@ -33,7 +33,7 @@ Future searchText(String searchText, BuildContext context) async {
 Future searchColumnQuote(String columnName, String columnValue,
     String searchText, BuildContext context) async {
   al.messageLoading(
-      context, 'Searching in cloud', '$columnValue & $searchText');
+      context, 'Searching in cloud', '$columnValue & $searchText', 25);
   searchColumnAndQuote(columnName, columnValue, searchText, context).then(
       (value) async {
     if (value == 0) return;
@@ -50,7 +50,7 @@ Future searchColumnQuote(String columnName, String columnValue,
 }
 
 Future searchColumnText(String columnTextKey, BuildContext context) async {
-  al.messageLoading(context, 'Searching in cloud', columnTextKey);
+  al.messageLoading(context, 'Searching in cloud', columnTextKey, 25);
 
   columnTextShow(columnTextKey, context).then((value) async {
     if (value == 0) return;

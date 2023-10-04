@@ -6,6 +6,7 @@ import '../../../../BL/bl.dart';
 import '../../../../BL/orm.dart';
 import '../../../../DL/dl.dart';
 
+import '../../../alib/alib.dart';
 import '../../../alib/selectiondialogs/selectone.dart';
 
 Future appendrowCurrentRowSet(BuildContext context) async {
@@ -14,7 +15,9 @@ Future appendrowCurrentRowSet(BuildContext context) async {
   bl.orm.currentRow.sheetName.value =
       await selectOne(currentSS.sheetNames, context);
   if (bl.orm.currentRow.sheetName.value.isEmpty) return;
-
+  // ignore: use_build_context_synchronously
+  al.messageLoading(
+      context, 'Creating row in cloud', bl.orm.currentRow.sheetName.value, 7);
   String sheetRownoKey = await setCellAppendRow();
   currentSS.keys.clear();
   currentSS.keys.add(sheetRownoKey);
