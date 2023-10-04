@@ -72,6 +72,7 @@ class CurrentRow {
   //--------------------------optional user fields
   RxString publisher = ''.obs;
   RxString folder = ''.obs;
+  RxString yellowParts = ''.obs;
 
   List<String> cols = [];
   //Map optionalFields = {};
@@ -116,6 +117,7 @@ Future currentRowSet(String sheetRownoKey) async {
   }
 
   bl.orm.currentRow.quote.value = valueGet('quote');
+  bl.orm.currentRow.yellowParts.value = valueGet('yellowParts');
 
   bl.orm.currentRow.author.value = valueGet('author');
   bl.orm.currentRow.book.value = valueGet('book');

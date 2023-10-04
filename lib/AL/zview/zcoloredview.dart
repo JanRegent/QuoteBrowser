@@ -19,10 +19,12 @@ class _ColoredViewState extends State<ColoredView> {
     super.initState();
 
     highlightedWordFill();
+    highlightedYellowPartsFill();
   }
 
   //------------------------------------------------------------------highlight
   Map<String, HighlightedWord> highlightedWord = {};
+
   void highlightedWordFill() {
     List<String> tagsWords = bl.orm.currentRow.tags.value.trim().split('#');
     //bl.orm.currentRow.tags.value.trim().split(RegExp(r'[|,.\s]'));
@@ -44,11 +46,32 @@ class _ColoredViewState extends State<ColoredView> {
     color: Colors.red,
   );
 
+  Map<String, HighlightedWord> highlightedParts = {};
+  void highlightedYellowPartsFill() {
+    List<String> parts = bl.orm.currentRow.yellowParts.value.split('__|__\n');
+    //bl.orm.currentRow.tags.value.trim().split(RegExp(r'[|,.\s]'));
+    highlightedParts.clear();
+    for (String part in parts) {
+      if (part.length < 2) continue;
+      highlightedParts[part] = HighlightedWord(
+        onTap: () {},
+        textStyle: textStyleParts,
+      );
+    }
+  }
+
+  TextStyle textStyleParts = const TextStyle(
+      // You can set the general style, like a Text()
+      fontSize: 20.0,
+      backgroundColor: Colors.yellow);
+
+  bool yellowPartsShow = false;
   TextHighlight quoteField() {
     highlightedWordFill();
+    highlightedYellowPartsFill();
     return TextHighlight(
         text: bl.orm.currentRow.quote.value,
-        words: highlightedWord,
+        words: yellowPartsShow ? highlightedParts : highlightedWord,
         matchCase: false,
         textStyle: const TextStyle(
           fontSize: 20.0,
@@ -56,6 +79,20 @@ class _ColoredViewState extends State<ColoredView> {
         ));
   }
 
+  Switch partsSwitch() {
+    return Switch(
+      // thumb color (round icon)
+      activeColor: const Color.fromARGB(255, 240, 185, 22),
+      activeTrackColor: Colors.cyan,
+      inactiveThumbColor: Colors.blueGrey.shade600,
+      inactiveTrackColor: Colors.grey.shade400,
+      splashRadius: 50.0,
+      // boolean variable value
+      value: yellowPartsShow,
+      // changes the state of the switch
+      onChanged: (value) => setState(() => yellowPartsShow = value),
+    );
+  }
   //------------------------------------------------------------------card
 
   Card card() {
@@ -68,6 +105,7 @@ class _ColoredViewState extends State<ColoredView> {
           leading: Text(bl.orm.currentRow.dateinsert),
           title: Obx(() => Text(
               '${bl.orm.currentRow.sheetName.value}_|_${bl.orm.currentRow.rowNo.value}')),
+          trailing: partsSwitch(),
         ),
         ListTile(title: quoteField()),
       ]),
