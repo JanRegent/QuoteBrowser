@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:clipboard/clipboard.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
@@ -6,42 +8,55 @@ import '../../BL/bl.dart';
 import '../../BL/orm.dart';
 import '../alib/alib.dart';
 
+//----------------------------------------------------------------goto
+void showGotoPopupMenu(
+    BuildContext context, VoidCallback swiperSetstate) async {
+  gotoItemsBuild(swiperSetstate);
+  await showMenu(
+    context: context,
+    position: const RelativeRect.fromLTRB(100, 100, 100, 100),
+    items: gotoItems,
+    elevation: 8.0,
+  );
+}
+
+void setstateGoto(VoidCallback swiperSetstate) async {
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
+  swiperSetstate();
+}
+
+List<PopupMenuItem<String>> gotoItems = [];
+void gotoItemsBuild(VoidCallback swiperSetstate) {
+  int localIdsLength = currentSS.keys.length - 1;
+  gotoItems = [];
+  //todo widget.configRow['localIds.length'];
+  gotoItems.add(PopupMenuItem(
+    child: Text('$localIdsLength >|'),
+    onTap: () async {
+      currentSS.swiperIndex = localIdsLength - 1;
+      setstateGoto(swiperSetstate);
+    },
+  ));
+  for (int i = 0; i < localIdsLength; i = i + 10) {
+    gotoItems.add(PopupMenuItem(
+      child: i > 0 ? Text((i + 1).toString()) : const Text('1  |<'),
+      onTap: () async {
+        currentSS.swiperIndex = i;
+        setstateGoto(swiperSetstate);
+      },
+    ));
+  }
+  gotoItems.add(PopupMenuItem(
+    child: Text('$localIdsLength >|'),
+    onTap: () async {
+      currentSS.swiperIndex = localIdsLength - 1;
+      setstateGoto(swiperSetstate);
+    },
+  ));
+}
+
+//----------------------------------------------------------------no goto menus
 PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
-  void setstateGoto() async {
-    await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
-    swiperSetstate();
-  }
-
-  List<PopupMenuItem<String>> gotoItems = [];
-  void gotoItemsBuild() {
-    int localIdsLength = 25;
-    //todo widget.configRow['localIds.length'];
-    gotoItems.add(PopupMenuItem(
-      child: Text('$localIdsLength >|'),
-      onTap: () async {
-        currentSS.swiperIndex = localIdsLength - 1;
-        setstateGoto();
-      },
-    ));
-    for (int i = 0; i < localIdsLength; i = i + 10) {
-      gotoItems.add(PopupMenuItem(
-        child: i > 0 ? Text((i + 1).toString()) : const Text('1  |<'),
-        onTap: () async {
-          currentSS.swiperIndex = i;
-          setstateGoto();
-        },
-      ));
-    }
-    gotoItems.add(PopupMenuItem(
-      child: Text('$localIdsLength >|'),
-      onTap: () async {
-        currentSS.swiperIndex = localIdsLength - 1;
-        setstateGoto();
-      },
-    ));
-  }
-
-  gotoItemsBuild();
   return PopupMenuButton(
     child: const Icon(Icons.menu),
     itemBuilder: (BuildContext context) => <PopupMenuEntry<PopupMenuButton>>[
@@ -129,16 +144,6 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
           ],
         ),
       ),
-      PopupMenuItem(
-          child: PopupMenuButton<String>(
-        child: const Text('GoTo'),
-        onSelected: (String result) {
-          //setState(() { _selection = result; });
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },
-        itemBuilder: (BuildContext context) => gotoItems,
-      )),
     ],
   );
 }

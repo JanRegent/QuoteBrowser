@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../BL/filters/searchss.dart';
 import '../../../BL/orm.dart';
+
 import '../../alib/selectiondialogs/selectone.dart';
 
 import '../../zview/_cardsswiper.dart';
@@ -35,6 +36,8 @@ class LastRowsAddQuote {
 
       case 'Add quote':
         currentSS.filterIcon = const Icon(Icons.add);
+        // ignore: use_build_context_synchronously
+
         // ignore: use_build_context_synchronously
         await appendrowCurrentRowSet(context);
         currentSS.addQuoteMode = true;

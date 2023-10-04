@@ -96,6 +96,11 @@ class _CardSwiperState extends State<CardSwiper> {
         ),
         child: const Icon(Icons.arrow_back_rounded, color: Colors.white),
       ),
+      IconButton(
+          onPressed: () {
+            showGotoPopupMenu(context, swiperSetstate);
+          },
+          icon: const Icon(Icons.run_circle_outlined)),
       ElevatedButton(
         onPressed: () {
           currentSS.swiperIndex += 1;

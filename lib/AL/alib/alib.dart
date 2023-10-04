@@ -229,7 +229,8 @@ class AL {
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       content: SizedBox(
-          height: 300,
+          height: 400,
+          width: 400,
           child: Column(
             children: [
               // const CircularProgressIndicator(
@@ -240,7 +241,11 @@ class AL {
                 titleFontSize: 20,
                 message: mess,
                 messageFontSize: 25,
-                contentType: ContentType.help,
+                contentType: ContentType.success,
+              ),
+              Text(
+                mess,
+                style: const TextStyle(fontSize: 15, color: Colors.black),
               ),
             ],
           )),
