@@ -129,7 +129,15 @@ class _QuoteEditState extends State<QuoteEdit> {
         await setCellBL(attribName, bl.orm.currentRow.tags.value);
         attribNameRedo.value = attribName;
         break;
-
+      case 'yellowParts':
+        attribTitleRedo.value = selected.value;
+        attribPrevRedo.value = bl.orm.currentRow.yellowParts.value;
+        bl.orm.currentRow.yellowParts.value += '__|__\n${selected.value}';
+        // pureTags();
+        // await setCellBL(attribName, bl.orm.currentRow.tags.value);
+        attribNameRedo.value = attribName;
+        print(bl.orm.currentRow.yellowParts.value);
+        break;
       case 'original':
         await setCellBL(attribName, bl.orm.currentRow.original.value);
         return;
@@ -170,6 +178,15 @@ class _QuoteEditState extends State<QuoteEdit> {
             IconButton(
                 icon: ALicons.attrIcons.tagIcon,
                 onPressed: () => attribSet('tags')),
+
+            IconButton(
+              icon: const Icon(
+                Icons.circle,
+                color: Colors.yellow,
+              ),
+              onPressed: () => attribSet('yellowParts'),
+            ),
+
             const Spacer(),
             IconButton(
                 icon: const Icon(Icons.publish_rounded),
