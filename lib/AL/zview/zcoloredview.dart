@@ -29,11 +29,11 @@ class _ColoredViewState extends State<ColoredView> {
     List<String> tagsWords = bl.orm.currentRow.tags.value.trim().split('#');
     //bl.orm.currentRow.tags.value.trim().split(RegExp(r'[|,.\s]'));
     highlightedWord.clear();
-    if (tagsWords.length < 2) return;
-    for (String word in tagsWords) {
-      if (word.length < 2) continue;
-      word = word.replaceAll("'", "").replaceAll('"', '');
-      highlightedWord[word] = HighlightedWord(
+
+    for (String tag in tagsWords) {
+      tag = tag.replaceAll("'", "").replaceAll('"', '');
+      if (tag.isEmpty) continue;
+      highlightedWord[tag] = HighlightedWord(
         onTap: () {},
         textStyle: textStyle,
       );
@@ -51,8 +51,9 @@ class _ColoredViewState extends State<ColoredView> {
     List<String> parts = bl.orm.currentRow.yellowParts.value.split('__|__\n');
     //bl.orm.currentRow.tags.value.trim().split(RegExp(r'[|,.\s]'));
     highlightedParts.clear();
+
     for (String part in parts) {
-      if (part.length < 2) continue;
+      if (part.isEmpty) continue;
       highlightedParts[part] = HighlightedWord(
         onTap: () {},
         textStyle: textStyleParts,
@@ -67,8 +68,6 @@ class _ColoredViewState extends State<ColoredView> {
 
   bool yellowPartsShow = false;
   TextHighlight quoteField() {
-    highlightedWordFill();
-    highlightedYellowPartsFill();
     return TextHighlight(
         text: bl.orm.currentRow.quote.value,
         words: yellowPartsShow ? highlightedParts : highlightedWord,
@@ -79,20 +78,20 @@ class _ColoredViewState extends State<ColoredView> {
         ));
   }
 
-  Switch partsSwitch() {
-    return Switch(
-      // thumb color (round icon)
-      activeColor: const Color.fromARGB(255, 240, 185, 22),
-      activeTrackColor: Colors.cyan,
-      inactiveThumbColor: Colors.blueGrey.shade600,
-      inactiveTrackColor: Colors.grey.shade400,
-      splashRadius: 50.0,
-      // boolean variable value
-      value: yellowPartsShow,
-      // changes the state of the switch
-      onChanged: (value) => setState(() => yellowPartsShow = value),
+  IconButton partsSwitch() {
+    return IconButton(
+      icon: Icon(
+        Icons.circle,
+        color: yellowPartsShow ? Colors.yellowAccent : Colors.lime,
+      ),
+      onPressed: () {
+        setState(() {
+          yellowPartsShow = !yellowPartsShow;
+        });
+      },
     );
   }
+
   //------------------------------------------------------------------card
 
   Card card() {

@@ -133,7 +133,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         attribTitleRedo.value = selected.value;
         attribPrevRedo.value = bl.orm.currentRow.yellowParts.value;
         bl.orm.currentRow.yellowParts.value += '__|__\n${selected.value}';
-        await setCellBL(attribName, bl.orm.currentRow.tags.value);
+        await setCellBL(attribName, bl.orm.currentRow.yellowParts.value);
         attribNameRedo.value = attribName;
 
         break;
