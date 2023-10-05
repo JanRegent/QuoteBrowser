@@ -133,10 +133,9 @@ class _QuoteEditState extends State<QuoteEdit> {
         attribTitleRedo.value = selected.value;
         attribPrevRedo.value = bl.orm.currentRow.yellowParts.value;
         bl.orm.currentRow.yellowParts.value += '__|__\n${selected.value}';
-        // pureTags();
-        // await setCellBL(attribName, bl.orm.currentRow.tags.value);
+        await setCellBL(attribName, bl.orm.currentRow.tags.value);
         attribNameRedo.value = attribName;
-        print(bl.orm.currentRow.yellowParts.value);
+
         break;
       case 'original':
         await setCellBL(attribName, bl.orm.currentRow.original.value);
