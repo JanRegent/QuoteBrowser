@@ -96,11 +96,14 @@ class _CardSwiperState extends State<CardSwiper> {
         ),
         child: const Icon(Icons.arrow_back_rounded, color: Colors.white),
       ),
-      IconButton(
+      //
+      TextButton(
           onPressed: () {
             showGotoPopupMenu(context, swiperSetstate);
           },
-          icon: const Icon(Icons.run_circle_outlined)),
+          child: Text(
+              ' ${(currentSS.swiperIndex + 1)}/${currentSS.keys.length}',
+              style: const TextStyle(color: Colors.white, fontSize: 20))),
       ElevatedButton(
         onPressed: () {
           currentSS.swiperIndex += 1;
@@ -167,14 +170,10 @@ class _CardSwiperState extends State<CardSwiper> {
             MediaQuery.of(context).size.height)),
         child: Swiper(
           itemBuilder: (BuildContext context, int rowIndex) {
-            return tabs(); // RowViewPage(widget.title, swiperSetstate);
+            return tabs();
           },
           itemCount: currentSS.keys.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
-          pagination: const SwiperPagination(
-              builder: SwiperPagination.fraction,
-              alignment: Alignment.bottomCenter),
-          //control: const SwiperControl(),
           index: currentSS.swiperIndex,
           controller: controller,
         ));
