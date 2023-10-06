@@ -67,15 +67,42 @@ class _ColoredViewState extends State<ColoredView> {
       backgroundColor: Colors.yellow);
 
   bool yellowPartsShow = false;
+  bool highlightOnOff = false;
   TextHighlight quoteField() {
     return TextHighlight(
         text: bl.orm.currentRow.quote.value,
-        words: yellowPartsShow ? highlightedParts : highlightedWord,
+        words: highlightOnOff
+            ? yellowPartsShow
+                ? highlightedParts
+                : highlightedWord
+            : {},
         matchCase: false,
         textStyle: const TextStyle(
           fontSize: 20.0,
           color: Colors.black,
         ));
+  }
+
+  IconButton highlightOnOffButton() {
+    return IconButton(
+      icon: const Icon(Icons.highlight_alt_rounded, color: Colors.red),
+      onPressed: () {
+        setState(() {
+          highlightOnOff = !highlightOnOff;
+        });
+      },
+    );
+  }
+
+  IconButton highlightTagsButton() {
+    return IconButton(
+      icon: const Icon(Icons.tag, color: Colors.black),
+      onPressed: () {
+        setState(() {
+          yellowPartsShow = false;
+        });
+      },
+    );
   }
 
   IconButton partsSwitch() {
@@ -86,12 +113,21 @@ class _ColoredViewState extends State<ColoredView> {
       ),
       onPressed: () {
         setState(() {
-          yellowPartsShow = !yellowPartsShow;
+          yellowPartsShow = true;
         });
       },
     );
   }
 
+  Row viewButtons() {
+    return Row(
+      children: [
+        highlightOnOffButton(),
+        highlightOnOff == true ? highlightTagsButton() : const Text(' '),
+        highlightOnOff == true ? partsSwitch() : const Text(' ')
+      ],
+    );
+  }
   //------------------------------------------------------------------card
 
   Card card() {
@@ -102,9 +138,9 @@ class _ColoredViewState extends State<ColoredView> {
         ListTile(
           tileColor: const Color.fromARGB(255, 232, 216, 142),
           leading: Text(bl.orm.currentRow.dateinsert),
-          title: Obx(() => Text(
+          title: viewButtons(),
+          trailing: Obx(() => Text(
               '${bl.orm.currentRow.sheetName.value}_|_${bl.orm.currentRow.rowNo.value}')),
-          trailing: partsSwitch(),
         ),
         ListTile(title: quoteField()),
       ]),

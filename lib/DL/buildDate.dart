@@ -1,1 +1,1 @@
-String buildDate = ' 2023_10_05__16_35_build_AL---ColoredView--yellowParts-circle ';  
+String buildDate = ' 2023_10_06__10_42_build_AL---ColoredView--viewButtons ';  
