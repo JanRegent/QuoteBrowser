@@ -16,6 +16,7 @@ class CurrentSS {
   List<String> sheetNames = [];
   bool addQuoteMode = false;
   int swiperIndex = 0;
+  RxInt swiperIndexRx = 0.obs;
 }
 
 class Orm {

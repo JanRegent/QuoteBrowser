@@ -7,7 +7,7 @@ import '../../../BL/orm.dart';
 
 import '../../alib/selectiondialogs/selectone.dart';
 
-import '../../zview/_cardsswiper.dart';
+import '../../zview/_swiper.dart';
 import '../../zview/aedit/addquote/addquoterow.dart';
 import 'common.dart';
 

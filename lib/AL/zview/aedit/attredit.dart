@@ -9,7 +9,7 @@ import 'quoteedit.dart';
 
 // ignore: must_be_immutable
 class AttrEdit extends StatefulWidget {
-  VoidCallback swiperSetstate;
+  Function swiperSetstate;
   AttrEdit(this.swiperSetstate, {super.key});
 
   @override

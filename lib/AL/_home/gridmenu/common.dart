@@ -3,7 +3,7 @@ import 'package:input_dialog/input_dialog.dart';
 
 import '../../../BL/filters/searchss.dart';
 import '../../alib/alib.dart';
-import '../../zview/_cardsswiper.dart';
+import '../../zview/_swiper.dart';
 
 Future<String> inputWord(BuildContext context) async {
   final word = await InputDialog.show(
