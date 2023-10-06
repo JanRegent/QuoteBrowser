@@ -66,8 +66,8 @@ class _ColoredViewState extends State<ColoredView> {
       fontSize: 20.0,
       backgroundColor: Colors.yellow);
 
-  bool yellowPartsShow = false;
-  bool highlightOnOff = false;
+  //--------------------------------------------------------------------quote
+
   TextHighlight quoteField() {
     return TextHighlight(
         text: bl.orm.currentRow.quote.value,
@@ -82,6 +82,10 @@ class _ColoredViewState extends State<ColoredView> {
           color: Colors.black,
         ));
   }
+
+  //--------------------------------------------------------------------butts
+  bool yellowPartsShow = false;
+  bool highlightOnOff = false;
 
   IconButton highlightOnOffButton() {
     return IconButton(
@@ -137,18 +141,24 @@ class _ColoredViewState extends State<ColoredView> {
       child: ListView(children: [
         ListTile(
           tileColor: const Color.fromARGB(255, 232, 216, 142),
-          leading: Text(bl.orm.currentRow.dateinsert),
           title: viewButtons(),
-          trailing: Obx(() => Text(
-              '${bl.orm.currentRow.sheetName.value}_|_${bl.orm.currentRow.rowNo.value}')),
         ),
-        ListTile(title: quoteField()),
+        ListTile(title: Obx(() => quoteField())),
       ]),
     );
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return card();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return card();
+    return StatefulBuilder(
+      builder: (BuildContext context, StateSetter setState) {
+        return card();
+      },
+    );
   }
 }
