@@ -1,8 +1,11 @@
 // Just a standard StatefulWidget
+
+import 'package:circular_menu/circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../BL/orm.dart';
+import '../alib/alib.dart';
 import 'aedit/attredit.dart';
 
 import 'aedit/fieldpopup.dart';
@@ -47,8 +50,11 @@ class _SwiperTabsState extends State<SwiperTabs>
   Row titleArrowsRowOff() {
     return Row(children: [
       currentSS.filterIcon,
-      Text(widget.title),
-      const Text('  '),
+      IconButton(
+          onPressed: () {
+            al.messageInfo(context, 'Search exp.', widget.title, 10);
+          },
+          icon: const Icon(Icons.info)),
       const Spacer(),
       ElevatedButton(
         onPressed: () {
@@ -76,6 +82,7 @@ class _SwiperTabsState extends State<SwiperTabs>
         onPressed: () {
           currentSS.swiperIndex += 1;
           indexChanged(currentSS.swiperIndex.value);
+          widget.setStateSwiper();
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
@@ -86,6 +93,79 @@ class _SwiperTabsState extends State<SwiperTabs>
         child: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
       ),
     ]);
+  }
+
+  //----------------------------------------------------------------------icons/drop
+
+  List<PopupMenuItem<String>> tabMenuItems = [];
+  void tabMenuItemsBuild() {
+    tabMenuItems = [];
+
+    for (var iconbutton in iconList()) {
+      tabMenuItems.add(PopupMenuItem(
+        child: iconbutton,
+      ));
+    }
+  }
+
+  void showTabPopupMenu() async {
+    final size = MediaQuery.of(context).size;
+    final center = Offset(size.width - 100, size.height - size.height);
+    final position = RelativeRect.fromSize(
+        Rect.fromCenter(center: center, width: 0, height: 0), size);
+
+    tabMenuItemsBuild();
+    await showMenu(
+      context: context,
+      position: position,
+      items: tabMenuItems,
+      elevation: 8.0,
+    );
+  }
+
+  IconButton tabMenuIcon() {
+    return IconButton(
+        onPressed: () {
+          showTabPopupMenu();
+        },
+        icon: const Icon(Icons.menu));
+  }
+
+  List<IconButton> iconList() {
+    return <IconButton>[
+      IconButton(
+        icon: const Icon(Icons.headset_rounded),
+        onPressed: () {
+          _tabController.index = 1;
+          setState(() {});
+          attribIndex = 0;
+        },
+      ),
+      IconButton(
+        icon: const Icon(Icons.tag),
+        onPressed: () {
+          _tabController.index = 1;
+          attribIndex = 1;
+          setState(() {});
+        },
+      ),
+      IconButton(
+        icon: const Icon(Icons.devices_other),
+        onPressed: () {
+          _tabController.index = 1;
+          attribIndex = 2;
+          setState(() {});
+        },
+      ),
+      IconButton(
+        icon: const Icon(Icons.category),
+        onPressed: () {
+          _tabController.index = 1;
+          attribIndex = 3;
+          setState(() {});
+        },
+      )
+    ];
   }
 
   //----------------------------------------------------------------------tabs
@@ -112,42 +192,9 @@ class _SwiperTabsState extends State<SwiperTabs>
                       icon: const Icon(Icons.format_quote)),
                 ),
                 Tab(
-                    child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.headset_rounded),
-                      onPressed: () {
-                        _tabController.index = 1;
-                        setState(() {});
-                        attribIndex = 0;
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.tag),
-                      onPressed: () {
-                        _tabController.index = 1;
-                        attribIndex = 1;
-                        setState(() {});
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.devices_other),
-                      onPressed: () {
-                        _tabController.index = 1;
-                        attribIndex = 2;
-                        setState(() {});
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.category),
-                      onPressed: () {
-                        _tabController.index = 1;
-                        attribIndex = 3;
-                        setState(() {});
-                      },
-                    ),
-                  ],
-                )),
+                    child: MediaQuery.of(context).size.width > 580
+                        ? Row(children: iconList())
+                        : tabMenuIcon()),
                 Tab(
                     child: IconButton(
                         onPressed: () {
@@ -172,15 +219,15 @@ class _SwiperTabsState extends State<SwiperTabs>
   Widget attribTabs() {
     switch (attribIndex) {
       case 0:
-        return const MainFields();
+        return Obx(() => const MainFields());
       case 1:
-        return const TagsTab();
+        return Obx(() => const TagsTab());
       case 2:
-        return const OthersFields();
+        return Obx(() => const OthersFields());
       case 3:
-        return const CatablePage();
+        return Obx(() => const CatablePage());
       default:
-        return const MainFields();
+        return Obx(() => const MainFields());
     }
   }
 }
