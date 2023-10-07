@@ -218,15 +218,15 @@ class _SwiperTabsState extends State<SwiperTabs>
   Widget attribTabs() {
     switch (attribIndex) {
       case 0:
-        return Obx(() => const MainFields());
+        return const MainFields();
       case 1:
-        return Obx(() => const TagsTab());
+        return const TagsTab();
       case 2:
-        return Obx(() => const OthersFields());
+        return const OthersFields();
       case 3:
-        return Obx(() => const CatablePage());
+        return const CatablePage();
       default:
-        return Obx(() => const MainFields());
+        return const MainFields();
     }
   }
 }
