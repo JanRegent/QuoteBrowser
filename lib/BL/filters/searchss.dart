@@ -9,7 +9,7 @@ import '../../DL/dl.dart';
 
 Future<int> filterSearchText(String searchText, BuildContext context) async {
   currentSS.filterKey = searchText;
-  currentSS.swiperIndex = 0;
+  currentSS.swiperIndex.value = 0;
 
   debugPrint(searchText);
   try {
@@ -29,28 +29,28 @@ Future<int> filterSearchText(String searchText, BuildContext context) async {
   if (currentSS.keys.isEmpty) {
     return 0;
   }
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
   return currentSS.keys.length;
 }
 
 Future<int> columnTextShow(String columnTextKey, BuildContext context) async {
   currentSS.filterKey = columnTextKey;
-  currentSS.swiperIndex = 0;
+  currentSS.swiperIndex.value = 0;
 
   currentSS.keys = await bl.columnTextFilterCRUD.readFilter(columnTextKey);
 
   if (currentSS.keys.isEmpty) {
     return 0;
   }
-  currentSS.swiperIndex = 0;
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
+  currentSS.swiperIndex.value = 0;
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
   return currentSS.keys.length;
 }
 
 Future<int> searchColumnAndQuote(String columnName, String columnValue,
     String searchText, BuildContext context) async {
   currentSS.filterKey = searchText;
-  currentSS.swiperIndex = 0;
+  currentSS.swiperIndex.value = 0;
 
   debugPrint(searchText);
   try {
@@ -71,7 +71,7 @@ Future<int> searchColumnAndQuote(String columnName, String columnValue,
   if (currentSS.keys.isEmpty) {
     return 0;
   }
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
   return currentSS.keys.length;
 }
 
@@ -93,7 +93,7 @@ Future<List<String>> sheetRowsSaveGetKeys(List rowsArrDyn) async {
 
 Future<int> getLastRows(String sheetName, BuildContext context) async {
   currentSS.filterKey = '';
-  currentSS.swiperIndex = 0;
+  currentSS.swiperIndex.value = 0;
 
   debugPrint(sheetName);
 
@@ -105,6 +105,6 @@ Future<int> getLastRows(String sheetName, BuildContext context) async {
   if (currentSS.keys.isEmpty) {
     return 0;
   }
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
   return currentSS.keys.length;
 }

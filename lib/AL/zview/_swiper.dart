@@ -53,7 +53,7 @@ class _CardSwiperState extends State<CardSwiper> {
           },
           itemCount: currentSS.keys.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
-          index: currentSS.swiperIndex,
+          index: currentSS.swiperIndex.value,
           controller: controller,
         ));
   }

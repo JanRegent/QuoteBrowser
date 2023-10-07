@@ -14,16 +14,15 @@ import 'rowpopupmenu.dart';
 import 'zcoloredview.dart';
 
 void indexChanged(int rowIndex) async {
-  currentSS.swiperIndex = rowIndex;
+  currentSS.swiperIndex.value = rowIndex;
   if (currentSS.swiperIndex > currentSS.keys.length - 1) {
-    currentSS.swiperIndex = 0;
+    currentSS.swiperIndex.value = 0;
   }
   if (currentSS.swiperIndex < 0) {
-    currentSS.swiperIndex = currentSS.keys.length - 1;
+    currentSS.swiperIndex.value = currentSS.keys.length - 1;
   }
   redoClear();
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
-  currentSS.swiperIndexRx.value = currentSS.swiperIndex;
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
 }
 
 // ignore: must_be_immutable
@@ -54,7 +53,8 @@ class _SwiperTabsState extends State<SwiperTabs>
       ElevatedButton(
         onPressed: () {
           currentSS.swiperIndex -= 1;
-          indexChanged(currentSS.swiperIndex);
+          indexChanged(currentSS.swiperIndex.value);
+          widget.setStateSwiper();
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
@@ -70,12 +70,12 @@ class _SwiperTabsState extends State<SwiperTabs>
             showGotoPopupMenu(context, widget.setStateSwiper);
           },
           child: Obx(() => Text(
-              ' ${(currentSS.swiperIndexRx.value + 1)}/${currentSS.keys.length}',
+              ' ${(currentSS.swiperIndex.value + 1)}/${currentSS.keys.length}',
               style: const TextStyle(color: Colors.white, fontSize: 20)))),
       ElevatedButton(
         onPressed: () {
           currentSS.swiperIndex += 1;
-          indexChanged(currentSS.swiperIndex);
+          indexChanged(currentSS.swiperIndex.value);
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),

@@ -15,8 +15,7 @@ class CurrentSS {
   late Icon filterIcon;
   List<String> sheetNames = [];
   bool addQuoteMode = false;
-  int swiperIndex = 0;
-  RxInt swiperIndexRx = 0.obs;
+  RxInt swiperIndex = 0.obs;
 }
 
 class Orm {

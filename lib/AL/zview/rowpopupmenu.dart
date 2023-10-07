@@ -9,19 +9,25 @@ import '../../BL/orm.dart';
 import '../alib/alib.dart';
 
 //----------------------------------------------------------------goto
+// ↓ get the tap position Offset
 void showGotoPopupMenu(
     BuildContext context, VoidCallback swiperSetstate) async {
+  final size = MediaQuery.of(context).size;
+  final center = Offset(size.width - 100, size.height - size.height);
+  final position = RelativeRect.fromSize(
+      Rect.fromCenter(center: center, width: 0, height: 0), size);
+
   gotoItemsBuild(swiperSetstate);
   await showMenu(
     context: context,
-    position: const RelativeRect.fromLTRB(100, 100, 100, 100),
+    position: position,
     items: gotoItems,
     elevation: 8.0,
   );
 }
 
 void setstateGoto(VoidCallback swiperSetstate) async {
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex]);
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
   swiperSetstate();
 }
 
@@ -33,7 +39,7 @@ void gotoItemsBuild(VoidCallback swiperSetstate) {
   gotoItems.add(PopupMenuItem(
     child: Text('$localIdsLength >|'),
     onTap: () async {
-      currentSS.swiperIndex = localIdsLength - 1;
+      currentSS.swiperIndex.value = localIdsLength - 1;
       setstateGoto(swiperSetstate);
     },
   ));
@@ -41,7 +47,7 @@ void gotoItemsBuild(VoidCallback swiperSetstate) {
     gotoItems.add(PopupMenuItem(
       child: i > 0 ? Text((i + 1).toString()) : const Text('1  |<'),
       onTap: () async {
-        currentSS.swiperIndex = i;
+        currentSS.swiperIndex.value = i;
         setstateGoto(swiperSetstate);
       },
     ));
@@ -49,7 +55,7 @@ void gotoItemsBuild(VoidCallback swiperSetstate) {
   gotoItems.add(PopupMenuItem(
     child: Text('$localIdsLength >|'),
     onTap: () async {
-      currentSS.swiperIndex = localIdsLength - 1;
+      currentSS.swiperIndex.value = localIdsLength - 1;
       setstateGoto(swiperSetstate);
     },
   ));
