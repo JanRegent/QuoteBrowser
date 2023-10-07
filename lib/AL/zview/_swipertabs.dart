@@ -1,6 +1,5 @@
 // Just a standard StatefulWidget
 
-import 'package:circular_menu/circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -123,7 +122,7 @@ class _SwiperTabsState extends State<SwiperTabs>
     );
   }
 
-  IconButton tabMenuIcon() {
+  IconButton tabPopupMenuIcon() {
     return IconButton(
         onPressed: () {
           showTabPopupMenu();
@@ -194,7 +193,7 @@ class _SwiperTabsState extends State<SwiperTabs>
                 Tab(
                     child: MediaQuery.of(context).size.width > 580
                         ? Row(children: iconList())
-                        : tabMenuIcon()),
+                        : tabPopupMenuIcon()),
                 Tab(
                     child: IconButton(
                         onPressed: () {
