@@ -128,7 +128,7 @@ class _SwiperTabsState extends State<SwiperTabs>
   @override
   Widget build(BuildContext context) {
     if (currentSS.swiperIndexChanged) {
-      _tabController.index = 2;
+      _tabController.index = 0;
       currentSS.swiperIndexChanged = false;
     }
     return DefaultTabController(
