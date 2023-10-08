@@ -6,7 +6,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../BL/bl.dart';
 import '../aedit/fieldpopup.dart';
-import '../aedit/originalview.dart';
 
 class OthersFields extends StatefulWidget {
   const OthersFields({super.key});
@@ -121,33 +120,6 @@ class _OthersFieldsState extends State<OthersFields> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DefaultTabController(
-        length: 2,
-        initialIndex: 1,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: TabBar(
-              tabs: [
-                const Tab(text: 'Others'),
-                Tab(
-                    child: Row(
-                  children: [
-                    const Text('Original'),
-                    const Text('    '),
-                    copyPasteClearPopupMenuButton(
-                        bl.orm.currentRow.original.value, 'original')
-                  ],
-                ))
-              ],
-            ),
-          ),
-          body: TabBarView(
-            children: [othersListview(), const OriginalView()],
-          ),
-        ),
-      ),
-    );
+    return othersListview();
   }
 }

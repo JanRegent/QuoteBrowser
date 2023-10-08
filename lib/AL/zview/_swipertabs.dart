@@ -98,18 +98,19 @@ class _SwiperTabsState extends State<SwiperTabs>
     ]);
   }
 
-  List<IconButton> iconList() {
-    return <IconButton>[
+  List<Widget> iconList() {
+    return <Widget>[
       IconButton(
-        icon: const Icon(Icons.headset_rounded),
+        icon: const Icon(Icons.view_list),
         onPressed: () {
           _tabController.index = 1;
           setState(() {});
           attribIndex = 0;
         },
       ),
+      const Spacer(),
       IconButton(
-        icon: const Icon(Icons.devices_other),
+        icon: const Icon(Icons.view_list_outlined),
         onPressed: () {
           _tabController.index = 1;
           attribIndex = 1;
