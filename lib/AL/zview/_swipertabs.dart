@@ -25,6 +25,7 @@ void indexChanged(int rowIndex) async {
   }
   redoClear();
   await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
+  currentSS.swiperIndexChanged = true;
 }
 
 // ignore: must_be_immutable
@@ -41,6 +42,11 @@ class SwiperTabs extends StatefulWidget {
 // This is where the interesting stuff happens
 class _SwiperTabsState extends State<SwiperTabs>
     with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   //----------------------------------------------------------------------buts
   //---------------------------------------------------------- int startRow
 
@@ -174,6 +180,10 @@ class _SwiperTabsState extends State<SwiperTabs>
   int attribIndex = 0;
   @override
   Widget build(BuildContext context) {
+    if (currentSS.swiperIndexChanged) {
+      _tabController.index = 2;
+      currentSS.swiperIndexChanged = false;
+    }
     return DefaultTabController(
         length: 3,
         child: Scaffold(

@@ -17,9 +17,6 @@ class _ColoredViewState extends State<ColoredView> {
   @override
   initState() {
     super.initState();
-
-    highlightedWordFill();
-    highlightedYellowPartsFill();
   }
 
   //------------------------------------------------------------------highlight
@@ -102,6 +99,7 @@ class _ColoredViewState extends State<ColoredView> {
     return IconButton(
       icon: const Icon(Icons.tag, color: Colors.black),
       onPressed: () {
+        highlightedWordFill();
         setState(() {
           yellowPartsShow = false;
         });
@@ -116,6 +114,7 @@ class _ColoredViewState extends State<ColoredView> {
         color: yellowPartsShow ? Colors.yellowAccent : Colors.lime,
       ),
       onPressed: () {
+        highlightedYellowPartsFill();
         setState(() {
           yellowPartsShow = true;
         });
