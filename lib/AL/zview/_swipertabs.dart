@@ -9,11 +9,9 @@ import 'aedit/attredit.dart';
 
 import 'aedit/fieldpopup.dart';
 import 'battribs/aheadfields.dart';
-import 'battribs/btags.dart';
-import 'battribs/category/catable.dart';
 import 'battribs/cothers.dart';
 import 'rowpopupmenu.dart';
-import 'zcoloredview.dart';
+import 'acoloredview/coloredview.dart';
 
 void indexChanged(int rowIndex) async {
   currentSS.swiperIndex.value = rowIndex;
@@ -147,29 +145,13 @@ class _SwiperTabsState extends State<SwiperTabs>
         },
       ),
       IconButton(
-        icon: const Icon(Icons.tag),
+        icon: const Icon(Icons.devices_other),
         onPressed: () {
           _tabController.index = 1;
           attribIndex = 1;
           setState(() {});
         },
       ),
-      IconButton(
-        icon: const Icon(Icons.devices_other),
-        onPressed: () {
-          _tabController.index = 1;
-          attribIndex = 2;
-          setState(() {});
-        },
-      ),
-      IconButton(
-        icon: const Icon(Icons.category),
-        onPressed: () {
-          _tabController.index = 1;
-          attribIndex = 3;
-          setState(() {});
-        },
-      )
     ];
   }
 
@@ -230,11 +212,7 @@ class _SwiperTabsState extends State<SwiperTabs>
       case 0:
         return const MainFields();
       case 1:
-        return const TagsTab();
-      case 2:
         return const OthersFields();
-      case 3:
-        return const CatablePage();
       default:
         return const MainFields();
     }

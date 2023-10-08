@@ -8,6 +8,7 @@ import '../../../BL/bl.dart';
 import '../../alib/alicons.dart';
 import '../aedit/quoteedit.dart';
 import '../aedit/fieldpopup.dart';
+import 'category/catable.dart';
 
 class MainFields extends StatefulWidget {
   const MainFields({super.key});
@@ -54,14 +55,27 @@ class _MainFieldsState extends State<MainFields> {
         });
   }
 
+  IconButton catsListShow() {
+    return IconButton(
+      icon: const Icon(Icons.category),
+      onPressed: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CatablePage()),
+        );
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      },
+    );
+  }
+
   Widget categories() {
     if (!bl.orm.currentRow.cols.contains('categories')) {
       return const Text('');
     }
-    Icon catIcon = const Icon(Icons.category);
 
     return ListTile(
-      leading: catIcon,
+      leading: catsListShow(),
       title: Text(bl.orm.currentRow.categories.value),
       //trailing: fieldPopupMenu(bl.orm.currentRow.categories.value, 'cat')
     );

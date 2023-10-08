@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 
 import 'package:highlight_text/highlight_text.dart';
 
-import '../../BL/bl.dart';
+import '../../../BL/bl.dart';
+import 'popup.dart';
 
 // ignore: must_be_immutable
 class ColoredView extends StatefulWidget {
@@ -142,7 +143,10 @@ class _ColoredViewState extends State<ColoredView> {
           tileColor: const Color.fromARGB(255, 232, 216, 142),
           title: viewButtons(),
         ),
-        ListTile(title: Obx(() => quoteField())),
+        ListTile(
+          title: Obx(() => quoteField()),
+          trailing: coloredPopupMenuButton(bl.orm.currentRow.quote.value),
+        ),
       ]),
     );
   }

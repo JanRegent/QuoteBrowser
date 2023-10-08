@@ -29,38 +29,42 @@ class _CatablePageState extends State<CatablePage> {
   String selectedCats = '';
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        children: [
-          ListTile(
-            leading: IconButton(
-              icon: const Icon(Icons.cancel),
-              onPressed: () {
-                setState(() {
-                  selectedCats = '';
-                });
-              },
-            ),
-            title: Text(selectedCats),
-            trailing: IconButton(
-              icon: const Icon(Icons.save),
-              onPressed: () async {
-                bl.orm.currentRow.categories.value = selectedCats;
-                await setCellBL(
-                    'categories', bl.orm.currentRow.categories.value);
-              },
-            ),
+    return Scaffold(
+        appBar: AppBar(
+          title: const Icon(Icons.category),
+        ),
+        body: SizedBox(
+          width: double.infinity,
+          child: Column(
+            children: [
+              ListTile(
+                leading: IconButton(
+                  icon: const Icon(Icons.cancel),
+                  onPressed: () {
+                    setState(() {
+                      selectedCats = '';
+                    });
+                  },
+                ),
+                title: Text(selectedCats),
+                trailing: IconButton(
+                  icon: const Icon(Icons.save),
+                  onPressed: () async {
+                    bl.orm.currentRow.categories.value = selectedCats;
+                    await setCellBL(
+                        'categories', bl.orm.currentRow.categories.value);
+                  },
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: renderAsynchSearchableListview(),
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: renderAsynchSearchableListview(),
-            ),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 
   void addActor() {

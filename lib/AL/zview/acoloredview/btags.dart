@@ -35,15 +35,19 @@ class _TagsTabState extends State<TagsTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        child: ListView.separated(
-          itemCount: expandedCardTags.length,
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-          itemBuilder: (BuildContext context, int index) {
-            return expandedCardTags[index];
-          },
-        ));
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('#'),
+        ),
+        body: Card(
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            child: ListView.separated(
+              itemCount: expandedCardTags.length,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
+              itemBuilder: (BuildContext context, int index) {
+                return expandedCardTags[index];
+              },
+            )));
   }
 }
