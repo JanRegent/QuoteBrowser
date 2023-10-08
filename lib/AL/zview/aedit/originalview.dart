@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:highlight_text/highlight_text.dart';
 
 import '../../../BL/bl.dart';
+import 'fieldpopup.dart';
 
 // ignore: must_be_immutable
 class OriginalView extends StatefulWidget {
@@ -51,6 +52,8 @@ class _OriginalViewState extends State<OriginalView> {
           leading: Text(bl.orm.currentRow.dateinsert),
           title: Obx(() => Text(
               '${bl.orm.currentRow.sheetName.value}_|_${bl.orm.currentRow.rowNo.value}')),
+          trailing: copyPasteClearPopupMenuButton(
+              bl.orm.currentRow.original.value, 'original'),
         ),
         ListTile(title: originalField()),
       ]),
