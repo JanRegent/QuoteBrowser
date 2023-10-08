@@ -17,6 +17,7 @@ class CurrentSS {
   bool addQuoteMode = false;
   RxInt swiperIndex = 0.obs;
   bool swiperIndexChanged = false;
+  bool quoteEdit = true;
 }
 
 class Orm {

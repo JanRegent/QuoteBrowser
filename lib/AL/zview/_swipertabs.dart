@@ -98,42 +98,6 @@ class _SwiperTabsState extends State<SwiperTabs>
     ]);
   }
 
-  //----------------------------------------------------------------------icons/drop
-
-  List<PopupMenuItem<String>> tabMenuItems = [];
-  void tabMenuItemsBuild() {
-    tabMenuItems = [];
-
-    for (var iconbutton in iconList()) {
-      tabMenuItems.add(PopupMenuItem(
-        child: iconbutton,
-      ));
-    }
-  }
-
-  void showTabPopupMenu() async {
-    final size = MediaQuery.of(context).size;
-    final center = Offset(size.width - 100, size.height - size.height);
-    final position = RelativeRect.fromSize(
-        Rect.fromCenter(center: center, width: 0, height: 0), size);
-
-    tabMenuItemsBuild();
-    await showMenu(
-      context: context,
-      position: position,
-      items: tabMenuItems,
-      elevation: 8.0,
-    );
-  }
-
-  IconButton tabPopupMenuIcon() {
-    return IconButton(
-        onPressed: () {
-          showTabPopupMenu();
-        },
-        icon: const Icon(Icons.menu));
-  }
-
   List<IconButton> iconList() {
     return <IconButton>[
       IconButton(
@@ -157,7 +121,7 @@ class _SwiperTabsState extends State<SwiperTabs>
 
   //----------------------------------------------------------------------tabs
   // We need a TabController to control the selected tab programmatically
-  late final _tabController = TabController(length: 3, vsync: this);
+  late final _tabController = TabController(length: 2, vsync: this);
 
   int attribIndex = 0;
   @override
@@ -167,7 +131,7 @@ class _SwiperTabsState extends State<SwiperTabs>
       currentSS.swiperIndexChanged = false;
     }
     return DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: titleArrowsRowOff(),
@@ -176,22 +140,26 @@ class _SwiperTabsState extends State<SwiperTabs>
               controller: _tabController,
               tabs: <Widget>[
                 Tab(
-                  child: IconButton(
-                      onPressed: () {
-                        _tabController.index = 0;
-                      },
-                      icon: const Icon(Icons.format_quote)),
-                ),
-                Tab(
-                    child: MediaQuery.of(context).size.width > 580
-                        ? Row(children: iconList())
-                        : tabPopupMenuIcon()),
-                Tab(
-                    child: IconButton(
+                    child: Row(
+                  children: [
+                    IconButton(
                         onPressed: () {
-                          _tabController.index = 2;
+                          _tabController.index = 0;
+                          currentSS.quoteEdit = false;
+                          setState(() {});
                         },
-                        icon: const Icon(Icons.edit))),
+                        icon: const Icon(Icons.format_quote)),
+                    const Spacer(),
+                    IconButton(
+                        onPressed: () {
+                          _tabController.index = 0;
+                          currentSS.quoteEdit = true;
+                          setState(() {});
+                        },
+                        icon: const Icon(Icons.edit))
+                  ],
+                )),
+                Tab(child: Row(children: iconList())),
               ],
             ),
           ),
@@ -199,9 +167,10 @@ class _SwiperTabsState extends State<SwiperTabs>
             physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: [
-              const ColoredView(),
+              !currentSS.quoteEdit
+                  ? const ColoredView()
+                  : AttrEdit(widget.setStateSwiper),
               attribTabs(),
-              AttrEdit(widget.setStateSwiper)
             ],
           ),
         ));

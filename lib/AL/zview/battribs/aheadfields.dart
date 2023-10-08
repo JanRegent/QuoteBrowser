@@ -8,7 +8,7 @@ import '../../../BL/bl.dart';
 import '../../alib/alicons.dart';
 import '../aedit/quoteedit.dart';
 import '../aedit/fieldpopup.dart';
-import 'category/catable.dart';
+import '../aedit/category/catable.dart';
 
 class MainFields extends StatefulWidget {
   const MainFields({super.key});

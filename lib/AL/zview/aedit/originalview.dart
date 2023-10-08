@@ -59,6 +59,10 @@ class _OriginalViewState extends State<OriginalView> {
 
   @override
   Widget build(BuildContext context) {
-    return card();
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Original quote'),
+        ),
+        body: card());
   }
 }

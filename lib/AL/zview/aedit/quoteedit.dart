@@ -12,6 +12,7 @@ import '../../alib/alicons.dart';
 
 import 'addquote/addquoterow.dart';
 import 'fieldpopup.dart';
+import 'originalview.dart';
 
 Future setCellBL(String columnName, String cellContent) async {
   if (columnName.isEmpty) return;
@@ -30,6 +31,13 @@ Future setCellBL(String columnName, String cellContent) async {
   }
 }
 
+Future showOriginal(BuildContext context) async {
+  await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const OriginalView()),
+  );
+}
+
 // ignore: must_be_immutable
 class QuoteEdit extends StatefulWidget {
   final bool isAttrEdit;
@@ -44,7 +52,7 @@ class QuoteEdit extends StatefulWidget {
 
 class _QuoteEditState extends State<QuoteEdit> {
   final TextEditingController _controller = TextEditingController();
-
+  late BuildContext originalContext = widget.context;
   RxString selected = ''.obs;
   List<PopupMenuItem> menu1 = [
     copyPopupMenuItem(bl.orm.currentRow.quote.value),
@@ -153,7 +161,7 @@ class _QuoteEditState extends State<QuoteEdit> {
     widget.swiperSetstate();
   }
 
-  Container buttRow() {
+  Container buttRow(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(5),
@@ -187,9 +195,9 @@ class _QuoteEditState extends State<QuoteEdit> {
             ),
 
             const Spacer(),
-            IconButton(
-                icon: const Icon(Icons.publish_rounded),
-                onPressed: () => attribSet('vydal')),
+            // IconButton(
+            //     icon: const Icon(Icons.publish_rounded),
+            //     onPressed: () => attribSet('vydal')),
 
             PopupMenuButton(
               itemBuilder: (BuildContext context) {
@@ -210,6 +218,14 @@ class _QuoteEditState extends State<QuoteEdit> {
                     },
                   ));
                 }
+                menu1.add(PopupMenuItem(
+                  value: '/Original',
+                  child: const Text("Original"),
+                  onTap: () async {
+                    await showOriginal(context);
+                  },
+                ));
+
                 return menu1;
               },
             )
@@ -229,7 +245,7 @@ class _QuoteEditState extends State<QuoteEdit> {
     _controller.text = bl.orm.currentRow.quote.value;
 
     List<Widget> colItems = [
-      buttRow(),
+      buttRow(context),
       TextField(
         controller: _controller,
         readOnly: true,
@@ -242,7 +258,7 @@ class _QuoteEditState extends State<QuoteEdit> {
           bl.orm.currentRow.quote.value = value;
         },
       ),
-      widget.isAttrEdit ? buttRow() : const Text(' ')
+      widget.isAttrEdit ? buttRow(context) : const Text(' ')
     ];
     if (currentSS.addQuoteMode) {
       colItems.insert(0, addQuoteRow(context, widget.swiperSetstate));
