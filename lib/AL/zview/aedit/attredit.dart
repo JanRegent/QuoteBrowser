@@ -40,7 +40,7 @@ class _AttrEditState extends State<AttrEdit> {
     List<ListTile> listTilesGet() {
       List<ListTile> listtiles = [
         redorowAL(),
-        ListTile(title: QuoteEdit(true, widget.swiperSetstate, context)),
+        ListTile(title: QuoteEdit(widget.swiperSetstate, context)),
         redorowAL()
       ];
 

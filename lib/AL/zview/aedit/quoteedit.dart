@@ -40,11 +40,10 @@ Future showOriginal(BuildContext context) async {
 
 // ignore: must_be_immutable
 class QuoteEdit extends StatefulWidget {
-  final bool isAttrEdit;
   Function swiperSetstate;
   BuildContext context;
   // ignore: use_key_in_widget_constructors
-  QuoteEdit(this.isAttrEdit, this.swiperSetstate, this.context);
+  QuoteEdit(this.swiperSetstate, this.context);
 
   @override
   State<QuoteEdit> createState() => _QuoteEditState();
@@ -147,12 +146,12 @@ class _QuoteEditState extends State<QuoteEdit> {
         break;
       case 'original':
         await setCellBL(attribName, bl.orm.currentRow.original.value);
-        return;
+        break;
       case '__othersFields__':
-        return;
+        break;
 
       default:
-        return;
+        break;
     }
     setState(() {
       bl.orm.currentRow.setCellDLOn = false;
@@ -240,25 +239,29 @@ class _QuoteEditState extends State<QuoteEdit> {
 
   String onEdit = '';
 
+  TextField quoteTextField() {
+    return TextField(
+      controller: _controller,
+      readOnly: true,
+      style: const TextStyle(
+        fontSize: 20.0,
+        color: Colors.black,
+      ),
+      maxLines: 20,
+      onChanged: (value) async {
+        bl.orm.currentRow.quote.value = value;
+      },
+    );
+  }
+
   @override //printSelectedText()
   Widget build(BuildContext context) {
     _controller.text = bl.orm.currentRow.quote.value;
 
     List<Widget> colItems = [
       buttRow(context),
-      TextField(
-        controller: _controller,
-        readOnly: true,
-        style: const TextStyle(
-          fontSize: 20.0,
-          color: Colors.black,
-        ),
-        maxLines: 20,
-        onChanged: (value) async {
-          bl.orm.currentRow.quote.value = value;
-        },
-      ),
-      widget.isAttrEdit ? buttRow(context) : const Text(' ')
+      quoteTextField(),
+      buttRow(context)
     ];
     if (currentSS.addQuoteMode) {
       colItems.insert(0, addQuoteRow(context, widget.swiperSetstate));

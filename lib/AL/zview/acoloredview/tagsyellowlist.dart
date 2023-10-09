@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import '../../../BL/bl.dart';
 import '../aedit/fieldpopup.dart';
 
-class TagsYelowPage extends StatefulWidget {
+class TagsYellowPage extends StatefulWidget {
   final String tagsYellow;
-  const TagsYelowPage(this.tagsYellow, {super.key});
+  const TagsYellowPage(this.tagsYellow, {super.key});
 
   @override
-  State<TagsYelowPage> createState() => _TagsYelowPageState();
+  State<TagsYellowPage> createState() => _TagsYellowPageState();
 }
 
-class _TagsYelowPageState extends State<TagsYelowPage> {
+class _TagsYellowPageState extends State<TagsYellowPage> {
   List<Widget> expandedCardTags = [];
 
   @override
