@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 
 import '../../BL/orm.dart';
 import '../alib/alib.dart';
-import 'aedit/attredit.dart';
+import 'bedit/attredit.dart';
 
-import 'aedit/fieldpopup.dart';
-import 'battribs/headfields.dart';
-import 'battribs/othersfields.dart';
+import 'bedit/fieldpopup.dart';
+import 'cattribs/headfields.dart';
+import 'cattribs/othersfields.dart';
 import 'rowpopupmenu.dart';
 import 'acoloredview/coloredview.dart';
 

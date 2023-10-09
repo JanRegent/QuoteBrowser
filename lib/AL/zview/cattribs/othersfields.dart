@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../BL/bl.dart';
-import '../aedit/fieldpopup.dart';
+import '../bedit/fieldpopup.dart';
 
 class OthersFields extends StatefulWidget {
   const OthersFields({super.key});

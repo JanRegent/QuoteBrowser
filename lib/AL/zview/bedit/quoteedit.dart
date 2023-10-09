@@ -10,6 +10,7 @@ import '../../../DL/dl.dart';
 
 import '../../alib/alicons.dart';
 
+import '../acoloredview/tagsyellowlist.dart';
 import 'addquote/addquoterow.dart';
 import 'fieldpopup.dart';
 import 'originalview.dart';
@@ -53,40 +54,72 @@ class _QuoteEditState extends State<QuoteEdit> {
   final TextEditingController _controller = TextEditingController();
   late BuildContext originalContext = widget.context;
   RxString selected = ''.obs;
-  List<PopupMenuItem> menu1 = [
-    copyPopupMenuItem(bl.orm.currentRow.quote.value),
-    PopupMenuItem(
-      value: '/quoteIReplace',
-      child: const Text("quote from clipboard Replace"),
-      onTap: () async {
-        FlutterClipboard.paste().then((value) async {
-          await setCellBL('quote', value);
-        });
-      },
-    ),
-    PopupMenuItem(
-      value: '/quoteAppend',
-      child: const Text("quote from clipboard Append"),
-      onTap: () async {
-        FlutterClipboard.paste().then((value) async {
-          await setCellBL('quote', bl.orm.currentRow.quote + '\n\n' + value);
-        });
-      },
-    ),
-    PopupMenuItem(
-      value: '/__toRead__',
-      child: const Text("__toRead__ remove"),
-      onTap: () async {
-        try {
-          await setCellBL(
-              'dateinsert',
-              bl.orm.currentRow.dateinsert
-                  .toString()
-                  .replaceAll('__toRead__', ''));
-        } catch (_) {}
-      },
-    )
-  ];
+  List<PopupMenuItem> menu1(BuildContext context) {
+    return [
+      copyPopupMenuItem(bl.orm.currentRow.quote.value),
+      PopupMenuItem(
+        value: '/quoteIReplace',
+        child: const Text("quote from clipboard Replace"),
+        onTap: () async {
+          FlutterClipboard.paste().then((value) async {
+            await setCellBL('quote', value);
+          });
+        },
+      ),
+      PopupMenuItem(
+        value: '/quoteAppend',
+        child: const Text("quote from clipboard Append"),
+        onTap: () async {
+          FlutterClipboard.paste().then((value) async {
+            await setCellBL('quote', bl.orm.currentRow.quote + '\n\n' + value);
+          });
+        },
+      ),
+      PopupMenuItem(
+        value: '/tagsList',
+        child: IconButton(
+          icon: const Icon(Icons.tag, color: Colors.black),
+          onPressed: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const TagsYellowPage('tags')),
+            );
+            // ignore: use_build_context_synchronously
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      PopupMenuItem(
+        value: '/yellowpartsList',
+        child: IconButton(
+          icon: const Icon(Icons.circle, color: Colors.yellow),
+          onPressed: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const TagsYellowPage('yellowparts')),
+            );
+            // ignore: use_build_context_synchronously
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      PopupMenuItem(
+        value: '/__toRead__',
+        child: const Text("__toRead__ remove"),
+        onTap: () async {
+          try {
+            await setCellBL(
+                'dateinsert',
+                bl.orm.currentRow.dateinsert
+                    .toString()
+                    .replaceAll('__toRead__', ''));
+          } catch (_) {}
+        },
+      )
+    ];
+  }
 
   void attribSet(String attribName) async {
     try {
@@ -184,48 +217,16 @@ class _QuoteEditState extends State<QuoteEdit> {
             IconButton(
                 icon: ALicons.attrIcons.tagIcon,
                 onPressed: () => attribSet('tags')),
-
             IconButton(
-              icon: const Icon(
-                Icons.circle,
-                color: Colors.yellow,
-              ),
+              icon: const Icon(Icons.circle, color: Colors.yellow),
               onPressed: () => attribSet('yellowParts'),
             ),
 
             const Spacer(),
-            // IconButton(
-            //     icon: const Icon(Icons.publish_rounded),
-            //     onPressed: () => attribSet('vydal')),
 
             PopupMenuButton(
               itemBuilder: (BuildContext context) {
-                if (bl.orm.currentRow.dateinsert
-                    .toString()
-                    .contains('__toRead__')) {
-                  menu1.add(PopupMenuItem(
-                    value: '/__toRead__',
-                    child: const Text("__toRead__ remove"),
-                    onTap: () async {
-                      try {
-                        await setCellBL(
-                            'dateinsert',
-                            bl.orm.currentRow.dateinsert
-                                .toString()
-                                .replaceAll('__toRead__', ''));
-                      } catch (_) {}
-                    },
-                  ));
-                }
-                menu1.add(PopupMenuItem(
-                  value: '/Original',
-                  child: const Text("Original"),
-                  onTap: () async {
-                    await showOriginal(context);
-                  },
-                ));
-
-                return menu1;
+                return menu1(context);
               },
             )
 
