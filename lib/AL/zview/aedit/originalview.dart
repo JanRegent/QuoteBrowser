@@ -55,7 +55,7 @@ class _OriginalViewState extends State<OriginalView> {
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.original.value, 'original'),
         ),
-        ListTile(title: originalField()),
+        ListTile(title: Obx(() => originalField())),
       ]),
     );
   }

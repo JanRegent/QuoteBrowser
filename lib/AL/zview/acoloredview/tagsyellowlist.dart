@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import '../../../BL/bl.dart';
 import '../aedit/fieldpopup.dart';
 
-class TagsTab extends StatefulWidget {
-  const TagsTab({super.key});
+class TagsYelowPage extends StatefulWidget {
+  final String tagsYellow;
+  const TagsYelowPage(this.tagsYellow, {super.key});
 
   @override
-  State<TagsTab> createState() => _TagsTabState();
+  State<TagsYelowPage> createState() => _TagsYelowPageState();
 }
 
-class _TagsTabState extends State<TagsTab> {
+class _TagsYelowPageState extends State<TagsYelowPage> {
   List<Widget> expandedCardTags = [];
 
   @override
@@ -23,12 +24,17 @@ class _TagsTabState extends State<TagsTab> {
 
   List<Widget> expandedTags() {
     expandedCardTags = [];
+    List<String> items = [];
+    if (widget.tagsYellow == 'tags') {
+      items = bl.orm.currentRow.tags.value.split('#');
+    } else {
+      items = bl.orm.currentRow.yellowParts.value.split('__|__\n');
+    }
 
-    List<String> tags = bl.orm.currentRow.tags.value.split('#');
-
-    for (int i = 0; i < tags.length; i++) {
+    for (int i = 0; i < items.length; i++) {
+      if (items[i].trim().isEmpty) continue;
       expandedCardTags.add(ListTile(
-          title: Text(tags[i]), trailing: copyPopupMenuButton(tags[i])));
+          title: Text(items[i]), trailing: copyPopupMenuButton(items[i])));
     }
     return expandedCardTags;
   }
@@ -37,14 +43,16 @@ class _TagsTabState extends State<TagsTab> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('#'),
+          title: widget.tagsYellow == 'tags'
+              ? const Text('#')
+              : const Text('Yellow parts'),
         ),
         body: Card(
             margin: const EdgeInsets.symmetric(vertical: 5),
             child: ListView.separated(
               itemCount: expandedCardTags.length,
               separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
+                  const Divider(color: Colors.blue),
               itemBuilder: (BuildContext context, int index) {
                 return expandedCardTags[index];
               },

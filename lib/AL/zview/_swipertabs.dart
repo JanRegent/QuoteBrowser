@@ -8,8 +8,8 @@ import '../alib/alib.dart';
 import 'aedit/attredit.dart';
 
 import 'aedit/fieldpopup.dart';
-import 'battribs/aheadfields.dart';
-import 'battribs/cothers.dart';
+import 'battribs/headfields.dart';
+import 'battribs/othersfields.dart';
 import 'rowpopupmenu.dart';
 import 'acoloredview/coloredview.dart';
 

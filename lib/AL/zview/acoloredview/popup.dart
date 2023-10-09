@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../aedit/fieldpopup.dart';
-import 'tagslist.dart';
+import 'tagsyellowlist.dart';
 
 PopupMenuButton coloredPopupMenuButton(String fieldValue) {
   return PopupMenuButton(
@@ -15,7 +15,8 @@ PopupMenuButton coloredPopupMenuButton(String fieldValue) {
             onPressed: () async {
               await Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const TagsTab()),
+                MaterialPageRoute(
+                    builder: (context) => const TagsYelowPage('tags')),
               );
               // ignore: use_build_context_synchronously
               Navigator.pop(context);
@@ -27,6 +28,11 @@ PopupMenuButton coloredPopupMenuButton(String fieldValue) {
           child: IconButton(
             icon: const Icon(Icons.circle, color: Colors.yellow),
             onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const TagsYelowPage('yellowparts')),
+              );
               // ignore: use_build_context_synchronously
               Navigator.pop(context);
             },
