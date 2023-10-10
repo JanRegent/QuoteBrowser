@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../BL/bl.dart';
 import '../../alib/alicons.dart';
 import '../bedit/quoteedit.dart';
-import '../bedit/fieldpopup.dart';
+import '../bedit/quotepopup.dart';
 import '../bedit/category/catable.dart';
 
 class MainFields extends StatefulWidget {

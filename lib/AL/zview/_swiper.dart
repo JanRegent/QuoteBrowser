@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../BL/orm.dart';
 
 import '_swipertabs.dart';
-import 'bedit/fieldpopup.dart';
+import 'bedit/quotepopup.dart';
 
 class CardSwiper extends StatefulWidget {
   final String title;

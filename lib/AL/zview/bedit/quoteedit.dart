@@ -12,7 +12,7 @@ import '../../alib/alicons.dart';
 
 import '../acoloredview/tagsyellowlist.dart';
 import 'addquote/addquoterow.dart';
-import 'fieldpopup.dart';
+import 'quotepopup.dart';
 import 'originalview.dart';
 
 Future setCellBL(String columnName, String cellContent) async {
@@ -73,6 +73,16 @@ class _QuoteEditState extends State<QuoteEdit> {
           FlutterClipboard.paste().then((value) async {
             await setCellBL('quote', bl.orm.currentRow.quote + '\n\n' + value);
           });
+        },
+      ),
+      PopupMenuItem(
+        value: '/OriginalView',
+        child: const Text("Original View"),
+        onTap: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const OriginalView()),
+          );
         },
       ),
       PopupMenuItem(

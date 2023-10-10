@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:highlight_text/highlight_text.dart';
 
 import '../../../BL/bl.dart';
-import 'fieldpopup.dart';
+import 'quotepopup.dart';
 
 // ignore: must_be_immutable
 class OriginalView extends StatefulWidget {

@@ -7,7 +7,7 @@ import '../../BL/orm.dart';
 import '../alib/alib.dart';
 import 'bedit/attredit.dart';
 
-import 'bedit/fieldpopup.dart';
+import 'bedit/quotepopup.dart';
 import 'cattribs/headfields.dart';
 import 'cattribs/othersfields.dart';
 import 'rowpopupmenu.dart';

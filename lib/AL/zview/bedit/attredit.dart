@@ -4,7 +4,7 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../../BL/bl.dart';
 
-import 'fieldpopup.dart';
+import 'quotepopup.dart';
 import 'quoteedit.dart';
 
 // ignore: must_be_immutable
