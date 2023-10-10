@@ -32,19 +32,13 @@ Future setCellBL(String columnName, String cellContent) async {
   }
 }
 
-Future showOriginal(BuildContext context) async {
-  await Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const OriginalView()),
-  );
-}
-
 // ignore: must_be_immutable
 class QuoteEdit extends StatefulWidget {
-  Function swiperSetstate;
+  VoidCallback swiperSetstate;
+  VoidCallback attreditSetstate;
   BuildContext context;
   // ignore: use_key_in_widget_constructors
-  QuoteEdit(this.swiperSetstate, this.context);
+  QuoteEdit(this.swiperSetstate, this.attreditSetstate, this.context);
 
   @override
   State<QuoteEdit> createState() => _QuoteEditState();
@@ -201,6 +195,7 @@ class _QuoteEditState extends State<QuoteEdit> {
     });
 
     widget.swiperSetstate();
+    widget.attreditSetstate(); //quote content refresh
   }
 
   Container buttRow(BuildContext context) {

@@ -9,7 +9,7 @@ import 'quoteedit.dart';
 
 // ignore: must_be_immutable
 class AttrEdit extends StatefulWidget {
-  Function swiperSetstate;
+  VoidCallback swiperSetstate;
   AttrEdit(this.swiperSetstate, {super.key});
 
   @override
@@ -40,7 +40,8 @@ class _AttrEditState extends State<AttrEdit> {
     List<ListTile> listTilesGet() {
       List<ListTile> listtiles = [
         redorowAL(),
-        ListTile(title: QuoteEdit(widget.swiperSetstate, context)),
+        ListTile(
+            title: QuoteEdit(widget.swiperSetstate, attreditSetstate, context)),
         redorowAL()
       ];
 
