@@ -38,14 +38,15 @@ class QuoteEdit extends StatefulWidget {
   VoidCallback attreditSetstate;
   BuildContext context;
   // ignore: use_key_in_widget_constructors
-  QuoteEdit(this.swiperSetstate, this.attreditSetstate, this.context);
+  QuoteEdit(this.swiperSetstate, this.attreditSetstate, this.context,
+      {Key? key})
+      : super(key: key);
 
   @override
   State<QuoteEdit> createState() => _QuoteEditState();
 }
 
 class _QuoteEditState extends State<QuoteEdit> {
-  final TextEditingController _controller = TextEditingController();
   late BuildContext originalContext = widget.context;
   RxString selected = ''.obs;
   List<PopupMenuItem> menu1(BuildContext context) {
@@ -127,8 +128,9 @@ class _QuoteEditState extends State<QuoteEdit> {
 
   void attribSet(String attribName) async {
     try {
-      selected.value = _controller.text.substring(
-          _controller.selection.baseOffset, _controller.selection.extentOffset);
+      selected.value = quoteEditController.text.substring(
+          quoteEditController.selection.baseOffset,
+          quoteEditController.selection.extentOffset);
       if (selected.value.isEmpty) return;
     } catch (_) {
       return;
@@ -247,7 +249,7 @@ class _QuoteEditState extends State<QuoteEdit> {
 
   TextField quoteTextField() {
     return TextField(
-      controller: _controller,
+      controller: quoteEditController,
       readOnly: true,
       style: const TextStyle(
         fontSize: 20.0,
@@ -262,8 +264,6 @@ class _QuoteEditState extends State<QuoteEdit> {
 
   @override //printSelectedText()
   Widget build(BuildContext context) {
-    _controller.text = bl.orm.currentRow.quote.value;
-
     List<Widget> colItems = [
       buttRow(context),
       quoteTextField(),

@@ -98,7 +98,7 @@ void pureTags() {
   bl.orm.currentRow.tags.value = tags.join('#');
 }
 
-final ValueNotifier<bool?> checkboxState = ValueNotifier<bool>(false);
+final TextEditingController quoteEditController = TextEditingController();
 
 Future currentRowSet(String sheetRownoKey) async {
   //String sheetRownoKey = currentSS.keys[currentSS.swiperIndex];
@@ -119,6 +119,7 @@ Future currentRowSet(String sheetRownoKey) async {
   }
 
   bl.orm.currentRow.quote.value = valueGet('quote');
+  quoteEditController.text = bl.orm.currentRow.quote.value;
   bl.orm.currentRow.yellowParts.value = valueGet('yellowParts');
 
   bl.orm.currentRow.author.value = valueGet('author');
