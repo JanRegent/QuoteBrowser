@@ -49,7 +49,7 @@ class QuoteEdit extends StatefulWidget {
 class _QuoteEditState extends State<QuoteEdit> {
   late BuildContext originalContext = widget.context;
   RxString selected = ''.obs;
-  List<PopupMenuItem> menu1(BuildContext context) {
+  List<PopupMenuItem> buttonRowMenu(BuildContext context) {
     return [
       copyPopupMenuItem(bl.orm.currentRow.quote.value),
       PopupMenuItem(
@@ -81,36 +81,6 @@ class _QuoteEditState extends State<QuoteEdit> {
         },
       ),
       PopupMenuItem(
-        value: '/tagsList',
-        child: IconButton(
-          icon: const Icon(Icons.tag, color: Colors.black),
-          onPressed: () async {
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const TagsYellowPage('tags')),
-            );
-            // ignore: use_build_context_synchronously
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      PopupMenuItem(
-        value: '/yellowpartsList',
-        child: IconButton(
-          icon: const Icon(Icons.circle, color: Colors.yellow),
-          onPressed: () async {
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const TagsYellowPage('yellowparts')),
-            );
-            // ignore: use_build_context_synchronously
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      PopupMenuItem(
         value: '/__toRead__',
         child: const Text("__toRead__ remove"),
         onTap: () async {
@@ -126,13 +96,33 @@ class _QuoteEditState extends State<QuoteEdit> {
     ];
   }
 
+  Future emptySelected(String attribName) async {
+    if (attribName == 'tags') {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const TagsYellowPage('tags')),
+      );
+    }
+    if (attribName == 'yellowParts') {
+      // ignore: use_build_context_synchronously
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const TagsYellowPage('yellowparts')),
+      );
+    }
+  }
+
   void attribSet(String attribName) async {
     try {
       selected.value = quoteEditController.text.substring(
           quoteEditController.selection.baseOffset,
           quoteEditController.selection.extentOffset);
-      if (selected.value.isEmpty) return;
+      if (selected.value.isEmpty) {
+        return;
+      }
     } catch (_) {
+      await emptySelected(attribName);
       return;
     }
     attribNameRedo.value = '';
@@ -228,19 +218,12 @@ class _QuoteEditState extends State<QuoteEdit> {
               icon: const Icon(Icons.circle, color: Colors.yellow),
               onPressed: () => attribSet('yellowParts'),
             ),
-
             const Spacer(),
-
             PopupMenuButton(
               itemBuilder: (BuildContext context) {
-                return menu1(context);
+                return buttonRowMenu(context);
               },
             )
-
-            // TextButton(
-            //     child: fieldPopupMenu(bl.orm.currentRow.quote.value, 'quote'),
-            //     onPressed: () => attribSet('quote')),
-            // const Spacer(),
           ],
         ));
   }
