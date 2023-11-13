@@ -122,7 +122,6 @@ class _QuoteEditState extends State<QuoteEdit> {
         return;
       }
     } catch (_) {
-      await emptySelected(attribName);
       return;
     }
     attribNameRedo.value = '';
@@ -211,13 +210,16 @@ class _QuoteEditState extends State<QuoteEdit> {
             IconButton(
                 icon: ALicons.attrIcons.parPageIcon,
                 onPressed: () => attribSet('parPage')),
-            IconButton(
+            ElevatedButton.icon(
+                onPressed: () => attribSet('tags'),
+                onLongPress: () => emptySelected('tags'),
                 icon: ALicons.attrIcons.tagIcon,
-                onPressed: () => attribSet('tags')),
-            IconButton(
-              icon: const Icon(Icons.circle, color: Colors.yellow),
-              onPressed: () => attribSet('yellowParts'),
-            ),
+                label: const Text('')),
+            ElevatedButton.icon(
+                onPressed: () => attribSet('yellowParts'),
+                onLongPress: () => emptySelected('yellowParts'),
+                icon: const Icon(Icons.circle, color: Colors.yellow),
+                label: const Text('')),
             const Spacer(),
             PopupMenuButton(
               itemBuilder: (BuildContext context) {
