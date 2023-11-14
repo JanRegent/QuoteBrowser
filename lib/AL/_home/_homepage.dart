@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 
 import '../../BL/orm.dart';
 
-import 'gridmenu/_groupedgrid.dart';
-import 'gridmenu/_groupedlist.dart';
+import 'gridmenu/_searchmenu.dart';
 
 class SidebarHome extends StatefulWidget {
   const SidebarHome({super.key});
@@ -28,25 +27,25 @@ class _SidebarHomeState extends State<SidebarHome> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              Obx(() => Text(loadingTitle.value)),
-            ],
+          appBar: AppBar(
+            title: Row(
+              children: [
+                Obx(() => Text(loadingTitle.value)),
+              ],
+            ),
+            actions: const [],
           ),
-          actions: const [],
-        ),
-        body:
-            //const GroupedListMenu()
+          body: const SearchMenu()
+          //const GroupedListMenu()
 
-            GridMenuPage(
-          setstateHome,
-          crossAxisCount: 3,
-          title: 'GroupedGrid',
-        ),
+          //     GridMenuPage(
+          //   setstateHome,
+          //   crossAxisCount: 3,
+          //   title: 'GroupedGrid',
+          // ),
 
-        //SidebarPage(setstateHome),
-      ),
+          //SidebarPage(setstateHome),
+          ),
     );
   }
 }
