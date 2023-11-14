@@ -31,6 +31,17 @@ class HttpService {
     return response.data['data'];
   }
 
+  Future getSheetGroups() async {
+    // The below request is the same as above.
+    // ignore: unused_local_variable
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {'action': 'getSheetGroups'},
+    );
+
+    return response.data['data'];
+  }
+
   Future<List<String>> searchSS(String searchText) async {
     Response response = await dio.get(
       backendUrl,
@@ -79,14 +90,14 @@ class HttpService {
     return await sheetRowsSaveGetKeys(response.data['data']);
   }
 
-  Future<List<String>> getDataSheets(String sheetId) async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {'action': 'getDataSheets', 'sheetId': sheetId},
-    );
+  // Future<List<String>> getDataSheets(String sheetId) async {
+  //   Response response = await dio.get(
+  //     backendUrl,
+  //     queryParameters: {'action': 'getDataSheets', 'sheetId': sheetId},
+  //   );
 
-    return blUti.toListString(response.data['data']);
-  }
+  //   return blUti.toListString(response.data['data']);
+  // }
 
   //----------------------------------------------------------------------set
   Future<String> setCellDL(String sheetName, String columnName,

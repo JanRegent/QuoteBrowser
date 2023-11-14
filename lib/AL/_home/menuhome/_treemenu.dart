@@ -1,6 +1,8 @@
 import 'package:expandable_tree_menu/expandable_tree_menu.dart';
 import 'package:flutter/material.dart';
 
+import '../../../DL/dl.dart';
+
 class TreeMenu extends StatelessWidget {
   const TreeMenu({super.key});
 
@@ -36,6 +38,11 @@ class _TreeMenuPageState extends State<TreeMenuPage> {
 
   Future<List<TreeNode>> fetchData() async {
     // Load the data from somewhere;
+    Map sheetGroups = await dl.httpService.getSheetGroups();
+    for (var key in sheetGroups.keys) {
+      print(key);
+      print(sheetGroups[key]['sheetNames']);
+    }
     return await _dataLoad();
   }
 
@@ -110,14 +117,14 @@ class _TreeMenuPageState extends State<TreeMenuPage> {
   }
 
   /// Build the Node widget at a specific node in the tree
-  Widget _nodeBuilder(context, nodeValue) {
-    return Card(
-        margin: const EdgeInsets.symmetric(vertical: 1),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(nodeValue.toString()),
-        ));
-  }
+  // Widget _nodeBuilder(context, nodeValue) {
+  //   return Card(
+  //       margin: const EdgeInsets.symmetric(vertical: 1),
+  //       child: Padding(
+  //         padding: const EdgeInsets.all(8.0),
+  //         child: Text(nodeValue.toString()),
+  //       ));
+  // }
 }
 
 // A less contrived example would use a DataModel as type for the value
