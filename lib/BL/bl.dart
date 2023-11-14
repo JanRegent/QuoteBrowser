@@ -25,6 +25,8 @@ List<IsarGeneratedSchema> schemas = [
 class Bl {
   bool devMode = false;
 
+  Map<String, dynamic> sheetGroups = {};
+
   Orm orm = Orm();
   CatsCRUD catsCRUD = CatsCRUD();
   SheetrowsCRUD sheetrowsCRUD = SheetrowsCRUD();

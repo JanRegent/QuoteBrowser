@@ -1,6 +1,7 @@
 import 'package:expandable_tree_menu/expandable_tree_menu.dart';
 import 'package:flutter/material.dart';
 
+import '../../../BL/bl.dart';
 import '../../../DL/dl.dart';
 
 class TreeMenu extends StatelessWidget {
@@ -38,11 +39,8 @@ class _TreeMenuPageState extends State<TreeMenuPage> {
 
   Future<List<TreeNode>> fetchData() async {
     // Load the data from somewhere;
-    Map sheetGroups = await dl.httpService.getSheetGroups();
-    for (var key in sheetGroups.keys) {
-      print(key);
-      print(sheetGroups[key]['sheetNames']);
-    }
+    bl.sheetGroups = await dl.httpService.getSheetGroups();
+
     return await _dataLoad();
   }
 
@@ -52,17 +50,31 @@ class _TreeMenuPageState extends State<TreeMenuPage> {
     fetchData().then(_addData);
   }
 
+  TreeNode lastTree() {
+    List<TreeNode> subNodes = [];
+    for (var key in bl.sheetGroups.keys) {
+      subNodes.add(TreeNode(key));
+      print(key);
+      //print(bl.sheetGroups[key]['sheetNames']);
+    }
+    return TreeNode(
+      'Last',
+      subNodes: subNodes,
+    );
+  }
+
   ExpandableTree expandableTree() {
     return ExpandableTree(
-      nodes: const [
-        TreeNode(
+      nodes: [
+        lastTree(),
+        const TreeNode(
           'Category A',
           subNodes: [
             TreeNode('CatA first item'),
             TreeNode('CatA second item'),
           ],
         ),
-        TreeNode(
+        const TreeNode(
           'Category B',
           subNodes: [
             TreeNode('Cat B first item'),
@@ -95,14 +107,7 @@ class _TreeMenuPageState extends State<TreeMenuPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Flexible(
-            child: SingleChildScrollView(child: expandableTree()
-
-                //  ExpandableTree(
-                //   nodes: nodes,
-                //   nodeBuilder: _nodeBuilder,
-                //   onSelect: (node) => _nodeSelected(context, node),
-                // ),
-                ),
+            child: SingleChildScrollView(child: expandableTree()),
           ),
         ],
       ),
@@ -115,16 +120,6 @@ class _TreeMenuPageState extends State<TreeMenuPage> {
         MaterialPageRoute(builder: (context) => DetailPage(value: nodeValue));
     Navigator.of(context).push(route);
   }
-
-  /// Build the Node widget at a specific node in the tree
-  // Widget _nodeBuilder(context, nodeValue) {
-  //   return Card(
-  //       margin: const EdgeInsets.symmetric(vertical: 1),
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(8.0),
-  //         child: Text(nodeValue.toString()),
-  //       ));
-  // }
 }
 
 // A less contrived example would use a DataModel as type for the value
