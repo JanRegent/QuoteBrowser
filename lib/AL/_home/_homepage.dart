@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../BL/orm.dart';
-
-import 'gridmenu/_searchmenu.dart';
+import 'menuhome/_treemenu.dart';
 
 class SidebarHome extends StatefulWidget {
   const SidebarHome({super.key});
@@ -35,7 +34,7 @@ class _SidebarHomeState extends State<SidebarHome> {
             ),
             actions: const [],
           ),
-          body: const SearchMenu()
+          body: const TreeMenu()
           //const GroupedListMenu()
 
           //     GridMenuPage(
