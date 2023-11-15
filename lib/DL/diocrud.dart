@@ -56,6 +56,27 @@ class HttpService {
     return await sheetRowsSaveGetKeys(response.data['data']);
   }
 
+  Future<List<String>> getSheetGroup(
+      String sheetGroup, String searchText) async {
+    try {
+      Response response = await dio.get(
+        backendUrl,
+        queryParameters: {
+          'action': 'getSheetGroup',
+          'searchText': searchText,
+          'sheetGroup': sheetGroup
+        },
+      );
+
+      await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+
+      return await sheetRowsSaveGetKeys(response.data['data']);
+    } catch (e) {
+      debugPrint('getSheetGroup($sheetGroup, $searchText\n$e');
+      return [];
+    }
+  }
+
   Future<List<String>> getLastRows(String sheetName) async {
     Response response = await dio.get(
       backendUrl,

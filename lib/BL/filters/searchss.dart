@@ -33,6 +33,34 @@ Future<int> filterSearchText(String searchText, BuildContext context) async {
   return currentSS.keys.length;
 }
 
+Future<int> filterSearchTextSheetGroup(
+    String sheetGroup, String searchText, BuildContext context) async {
+  currentSS.filterKey =
+      '$searchText __|__ $sheetGroup __|__ [scope:sheetGroup]';
+  currentSS.swiperIndex.value = 0;
+
+  debugPrint(currentSS.filterKey);
+  try {
+    currentSS.keys = (await bl.filtersCRUD.readFilter(currentSS.filterKey));
+  } catch (_) {}
+
+  // ignore: prefer_is_empty
+  if (currentSS.keys.length == 0) {
+    //ignore: use_build_context_synchronously
+    al.messageLoading(context, 'Searching in cloud', currentSS.filterKey, 35);
+
+    currentSS.keys = await dl.httpService.getSheetGroup(sheetGroup, searchText);
+
+    await bl.filtersCRUD.updateFilter(
+        searchText, 'searchText: ${currentSS.filterKey}', currentSS.keys);
+  }
+  if (currentSS.keys.isEmpty) {
+    return 0;
+  }
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
+  return currentSS.keys.length;
+}
+
 Future<int> columnTextShow(String columnTextKey, BuildContext context) async {
   currentSS.filterKey = columnTextKey;
   currentSS.swiperIndex.value = 0;

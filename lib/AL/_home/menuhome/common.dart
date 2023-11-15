@@ -30,6 +30,21 @@ Future searchText(String searchText, BuildContext context) async {
   });
 }
 
+Future searchSheetGroup(
+    String sheetGroup, String searchText, BuildContext context) async {
+  filterSearchTextSheetGroup(sheetGroup, searchText, context).then(
+      (value) async {
+    if (value == 0) return;
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CardSwiper(searchText, const {})),
+    );
+  }, onError: (e) {
+    debugPrint('searchSheetGroup($sheetGroup, $searchText)\n $e');
+  });
+}
+
 Future searchColumnQuote(String columnName, String columnValue,
     String searchText, BuildContext context) async {
   al.messageLoading(

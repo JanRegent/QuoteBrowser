@@ -264,7 +264,7 @@ class AL {
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       content: SizedBox(
-          height: 300,
+          height: 500,
           child: Column(
             children: [
               // const CircularProgressIndicator(
