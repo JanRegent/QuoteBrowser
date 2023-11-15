@@ -14,7 +14,7 @@ class ColumnTextFiltersAL {
     al.messageLoading(context, 'Searching in cloud', item.tileName, 25);
     switch (item.tileName) {
       case 'New Author&text':
-        currentSS.filterIcon = const Icon(Icons.person);
+        //currentSS.filterIcon = const Icon(Icons.person);
         String author = '';
         try {
           author = await authorSelect(context);
@@ -40,7 +40,7 @@ class ColumnTextFiltersAL {
 
       case 'Stored Author&text':
         String columnTextKey = '';
-        currentSS.filterIcon = const Icon(Icons.person);
+        //currentSS.filterIcon = const Icon(Icons.person);
         try {
           // ignore: use_build_context_synchronously
           columnTextKey = await authorTextSelect(context);

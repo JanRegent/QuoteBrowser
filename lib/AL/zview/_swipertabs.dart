@@ -52,7 +52,6 @@ class _SwiperTabsState extends State<SwiperTabs>
 
   Row titleArrowsRowOff() {
     return Row(children: [
-      currentSS.filterIcon,
       IconButton(
           onPressed: () {
             al.messageInfo(context, 'Search exp.', widget.title, 10);

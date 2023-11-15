@@ -14,7 +14,7 @@ void main() async {
 
   await bl.init();
   await dl.init();
-  //await sheetNamesInit();
+  bl.sheetGroups = await dl.httpService.getSheetGroups();
   //rows2db();
 
   runApp(const SidebarHome());

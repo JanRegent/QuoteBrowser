@@ -17,14 +17,11 @@ class SimpleFiltersAL {
   Future doItem(MenuTile item, BuildContext context) async {
     switch (item.tileName) {
       case 'Today':
-        currentSS.filterIcon = const Icon(Icons.date_range);
         await searchText('${blUti.todayStr()}.', context);
         break;
 
       case 'Last days':
-        currentSS.filterIcon = const Icon(Icons.date_range);
         String searchDate = '';
-        currentSS.filterIcon = const Icon(Icons.date_range);
         try {
           // ignore: use_build_context_synchronously
           searchDate = await dateSelect(context);
@@ -38,12 +35,12 @@ class SimpleFiltersAL {
         break;
 
       case 'To read':
-        currentSS.filterIcon = const Icon(Icons.date_range);
+        //currentSS.filterIcon = const Icon(Icons.date_range);
         // ignore: use_build_context_synchronously
         await searchText('__toRead__', context);
         break;
       case 'New word search':
-        currentSS.filterIcon = const Icon(Icons.wordpress);
+        //currentSS.filterIcon = const Icon(Icons.wordpress);
         // ignore: use_build_context_synchronously
         String word = await inputWord(context);
         try {
@@ -57,7 +54,7 @@ class SimpleFiltersAL {
 
       case 'Stored words':
         String searchWord = '';
-        currentSS.filterIcon = const Icon(Icons.wordpress);
+        //currentSS.filterIcon = const Icon(Icons.wordpress);
         try {
           // ignore: use_build_context_synchronously
           searchWord = await wordSelect(context);

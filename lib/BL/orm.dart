@@ -12,7 +12,6 @@ RxString loadingTitle = ''.obs;
 class CurrentSS {
   String filterKey = '';
   List<String> keys = [];
-  late Icon filterIcon;
   List<String> sheetNames = [];
   bool addQuoteMode = false;
   RxInt swiperIndex = 0.obs;

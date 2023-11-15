@@ -16,7 +16,6 @@ class LastRowsAddQuote {
       MenuTile item, BuildContext context, Function setstateHome) async {
     switch (item.tileName) {
       case 'Last 10 rows':
-        currentSS.filterIcon = const Icon(Icons.last_page);
 
         // ignore: use_build_context_synchronously
         String sheetName = await selectOne(currentSS.sheetNames, context);
@@ -35,7 +34,6 @@ class LastRowsAddQuote {
         break;
 
       case 'Add quote':
-        currentSS.filterIcon = const Icon(Icons.add);
         // ignore: use_build_context_synchronously
 
         // ignore: use_build_context_synchronously
