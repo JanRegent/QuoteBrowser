@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:input_dialog/input_dialog.dart';
 
+import '../../../BL/bl.dart';
 import '../../../BL/filters/searchss.dart';
 import '../../alib/alib.dart';
 import '../../zview/_swiper.dart';
@@ -32,6 +33,7 @@ Future searchText(String searchText, BuildContext context) async {
 
 Future searchSheetGroup(
     String sheetGroup, String searchText, BuildContext context) async {
+  bl.sheetGroupCurrent = sheetGroup;
   filterSearchTextSheetGroup(sheetGroup, searchText, context).then(
       (value) async {
     if (value == 0) return;

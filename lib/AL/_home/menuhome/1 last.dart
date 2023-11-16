@@ -38,17 +38,16 @@ class _LastMenuState extends State<LastMenu> {
   @override
   void initState() {
     super.initState();
-    for (var key in bl.sheetGroups.keys) {
+    for (var sheetGroup in bl.sheetGroups.keys) {
       listTiles.add(ListTile(
           title: Text(
-            key,
+            sheetGroup,
             style: const TextStyle(fontSize: 30),
           ),
           onTap: () async {
-            await searchSheetGroup(key, '${blUti.todayStr()}.', context);
+            await searchSheetGroup(sheetGroup, '${blUti.todayStr()}.', context);
           },
           trailing: lastdays()));
-      //print(bl.sheetGroups[key]['sheetNames']);
     }
   }
 

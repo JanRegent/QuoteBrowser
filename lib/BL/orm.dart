@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 
 import 'bl.dart';
 
-import 'params/params.dart';
-
 List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
 CurrentSS currentSS = CurrentSS();
 RxString loadingTitle = ''.obs;
@@ -45,7 +43,7 @@ class Orm {
 
 void currentRowNew() {
   bl.orm.currentRow = CurrentRow()
-    ..fileId = dataSheetId
+    ..fileId = ''
     ..quote.value = ''
     ..tags.value = '';
 }

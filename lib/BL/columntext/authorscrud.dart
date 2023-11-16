@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/bluti.dart';
-import 'package:quotebrowser/BL/params/params.dart';
 
 import '../../DL/dl.dart';
 import '../bl.dart';
@@ -28,9 +27,8 @@ class AuthorCRUD {
   //-----------------------------------------------------------------update
   Future updateAuthors() async {
     if (isar.authors.count() > 0) return;
-
-    List authorsDyn =
-        await dl.httpService.getAllrows('__Authors__', dataSheetId);
+    String sheetId = bl.sheetGroups[bl.sheetGroupCurrent][0];
+    List authorsDyn = await dl.httpService.getAllrows('__Authors__', sheetId);
     List<String> auth = blUti.toListString(authorsDyn);
 
     List<String> authors = [];

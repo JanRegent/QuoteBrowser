@@ -5,7 +5,7 @@ import '../BL/bl.dart';
 import '../BL/bluti.dart';
 
 import '../BL/filters/searchss.dart';
-import '../BL/params/params.dart';
+
 import 'backendurl.dart';
 
 //CORS
@@ -16,6 +16,7 @@ import 'backendurl.dart';
 class HttpService {
   final dio = Dio();
 
+  //-------------------------------------------------------------------get rows
   Future<List> getAllrows(String sheetName, String sheetId) async {
     // The below request is the same as above.
     // ignore: unused_local_variable
@@ -31,6 +32,22 @@ class HttpService {
     return response.data['data'];
   }
 
+  Future<List<String>> getLastRows(String sheetName) async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {
+        'action': 'getLastRows',
+        'sheetName': sheetName,
+        'sheetId': bl.sheetGroups[bl.sheetGroupCurrent][sheetName]
+      },
+    );
+
+    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+
+    return await sheetRowsSaveGetKeys(response.data['data']);
+  }
+
+  //-----------------------------------------------------------------SheetGroups
   Future getSheetGroups() async {
     // The below request is the same as above.
     // ignore: unused_local_variable
@@ -40,20 +57,6 @@ class HttpService {
     );
 
     return response.data['data'];
-  }
-
-  Future<List<String>> searchSS(String searchText) async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {
-        'action': 'searchSS',
-        'searchText': searchText,
-        'ssId': dataSheetId
-      },
-    );
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-
-    return await sheetRowsSaveGetKeys(response.data['data']);
   }
 
   Future<List<String>> getSheetGroup(
@@ -77,16 +80,16 @@ class HttpService {
     }
   }
 
-  Future<List<String>> getLastRows(String sheetName) async {
+  //-------------------------------------------------------------------search
+  Future<List<String>> searchSS(String searchText) async {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
-        'action': 'getLastRows',
-        'sheetName': sheetName,
-        'sheetId': dataSheetId
+        'action': 'searchSS',
+        'searchText': searchText,
+        'ssId': bl.sheetGroups[bl.sheetGroupCurrent][0]
       },
     );
-
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
 
     return await sheetRowsSaveGetKeys(response.data['data']);
@@ -99,7 +102,7 @@ class HttpService {
       queryParameters: {
         'action': 'searchColumnAndQuote',
         'searchText': searchText,
-        'ssId': dataSheetId,
+        'ssId': bl.sheetGroups[bl.sheetGroupCurrent][0],
         'author': columnName == 'author' ? columnValue : '',
         'book': columnName == 'book' ? columnValue : '',
         'tag': columnName == 'tag' ? columnValue : ''
@@ -110,15 +113,6 @@ class HttpService {
 
     return await sheetRowsSaveGetKeys(response.data['data']);
   }
-
-  // Future<List<String>> getDataSheets(String sheetId) async {
-  //   Response response = await dio.get(
-  //     backendUrl,
-  //     queryParameters: {'action': 'getDataSheets', 'sheetId': sheetId},
-  //   );
-
-  //   return blUti.toListString(response.data['data']);
-  // }
 
   //----------------------------------------------------------------------set
   Future<String> setCellDL(String sheetName, String columnName,
@@ -132,7 +126,7 @@ class HttpService {
         queryParameters: {
           'action': 'setCell',
           'sheetName': sheetName,
-          'sheetId': dataSheetId,
+          'sheetId': bl.sheetGroups[bl.sheetGroupCurrent][sheetName],
           'columnName': columnName,
           'cellContent': cellContent,
           'rowNo': rowNo

@@ -26,6 +26,7 @@ class Bl {
   bool devMode = false;
 
   Map<String, dynamic> sheetGroups = {};
+  String sheetGroupCurrent = '';
 
   Orm orm = Orm();
   CatsCRUD catsCRUD = CatsCRUD();
