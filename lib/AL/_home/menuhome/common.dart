@@ -50,28 +50,20 @@ Future searchGroup_(String sheetGroup, String searchText) async {
   debugPrint('    ${bl.lastCount}');
 }
 
-Future<int> searchSheetGroup(
+Future searchSheetGroup(
     String sheetGroup, String searchText, BuildContext context) async {
   bl.sheetGroupCurrent = sheetGroup;
-  al.messageLoading(
-      context, 'Search cloud', '$searchText __|__ $sheetGroup', 35);
 
-  filterSearchTextSheetGroup(sheetGroup, searchText).then((dataCount) async {
-    bl.lastCount[sheetGroup] = dataCount;
-    debugPrint('    dataCount: ${bl.lastCount[sheetGroup]}');
-    debugPrint('    ${bl.lastCount}');
-    if (dataCount == 0) return dataCount;
+  bl.lastCount[sheetGroup] = 'loading';
+  await searchGroup_(sheetGroup, searchText);
 
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => CardSwiper(searchText, const {})),
-    );
-    return dataCount;
-  }, onError: (e) {
-    debugPrint('searchSheetGroup($sheetGroup, $searchText)\n $e');
-    return -1;
-  });
-  return -1;
+  if (bl.lastCount[sheetGroup] == 0) return;
+
+  // ignore: use_build_context_synchronously
+  await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => CardSwiper(searchText, const {})),
+  );
 }
 
 Future searchColumnQuote(String columnName, String columnValue,

@@ -48,8 +48,7 @@ class _LastMenuState extends State<LastMenu> {
             style: const TextStyle(fontSize: 30),
           ),
           onTap: () async {
-            bl.lastCount[sheetGroup] = await searchSheetGroup(
-                sheetGroup, '${blUti.todayStr()}.', context);
+            await searchSheetGroup(sheetGroup, '${blUti.todayStr()}.', context);
           },
           trailing: lastdays()));
     }
