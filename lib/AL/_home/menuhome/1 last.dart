@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
@@ -40,12 +41,16 @@ class _LastMenuState extends State<LastMenu> {
     super.initState();
     for (var sheetGroup in bl.sheetGroups.keys) {
       listTiles.add(ListTile(
+          leading: Obx(() => Text(bl.lastCount[sheetGroup] == -1
+              ? '?'
+              : bl.lastCount[sheetGroup].toString())),
           title: Text(
             sheetGroup,
             style: const TextStyle(fontSize: 30),
           ),
           onTap: () async {
-            await searchSheetGroup(sheetGroup, '${blUti.todayStr()}.', context);
+            bl.lastCount[sheetGroup] = await searchSheetGroup(
+                sheetGroup, '${blUti.todayStr()}.', context);
           },
           trailing: lastdays()));
     }

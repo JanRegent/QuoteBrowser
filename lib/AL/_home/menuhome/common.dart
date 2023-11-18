@@ -31,20 +31,26 @@ Future searchText(String searchText, BuildContext context) async {
   });
 }
 
-Future searchSheetGroup(
+Future<int> searchSheetGroup(
     String sheetGroup, String searchText, BuildContext context) async {
   bl.sheetGroupCurrent = sheetGroup;
   filterSearchTextSheetGroup(sheetGroup, searchText, context).then(
-      (value) async {
-    if (value == 0) return;
+      (dataCount) async {
+    bl.lastCount[sheetGroup] = dataCount;
+    debugPrint('    dataCount: ${bl.lastCount[sheetGroup]}');
+    debugPrint('    ${bl.lastCount}');
+    if (dataCount == 0) return dataCount;
 
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CardSwiper(searchText, const {})),
     );
+    return dataCount;
   }, onError: (e) {
     debugPrint('searchSheetGroup($sheetGroup, $searchText)\n $e');
+    return -1;
   });
+  return -1;
 }
 
 Future searchColumnQuote(String columnName, String columnValue,

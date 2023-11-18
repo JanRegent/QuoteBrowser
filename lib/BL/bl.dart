@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 
 import 'categories/catscrud.dart';
@@ -27,6 +28,7 @@ class Bl {
 
   Map<String, dynamic> sheetGroups = {};
   String sheetGroupCurrent = '';
+  RxMap lastCount = {}.obs;
 
   Orm orm = Orm();
   CatsCRUD catsCRUD = CatsCRUD();
