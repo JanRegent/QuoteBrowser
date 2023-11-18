@@ -40,10 +40,9 @@ class _LastMenuState extends State<LastMenu> {
   void initState() {
     super.initState();
     for (var sheetGroup in bl.sheetGroups.keys) {
+      bl.lastCount[sheetGroup] = '';
       listTiles.add(ListTile(
-          leading: Obx(() => Text(bl.lastCount[sheetGroup] == -1
-              ? '?'
-              : bl.lastCount[sheetGroup].toString())),
+          leading: Obx(() => Text(bl.lastCount[sheetGroup].toString())),
           title: Text(
             sheetGroup,
             style: const TextStyle(fontSize: 30),
@@ -56,7 +55,18 @@ class _LastMenuState extends State<LastMenu> {
     }
   }
 
-  List<ListTile> listTiles = [];
+  List<ListTile> listTiles = [
+    ListTile(
+      title: const Text('Refresh all'),
+      onTap: () async {
+        await searchSheetGroups('${blUti.todayStr()}.');
+      },
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(width: 2, color: Colors.black),
+        borderRadius: BorderRadius.circular(10),
+      ),
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +78,19 @@ class _LastMenuState extends State<LastMenu> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              return Card(
-                margin: const EdgeInsets.all(15),
-                child: Container(
-                  color: Colors.orange[100 * (index % 12 + 1)],
-                  height: 60,
-                  alignment: Alignment.center,
-                  child: listTiles[index],
-                ),
-              );
+              if (index == 0) {
+                return listTiles[index];
+              } else {
+                return Card(
+                  margin: const EdgeInsets.all(15),
+                  child: Container(
+                    color: Colors.orange[100 * (index % 12 + 1)],
+                    height: 60,
+                    alignment: Alignment.center,
+                    child: listTiles[index],
+                  ),
+                );
+              }
             },
             childCount: listTiles.length,
           ),

@@ -66,9 +66,7 @@ class FiltersCRUD {
   }
 
   //------------------------------------------------------------------update
-  Future updateFilter(
-      String filterKey, String filterName, List<String> sheetRownoKeys) async {
-    if (filterName.isEmpty) return;
+  Future updateFilter(String filterKey, List<String> sheetRownoKeys) async {
     if (sheetRownoKeys.isEmpty) return;
     isar.write((isar) async {
       SimpleFilter sFilter = SimpleFilter();

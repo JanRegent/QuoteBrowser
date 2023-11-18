@@ -31,11 +31,32 @@ Future searchText(String searchText, BuildContext context) async {
   });
 }
 
+Future searchSheetGroups(String searchText) async {
+  for (var sheetGroup in bl.sheetGroups.keys) {
+    bl.lastCount[sheetGroup] = '?';
+  }
+  for (var sheetGroup in bl.sheetGroups.keys) {
+    bl.lastCount[sheetGroup] = 'loading';
+    await searchGroup_(sheetGroup, searchText);
+  }
+}
+
+Future searchGroup_(String sheetGroup, String searchText) async {
+  bl.lastCount[sheetGroup] =
+      await filterSearchTextSheetGroup(sheetGroup, searchText);
+
+  debugPrint('$searchText __|__ $sheetGroup');
+  debugPrint('    dataCount: ${bl.lastCount[sheetGroup]}');
+  debugPrint('    ${bl.lastCount}');
+}
+
 Future<int> searchSheetGroup(
     String sheetGroup, String searchText, BuildContext context) async {
   bl.sheetGroupCurrent = sheetGroup;
-  filterSearchTextSheetGroup(sheetGroup, searchText, context).then(
-      (dataCount) async {
+  al.messageLoading(
+      context, 'Search cloud', '$searchText __|__ $sheetGroup', 35);
+
+  filterSearchTextSheetGroup(sheetGroup, searchText).then((dataCount) async {
     bl.lastCount[sheetGroup] = dataCount;
     debugPrint('    dataCount: ${bl.lastCount[sheetGroup]}');
     debugPrint('    ${bl.lastCount}');
