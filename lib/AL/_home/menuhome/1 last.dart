@@ -42,7 +42,9 @@ class _LastMenuState extends State<LastMenu> {
     for (var sheetGroup in bl.sheetGroups.keys) {
       bl.lastCount[sheetGroup] = '';
       listTiles.add(ListTile(
-          leading: Obx(() => Text(bl.lastCount[sheetGroup].toString())),
+          leading: Obx(() => bl.lastCount[sheetGroup] != 'loading'
+              ? Text(bl.lastCount[sheetGroup])
+              : const CircularProgressIndicator()),
           title: Text(
             sheetGroup,
             style: const TextStyle(fontSize: 30),
@@ -56,10 +58,22 @@ class _LastMenuState extends State<LastMenu> {
 
   List<ListTile> listTiles = [
     ListTile(
-      title: const Text('Refresh all'),
-      onTap: () async {
-        await searchSheetGroups('${blUti.todayStr()}.');
-      },
+      title: Row(
+        children: [
+          ElevatedButton.icon(
+            icon: const Icon(Icons.refresh),
+            label: const Text('All'),
+            onPressed: () async {
+              await searchSheetGroups('${blUti.todayStr()}.');
+            },
+            onLongPress: () async {
+              await bl.sheetrowsCRUD.deleteAllDb();
+              await searchSheetGroups('${blUti.todayStr()}.');
+            },
+          ),
+          const Text('')
+        ],
+      ),
       shape: RoundedRectangleBorder(
         side: const BorderSide(width: 2, color: Colors.black),
         borderRadius: BorderRadius.circular(10),

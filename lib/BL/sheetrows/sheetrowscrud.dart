@@ -19,7 +19,7 @@ class SheetrowsCRUD {
     try {
       return isar.sheetRows.get(key)!.sheetRowArr;
     } catch (e) {
-      debugPrint('sheetrowsCRUD().getById($key)\n$e');
+      debugPrint('sheetrowsCRUD().getRowArr($key)\n$e');
       return [];
     }
   }
@@ -61,5 +61,12 @@ class SheetrowsCRUD {
     // }
 
     return [];
+  }
+
+  //------------------------------------------------------------------update
+  Future deleteAllDb() async {
+    isar.write((isar) async {
+      isar.sheetRows.clear();
+    });
   }
 }
