@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
+import '../../alib/alib.dart';
 import '../../filterspages/_selectview.dart';
 import 'common.dart';
 
@@ -39,6 +40,7 @@ class _LastMenuState extends State<LastMenu> {
   @override
   void initState() {
     super.initState();
+    listTiles.add(buttTile());
     for (var sheetGroup in bl.sheetGroups.keys) {
       bl.lastCount[sheetGroup] = '';
       listTiles.add(ListTile(
@@ -56,8 +58,10 @@ class _LastMenuState extends State<LastMenu> {
     }
   }
 
-  List<ListTile> listTiles = [
-    ListTile(
+  List<ListTile> listTiles = [];
+
+  ListTile buttTile() {
+    return ListTile(
       title: Row(
         children: [
           ElevatedButton.icon(
@@ -71,15 +75,17 @@ class _LastMenuState extends State<LastMenu> {
               await searchSheetGroups('${blUti.todayStr()}.');
             },
           ),
-          const Text('')
+          const Text(''),
+          al.linkIconOpenDoc(
+              '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU', context, ''),
         ],
       ),
       shape: RoundedRectangleBorder(
         side: const BorderSide(width: 2, color: Colors.black),
         borderRadius: BorderRadius.circular(10),
       ),
-    )
-  ];
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
