@@ -37,6 +37,24 @@ class _LastMenuState extends State<LastMenu> {
     );
   }
 
+  PopupMenuButton popupGen(String sheetGroup) {
+    List<PopupMenuItem> items = [];
+    for (String sheetName in bl.sheetGroups[sheetGroup].keys) {
+      items.add(PopupMenuItem(
+        child: Text(sheetName),
+        onTap: () {
+          debugPrint(sheetName);
+        },
+      ));
+    }
+    return PopupMenuButton(
+      child: const Icon(Icons.arrow_forward_ios_rounded),
+      itemBuilder: (context) {
+        return items;
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -47,9 +65,14 @@ class _LastMenuState extends State<LastMenu> {
           leading: Obx(() => bl.lastCount[sheetGroup] != 'loading'
               ? Text(bl.lastCount[sheetGroup])
               : const CircularProgressIndicator()),
-          title: Text(
-            sheetGroup,
-            style: const TextStyle(fontSize: 30),
+          title: Row(
+            children: [
+              Text(
+                sheetGroup,
+                style: const TextStyle(fontSize: 30),
+              ),
+              popupGen(sheetGroup)
+            ],
           ),
           onTap: () async {
             await searchSheetGroup(sheetGroup, '${blUti.todayStr()}.', context);
