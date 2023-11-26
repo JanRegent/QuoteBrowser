@@ -48,7 +48,7 @@ class _LastMenuState extends State<LastMenu> {
       ));
     }
     return PopupMenuButton(
-      child: const Icon(Icons.arrow_forward_ios_rounded),
+      child: const Icon(Icons.list),
       itemBuilder: (context) {
         return items;
       },
@@ -69,10 +69,12 @@ class _LastMenuState extends State<LastMenu> {
             children: [
               Text(
                 sheetGroup,
-                style: const TextStyle(fontSize: 30),
-              ),
-              popupGen(sheetGroup)
+                style: const TextStyle(fontSize: 15),
+              )
             ],
+          ),
+          subtitle: Row(
+            children: [popupGen(sheetGroup)],
           ),
           onTap: () async {
             await searchSheetGroup(sheetGroup, '${blUti.todayStr()}.', context);
