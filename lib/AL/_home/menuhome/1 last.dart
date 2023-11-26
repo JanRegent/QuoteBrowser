@@ -7,6 +7,7 @@ import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
 import '../../alib/alib.dart';
 import '../../filterspages/_selectview.dart';
+import '../../zview/qedit/aaqedit.dart';
 import 'common.dart';
 
 class LastMenu extends StatefulWidget {
@@ -103,6 +104,15 @@ class _LastMenuState extends State<LastMenu> {
           const Text(''),
           al.linkIconOpenDoc(
               '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU', context, ''),
+          ElevatedButton.icon(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const QeditApp()),
+                );
+              },
+              icon: const Icon(Icons.edit),
+              label: const Text(''))
         ],
       ),
       shape: RoundedRectangleBorder(
