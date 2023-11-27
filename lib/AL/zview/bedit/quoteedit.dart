@@ -126,7 +126,6 @@ class _QuoteEditState extends State<QuoteEdit> {
   }
 
   void attribSet(String attribName) async {
-    selectedSet();
     if (selected.value.isEmpty) return;
     attribNameRedo.value = '';
     setState(() {
@@ -218,6 +217,34 @@ class _QuoteEditState extends State<QuoteEdit> {
     );
   }
 
+  PopupMenuButton tagsYellowPopup() {
+    List<PopupMenuItem> items = [];
+    items.add(PopupMenuItem(
+      child: ElevatedButton.icon(
+          onPressed: () => attribSet('tags'),
+          onLongPress: () => emptySelected('tags'),
+          icon: ALicons.attrIcons.tagIcon,
+          label: const Text('')),
+    ));
+    items.add(PopupMenuItem(
+        child: ElevatedButton.icon(
+            onPressed: () => attribSet('yellowParts'),
+            onLongPress: () => emptySelected('yellowParts'),
+            icon: ALicons.attrIcons.yellowPartIcon,
+            label: const Text(''))));
+
+    return PopupMenuButton(
+      child: ALicons.attrIcons.tagIcon,
+      onOpened: () {
+        selectedSet();
+        if (selected.value.isEmpty) return;
+      },
+      itemBuilder: (context) {
+        return items;
+      },
+    );
+  }
+
 //personMenus(),
   Container buttRow(BuildContext context) {
     return Container(
@@ -232,16 +259,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         child: Row(
           children: [
             personPopup(),
-            ElevatedButton.icon(
-                onPressed: () => attribSet('tags'),
-                onLongPress: () => emptySelected('tags'),
-                icon: ALicons.attrIcons.tagIcon,
-                label: const Text('')),
-            ElevatedButton.icon(
-                onPressed: () => attribSet('yellowParts'),
-                onLongPress: () => emptySelected('yellowParts'),
-                icon: const Icon(Icons.circle, color: Colors.yellow),
-                label: const Text('')),
+            tagsYellowPopup(),
             const Spacer(),
             PopupMenuButton(
               itemBuilder: (BuildContext context) {
@@ -273,6 +291,7 @@ class _QuoteEditState extends State<QuoteEdit> {
   Widget build(BuildContext context) {
     List<Widget> colItems = [
       buttRow(context),
+      const Text('  '),
       quoteTextField(),
       buttRow(context)
     ];

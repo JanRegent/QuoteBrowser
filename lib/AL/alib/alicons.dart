@@ -50,6 +50,10 @@ class AttrIcons {
     return const Icon(Icons.person);
   }
 
+  Icon get yellowPartIcon {
+    return const Icon(Icons.circle, color: Colors.yellow);
+  }
+
   Icon get categoryIcon {
     return const Icon(Icons.category);
   }

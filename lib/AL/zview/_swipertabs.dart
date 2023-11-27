@@ -79,7 +79,7 @@ class _SwiperTabsState extends State<SwiperTabs>
           },
           child: Obx(() => Text(
               ' ${(currentSS.swiperIndex.value + 1)}/${currentSS.keys.length}',
-              style: const TextStyle(color: Colors.white, fontSize: 20)))),
+              style: const TextStyle(color: Colors.black, fontSize: 20)))),
       ElevatedButton(
         onPressed: () {
           currentSS.swiperIndex += 1;
