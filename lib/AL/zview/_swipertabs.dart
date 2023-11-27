@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../BL/bl.dart';
 import '../../BL/orm.dart';
 import '../alib/alib.dart';
 import 'bedit/attredit.dart';
@@ -60,6 +61,7 @@ class _SwiperTabsState extends State<SwiperTabs>
       const Spacer(),
       ElevatedButton(
         onPressed: () {
+          if (bl.orm.currentRow.setCellDLOn) return;
           currentSS.swiperIndex -= 1;
           indexChanged(currentSS.swiperIndex.value);
           widget.setStateSwiper();
@@ -75,6 +77,7 @@ class _SwiperTabsState extends State<SwiperTabs>
       //
       TextButton(
           onPressed: () {
+            if (bl.orm.currentRow.setCellDLOn) return;
             showGotoPopupMenu(context, widget.setStateSwiper);
           },
           child: Obx(() => Text(
@@ -82,6 +85,7 @@ class _SwiperTabsState extends State<SwiperTabs>
               style: const TextStyle(color: Colors.black, fontSize: 20)))),
       ElevatedButton(
         onPressed: () {
+          if (bl.orm.currentRow.setCellDLOn) return;
           currentSS.swiperIndex += 1;
           indexChanged(currentSS.swiperIndex.value);
           widget.setStateSwiper();
