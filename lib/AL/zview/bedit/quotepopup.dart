@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
-import '../../alib/alert/alertok.dart';
+import '../../alib/alertinfo/alertok.dart';
 import 'quoteedit.dart';
 
 PopupMenuItem copyPopupMenuItem(String fieldValue) {

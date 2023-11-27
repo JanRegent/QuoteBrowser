@@ -167,50 +167,6 @@ class AL {
     return dialogContext;
   }
 
-  // Future infoLoading(BuildContext context, String descr) async {
-  //   await showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return SimpleDialog(
-  //         title: Text(descr),
-  //         children: [
-  //           Container(
-  //               color: Colors.lightBlue,
-  //               child: Center(
-  //                 child: LoadingAnimationWidget.staggeredDotsWave(
-  //                   color: Colors.white,
-  //                   size: 200,
-  //                 ),
-  //               ))
-  //         ],
-  //       );
-  //     },
-  //   );
-  //   // QuickAlert.show(
-  //   //   context: context,
-  //   //   type: QuickAlertType.loading,
-  //   //   title: 'Loading',
-  //   //   text: 'Fetching data',
-  //   // );
-  // }
-
-  // Future infoLoadingQ(BuildContext context) async {
-  //   QuickAlert.show(
-  //     context: context,
-  //     type: QuickAlertType.loading,
-  //     title: 'Loading',
-  //     text: 'Fetching data',
-  //   );
-  // }
-
-  // Future infoSnack(BuildContext context, String mess) async {
-  //   await QuickAlert.show(
-  //     context: context,
-  //     type: QuickAlertType.error,
-  //     text: 'Please input something',
-  //   );
-  // }
-
   void messageBottom(context, String text) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
@@ -221,6 +177,45 @@ class AL {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  Future<void> modalDialog(
+      BuildContext context, String title, String infoPopupLongText) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(infoPopupLongText),
+          actions: <Widget>[
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     textStyle: Theme.of(context).textTheme.labelLarge,
+            //   ),
+            //   child: const Text('Disable'),
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //   },
+            // ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  String infoPopupLongTextExampleText =
+      '''
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra. Consectetur adipiscing elit ut aliquam purus sit. Nisl vel pretium lectus quam. Et odio pellentesque diam volutpat commodo. Diam vulputate ut pharetra sit amet aliquam id diam maecenas. Malesuada fames ac turpis egestas. Et sollicitudin ac orci phasellus egestas tellus rutrum. Pretium lectus quam id leo in. Semper risus in hendrerit gravida. Nullam ac tortor vitae purus faucibus ornare suspendisse sed. Non tellus orci ac auctor. Quis risus sed vulputate odio ut enim blandit.
+\n
+Nullam eget felis eget nunc lobortis mattis aliquam faucibus purus. Aenean et tortor at risus viverra adipiscing at in. Augue eget arcu dictum varius duis at consectetur. Est pellentesque elit ullamcorper dignissim cras. At consectetur lorem donec massa sapien faucibus et. Sit amet venenatis urna cursus eget. Dignissim cras tincidunt lobortis feugiat vivamus. Eget arcu dictum varius duis at. Aenean pharetra magna ac placerat. Enim nec dui nunc mattis enim ut tellus elementum. Laoreet suspendisse interdum consectetur libero. Tellus mauris a diam maecenas sed enim. Tortor posuere ac ut consequat semper viverra nam libero. Tellus molestie nunc non blandit massa.
+''';
   void messageInfo(
       BuildContext context, String title, String mess, int seconds) async {
     final snackBar = SnackBar(

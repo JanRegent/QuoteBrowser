@@ -126,6 +126,7 @@ class _QuoteEditState extends State<QuoteEdit> {
   }
 
   void attribSet(String attribName) async {
+    Navigator.pop(context);
     if (selected.value.isEmpty) return;
     attribNameRedo.value = '';
     setState(() {
@@ -186,8 +187,7 @@ class _QuoteEditState extends State<QuoteEdit> {
     setState(() {
       bl.orm.currentRow.setCellDLOn = false;
     });
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+
     widget.swiperSetstate();
     widget.attreditSetstate(); //quote content refresh
   }
