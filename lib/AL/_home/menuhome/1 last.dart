@@ -38,7 +38,7 @@ class _LastMenuState extends State<LastMenu> {
     );
   }
 
-  PopupMenuButton popupGen(String sheetGroup) {
+  PopupMenuButton sheetNamesPopupGen(String sheetGroup) {
     List<PopupMenuItem> items = [];
     for (String sheetName in bl.sheetGroups[sheetGroup].keys) {
       items.add(PopupMenuItem(
@@ -75,7 +75,7 @@ class _LastMenuState extends State<LastMenu> {
             ],
           ),
           subtitle: Row(
-            children: [popupGen(sheetGroup)],
+            children: [sheetNamesPopupGen(sheetGroup)],
           ),
           onTap: () async {
             await searchSheetGroup(sheetGroup, '${blUti.todayStr()}.', context);

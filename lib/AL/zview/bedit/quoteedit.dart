@@ -189,6 +189,29 @@ class _QuoteEditState extends State<QuoteEdit> {
     widget.attreditSetstate(); //quote content refresh
   }
 
+  PopupMenuButton personPopup() {
+    List<PopupMenuItem> items = [];
+    items.add(PopupMenuItem(
+      child: ALicons.attrIcons.authorIcon,
+      onTap: () => attribSet('author'),
+    ));
+    items.add(PopupMenuItem(
+      child: ALicons.attrIcons.bookIcon,
+      onTap: () => attribSet('book'),
+    ));
+    items.add(PopupMenuItem(
+      child: ALicons.attrIcons.parPageIcon,
+      onTap: () => attribSet('parPage'),
+    ));
+    return PopupMenuButton(
+      child: ALicons.attrIcons.authorIcon,
+      itemBuilder: (context) {
+        return items;
+      },
+    );
+  }
+
+//personMenus(),
   Container buttRow(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(10),
@@ -201,15 +224,7 @@ class _QuoteEditState extends State<QuoteEdit> {
             )),
         child: Row(
           children: [
-            IconButton(
-                icon: ALicons.attrIcons.authorIcon,
-                onPressed: () => attribSet('author')),
-            IconButton(
-                icon: ALicons.attrIcons.bookIcon,
-                onPressed: () => attribSet('book')),
-            IconButton(
-                icon: ALicons.attrIcons.parPageIcon,
-                onPressed: () => attribSet('parPage')),
+            personPopup(),
             ElevatedButton.icon(
                 onPressed: () => attribSet('tags'),
                 onLongPress: () => emptySelected('tags'),
