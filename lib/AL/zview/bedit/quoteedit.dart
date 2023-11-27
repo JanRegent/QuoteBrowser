@@ -126,12 +126,9 @@ class _QuoteEditState extends State<QuoteEdit> {
   }
 
   void attribSet(String attribName) async {
-    Navigator.pop(context);
     if (selected.value.isEmpty) return;
     attribNameRedo.value = '';
-    setState(() {
-      bl.orm.currentRow.setCellDLOn = true;
-    });
+    bl.orm.currentRow.setCellDLOn = true;
 
     switch (attribName) {
       case 'author':
@@ -184,12 +181,11 @@ class _QuoteEditState extends State<QuoteEdit> {
       default:
         break;
     }
-    setState(() {
-      bl.orm.currentRow.setCellDLOn = false;
-    });
+    bl.orm.currentRow.setCellDLOn = false;
 
-    widget.swiperSetstate();
-    widget.attreditSetstate(); //quote content refresh
+    //error might indicate a memory leak if setState() is being called because another object is retaining a reference to this State object after it has been removed from the tree. To avoid memory leaks, consider breaking the reference to this object during dispose().
+    //widget.swiperSetstate();
+    //widget.attreditSetstate(); //quote content refresh
   }
 
   PopupMenuButton personPopup() {
@@ -246,7 +242,6 @@ class _QuoteEditState extends State<QuoteEdit> {
     );
   }
 
-//personMenus(),
   Container buttRow(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(10),
