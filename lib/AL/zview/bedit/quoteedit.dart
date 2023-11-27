@@ -113,17 +113,21 @@ class _QuoteEditState extends State<QuoteEdit> {
     }
   }
 
-  void attribSet(String attribName) async {
+  void selectedSet() {
     try {
       selected.value = quoteEditController.text.substring(
           quoteEditController.selection.baseOffset,
           quoteEditController.selection.extentOffset);
-      if (selected.value.isEmpty) {
-        return;
-      }
+      attribTitleRedo.value = selected.value;
+      attribNameRedo.value = '?';
     } catch (_) {
       return;
     }
+  }
+
+  void attribSet(String attribName) async {
+    selectedSet();
+    if (selected.value.isEmpty) return;
     attribNameRedo.value = '';
     setState(() {
       bl.orm.currentRow.setCellDLOn = true;
@@ -131,7 +135,6 @@ class _QuoteEditState extends State<QuoteEdit> {
 
     switch (attribName) {
       case 'author':
-        selected.value;
         attribTitleRedo.value = selected.value;
         attribPrevRedo.value = bl.orm.currentRow.author.value;
         bl.orm.currentRow.author.value = selected.value;
@@ -205,6 +208,10 @@ class _QuoteEditState extends State<QuoteEdit> {
     ));
     return PopupMenuButton(
       child: ALicons.attrIcons.authorIcon,
+      onOpened: () {
+        selectedSet();
+        if (selected.value.isEmpty) return;
+      },
       itemBuilder: (context) {
         return items;
       },
