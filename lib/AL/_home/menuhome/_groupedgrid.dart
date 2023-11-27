@@ -1,6 +1,5 @@
 import '2columntext.dart';
 import '3lastadd.dart';
-import '4application.dart';
 import 'common.dart';
 
 import 'package:flutter/material.dart';
@@ -43,9 +42,6 @@ class GridMenuPage extends StatelessWidget {
         break;
       case 'Last rows && Add quote':
         LastRowsAddQuote().doItem(item, context, setstateHome);
-        break;
-      case 'Application':
-        ApplicationMenu().doItem(item, context, setstateHome);
         break;
       default:
     }
