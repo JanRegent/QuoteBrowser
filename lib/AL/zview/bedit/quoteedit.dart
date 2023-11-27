@@ -128,7 +128,10 @@ class _QuoteEditState extends State<QuoteEdit> {
   void attribSet(String attribName) async {
     if (selected.value.isEmpty) return;
     attribNameRedo.value = '';
-    bl.orm.currentRow.setCellDLOn = true;
+
+    setState(() {
+      bl.orm.currentRow.setCellDLOn = true;
+    });
 
     switch (attribName) {
       case 'author':
@@ -181,8 +184,9 @@ class _QuoteEditState extends State<QuoteEdit> {
       default:
         break;
     }
-    bl.orm.currentRow.setCellDLOn = false;
-
+    setState(() {
+      bl.orm.currentRow.setCellDLOn = false;
+    });
     //error might indicate a memory leak if setState() is being called because another object is retaining a reference to this State object after it has been removed from the tree. To avoid memory leaks, consider breaking the reference to this object during dispose().
     widget.swiperSetstate();
     widget.attreditSetstate(); //quote content refresh
