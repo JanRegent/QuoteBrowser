@@ -13,6 +13,16 @@ class SheetRow {
 }
 
 class SheetrowsCRUD {
+  //----------------------------------------------------------------create,count
+
+  Future<int> count() async {
+    try {
+      return isar.sheetRows.where().findAll().length;
+    } catch (e) {
+      debugPrint('sheetrowsCRUD().count()\n$e');
+      return 0;
+    }
+  }
   //------------------------------------------------------------------read
 
   Future<List<String>> getRowArr(String key) async {

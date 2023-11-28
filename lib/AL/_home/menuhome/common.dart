@@ -44,10 +44,6 @@ Future searchSheetGroups(String searchText) async {
 Future searchGroup_(String sheetGroup, String searchText) async {
   bl.lastCount[sheetGroup] =
       await filterSearchTextSheetGroup(sheetGroup, searchText);
-
-  debugPrint('$searchText __|__ $sheetGroup');
-  debugPrint('    dataCount: ${bl.lastCount[sheetGroup]}');
-  debugPrint('    ${bl.lastCount}');
 }
 
 Future searchSheetGroup(

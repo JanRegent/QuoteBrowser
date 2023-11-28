@@ -124,6 +124,12 @@ class _LastMenuState extends State<LastMenu> {
 
   @override
   Widget build(BuildContext context) {
+    bl.sheetrowsCRUD.count().then((count) {
+      if (count == 0) {
+        searchSheetGroups('${blUti.todayStr()}.').then((value) {});
+      }
+    });
+
     return Scaffold(
         body: CustomScrollView(
       slivers: [
