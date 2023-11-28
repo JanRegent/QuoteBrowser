@@ -160,6 +160,8 @@ class _QuoteEditState extends State<QuoteEdit> {
         await setCellBL(attribName, selected.value);
         break;
       case 'tags':
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
         attribTitleRedo.value = selected.value;
         attribPrevRedo.value = bl.orm.currentRow.tags.value;
         bl.orm.currentRow.tags.value += '#${selected.value}';
@@ -168,6 +170,8 @@ class _QuoteEditState extends State<QuoteEdit> {
         attribNameRedo.value = attribName;
         break;
       case 'yellowParts':
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
         attribTitleRedo.value = selected.value;
         attribPrevRedo.value = bl.orm.currentRow.yellowParts.value;
         bl.orm.currentRow.yellowParts.value += '__|__\n${selected.value}';

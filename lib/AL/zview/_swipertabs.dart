@@ -53,13 +53,8 @@ class _SwiperTabsState extends State<SwiperTabs>
 
   Row titleArrowsRowOff() {
     return Row(children: [
-      IconButton(
-          onPressed: () async {
-            al.modalDialog(context, 'Search by expression',
-                'SheetGroup contains \n\n${widget.title}');
-            //await infoPopupPageShow(context, 'xxx');
-          },
-          icon: const Icon(Icons.info)),
+      al.infoButton(context, 'Search by expression',
+          'SheetGroup contains \n\n${widget.title}'),
       const Spacer(),
       ElevatedButton(
         onPressed: () {

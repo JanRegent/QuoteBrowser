@@ -177,6 +177,15 @@ class AL {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  IconButton infoButton(
+      BuildContext context, String title, String infoLongText) {
+    return IconButton(
+        onPressed: () async {
+          al.modalDialog(context, title, infoLongText);
+        },
+        icon: const Icon(Icons.info));
+  }
+
   Future<void> modalDialog(
       BuildContext context, String title, String infoPopupLongText) {
     return showDialog<void>(
