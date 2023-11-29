@@ -32,8 +32,8 @@ Future<int> filterSearchText(String searchText, BuildContext context) async {
   return currentSS.keys.length;
 }
 
-Future<String> filterSearchTextSheetGroup(
-    String sheetGroup, String searchText) async {
+Future<String> searchTextSheetGroupSheetName(
+    String sheetGroup, String sheetName, String searchText) async {
   currentSS.filterKey = '$searchText __|__ $sheetGroup';
   currentSS.swiperIndex.value = 0;
 
@@ -51,8 +51,22 @@ Future<String> filterSearchTextSheetGroup(
   if (currentSS.keys.isEmpty) {
     return '0';
   }
+  currentSS.keys = sheetNameKeysFilter(sheetName);
   await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
   return currentSS.keys.length.toString();
+}
+
+List<String> sheetNameKeysFilter(String sheetName) {
+  if (sheetName.isEmpty) return currentSS.keys;
+  List<String> sheetNameKeys = [];
+  for (String key in currentSS.keys) {
+    try {
+      List<String> sheetNameNo = key.split('__|__');
+      if (sheetNameNo[0] != sheetName) continue;
+      sheetNameKeys.add(key);
+    } catch (_) {}
+  }
+  return sheetNameKeys;
 }
 
 Future<int> columnTextShow(String columnTextKey, BuildContext context) async {

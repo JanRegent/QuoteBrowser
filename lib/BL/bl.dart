@@ -30,6 +30,7 @@ class Bl {
 
   Map<String, dynamic> sheetGroups = {};
   String sheetGroupCurrent = '';
+  RxString filteredSheetName = ''.obs;
   RxMap lastCount = {}.obs;
 
   Orm orm = Orm();

@@ -31,27 +31,32 @@ Future searchText(String searchText, BuildContext context) async {
   });
 }
 
-Future searchSheetGroups(String searchText) async {
+Future searchSheetGroups(String searchText, sheetName) async {
   for (var sheetGroup in bl.sheetGroups.keys) {
     bl.lastCount[sheetGroup] = '?';
   }
   for (var sheetGroup in bl.sheetGroups.keys) {
     bl.lastCount[sheetGroup] = 'loading';
-    await searchGroup_(sheetGroup, searchText);
+    await searchGroup_(sheetGroup, sheetName, searchText);
   }
 }
 
-Future searchGroup_(String sheetGroup, String searchText) async {
-  bl.lastCount[sheetGroup] =
-      await filterSearchTextSheetGroup(sheetGroup, searchText);
+Future searchGroup_(
+    String sheetGroup, String sheetName, String searchText) async {
+  try {
+    bl.lastCount[sheetGroup] =
+        await searchTextSheetGroupSheetName(sheetGroup, sheetName, searchText);
+  } catch (_) {
+    bl.lastCount[sheetGroup] = '0';
+  }
 }
 
-Future searchSheetGroup(
-    String sheetGroup, String searchText, BuildContext context) async {
+Future searchSheetGroup(String sheetGroup, sheetName, String searchText,
+    BuildContext context) async {
   bl.sheetGroupCurrent = sheetGroup;
 
   bl.lastCount[sheetGroup] = 'loading';
-  await searchGroup_(sheetGroup, searchText);
+  await searchGroup_(sheetGroup, sheetName, searchText);
 
   if (bl.lastCount[sheetGroup] == 0) return;
 

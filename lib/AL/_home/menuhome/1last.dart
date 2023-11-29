@@ -43,8 +43,10 @@ class _LastMenuState extends State<LastMenu> {
     for (String sheetName in bl.sheetGroups[sheetGroup].keys) {
       items.add(PopupMenuItem(
         child: Text(sheetName),
-        onTap: () {
-          debugPrint(sheetName);
+        onTap: () async {
+          bl.filteredSheetName.value = sheetName;
+          await searchSheetGroup(
+              sheetGroup, sheetName, '${blUti.todayStr()}.', context);
         },
       ));
     }
@@ -75,10 +77,14 @@ class _LastMenuState extends State<LastMenu> {
             ],
           ),
           subtitle: Row(
-            children: [sheetNamesPopupGen(sheetGroup)],
+            children: [
+              sheetNamesPopupGen(sheetGroup),
+              Obx(() => Text(bl.filteredSheetName.value))
+            ],
           ),
           onTap: () async {
-            await searchSheetGroup(sheetGroup, '${blUti.todayStr()}.', context);
+            await searchSheetGroup(
+                sheetGroup, '', '${blUti.todayStr()}.', context);
           },
           trailing: lastdays()));
     }
@@ -94,11 +100,11 @@ class _LastMenuState extends State<LastMenu> {
             icon: const Icon(Icons.refresh),
             label: const Text('All'),
             onPressed: () async {
-              await searchSheetGroups('${blUti.todayStr()}.');
+              await searchSheetGroups('${blUti.todayStr()}.', '');
             },
             onLongPress: () async {
               await bl.sheetrowsCRUD.deleteAllDb();
-              await searchSheetGroups('${blUti.todayStr()}.');
+              await searchSheetGroups('${blUti.todayStr()}.', '');
             },
           ),
           const Text(''),
@@ -126,7 +132,7 @@ class _LastMenuState extends State<LastMenu> {
   Widget build(BuildContext context) {
     bl.sheetrowsCRUD.count().then((count) {
       if (count == 0) {
-        searchSheetGroups('${blUti.todayStr()}.').then((value) {});
+        searchSheetGroups('${blUti.todayStr()}.', '').then((value) {});
       }
     });
 

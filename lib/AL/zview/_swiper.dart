@@ -1,8 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-
 import '../../BL/orm.dart';
 
+import '../alib/alib.dart';
 import '_swipertabs.dart';
 import 'bedit/quotepopup.dart';
 
@@ -60,6 +60,12 @@ class _CardSwiperState extends State<CardSwiper> {
 
   @override
   Widget build(BuildContext context) {
-    return bodySwiper();
+    if (currentSS.keys.isNotEmpty) {
+      return bodySwiper();
+    } else {
+      return Row(
+        children: [al.iconBack(context), const Text('Filter is mepty')],
+      );
+    }
   }
 }
