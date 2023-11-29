@@ -6,6 +6,7 @@ import 'AL/_home/_homepage.dart';
 import 'BL/bl.dart';
 
 import 'DL/dl.dart';
+import 'BL/rss/rssin.dart';
 
 // flutter run -d windows  --dart-define=devmode=1
 // flutter run -d chrome --web-renderer html --dart-define=devmode=1 --web-browser-flag "--disable-web-security"
@@ -16,7 +17,7 @@ void main() async {
   await dl.init();
   bl.sheetGroups = await dl.httpService.getSheetGroups();
   //rows2db();
-
+  rssInDo();
   runApp(const SidebarHome());
 }
 

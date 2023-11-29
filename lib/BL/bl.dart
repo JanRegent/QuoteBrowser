@@ -10,6 +10,7 @@ import 'columntext/authorscrud.dart';
 import 'columntext/columntextfilter.dart';
 import 'filters/simplefilter.dart';
 import 'orm.dart';
+import 'rss/rss.dart';
 import 'sheetrows/sheetcolscrud.dart';
 import 'sheetrows/sheetrowscrud.dart';
 
@@ -20,7 +21,8 @@ List<IsarGeneratedSchema> schemas = [
   SheetColSchema,
   SimpleFilterSchema,
   ColumnTextFilterSchema,
-  AuthorSchema
+  AuthorSchema,
+  RssSchema
 ];
 
 class Bl {
@@ -37,7 +39,7 @@ class Bl {
   FiltersCRUD filtersCRUD = FiltersCRUD();
   ColumnTextFilterCRUD columnTextFilterCRUD = ColumnTextFilterCRUD();
   AuthorCRUD authorCRUD = AuthorCRUD();
-  //CRUDsembast crud = CRUDsembast();
+  RssCRUD rssCRUD = RssCRUD();
 
   Future init() async {
     await isarOpen();
