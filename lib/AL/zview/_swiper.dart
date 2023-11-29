@@ -1,5 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import '../../BL/filters/searchss.dart';
 import '../../BL/orm.dart';
 
 import '../alib/alib.dart';
@@ -63,9 +64,7 @@ class _CardSwiperState extends State<CardSwiper> {
     if (currentSS.keys.isNotEmpty) {
       return bodySwiper();
     } else {
-      return Row(
-        children: [al.iconBack(context), const Text('Filter is mepty')],
-      );
+      return currentSsKeysFilterLv('Filter is empty', context);
     }
   }
 }

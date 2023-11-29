@@ -51,12 +51,13 @@ Future<String> searchTextSheetGroupSheetName(
   if (currentSS.keys.isEmpty) {
     return '0';
   }
-  currentSS.keys = sheetNameKeysFilter(sheetName);
+  currentSS.keys = sheetNameKeysFilter(sheetGroup, sheetName);
   await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
   return currentSS.keys.length.toString();
 }
 
-List<String> sheetNameKeysFilter(String sheetName) {
+List<String> sheetNameKeysFilter(String sheetGroup, String sheetName) {
+  currentSsKeysFilter = (sheetGroup: sheetGroup, sheetName: sheetName);
   if (sheetName.isEmpty) return currentSS.keys;
   List<String> sheetNameKeys = [];
   for (String key in currentSS.keys) {
@@ -67,6 +68,26 @@ List<String> sheetNameKeysFilter(String sheetName) {
     } catch (_) {}
   }
   return sheetNameKeys;
+}
+
+({String sheetGroup, String sheetName}) currentSsKeysFilter =
+    (sheetGroup: '', sheetName: '');
+
+ListView currentSsKeysFilterLv(String title, BuildContext context) {
+  return ListView(
+    children: [
+      Row(children: [al.iconBack(context)]),
+      Text(title),
+      ListTile(
+        leading: const Text('sheetsGroup'),
+        title: Text(currentSsKeysFilter.sheetGroup),
+      ),
+      ListTile(
+        leading: const Text('sheetName'),
+        title: Text(currentSsKeysFilter.sheetName),
+      )
+    ],
+  );
 }
 
 Future<int> columnTextShow(String columnTextKey, BuildContext context) async {
