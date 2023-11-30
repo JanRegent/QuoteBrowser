@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../BL/bl.dart';
 import '../BL/bluti.dart';
 
-import '../BL/filters/searchss.dart';
+import '../BL/filtersbl/searchss.dart';
 
 import 'backendurl.dart';
 

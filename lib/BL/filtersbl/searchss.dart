@@ -6,6 +6,7 @@ import '../bluti.dart';
 
 import '../orm.dart';
 import '../../DL/dl.dart';
+import 'emptyresults.dart';
 
 Future<int> filterSearchText(String searchText, BuildContext context) async {
   currentSS.filterKey = searchText;
@@ -57,8 +58,7 @@ Future<String> searchTextSheetGroupSheetName(
 }
 
 List<String> sheetNameKeysFilter(String sheetGroup, String sheetName) {
-  currentSsKeysFilter =
-      (searchText: '', sheetGroup: sheetGroup, sheetName: sheetName);
+  emptyResult = (searchText: '', sheetGroup: sheetGroup, sheetName: sheetName);
   if (sheetName.isEmpty) return currentSS.keys;
   List<String> sheetNameKeys = [];
   for (String key in currentSS.keys) {
@@ -69,30 +69,6 @@ List<String> sheetNameKeysFilter(String sheetGroup, String sheetName) {
     } catch (_) {}
   }
   return sheetNameKeys;
-}
-
-({String searchText, String sheetGroup, String sheetName}) currentSsKeysFilter =
-    (searchText: '', sheetGroup: '', sheetName: '');
-
-ListView currentSsKeysFilterLv(String title, BuildContext context) {
-  return ListView(
-    children: [
-      Row(children: [al.iconBack(context)]),
-      Text(title),
-      ListTile(
-        leading: const Text('searchText'),
-        title: Text(currentSsKeysFilter.searchText),
-      ),
-      ListTile(
-        leading: const Text('sheetsGroup'),
-        title: Text(currentSsKeysFilter.sheetGroup),
-      ),
-      ListTile(
-        leading: const Text('sheetName'),
-        title: Text(currentSsKeysFilter.sheetName),
-      )
-    ],
-  );
 }
 
 Future<int> columnTextShow(String columnTextKey, BuildContext context) async {

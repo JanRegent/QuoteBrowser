@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../BL/bl.dart';
 import '1last.dart';
 import '9appsettings.dart';
 
@@ -21,7 +23,7 @@ class HomeTab extends StatelessWidget {
                 Tab(text: 'Filters'),
               ],
             ),
-            title: const Text('(qb)Home'),
+            title: Obx(() => Text(bl.homeTitle.value)),
           ),
           drawer: Drawer(
             child: ListView(
@@ -32,7 +34,7 @@ class HomeTab extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.blue,
                   ),
-                  child: Text('(qb)Home'),
+                  child: Text('(qb)settings'),
                 ),
                 ListTile(
                   title: const Text('Home'),

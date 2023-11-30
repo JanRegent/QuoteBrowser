@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:input_dialog/input_dialog.dart';
 
 import '../../../BL/bl.dart';
-import '../../../BL/filters/searchss.dart';
+import '../../../BL/filtersbl/searchss.dart';
 import '../../alib/alib.dart';
 import '../../zview/_swiper.dart';
 
@@ -20,14 +20,19 @@ Future<String> inputWord(BuildContext context) async {
 
 Future searchText(String sheetGroup, String sheetName, String searchText,
     BuildContext context) async {
+  bl.lastCount[sheetGroup] = 'loading';
+  bl.homeTitle.value = 'load: $sheetGroup';
   searchTextSheetGroupSheetName(sheetGroup, sheetName, searchText).then(
       (value) async {
+    bl.lastCount[sheetGroup] = value;
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CardSwiper(searchText, const {})),
     );
+    bl.homeTitle.value = '';
   }, onError: (e) {
     debugPrint('searchText($searchText) \n $e');
+    bl.homeTitle.value = '';
   });
 }
 
@@ -56,6 +61,7 @@ Future searchSheetGroup(String sheetGroup, sheetName, String searchText,
   bl.sheetGroupCurrent = sheetGroup;
 
   bl.lastCount[sheetGroup] = 'loading';
+  print(bl.lastCount[sheetGroup]);
   await searchGroup_(sheetGroup, sheetName, searchText);
 
   if (bl.lastCount[sheetGroup] == 0) return;

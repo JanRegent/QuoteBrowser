@@ -8,7 +8,7 @@ import 'categories/catscrud.dart';
 
 import 'columntext/authorscrud.dart';
 import 'columntext/columntextfilter.dart';
-import 'filters/simplefilter.dart';
+import 'filtersbl/simplefilter.dart';
 import 'orm.dart';
 import 'rss/rss.dart';
 import 'sheetrows/sheetcolscrud.dart';
@@ -32,6 +32,7 @@ class Bl {
   String sheetGroupCurrent = '';
   RxString filteredSheetName = ''.obs;
   RxMap lastCount = {}.obs;
+  RxString homeTitle = '(qb)Home'.obs;
 
   Orm orm = Orm();
   CatsCRUD catsCRUD = CatsCRUD();

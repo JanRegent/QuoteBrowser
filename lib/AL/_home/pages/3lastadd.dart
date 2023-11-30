@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../BL/filters/searchss.dart';
+import '../../../BL/filtersbl/searchss.dart';
 import '../../../BL/orm.dart';
 
 import '../../alib/selectiondialogs/selectone.dart';
 
 import '../../zview/_swiper.dart';
 import '../../zview/bedit/addquote/addquoterow.dart';
-import 'common.dart';
+import 'searchshow.dart';
 
 class LastRowsAddQuote {
   Future doItem(

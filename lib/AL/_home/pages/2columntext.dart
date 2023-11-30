@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../alib/alib.dart';
 import '../../filterspages/_selectview.dart';
 
-import 'common.dart';
+import 'searchshow.dart';
 
 class ColumnTextFiltersAL {
   Future doItem(MenuTile item, BuildContext context) async {

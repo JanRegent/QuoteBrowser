@@ -1,6 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import '../../BL/filters/searchss.dart';
+import '../../BL/filtersbl/emptyresults.dart';
 import '../../BL/orm.dart';
 
 import '_swipertabs.dart';
@@ -63,7 +63,7 @@ class _CardSwiperState extends State<CardSwiper> {
     if (currentSS.keys.isNotEmpty) {
       return bodySwiper();
     } else {
-      return currentSsKeysFilterLv('Filter is empty', context);
+      return emptyResultListview('Filter is empty', context);
     }
   }
 }

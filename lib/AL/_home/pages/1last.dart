@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
-import '../../../BL/filters/searchss.dart';
+import '../../../BL/filtersbl/emptyresults.dart';
 import '../../alib/alib.dart';
 import '../../filterspages/_selectview.dart';
 import '../../zview/qedit/aaqedit.dart';
-import 'common.dart';
+import 'searchshow.dart';
 
 class LastMenu extends StatefulWidget {
   const LastMenu({super.key});
@@ -32,7 +32,7 @@ class _LastMenuState extends State<LastMenu> {
           return;
         }
 
-        currentSsKeysFilter =
+        emptyResult =
             (searchText: searchDate, sheetGroup: sheetGroup, sheetName: '');
 
         if (searchDate.isEmpty) return;
