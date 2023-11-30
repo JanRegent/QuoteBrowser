@@ -18,16 +18,16 @@ Future<String> inputWord(BuildContext context) async {
 
 //----------------------------------------------------------search/view
 
-Future searchText(String searchText, BuildContext context) async {
-  filterSearchText(searchText, context).then((value) async {
-    if (value == 0) return;
-
+Future searchText(String sheetGroup, String sheetName, String searchText,
+    BuildContext context) async {
+  searchTextSheetGroupSheetName(sheetGroup, sheetName, searchText).then(
+      (value) async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CardSwiper(searchText, const {})),
     );
   }, onError: (e) {
-    debugPrint(e);
+    debugPrint('searchText($searchText) \n $e');
   });
 }
 

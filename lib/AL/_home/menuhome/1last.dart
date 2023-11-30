@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
+import '../../../BL/filters/searchss.dart';
 import '../../alib/alib.dart';
 import '../../filterspages/_selectview.dart';
 import '../../zview/qedit/aaqedit.dart';
@@ -19,9 +20,9 @@ class LastMenu extends StatefulWidget {
 }
 
 class _LastMenuState extends State<LastMenu> {
-  ElevatedButton lastdays() {
+  ElevatedButton lastdays(String sheetGroup) {
     return ElevatedButton(
-      child: const Icon(Icons.last_page),
+      child: const Icon(Icons.date_range),
       onPressed: () async {
         String searchDate = '';
         try {
@@ -31,9 +32,12 @@ class _LastMenuState extends State<LastMenu> {
           return;
         }
 
+        currentSsKeysFilter =
+            (searchText: searchDate, sheetGroup: sheetGroup, sheetName: '');
+
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchText(searchDate, context);
+        await searchText(sheetGroup, '', searchDate, context);
       },
     );
   }
@@ -86,7 +90,7 @@ class _LastMenuState extends State<LastMenu> {
             await searchSheetGroup(
                 sheetGroup, '', '${blUti.todayStr()}.', context);
           },
-          trailing: lastdays()));
+          trailing: lastdays(sheetGroup)));
     }
   }
 

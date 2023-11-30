@@ -57,7 +57,8 @@ Future<String> searchTextSheetGroupSheetName(
 }
 
 List<String> sheetNameKeysFilter(String sheetGroup, String sheetName) {
-  currentSsKeysFilter = (sheetGroup: sheetGroup, sheetName: sheetName);
+  currentSsKeysFilter =
+      (searchText: '', sheetGroup: sheetGroup, sheetName: sheetName);
   if (sheetName.isEmpty) return currentSS.keys;
   List<String> sheetNameKeys = [];
   for (String key in currentSS.keys) {
@@ -70,14 +71,18 @@ List<String> sheetNameKeysFilter(String sheetGroup, String sheetName) {
   return sheetNameKeys;
 }
 
-({String sheetGroup, String sheetName}) currentSsKeysFilter =
-    (sheetGroup: '', sheetName: '');
+({String searchText, String sheetGroup, String sheetName}) currentSsKeysFilter =
+    (searchText: '', sheetGroup: '', sheetName: '');
 
 ListView currentSsKeysFilterLv(String title, BuildContext context) {
   return ListView(
     children: [
       Row(children: [al.iconBack(context)]),
       Text(title),
+      ListTile(
+        leading: const Text('searchText'),
+        title: Text(currentSsKeysFilter.searchText),
+      ),
       ListTile(
         leading: const Text('sheetsGroup'),
         title: Text(currentSsKeysFilter.sheetGroup),
