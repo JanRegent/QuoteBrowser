@@ -46,7 +46,10 @@ class _LastMenuState extends State<LastMenu> {
     List<PopupMenuItem> items = [];
     for (String sheetName in bl.sheetGroups[sheetGroup].keys) {
       items.add(PopupMenuItem(
-        child: Text(sheetName),
+        child: ListTile(
+            leading: al.linkIconOpenDoc(
+                bl.sheetGroups[sheetGroup][sheetName], context, ''),
+            title: Text(sheetName)),
         onTap: () async {
           bl.filteredSheetName.value = sheetName;
           await searchSheetGroup(
