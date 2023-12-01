@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 
+import 'authors/authorscrud.dart';
 import 'categories/catscrud.dart';
 
-import 'columntext/authorscrud.dart';
 import 'columntext/columntextfilter.dart';
 import 'filtersbl/simplefilter.dart';
 import 'orm.dart';
@@ -47,15 +47,13 @@ class Bl {
     await isarOpen();
 
     isar = Isar.get(schemas: schemas);
-    await bl.catsCRUD.update();
 
     devModeSet();
+  }
 
+  void updateSlowly() {
+    bl.catsCRUD.update();
     authorCRUD.updateAuthors();
-
-    // dl.httpService
-    //     .getDataSheets(dataSheetId)
-    //     .then((values) => currentSS.sheetNames = values);
   }
 
   void devModeSet() {

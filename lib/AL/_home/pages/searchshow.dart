@@ -61,7 +61,7 @@ Future searchSheetGroup(String sheetGroup, sheetName, String searchText,
   bl.sheetGroupCurrent = sheetGroup;
 
   bl.lastCount[sheetGroup] = 'loading';
-  print(bl.lastCount[sheetGroup]);
+
   await searchGroup_(sheetGroup, sheetName, searchText);
 
   if (bl.lastCount[sheetGroup] == 0) return;

@@ -15,6 +15,8 @@ void main() async {
   await bl.init();
   await dl.init();
   bl.sheetGroups = await dl.httpService.getSheetGroups();
+
+  bl.updateSlowly();
   //rows2db();
   //rssInDo();
 
