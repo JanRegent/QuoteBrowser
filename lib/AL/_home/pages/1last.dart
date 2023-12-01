@@ -125,7 +125,14 @@ class _LastMenuState extends State<LastMenu> {
                 );
               },
               icon: const Icon(Icons.edit),
-              label: const Text(''))
+              label: const Text('')),
+          ElevatedButton.icon(
+              onPressed: () async {
+                String authorSelected = await authorSelect(context);
+                debugPrint(authorSelected);
+              },
+              icon: const Icon(Icons.person),
+              label: const Text('')),
         ],
       ),
       shape: RoundedRectangleBorder(
