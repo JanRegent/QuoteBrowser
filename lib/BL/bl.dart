@@ -3,8 +3,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:isar/isar.dart';
+import 'package:quotebrowser/BL/authorsbooks/bookscrud.dart';
 
-import 'authors/authorscrud.dart';
+import 'authorsbooks/authorscrud.dart';
 import 'categories/catscrud.dart';
 
 import 'columntext/columntextfilter.dart';
@@ -22,6 +23,7 @@ List<IsarGeneratedSchema> schemas = [
   SimpleFilterSchema,
   ColumnTextFilterSchema,
   AuthorSchema,
+  BooksSchema,
   RssSchema
 ];
 
@@ -41,6 +43,7 @@ class Bl {
   FiltersCRUD filtersCRUD = FiltersCRUD();
   ColumnTextFilterCRUD columnTextFilterCRUD = ColumnTextFilterCRUD();
   AuthorCRUD authorCRUD = AuthorCRUD();
+  BooksCRUD booksCRUD = BooksCRUD();
   RssCRUD rssCRUD = RssCRUD();
 
   Future init() async {
@@ -54,6 +57,7 @@ class Bl {
   void updateSlowly() {
     bl.catsCRUD.update();
     authorCRUD.updateAuthors();
+    booksCRUD.updateBooks();
   }
 
   void devModeSet() {

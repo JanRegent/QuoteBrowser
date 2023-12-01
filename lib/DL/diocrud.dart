@@ -80,11 +80,19 @@ class HttpService {
     }
   }
 
-  //-------------------------------------------------------------------authors
+  //---------------------------------------------------------------authors,books
   Future getAuthors() async {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {'action': 'getAuthors'},
+    );
+    return response.data['data'];
+  }
+
+  Future getBooks() async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {'action': 'getBooks'},
     );
     return response.data['data'];
   }

@@ -24,7 +24,7 @@ class AuthorCRUD {
     try {
       return isar.authors.where().auhorProperty().findAll();
     } catch (e) {
-      debugPrint('CatsCRUD().readAll()\n$e');
+      debugPrint('AuthorCRUD().readAll()\n$e');
       return [];
     }
   }
@@ -34,10 +34,10 @@ class AuthorCRUD {
     await clear();
 
     List authorsDyn = await dl.httpService.getAuthors();
-    for (var i = 0; i < authorsDyn.length; i++) {
+    for (var i = 1; i < authorsDyn.length; i++) {
       update(authorsDyn[i][0], authorsDyn[i][1]);
     }
-    debugPrint('updateAuthors() ${authorsDyn.length}');
+    debugPrint('AuthorCRUD.updateAuthors() ${authorsDyn.length}');
   }
 
   Future update(String author, String aliases) async {
