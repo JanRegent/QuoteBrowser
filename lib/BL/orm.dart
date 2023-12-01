@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../DL/dl.dart';
 import 'bl.dart';
 
 List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
@@ -78,6 +79,37 @@ class CurrentRow {
   //List<RxString> optionalvalues = [];
   List<String> optionalColumNames = [];
   RxList<RxString> optionalvalues = RxList<RxString>();
+
+  //-------------------------------------------------------redo
+  RxString attribNameRedo = ''.obs;
+  RxString attribPrevRedo = ''.obs;
+  RxString attribTitleRedo = ''.obs;
+  RxString selectedText = ''.obs;
+
+  Future settAttrib(String attribName) async {
+    attribTitleRedo.value = selectedText.value;
+    attribPrevRedo.value = bl.orm.currentRow.author.value;
+    bl.orm.currentRow.author.value = selectedText.value;
+    await setCellBL('author', bl.orm.currentRow.author.value);
+    attribNameRedo.value = attribName;
+  }
+
+  Future setCellBL(String columnName, String cellContent) async {
+    if (columnName.isEmpty) return;
+    if (bl.orm.currentRow.sheetName.value.isEmpty) return;
+    try {
+      String sheetRownokey = await dl.httpService.setCellDL(
+          bl.orm.currentRow.sheetName.value,
+          columnName,
+          cellContent,
+          bl.orm.currentRow.rowNo.value);
+      if (sheetRownokey.isNotEmpty) {
+        await currentRowSet(sheetRownokey);
+      }
+    } catch (e) {
+      debugPrint('setCellBL( \n$e');
+    }
+  }
 }
 
 void pureTags() {

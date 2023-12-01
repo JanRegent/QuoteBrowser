@@ -29,9 +29,9 @@ class _AttrEditState extends State<AttrEdit> {
   ListTile redorowAL() {
     return ListTile(
         tileColor: Colors.lime,
-        leading: Obx(() => Text(attribNameRedo.value)),
-        title: Obx(() => Text(attribTitleRedo.value)),
-        trailing: attribPrevRedo.value.isNotEmpty
+        leading: Obx(() => Text(bl.orm.currentRow.attribNameRedo.value)),
+        title: Obx(() => Text(bl.orm.currentRow.attribTitleRedo.value)),
+        trailing: bl.orm.currentRow.attribPrevRedo.value.isNotEmpty
             ? redoButton(attreditSetstate)
             : const Text(' '));
   }
@@ -92,7 +92,7 @@ class _AttrEditState extends State<AttrEdit> {
       emptyDialog('Sheetname');
       return [];
     }
-    await setCellBL('quote', bl.orm.currentRow.quote.value);
+    await bl.orm.currentRow.setCellBL('quote', bl.orm.currentRow.quote.value);
     bl.orm.currentRow.dateinsert = '${blUti.todayStr()}.';
     //update(widget.sheet);
   }

@@ -1,11 +1,9 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
 import '../../alib/alertinfo/alertok.dart';
-import 'quoteedit.dart';
 
 PopupMenuItem copyPopupMenuItem(String fieldValue) {
   return PopupMenuItem(
@@ -37,7 +35,7 @@ PopupMenuItem pastePopupMenuItem(String columnName) {
           if (['fileUrl', 'sourceUrl', 'folder'].contains(columnName)) {
             value = blUti.pureHttpGDriveLink(value);
           }
-          await setCellBL(columnName, value);
+          await bl.orm.currentRow.setCellBL(columnName, value);
         });
       },
     ),
@@ -84,26 +82,29 @@ void clearField(String attribName) async {
   switch (attribName) {
     case 'author':
       bl.orm.currentRow.author.value = '';
-      await setCellBL('author', bl.orm.currentRow.author.value);
+      await bl.orm.currentRow
+          .setCellBL('author', bl.orm.currentRow.author.value);
       break;
     case 'book':
       bl.orm.currentRow.book.value = '';
-      await setCellBL('book', bl.orm.currentRow.book.value);
+      await bl.orm.currentRow.setCellBL('book', bl.orm.currentRow.book.value);
       break;
     case 'parPage':
       bl.orm.currentRow.parPage.value = '';
-      await setCellBL('parPage', bl.orm.currentRow.parPage.value);
+      await bl.orm.currentRow
+          .setCellBL('parPage', bl.orm.currentRow.parPage.value);
       break;
     case 'vydal':
-      await setCellBL('vydal', '');
+      await bl.orm.currentRow.setCellBL('vydal', '');
       break;
     case 'tags':
       bl.orm.currentRow.tags.value = '';
-      await setCellBL('tags', bl.orm.currentRow.tags.value);
+      await bl.orm.currentRow.setCellBL('tags', bl.orm.currentRow.tags.value);
       break;
     case 'original':
       bl.orm.currentRow.original.value = '';
-      await setCellBL('original', bl.orm.currentRow.original.value);
+      await bl.orm.currentRow
+          .setCellBL('original', bl.orm.currentRow.original.value);
       return;
     case '__othersFields__':
       return;
@@ -114,14 +115,11 @@ void clearField(String attribName) async {
 }
 
 //-------------------------------------------------------------------redo
-RxString attribNameRedo = ''.obs;
-RxString attribPrevRedo = ''.obs;
-RxString attribTitleRedo = ''.obs;
 
 void redoClear() {
-  attribNameRedo.value = '';
-  attribPrevRedo.value = '';
-  attribTitleRedo.value = '';
+  bl.orm.currentRow.attribNameRedo.value = '';
+  bl.orm.currentRow.attribPrevRedo.value = '';
+  bl.orm.currentRow.attribTitleRedo.value = '';
 }
 
 IconButton redoButton(Function attreditSetstate) {
@@ -133,30 +131,32 @@ IconButton redoButton(Function attreditSetstate) {
 }
 
 void redoAttrib(Function attreditSetstate) async {
-  if (attribNameRedo.value.toString().trim().isEmpty) return;
+  if (bl.orm.currentRow.attribNameRedo.value.toString().trim().isEmpty) return;
   bl.orm.currentRow.setCellDLOn = true;
   attreditSetstate();
-  switch (attribNameRedo.value) {
+  switch (bl.orm.currentRow.attribNameRedo.value) {
     case 'author':
-      bl.orm.currentRow.author.value = attribPrevRedo.value;
-      await setCellBL('author', bl.orm.currentRow.author.value);
+      bl.orm.currentRow.author.value = bl.orm.currentRow.attribPrevRedo.value;
+      await bl.orm.currentRow
+          .setCellBL('author', bl.orm.currentRow.author.value);
       redoClear();
       break;
     case 'book':
-      bl.orm.currentRow.book.value = attribPrevRedo.value;
-      await setCellBL('book', bl.orm.currentRow.book.value);
+      bl.orm.currentRow.book.value = bl.orm.currentRow.attribPrevRedo.value;
+      await bl.orm.currentRow.setCellBL('book', bl.orm.currentRow.book.value);
       redoClear();
 
       break;
     case 'parPage':
-      bl.orm.currentRow.parPage.value = attribPrevRedo.value;
-      await setCellBL('parPage', bl.orm.currentRow.parPage.value);
+      bl.orm.currentRow.parPage.value = bl.orm.currentRow.attribPrevRedo.value;
+      await bl.orm.currentRow
+          .setCellBL('parPage', bl.orm.currentRow.parPage.value);
       redoClear();
 
       break;
     case 'tags':
-      bl.orm.currentRow.tags.value = attribPrevRedo.value;
-      await setCellBL('tags', bl.orm.currentRow.tags.value);
+      bl.orm.currentRow.tags.value = bl.orm.currentRow.attribPrevRedo.value;
+      await bl.orm.currentRow.setCellBL('tags', bl.orm.currentRow.tags.value);
       redoClear();
 
       break;

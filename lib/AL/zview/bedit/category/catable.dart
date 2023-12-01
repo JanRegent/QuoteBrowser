@@ -4,7 +4,6 @@ import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../../BL/bl.dart';
 import '../addquote/emptyview.dart';
-import '../quoteedit.dart';
 
 class CatablePage extends StatefulWidget {
   const CatablePage({Key? key}) : super(key: key);
@@ -51,7 +50,7 @@ class _CatablePageState extends State<CatablePage> {
                   icon: const Icon(Icons.save),
                   onPressed: () async {
                     bl.orm.currentRow.categories.value = selectedCats;
-                    await setCellBL(
+                    await bl.orm.currentRow.setCellBL(
                         'categories', bl.orm.currentRow.categories.value);
                   },
                 ),

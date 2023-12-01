@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../BL/bl.dart';
 import '../../alib/alicons.dart';
-import '../bedit/quoteedit.dart';
+import '../../filterspages/_selectview.dart';
 import '../bedit/quotepopup.dart';
 import '../bedit/category/catable.dart';
 
@@ -51,7 +51,8 @@ class _MainFieldsState extends State<MainFields> {
             bl.orm.currentRow.fav.value = '';
           }
 
-          await setCellBL('favorite', bl.orm.currentRow.fav.value);
+          await bl.orm.currentRow
+              .setCellBL('favorite', bl.orm.currentRow.fav.value);
         });
   }
 
@@ -111,7 +112,14 @@ class _MainFieldsState extends State<MainFields> {
 
     headCard.add(ListTile(
         tileColor: Colors.white,
-        leading: ALicons.attrIcons.authorIcon,
+        leading: IconButton(
+          icon: ALicons.attrIcons.authorIcon,
+          onPressed: () async {
+            String authorSelected = await authorSelect(context);
+            if (authorSelected.isEmpty) return;
+            await bl.orm.currentRow.setCellBL('author', authorSelected);
+          },
+        ),
         title: Obx(() => Text(bl.orm.currentRow.author.value)),
         trailing: copyPasteClearPopupMenuButton(
             bl.orm.currentRow.author.value, 'author')));

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 import '../../../BL/bl.dart';
-import 'quoteedit.dart';
 
 // ignore: must_be_immutable
 class RatingStarsPage extends StatefulWidget {
@@ -43,7 +42,7 @@ class _RatingStarsPageState extends State<RatingStarsPage> {
     if (value == 1) {
       bl.orm.currentRow.stars.value = '*';
     }
-    await setCellBL('stars', bl.orm.currentRow.stars.value);
+    await bl.orm.currentRow.setCellBL('stars', bl.orm.currentRow.stars.value);
     widget.setstateAattribs();
   }
 

@@ -6,31 +6,12 @@ import '../../../BL/bl.dart';
 
 import '../../../BL/orm.dart';
 
-import '../../../DL/dl.dart';
-
 import '../../alib/alicons.dart';
 
 import '../acoloredview/tagsyellowlist.dart';
 import 'addquote/addquoterow.dart';
 import 'quotepopup.dart';
 import 'originalview.dart';
-
-Future setCellBL(String columnName, String cellContent) async {
-  if (columnName.isEmpty) return;
-  if (bl.orm.currentRow.sheetName.value.isEmpty) return;
-  try {
-    String sheetRownokey = await dl.httpService.setCellDL(
-        bl.orm.currentRow.sheetName.value,
-        columnName,
-        cellContent,
-        bl.orm.currentRow.rowNo.value);
-    if (sheetRownokey.isNotEmpty) {
-      await currentRowSet(sheetRownokey);
-    }
-  } catch (e) {
-    debugPrint('setCellBL( \n$e');
-  }
-}
 
 // ignore: must_be_immutable
 class QuoteEdit extends StatefulWidget {
@@ -48,7 +29,7 @@ class QuoteEdit extends StatefulWidget {
 
 class _QuoteEditState extends State<QuoteEdit> {
   late BuildContext originalContext = widget.context;
-  RxString selected = ''.obs;
+
   List<PopupMenuItem> buttonRowMenu(BuildContext context) {
     return [
       copyPopupMenuItem(bl.orm.currentRow.quote.value),
@@ -57,7 +38,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         child: const Text("quote from clipboard Replace"),
         onTap: () async {
           FlutterClipboard.paste().then((value) async {
-            await setCellBL('quote', value);
+            await bl.orm.currentRow.setCellBL('quote', value);
           });
         },
       ),
@@ -66,7 +47,8 @@ class _QuoteEditState extends State<QuoteEdit> {
         child: const Text("quote from clipboard Append"),
         onTap: () async {
           FlutterClipboard.paste().then((value) async {
-            await setCellBL('quote', bl.orm.currentRow.quote + '\n\n' + value);
+            await bl.orm.currentRow
+                .setCellBL('quote', bl.orm.currentRow.quote + '\n\n' + value);
           });
         },
       ),
@@ -85,7 +67,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         child: const Text("__toRead__ remove"),
         onTap: () async {
           try {
-            await setCellBL(
+            await bl.orm.currentRow.setCellBL(
                 'dateinsert',
                 bl.orm.currentRow.dateinsert
                     .toString()
@@ -115,19 +97,20 @@ class _QuoteEditState extends State<QuoteEdit> {
 
   void selectedSet() {
     try {
-      selected.value = quoteEditController.text.substring(
+      bl.orm.currentRow.selectedText.value = quoteEditController.text.substring(
           quoteEditController.selection.baseOffset,
           quoteEditController.selection.extentOffset);
-      attribTitleRedo.value = selected.value;
-      attribNameRedo.value = '?';
+      bl.orm.currentRow.attribTitleRedo.value =
+          bl.orm.currentRow.selectedText.value;
+      bl.orm.currentRow.attribNameRedo.value = '?';
     } catch (_) {
       return;
     }
   }
 
   void attribSet(String attribName) async {
-    if (selected.value.isEmpty) return;
-    attribNameRedo.value = '';
+    if (bl.orm.currentRow.selectedText.value.isEmpty) return;
+    bl.orm.currentRow.attribNameRedo.value = '';
 
     setState(() {
       bl.orm.currentRow.setCellDLOn = true;
@@ -135,52 +118,69 @@ class _QuoteEditState extends State<QuoteEdit> {
 
     switch (attribName) {
       case 'author':
-        attribTitleRedo.value = selected.value;
-        attribPrevRedo.value = bl.orm.currentRow.author.value;
-        bl.orm.currentRow.author.value = selected.value;
-        await setCellBL('author', bl.orm.currentRow.author.value);
-        attribNameRedo.value = attribName;
+        bl.orm.currentRow.attribTitleRedo.value =
+            bl.orm.currentRow.selectedText.value;
+        bl.orm.currentRow.attribPrevRedo.value = bl.orm.currentRow.author.value;
+        bl.orm.currentRow.author.value = bl.orm.currentRow.selectedText.value;
+        await bl.orm.currentRow
+            .setCellBL('author', bl.orm.currentRow.author.value);
+        bl.orm.currentRow.attribNameRedo.value = attribName;
         break;
       case 'book':
-        attribTitleRedo.value = selected.value;
-        attribPrevRedo.value = bl.orm.currentRow.book.value;
-        bl.orm.currentRow.book.value = selected.value;
-        await setCellBL('book', bl.orm.currentRow.book.value);
-        attribNameRedo.value = attribName;
+        bl.orm.currentRow.attribTitleRedo.value =
+            bl.orm.currentRow.selectedText.value;
+        bl.orm.currentRow.attribPrevRedo.value = bl.orm.currentRow.book.value;
+        bl.orm.currentRow.book.value = bl.orm.currentRow.selectedText.value;
+        await bl.orm.currentRow.setCellBL('book', bl.orm.currentRow.book.value);
+        bl.orm.currentRow.attribNameRedo.value = attribName;
         break;
       case 'parPage':
-        attribTitleRedo.value = selected.value;
-        attribPrevRedo.value = bl.orm.currentRow.parPage.value;
-        bl.orm.currentRow.parPage.value += ' ${selected.value}';
-        await setCellBL(attribName, bl.orm.currentRow.parPage.value);
-        attribNameRedo.value = attribName;
+        bl.orm.currentRow.attribTitleRedo.value =
+            bl.orm.currentRow.selectedText.value;
+        bl.orm.currentRow.attribPrevRedo.value =
+            bl.orm.currentRow.parPage.value;
+        bl.orm.currentRow.parPage.value +=
+            ' ${bl.orm.currentRow.selectedText.value}';
+        await bl.orm.currentRow
+            .setCellBL(attribName, bl.orm.currentRow.parPage.value);
+        bl.orm.currentRow.attribNameRedo.value = attribName;
         break;
       case 'vydal':
-        attribTitleRedo.value = selected.value;
-        await setCellBL(attribName, selected.value);
+        bl.orm.currentRow.attribTitleRedo.value =
+            bl.orm.currentRow.selectedText.value;
+        await bl.orm.currentRow
+            .setCellBL(attribName, bl.orm.currentRow.selectedText.value);
         break;
       case 'tags':
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
-        attribTitleRedo.value = selected.value;
-        attribPrevRedo.value = bl.orm.currentRow.tags.value;
-        bl.orm.currentRow.tags.value += '#${selected.value}';
+        bl.orm.currentRow.attribTitleRedo.value =
+            bl.orm.currentRow.selectedText.value;
+        bl.orm.currentRow.attribPrevRedo.value = bl.orm.currentRow.tags.value;
+        bl.orm.currentRow.tags.value +=
+            '#${bl.orm.currentRow.selectedText.value}';
         pureTags();
-        await setCellBL(attribName, bl.orm.currentRow.tags.value);
-        attribNameRedo.value = attribName;
+        await bl.orm.currentRow
+            .setCellBL(attribName, bl.orm.currentRow.tags.value);
+        bl.orm.currentRow.attribNameRedo.value = attribName;
         break;
       case 'yellowParts':
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
-        attribTitleRedo.value = selected.value;
-        attribPrevRedo.value = bl.orm.currentRow.yellowParts.value;
-        bl.orm.currentRow.yellowParts.value += '__|__\n${selected.value}';
-        await setCellBL(attribName, bl.orm.currentRow.yellowParts.value);
-        attribNameRedo.value = attribName;
+        bl.orm.currentRow.attribTitleRedo.value =
+            bl.orm.currentRow.selectedText.value;
+        bl.orm.currentRow.attribPrevRedo.value =
+            bl.orm.currentRow.yellowParts.value;
+        bl.orm.currentRow.yellowParts.value +=
+            '__|__\n${bl.orm.currentRow.selectedText.value}';
+        await bl.orm.currentRow
+            .setCellBL(attribName, bl.orm.currentRow.yellowParts.value);
+        bl.orm.currentRow.attribNameRedo.value = attribName;
 
         break;
       case 'original':
-        await setCellBL(attribName, bl.orm.currentRow.original.value);
+        await bl.orm.currentRow
+            .setCellBL(attribName, bl.orm.currentRow.original.value);
         break;
       case '__othersFields__':
         break;
@@ -214,7 +214,7 @@ class _QuoteEditState extends State<QuoteEdit> {
       child: ALicons.attrIcons.authorIcon,
       onOpened: () {
         selectedSet();
-        if (selected.value.isEmpty) return;
+        if (bl.orm.currentRow.selectedText.value.isEmpty) return;
       },
       itemBuilder: (context) {
         return items;
@@ -242,7 +242,7 @@ class _QuoteEditState extends State<QuoteEdit> {
       child: ALicons.attrIcons.tagIcon,
       onOpened: () {
         selectedSet();
-        if (selected.value.isEmpty) return;
+        if (bl.orm.currentRow.selectedText.value.isEmpty) return;
       },
       itemBuilder: (context) {
         return items;
