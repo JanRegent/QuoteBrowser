@@ -37,10 +37,10 @@ class _MainFieldsState extends State<MainFields> {
     }
     Icon favIcon = const Icon(Icons.favorite_outline);
 
-    if (bl.orm.currentRow.fav.value.isEmpty) {
-      favIcon = const Icon(Icons.favorite_outline);
-    } else {
+    if (bl.orm.currentRow.fav.value == 'f') {
       favIcon = const Icon(Icons.favorite);
+    } else {
+      favIcon = const Icon(Icons.favorite_outline);
     }
     return IconButton(
         icon: favIcon,

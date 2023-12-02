@@ -147,7 +147,7 @@ Future currentRowSet(String sheetRownoKey) async {
   bl.orm.currentRow.tags.value = valueGet('tags');
   bl.orm.currentRow.stars.value = valueGet('stars');
   bl.orm.currentRow.fav.value = valueGet('favorite');
-  bl.orm.currentRow.fav.value = valueGet('categories');
+  bl.orm.currentRow.categories.value = valueGet('categories');
 
   bl.orm.currentRow.dateinsert = valueGet('dateinsert');
 
