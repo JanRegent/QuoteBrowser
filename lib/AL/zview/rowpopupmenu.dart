@@ -80,13 +80,14 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
           itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
             PopupMenuItem<String>(
                 child: InkWell(
-              child: const Text('Open source sheet'),
+              child: const Text('Jump to row'),
               onTap: () async {
                 String? fileUrl =
                     bl.sheetUrls[bl.orm.currentRow.sheetName.value];
 
                 // ignore: use_build_context_synchronously //Icons.open_in_browser
-                await al.openSheet(fileUrl!, context, 'Open source sheet');
+                await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowNo.value,
+                    context, 'Jump to row');
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
                 // ignore: use_build_context_synchronously
