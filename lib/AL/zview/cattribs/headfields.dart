@@ -125,8 +125,16 @@ class _MainFieldsState extends State<MainFields> {
             bl.orm.currentRow.author.value, 'author')));
 
     headCard.add(ListTile(
+        //
         tileColor: Colors.white,
-        leading: ALicons.attrIcons.bookIcon,
+        leading: IconButton(
+          icon: ALicons.attrIcons.bookIcon,
+          onPressed: () async {
+            String bookSelected = await bookSelect(context);
+            if (bookSelected.isEmpty) return;
+            await bl.orm.currentRow.setCellBL('book', bookSelected);
+          },
+        ),
         title: Obx(() => Text(bl.orm.currentRow.book.value)),
         trailing: copyPasteClearPopupMenuButton(
             bl.orm.currentRow.book.value, 'book')));

@@ -45,3 +45,13 @@ Future<String> authorTextSelect(BuildContext context) async {
         builder: (context) => ValueSelectPage(words, 'Select Author|text ')),
   );
 }
+
+Future<String> bookSelect(BuildContext context) async {
+  List<String> books = await bl.booksCRUD.readAllBooks();
+  // ignore: use_build_context_synchronously
+  return await Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => ValueSelectPage(books, 'Select book')),
+  );
+}
