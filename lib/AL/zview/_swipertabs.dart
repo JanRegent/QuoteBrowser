@@ -8,7 +8,6 @@ import '../../BL/orm.dart';
 import '../alib/alib.dart';
 import 'bedit/attredit.dart';
 
-import 'bedit/quotepopup.dart';
 import 'cattribs/headfields.dart';
 import 'cattribs/othersfields.dart';
 import 'rowpopupmenu.dart';
@@ -22,7 +21,7 @@ void indexChanged(int rowIndex) async {
   if (currentSS.swiperIndex < 0) {
     currentSS.swiperIndex.value = currentSS.keys.length - 1;
   }
-  redoClear();
+
   await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
   currentSS.swiperIndexChanged = true;
 }

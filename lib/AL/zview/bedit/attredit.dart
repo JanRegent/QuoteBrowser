@@ -4,7 +4,6 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../../BL/bl.dart';
 
-import 'quotepopup.dart';
 import 'quoteedit.dart';
 
 // ignore: must_be_immutable
@@ -28,12 +27,10 @@ class _AttrEditState extends State<AttrEdit> {
 
   ListTile redorowAL() {
     return ListTile(
-        tileColor: Colors.lime,
-        leading: Obx(() => Text(bl.orm.currentRow.attribNameRedo.value)),
-        title: Obx(() => Text(bl.orm.currentRow.attribTitleRedo.value)),
-        trailing: bl.orm.currentRow.attribPrevRedo.value.isNotEmpty
-            ? redoButton(attreditSetstate)
-            : const Text(' '));
+      tileColor: Colors.lime,
+      leading: Obx(() => Text(bl.orm.currentRow.attribNameLast.value)),
+      title: Obx(() => Text(bl.orm.currentRow.selectedText.value)),
+    );
   }
 
   Card card(BuildContext context) {

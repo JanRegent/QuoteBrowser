@@ -22,6 +22,25 @@ class _TagsYellowPageState extends State<TagsYellowPage> {
     expandedTags();
   }
 
+  IconButton removeTagOrYellow(int index, List<String> items) {
+    return IconButton(
+        onPressed: () async {
+          items.removeAt(index);
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+          if (widget.tagsYellow == 'tags') {
+            bl.orm.currentRow.tags.value = items.join('#');
+            await bl.orm.currentRow
+                .setCellBL('tags', bl.orm.currentRow.tags.value);
+          } else {
+            bl.orm.currentRow.yellowParts.value = items.join('__|__\n');
+            await bl.orm.currentRow
+                .setCellBL('yellowParts', bl.orm.currentRow.yellowParts.value);
+          }
+        },
+        icon: const Icon(Icons.delete));
+  }
+
   List<Widget> expandedTags() {
     expandedCardTags = [];
     List<String> items = [];
@@ -31,10 +50,12 @@ class _TagsYellowPageState extends State<TagsYellowPage> {
       items = bl.orm.currentRow.yellowParts.value.split('__|__\n');
     }
 
-    for (int i = 0; i < items.length; i++) {
-      if (items[i].trim().isEmpty) continue;
+    for (int index = 0; index < items.length; index++) {
+      if (items[index].trim().isEmpty) continue;
       expandedCardTags.add(ListTile(
-          title: Text(items[i]), trailing: copyPopupMenuButton(items[i])));
+          leading: removeTagOrYellow(index, items),
+          title: Text(items[index]),
+          trailing: copyPopupMenuButton(items[index])));
     }
     return expandedCardTags;
   }

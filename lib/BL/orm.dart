@@ -80,19 +80,9 @@ class CurrentRow {
   List<String> optionalColumNames = [];
   RxList<RxString> optionalvalues = RxList<RxString>();
 
-  //-------------------------------------------------------redo
-  RxString attribNameRedo = ''.obs;
-  RxString attribPrevRedo = ''.obs;
-  RxString attribTitleRedo = ''.obs;
+  //-------------------------------------------------------
   RxString selectedText = ''.obs;
-
-  Future settAttrib(String attribName) async {
-    attribTitleRedo.value = selectedText.value;
-    attribPrevRedo.value = bl.orm.currentRow.author.value;
-    bl.orm.currentRow.author.value = selectedText.value;
-    await setCellBL('author', bl.orm.currentRow.author.value);
-    attribNameRedo.value = attribName;
-  }
+  RxString attribNameLast = '?'.obs;
 
   Future setCellBL(String columnName, String cellContent) async {
     if (columnName.isEmpty) return;
@@ -107,7 +97,7 @@ class CurrentRow {
         await currentRowSet(sheetRownokey);
       }
     } catch (e) {
-      debugPrint('setCellBL( \n$e');
+      debugPrint('setCellBL($columnName) \n$e');
     }
   }
 }

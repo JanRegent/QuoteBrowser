@@ -4,7 +4,6 @@ import '../../BL/filtersbl/emptyresults.dart';
 import '../../BL/orm.dart';
 
 import '_swipertabs.dart';
-import 'bedit/quotepopup.dart';
 
 class CardSwiper extends StatefulWidget {
   final String title;
@@ -25,7 +24,6 @@ class _CardSwiperState extends State<CardSwiper> {
   void initState() {
     super.initState();
     initialIndex = 0;
-    redoClear();
   }
 
   @override

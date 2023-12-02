@@ -1,1 +1,1 @@
-String buildDate = ' 2023_12_01__19_42_build_BL---BooksCRUD ';  
+String buildDate = ' 2023_12_02__11_25_build_AL---quoteedit--removeTagOrYellow ';  
