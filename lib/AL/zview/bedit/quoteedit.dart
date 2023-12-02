@@ -95,7 +95,7 @@ class _QuoteEditState extends State<QuoteEdit> {
     }
   }
 
-  void selectedSet() {
+  void selectText() {
     try {
       bl.orm.currentRow.selectedText.value = quoteEditController.text.substring(
           quoteEditController.selection.baseOffset,
@@ -106,7 +106,7 @@ class _QuoteEditState extends State<QuoteEdit> {
     }
   }
 
-  void attribSet(String attribName) async {
+  void setCellAL(String attribName) async {
     if (bl.orm.currentRow.selectedText.value.isEmpty) return;
     bl.orm.currentRow.attribNameLast.value = '';
 
@@ -180,20 +180,20 @@ class _QuoteEditState extends State<QuoteEdit> {
     List<PopupMenuItem> items = [];
     items.add(PopupMenuItem(
       child: ALicons.attrIcons.authorIcon,
-      onTap: () => attribSet('author'),
+      onTap: () => setCellAL('author'),
     ));
     items.add(PopupMenuItem(
       child: ALicons.attrIcons.bookIcon,
-      onTap: () => attribSet('book'),
+      onTap: () => setCellAL('book'),
     ));
     items.add(PopupMenuItem(
       child: ALicons.attrIcons.parPageIcon,
-      onTap: () => attribSet('parPage'),
+      onTap: () => setCellAL('parPage'),
     ));
     return PopupMenuButton(
       child: ALicons.attrIcons.authorIcon,
       onOpened: () {
-        selectedSet();
+        selectText();
         if (bl.orm.currentRow.selectedText.value.isEmpty) return;
       },
       itemBuilder: (context) {
@@ -206,14 +206,14 @@ class _QuoteEditState extends State<QuoteEdit> {
     List<PopupMenuItem> items = [];
     items.add(PopupMenuItem(
       child: ElevatedButton.icon(
-          onPressed: () => attribSet('tags'),
+          onPressed: () => setCellAL('tags'),
           onLongPress: () => emptySelected('tags'),
           icon: ALicons.attrIcons.tagIcon,
           label: const Text('')),
     ));
     items.add(PopupMenuItem(
         child: ElevatedButton.icon(
-            onPressed: () => attribSet('yellowParts'),
+            onPressed: () => setCellAL('yellowParts'),
             onLongPress: () => emptySelected('yellowParts'),
             icon: ALicons.attrIcons.yellowPartIcon,
             label: const Text(''))));
@@ -221,7 +221,7 @@ class _QuoteEditState extends State<QuoteEdit> {
     return PopupMenuButton(
       child: ALicons.attrIcons.tagIcon,
       onOpened: () {
-        selectedSet();
+        selectText();
         if (bl.orm.currentRow.selectedText.value.isEmpty) return;
       },
       itemBuilder: (context) {
