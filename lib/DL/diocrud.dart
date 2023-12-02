@@ -80,6 +80,14 @@ class HttpService {
     }
   }
 
+  Future getRootConfig() async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {'action': 'getRootConfig'},
+    );
+    return response.data['data'];
+  }
+
   //---------------------------------------------------------------authors,books
   Future getAuthors() async {
     Response response = await dio.get(

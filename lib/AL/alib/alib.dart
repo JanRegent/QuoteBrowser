@@ -47,6 +47,15 @@ class AL {
     } catch (_) {}
   }
 
+  Future openSheet(String sheetUrl, BuildContext context, String label) async {
+    try {
+      // ignore: unnecessary_null_comparison
+      if (sheetUrl.trim() == null) return;
+      if (sheetUrl.trim().isEmpty) return;
+      await openhUrl(Uri.parse(sheetUrl), context);
+    } catch (_) {}
+  }
+
   Widget linkIconOpenUrlNoDoc(String url, BuildContext context) {
     // ignore: unnecessary_null_comparison
     if (url.trim() == null) return const Text(' ');

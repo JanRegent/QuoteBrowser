@@ -82,9 +82,11 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
                 child: InkWell(
               child: const Text('Open source sheet'),
               onTap: () async {
+                String? fileUrl =
+                    bl.sheetUrls[bl.orm.currentRow.sheetName.value];
+
                 // ignore: use_build_context_synchronously //Icons.open_in_browser
-                await al.openDoc(
-                    bl.orm.currentRow.fileId, context, 'Open source sheet');
+                await al.openSheet(fileUrl!, context, 'Open source sheet');
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
                 // ignore: use_build_context_synchronously
