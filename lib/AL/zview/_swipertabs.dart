@@ -12,6 +12,7 @@ import 'cattribs/headfields.dart';
 import 'cattribs/othersfields.dart';
 import 'rowpopupmenu.dart';
 import 'acoloredview/coloredview.dart';
+import 'userwiew.dart';
 
 void indexChanged(int rowIndex) async {
   currentSS.swiperIndex.value = rowIndex;
@@ -124,8 +125,18 @@ class _SwiperTabsState extends State<SwiperTabs>
   late final _tabController = TabController(length: 2, vsync: this);
 
   int attribIndex = 0;
-  @override
-  Widget build(BuildContext context) {
+
+  Widget userView() {
+    return Scaffold(
+      appBar: AppBar(
+        title: titleArrowsRowOff(),
+        actions: [rowViewMenu({}, widget.setStateSwiper)],
+      ),
+      body: const UserViewPage(),
+    );
+  }
+
+  Widget editTabs() {
     if (currentSS.swiperIndexChanged) {
       _tabController.index = 0;
       currentSS.swiperIndexChanged = false;
@@ -176,14 +187,24 @@ class _SwiperTabsState extends State<SwiperTabs>
         ));
   }
 
+  @override
+  Widget build(BuildContext context) {
+    bl.devMode = false;
+    if (bl.devMode) {
+      return editTabs();
+    } else {
+      return userView();
+    }
+  }
+
   Widget attribTabs() {
     switch (attribIndex) {
       case 0:
-        return const MainFields();
+        return const HeadFields();
       case 1:
         return const OthersFields();
       default:
-        return const MainFields();
+        return const HeadFields();
     }
   }
 }

@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/AL/alib/alicons.dart';
 import 'package:quotebrowser/AL/zview/bedit/stars.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../BL/bl.dart';
-import '../../alib/alicons.dart';
-import '../../filterspages/_selectview.dart';
-import '../bedit/quotepopup.dart';
-import '../bedit/category/catable.dart';
+import 'bedit/quotepopup.dart';
 
-class HeadFields extends StatefulWidget {
-  const HeadFields({super.key});
+class UserHeadFields extends StatefulWidget {
+  const UserHeadFields({super.key});
 
   @override
-  State<HeadFields> createState() => _HeadFieldsState();
+  State<UserHeadFields> createState() => _UserHeadFieldsState();
 }
 
-class _HeadFieldsState extends State<HeadFields> {
+class _UserHeadFieldsState extends State<UserHeadFields> {
   List<Widget> headCard = [];
   @override
   initState() {
@@ -56,32 +54,6 @@ class _HeadFieldsState extends State<HeadFields> {
         });
   }
 
-  IconButton catsListShow() {
-    return IconButton(
-      icon: const Icon(Icons.category),
-      onPressed: () async {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const CatablePage()),
-        );
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  Widget categories() {
-    if (!bl.orm.currentRow.cols.contains('categories')) {
-      return const Text('');
-    }
-
-    return ListTile(
-      leading: catsListShow(),
-      title: Text(bl.orm.currentRow.categories.value),
-      //trailing: fieldPopupMenu(bl.orm.currentRow.categories.value, 'cat')
-    );
-  }
-
   Future<void> _onOpen(String url) async {
     LinkableElement link = LinkableElement('Link in text', url);
     if (!await launchUrl(Uri.parse(link.url))) {
@@ -114,11 +86,7 @@ class _HeadFieldsState extends State<HeadFields> {
         tileColor: Colors.white,
         leading: IconButton(
           icon: ALicons.attrIcons.authorIcon,
-          onPressed: () async {
-            String authorSelected = await authorSelect(context);
-            if (authorSelected.isEmpty) return;
-            await bl.orm.currentRow.setCellBL('author', authorSelected);
-          },
+          onPressed: () async {},
         ),
         title: Obx(() => Text(bl.orm.currentRow.author.value)),
         trailing: copyPasteClearPopupMenuButton(
@@ -129,11 +97,7 @@ class _HeadFieldsState extends State<HeadFields> {
         tileColor: Colors.white,
         leading: IconButton(
           icon: ALicons.attrIcons.bookIcon,
-          onPressed: () async {
-            String bookSelected = await bookSelect(context);
-            if (bookSelected.isEmpty) return;
-            await bl.orm.currentRow.setCellBL('book', bookSelected);
-          },
+          onPressed: () async {},
         ),
         title: Obx(() => Text(bl.orm.currentRow.book.value)),
         trailing: copyPasteClearPopupMenuButton(
@@ -149,23 +113,28 @@ class _HeadFieldsState extends State<HeadFields> {
       leading: favButt(),
       title: RatingStarsPage(setstateAattribs),
     ));
-    headCard.add(categories());
 
     return headCard;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        color: const Color.fromARGB(255, 122, 203, 243),
-        child: ListView.separated(
-          itemCount: headCard.length,
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-          itemBuilder: (BuildContext context, int index) {
-            return headCard[index];
-          },
-        ));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Head fields'),
+        //actions: [rowViewMenu({}, widget.setStateSwiper)],
+      ),
+      body: Card(
+          margin: const EdgeInsets.symmetric(vertical: 5),
+          color: const Color.fromARGB(255, 122, 203, 243),
+          child: ListView.separated(
+            itemCount: headCard.length,
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
+            itemBuilder: (BuildContext context, int index) {
+              return headCard[index];
+            },
+          )),
+    );
   }
 }
