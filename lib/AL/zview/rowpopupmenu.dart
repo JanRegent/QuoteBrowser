@@ -72,6 +72,14 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
                 '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}\n${bl.orm.currentRow.dateinsert}')),
       ),
       PopupMenuItem(
+          child: InkWell(
+        child: const Text('UserViewMode'),
+        onTap: () async {
+          bl.userViewMode = !bl.userViewMode;
+          Navigator.of(context).pop();
+        },
+      )),
+      PopupMenuItem(
         child: PopupMenuButton(
           child: const Text('File'),
           onSelected: (String result) {
@@ -88,8 +96,6 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
                 // ignore: use_build_context_synchronously //Icons.open_in_browser
                 await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowNo.value,
                     context, 'Jump to row');
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pop();
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
               },

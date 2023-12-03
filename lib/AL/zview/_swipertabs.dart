@@ -189,11 +189,10 @@ class _SwiperTabsState extends State<SwiperTabs>
 
   @override
   Widget build(BuildContext context) {
-    bl.devMode = false;
-    if (bl.devMode) {
-      return editTabs();
-    } else {
+    if (bl.userViewMode) {
       return userView();
+    } else {
+      return editTabs();
     }
   }
 
