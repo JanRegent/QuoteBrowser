@@ -6,12 +6,12 @@ import 'package:get/get.dart';
 import '../../BL/bl.dart';
 import '../../BL/orm.dart';
 import '../alib/alib.dart';
-import 'bedit/attredit.dart';
+import 'beditattr/attredit.dart';
 
 import 'cattribs/headfields.dart';
 import 'cattribs/othersfields.dart';
 import 'rowpopupmenu.dart';
-import 'acoloredview/coloredview.dart';
+import 'aedittext/editpage.dart';
 import 'userwiew.dart';
 
 void indexChanged(int rowIndex) async {
@@ -179,7 +179,7 @@ class _SwiperTabsState extends State<SwiperTabs>
             controller: _tabController,
             children: [
               !currentSS.quoteEdit
-                  ? const ColoredView()
+                  ? const EditPage()
                   : AttrEdit(widget.setStateSwiper),
               attribTabs(),
             ],
@@ -190,7 +190,7 @@ class _SwiperTabsState extends State<SwiperTabs>
   @override
   Widget build(BuildContext context) {
     if (bl.userViewMode) {
-      return userView();
+      return GestureDetector(child: userView());
     } else {
       return editTabs();
     }

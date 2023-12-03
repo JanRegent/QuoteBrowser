@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../BL/bl.dart';
-import '../bedit/quotepopup.dart';
+import '../beditattr/quotepopup.dart';
 
 class TagsYellowPage extends StatefulWidget {
   final String tagsYellow;

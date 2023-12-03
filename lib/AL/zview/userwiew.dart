@@ -25,6 +25,7 @@ class _UserViewPageState extends State<UserViewPage> {
 
   final TextStyle tagStyle = const TextStyle(
     color: Colors.red,
+    fontWeight: FontWeight.bold,
     fontSize: 20.0,
   );
 
@@ -53,7 +54,6 @@ class _UserViewPageState extends State<UserViewPage> {
       List<String> yellowSubparts = yellowPart.split(',');
       for (String yellowSubPart in yellowSubparts) {
         if (yellowSubPart.isEmpty) continue;
-        print(yellowSubPart);
         words[yellowSubPart] = HighlightedWord(
           onTap: () {},
           textStyle: yellowStyle,
@@ -74,8 +74,17 @@ class _UserViewPageState extends State<UserViewPage> {
   void initState() {
     super.initState();
     words = {};
-    initTags();
-    initYellowParts();
+  }
+
+  IconButton highlight() {
+    return IconButton(
+        onPressed: () {
+          words = {};
+          initTags();
+          initYellowParts();
+          setState(() {});
+        },
+        icon: const Icon(Icons.highlight));
   }
 
   @override
@@ -86,9 +95,6 @@ class _UserViewPageState extends State<UserViewPage> {
         child: SafeArea(
           child: ListView(
             children: <Widget>[
-              // const SizedBox(
-              //   height: 16.0,
-              // ),
               Card(
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -103,22 +109,22 @@ class _UserViewPageState extends State<UserViewPage> {
                         fontSize: 20.0,
                         color: Colors.black,
                       ),
-                      textAlign: TextAlign.justify,
+                      textAlign: TextAlign.left,
                     )),
               ),
               ListTile(
-                leading: IconButton(
-                  icon: const Icon(Icons.list),
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const UserHeadFields()),
-                    );
-                  },
-                ),
-                title: Obx(() => Text(bl.orm.currentRow.author.value)),
-              )
+                  leading: IconButton(
+                    icon: const Icon(Icons.list),
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserHeadFields()),
+                      );
+                    },
+                  ),
+                  title: Obx(() => Text(bl.orm.currentRow.author.value)),
+                  trailing: highlight())
               //const HeadFields()
             ],
           ),

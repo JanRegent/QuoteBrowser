@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/AL/alib/alicons.dart';
-import 'package:quotebrowser/AL/zview/bedit/stars.dart';
+import 'package:quotebrowser/AL/zview/beditattr/stars.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../BL/bl.dart';
-import 'bedit/quotepopup.dart';
+import 'beditattr/quotepopup.dart';
 
 class UserHeadFields extends StatefulWidget {
   const UserHeadFields({super.key});

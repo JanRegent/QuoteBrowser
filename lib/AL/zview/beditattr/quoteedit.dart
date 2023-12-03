@@ -8,7 +8,7 @@ import '../../../BL/orm.dart';
 
 import '../../alib/alicons.dart';
 
-import '../acoloredview/tagsyellowlist.dart';
+import '../aedittext/tagsyellowlist.dart';
 import 'addquote/addquoterow.dart';
 import 'quotepopup.dart';
 import 'originalview.dart';
