@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:highlight_text/highlight_text.dart';
 
 import '../../../BL/bl.dart';
 
@@ -16,12 +15,27 @@ class _EditPageState extends State<EditPage> {
   @override
   void initState() {
     super.initState();
+    editControler.text = bl.orm.currentRow.quote.value;
   }
 
-  IconButton highlight() {
-    return IconButton(onPressed: () {}, icon: const Icon(Icons.save));
+  bool isSaving = false;
+  IconButton saveQuote() {
+    return IconButton(
+        onPressed: () async {
+          setState(() {
+            isSaving = true;
+          });
+          bl.orm.currentRow.quote.value = editControler.text;
+          await bl.orm.currentRow
+              .setCellBL('quote', bl.orm.currentRow.quote.value);
+          setState(() {
+            isSaving = false;
+          });
+        },
+        icon: const Icon(Icons.save));
   }
 
+  TextEditingController editControler = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,36 +44,26 @@ class _EditPageState extends State<EditPage> {
         child: SafeArea(
           child: ListView(
             children: <Widget>[
+              ListTile(
+                  leading: isSaving
+                      ? const CircularProgressIndicator()
+                      : const Text(' '),
+                  title: Obx(() => Text(bl.orm.currentRow.author.value)),
+                  trailing: saveQuote()),
               Card(
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(1),
                         topRight: Radius.circular(1)),
                     side: BorderSide(width: 1, color: Colors.green)),
-                child: Obx(() => TextHighlight(
-                      text: bl.orm.currentRow.quote.value,
-                      words: const {},
-                      matchCase: false,
-                      textStyle: const TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.left,
-                    )),
-              ),
-              ListTile(
-                  leading: IconButton(
-                    icon: const Icon(Icons.list),
-                    onPressed: () async {
-                      // await Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => const UserHeadFields()),
-                      // );
-                    },
-                  ),
-                  title: Obx(() => Text(bl.orm.currentRow.author.value)),
-                  trailing: highlight())
+                child: TextField(
+                  decoration: const InputDecoration(labelText: ''),
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  controller: editControler, // <-- SEE HERE
+                ),
+              )
+
               //const HeadFields()
             ],
           ),
