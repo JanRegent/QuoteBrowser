@@ -5,6 +5,61 @@ import 'package:highlight_text/highlight_text.dart';
 import '../../../BL/bl.dart';
 import 'userheadfields.dart';
 
+//-----------------------------------------------------------------highl
+Map<String, HighlightedWord> words = {};
+const TextStyle tagStyle = TextStyle(
+  color: Colors.red,
+  fontWeight: FontWeight.bold,
+  fontSize: 20.0,
+);
+
+const TextStyle yellowStyle = TextStyle(
+  backgroundColor: Colors.yellow,
+  fontSize: 20.0,
+);
+
+void initTags() {
+  List<String> tags = bl.orm.currentRow.tags.value.split('#');
+  for (String tag in tags) {
+    if (tag.isEmpty) continue;
+    words[tag] = HighlightedWord(
+      onTap: () {},
+      textStyle: tagStyle,
+      //decoration: decoration,
+      //padding: padding,
+    );
+  }
+}
+
+void initYellowParts() {
+  void initSubPart(String yellowPart) {
+    List<String> yellowSubparts = yellowPart.split(',');
+    for (String yellowSubPart in yellowSubparts) {
+      if (yellowSubPart.isEmpty) continue;
+      words[yellowSubPart.trim()] = HighlightedWord(
+        onTap: () {},
+        textStyle: yellowStyle,
+        //decoration: decoration,
+        //padding: padding,
+      );
+    }
+  }
+
+  List<String> yParts = bl.orm.currentRow.yellowParts.value.split('__|__');
+  for (String yellowPart in yParts) {
+    if (yellowPart.isEmpty) continue;
+    initSubPart(yellowPart);
+  }
+}
+
+void initHighlight() {
+  words = {};
+
+  initTags();
+  initYellowParts();
+}
+
+//-------------------------------------------------------------userviewPage
 class UserViewPage extends StatefulWidget {
   const UserViewPage({super.key});
 
@@ -14,62 +69,6 @@ class UserViewPage extends StatefulWidget {
 }
 
 class _UserViewPageState extends State<UserViewPage> {
-  //final String text = bl.orm.currentRow.quote.value;
-
-  final EdgeInsetsGeometry padding = const EdgeInsets.all(8.0);
-
-  final BoxDecoration decoration = BoxDecoration(
-    color: Colors.green,
-    borderRadius: BorderRadius.circular(50),
-  );
-
-  final TextStyle tagStyle = const TextStyle(
-    color: Colors.red,
-    fontWeight: FontWeight.bold,
-    fontSize: 20.0,
-  );
-
-  final TextStyle yellowStyle = const TextStyle(
-    backgroundColor: Colors.yellow,
-    fontSize: 20.0,
-  );
-
-  late Map<String, HighlightedWord> words;
-
-  void initTags() {
-    List<String> tags = bl.orm.currentRow.tags.value.split('#');
-    for (String tag in tags) {
-      if (tag.isEmpty) continue;
-      words[tag] = HighlightedWord(
-        onTap: () {},
-        textStyle: tagStyle,
-        //decoration: decoration,
-        //padding: padding,
-      );
-    }
-  }
-
-  void initYellowParts() {
-    void initSubPart(String yellowPart) {
-      List<String> yellowSubparts = yellowPart.split(',');
-      for (String yellowSubPart in yellowSubparts) {
-        if (yellowSubPart.isEmpty) continue;
-        words[yellowSubPart] = HighlightedWord(
-          onTap: () {},
-          textStyle: yellowStyle,
-          //decoration: decoration,
-          //padding: padding,
-        );
-      }
-    }
-
-    List<String> yParts = bl.orm.currentRow.yellowParts.value.split('__|__');
-    for (String yellowPart in yParts) {
-      if (yellowPart.isEmpty) continue;
-      initSubPart(yellowPart);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -79,9 +78,7 @@ class _UserViewPageState extends State<UserViewPage> {
   IconButton highlight() {
     return IconButton(
         onPressed: () {
-          words = {};
-          initTags();
-          initYellowParts();
+          initHighlight();
           setState(() {});
         },
         icon: const Icon(Icons.highlight));

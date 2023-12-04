@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../AL/zview/view/userwiew.dart';
 import '../DL/dl.dart';
 import 'bl.dart';
 
@@ -181,7 +182,7 @@ Future currentRowSet(String sheetRownoKey) async {
   }
 
   pureTags();
-
+  initHighlight();
   //--------------------------ids
 
   bl.orm.currentRow.sheetName.value = sheetName;
