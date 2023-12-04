@@ -1,13 +1,13 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../BL/bl.dart';
+import '../../../../../BL/bl.dart';
 
-import '../../../../BL/orm.dart';
-import '../../../../DL/dl.dart';
+import '../../../../../BL/orm.dart';
+import '../../../../../DL/dl.dart';
 
-import '../../../alib/alib.dart';
-import '../../../alib/selectiondialogs/selectone.dart';
+import '../../../../alib/alib.dart';
+import '../../../../alib/selectiondialogs/selectone.dart';
 
 Future appendrowCurrentRowSet(BuildContext context) async {
   currentRowNew();

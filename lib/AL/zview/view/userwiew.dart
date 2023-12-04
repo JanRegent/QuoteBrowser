@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:highlight_text/highlight_text.dart';
 
-import '../../BL/bl.dart';
+import '../../../BL/bl.dart';
 import 'userheadfields.dart';
 
 class UserViewPage extends StatefulWidget {

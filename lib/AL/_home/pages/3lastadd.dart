@@ -8,7 +8,7 @@ import '../../../BL/orm.dart';
 import '../../alib/selectiondialogs/selectone.dart';
 
 import '../../zview/_swiper.dart';
-import '../../zview/beditattr/addquote/addquoterow.dart';
+import '../../zview/edit/battr/addquote/addquoterow.dart';
 import 'searchshow.dart';
 
 class LastRowsAddQuote {

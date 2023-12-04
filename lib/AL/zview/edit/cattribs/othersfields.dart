@@ -4,8 +4,8 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../BL/bl.dart';
-import '../beditattr/quotepopup.dart';
+import '../../../../BL/bl.dart';
+import '../battr/quotepopup.dart';
 
 class OthersFields extends StatefulWidget {
   const OthersFields({super.key});

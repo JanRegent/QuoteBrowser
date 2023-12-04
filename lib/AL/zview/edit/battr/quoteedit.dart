@@ -2,13 +2,13 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../BL/bl.dart';
+import '../../../../BL/bl.dart';
 
-import '../../../BL/orm.dart';
+import '../../../../BL/orm.dart';
 
-import '../../alib/alicons.dart';
+import '../../../alib/alicons.dart';
 
-import '../aedittext/tagsyellowlist.dart';
+import '../atext/tagsyellowlist.dart';
 import 'addquote/addquoterow.dart';
 import 'quotepopup.dart';
 import 'originalview.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/BL/bluti.dart';
 
-import '../../../BL/bl.dart';
+import '../../../../BL/bl.dart';
 
 import 'quoteedit.dart';
 

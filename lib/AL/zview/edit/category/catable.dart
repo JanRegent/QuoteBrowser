@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../../BL/bl.dart';
-import '../addquote/emptyview.dart';
+import '../battr/addquote/emptyview.dart';
 
 class CatablePage extends StatefulWidget {
   const CatablePage({Key? key}) : super(key: key);

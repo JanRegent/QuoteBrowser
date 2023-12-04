@@ -6,13 +6,13 @@ import 'package:get/get.dart';
 import '../../BL/bl.dart';
 import '../../BL/orm.dart';
 import '../alib/alib.dart';
-import 'beditattr/attredit.dart';
+import 'edit/battr/attredit.dart';
 
-import 'cattribs/headfields.dart';
-import 'cattribs/othersfields.dart';
+import 'edit/cattribs/headfields.dart';
+import 'edit/cattribs/othersfields.dart';
 import 'rowpopupmenu.dart';
-import 'aedittext/editpage.dart';
-import 'userwiew.dart';
+import 'edit/atext/editpage.dart';
+import 'view/userwiew.dart';
 
 void indexChanged(int rowIndex) async {
   currentSS.swiperIndex.value = rowIndex;

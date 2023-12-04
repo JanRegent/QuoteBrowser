@@ -1,8 +1,8 @@
 // ignore: must_be_immutable
 import 'package:flutter/material.dart';
 
-import '../../../BL/bl.dart';
-import '../beditattr/quotepopup.dart';
+import '../../../../BL/bl.dart';
+import '../battr/quotepopup.dart';
 
 class TagsYellowPage extends StatefulWidget {
   final String tagsYellow;

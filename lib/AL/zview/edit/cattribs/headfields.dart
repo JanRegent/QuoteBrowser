@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/AL/alib/alicons.dart';
-import 'package:quotebrowser/AL/zview/beditattr/stars.dart';
+import 'package:quotebrowser/AL/zview/edit/battr/stars.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../BL/bl.dart';
-import 'beditattr/quotepopup.dart';
+import '../../../../BL/bl.dart';
+import '../../../alib/alicons.dart';
+import '../../../filterspages/_selectview.dart';
+import '../battr/quotepopup.dart';
+import '../category/catable.dart';
 
-class UserHeadFields extends StatefulWidget {
-  const UserHeadFields({super.key});
+class HeadFields extends StatefulWidget {
+  const HeadFields({super.key});
 
   @override
-  State<UserHeadFields> createState() => _UserHeadFieldsState();
+  State<HeadFields> createState() => _HeadFieldsState();
 }
 
-class _UserHeadFieldsState extends State<UserHeadFields> {
+class _HeadFieldsState extends State<HeadFields> {
   List<Widget> headCard = [];
   @override
   initState() {
@@ -54,6 +56,32 @@ class _UserHeadFieldsState extends State<UserHeadFields> {
         });
   }
 
+  IconButton catsListShow() {
+    return IconButton(
+      icon: const Icon(Icons.category),
+      onPressed: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CatablePage()),
+        );
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  Widget categories() {
+    if (!bl.orm.currentRow.cols.contains('categories')) {
+      return const Text('');
+    }
+
+    return ListTile(
+      leading: catsListShow(),
+      title: Text(bl.orm.currentRow.categories.value),
+      //trailing: fieldPopupMenu(bl.orm.currentRow.categories.value, 'cat')
+    );
+  }
+
   Future<void> _onOpen(String url) async {
     LinkableElement link = LinkableElement('Link in text', url);
     if (!await launchUrl(Uri.parse(link.url))) {
@@ -86,7 +114,11 @@ class _UserHeadFieldsState extends State<UserHeadFields> {
         tileColor: Colors.white,
         leading: IconButton(
           icon: ALicons.attrIcons.authorIcon,
-          onPressed: () async {},
+          onPressed: () async {
+            String authorSelected = await authorSelect(context);
+            if (authorSelected.isEmpty) return;
+            await bl.orm.currentRow.setCellBL('author', authorSelected);
+          },
         ),
         title: Obx(() => Text(bl.orm.currentRow.author.value)),
         trailing: copyPasteClearPopupMenuButton(
@@ -97,7 +129,11 @@ class _UserHeadFieldsState extends State<UserHeadFields> {
         tileColor: Colors.white,
         leading: IconButton(
           icon: ALicons.attrIcons.bookIcon,
-          onPressed: () async {},
+          onPressed: () async {
+            String bookSelected = await bookSelect(context);
+            if (bookSelected.isEmpty) return;
+            await bl.orm.currentRow.setCellBL('book', bookSelected);
+          },
         ),
         title: Obx(() => Text(bl.orm.currentRow.book.value)),
         trailing: copyPasteClearPopupMenuButton(
@@ -113,28 +149,23 @@ class _UserHeadFieldsState extends State<UserHeadFields> {
       leading: favButt(),
       title: RatingStarsPage(setstateAattribs),
     ));
+    headCard.add(categories());
 
     return headCard;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Head fields'),
-        //actions: [rowViewMenu({}, widget.setStateSwiper)],
-      ),
-      body: Card(
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          color: const Color.fromARGB(255, 122, 203, 243),
-          child: ListView.separated(
-            itemCount: headCard.length,
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-            itemBuilder: (BuildContext context, int index) {
-              return headCard[index];
-            },
-          )),
-    );
+    return Card(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        color: const Color.fromARGB(255, 122, 203, 243),
+        child: ListView.separated(
+          itemCount: headCard.length,
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+          itemBuilder: (BuildContext context, int index) {
+            return headCard[index];
+          },
+        ));
   }
 }

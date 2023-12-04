@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../BL/bl.dart';
+import '../../../../BL/bl.dart';
 
 class EditPage extends StatefulWidget {
   const EditPage({super.key});
