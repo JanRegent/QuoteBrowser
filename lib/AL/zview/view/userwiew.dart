@@ -52,8 +52,10 @@ void initYellowParts() {
   }
 }
 
+bool highligthOnOff = false;
 void initHighlight() {
   words = {};
+  if (highligthOnOff == false) return;
 
   initTags();
   initYellowParts();
@@ -78,6 +80,7 @@ class _UserViewPageState extends State<UserViewPage> {
   IconButton highlight() {
     return IconButton(
         onPressed: () {
+          highligthOnOff = !highligthOnOff;
           initHighlight();
           setState(() {});
         },
@@ -92,6 +95,19 @@ class _UserViewPageState extends State<UserViewPage> {
         child: SafeArea(
           child: ListView(
             children: <Widget>[
+              ListTile(
+                  leading: IconButton(
+                    icon: const Icon(Icons.list),
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserHeadFields()),
+                      );
+                    },
+                  ),
+                  title: Obx(() => Text(bl.orm.currentRow.author.value)),
+                  trailing: highlight()),
               Card(
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -108,20 +124,8 @@ class _UserViewPageState extends State<UserViewPage> {
                       ),
                       textAlign: TextAlign.left,
                     )),
-              ),
-              ListTile(
-                  leading: IconButton(
-                    icon: const Icon(Icons.list),
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const UserHeadFields()),
-                      );
-                    },
-                  ),
-                  title: Obx(() => Text(bl.orm.currentRow.author.value)),
-                  trailing: highlight())
+              )
+
               //const HeadFields()
             ],
           ),

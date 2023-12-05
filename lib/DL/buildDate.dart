@@ -1,1 +1,1 @@
-String buildDate = ' 2023_12_04__17_11_build_DL---appendBook ';  
+String buildDate = ' 2023_12_05__10_03_build_AL---zview-view-highligthOnOff ';  
