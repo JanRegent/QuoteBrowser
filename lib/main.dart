@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'AL/_home/_homepage.dart';
 
@@ -21,28 +20,4 @@ void main() async {
   //rssInDo();
 
   runApp(const SidebarHome());
-}
-
-class MainApp extends StatefulWidget {
-  const MainApp({super.key});
-
-  @override
-  State<MainApp> createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Column(
-          children: [
-            const Text('Hello World!4'),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.abc))
-          ],
-        ),
-      ),
-    );
-  }
 }
