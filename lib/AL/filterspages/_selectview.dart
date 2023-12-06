@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../BL/bl.dart';
 
 import '../../BL/bluti.dart';
-import 'valueselectpage.dart';
+import '../alib/searchvalue/searchselectpage.dart';
 
 Future<String> dateSelect(BuildContext context) async {
   List<String> dateinserts = blUti.lastNdays(10);
@@ -12,7 +12,7 @@ Future<String> dateSelect(BuildContext context) async {
   return await Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => ValueSelectPage(dateinserts, 'Select date')),
+        builder: (context) => SearchSelectPage(dateinserts, 'Select date')),
   );
 }
 
@@ -22,7 +22,7 @@ Future<String> wordSelect(BuildContext context) async {
   return await Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => ValueSelectPage(words, 'Select word')),
+        builder: (context) => SearchSelectPage(words, 'Select word')),
   );
 }
 
@@ -32,7 +32,7 @@ Future<String> authorSelect(BuildContext context) async {
   return await Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => ValueSelectPage(authors, 'Select author')),
+        builder: (context) => SearchSelectPage(authors, 'Select author')),
   );
 }
 
@@ -42,7 +42,7 @@ Future<String> authorTextSelect(BuildContext context) async {
   return await Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => ValueSelectPage(words, 'Select Author|text ')),
+        builder: (context) => SearchSelectPage(words, 'Select Author|text ')),
   );
 }
 
@@ -52,6 +52,6 @@ Future<String> bookSelect(BuildContext context) async {
   return await Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => ValueSelectPage(books, 'Select book')),
+        builder: (context) => SearchSelectPage(books, 'Select book')),
   );
 }

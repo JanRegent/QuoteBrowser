@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
-import '../zview/edit/battr/addquote/emptyview.dart';
+import '../../zview/edit/battr/addquote/emptyview.dart';
 
-class ValueSelectPage extends StatefulWidget {
+class SearchSelectPage extends StatefulWidget {
   final List<String> values;
   final String title;
 
-  const ValueSelectPage(this.values, this.title, {super.key});
+  const SearchSelectPage(this.values, this.title, {super.key});
 
   @override
-  State<ValueSelectPage> createState() => _ValueSelectPageState();
+  State<SearchSelectPage> createState() => _SearchSelectPageState();
 }
 
-class _ValueSelectPageState extends State<ValueSelectPage> {
+class _SearchSelectPageState extends State<SearchSelectPage> {
   final TextEditingController textEditingController = TextEditingController();
 
   Widget bodyLv2(BuildContext context) {
