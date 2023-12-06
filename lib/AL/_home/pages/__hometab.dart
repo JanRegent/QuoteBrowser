@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../../BL/bl.dart';
 import '1last.dart';
 import '9appsettings.dart';
-import 'wordsearchpage2.dart';
+import 'wordhome.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
@@ -61,7 +61,7 @@ class HomeTab extends StatelessWidget {
           body: const TabBarView(
             children: [
               LastMenu(),
-              WordSearchPage('tags'),
+              WordHomePage(),
               Icon(Icons.directions_bike),
             ],
           ),

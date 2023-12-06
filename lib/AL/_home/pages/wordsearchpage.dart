@@ -1,8 +1,10 @@
 // ignore: must_be_immutable
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
+import '../../../DL/dl.dart';
 import '../../alib/searchvalue/searchselectpage.dart';
 
 class WordSearchPage extends StatefulWidget {
@@ -14,77 +16,101 @@ class WordSearchPage extends StatefulWidget {
 }
 
 class _WordSearchPageState extends State<WordSearchPage> {
-  List<Widget> expandedCardTags = [];
-
   @override
   initState() {
     super.initState();
-
-    expandedTags();
+    tagsUsed.add('??'.obs);
   }
 
-  IconButton removeTagOrYellow(int index, List<String> items) {
-    return IconButton(
-        onPressed: () async {
-          items.removeAt(index);
-          // ignore: use_build_context_synchronously
-          Navigator.pop(context);
-          if (widget.tagsYellow == 'tags') {
-            bl.orm.currentRow.tags.value = items.join('#');
-            await bl.orm.currentRow
-                .setCellBL('tags', bl.orm.currentRow.tags.value);
-          } else {
-            bl.orm.currentRow.yellowParts.value = items.join('__|__\n');
-            await bl.orm.currentRow
-                .setCellBL('yellowParts', bl.orm.currentRow.yellowParts.value);
-          }
-        },
-        icon: const Icon(Icons.delete));
+  List<String> tags = [];
+  Future<String> getData() async {
+    List data = await dl.httpService.getSheetNamesTags();
+    int tagIx = blUti.toListString(data[0]).indexOf('tags');
+    for (var six = 1; six < data.length; six++) {
+      tags.addAll(data[six][tagIx].toString().split('#'));
+    }
+    return 'Ok';
   }
 
-  List<Widget> expandedTags() {
-    expandedCardTags = [];
-    List<String> items = [];
-    if (widget.tagsYellow == 'tags') {
-      items = bl.orm.currentRow.tags.value.split('#');
-    } else {
-      items = bl.orm.currentRow.yellowParts.value.split('__|__\n');
-    }
+  RxList<RxString> tagsUsed = RxList<RxString>();
 
-    for (int index = 0; index < items.length; index++) {
-      if (items[index].trim().isEmpty) continue;
-      expandedCardTags.add(ListTile(
-          leading: removeTagOrYellow(index, items), title: Text(items[index])));
-    }
-    return expandedCardTags;
+  Card tagsCard() {
+    return Card(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            ListTile(
+              leading: IconButton(
+                  onPressed: () async {
+                    // ignore: use_build_context_synchronously
+                    tagsUsed[0].value = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SearchSelectPage(tags, 'Select tag')),
+                    );
+                  },
+                  icon: const Icon(Icons.tag)),
+              title: Row(
+                children: [
+                  TextButton(
+                      onPressed: () {},
+                      child: Obx(() => Text(tagsUsed[0].value)))
+                ],
+              ),
+            )
+          ],
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: widget.tagsYellow == 'tags'
-              ? const Text('#')
-              : const Text('Yellow parts'),
-        ),
-        body: Card(
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            child: Column(
-              children: [
-                IconButton(
-                    onPressed: () async {
-                      List<String> dateinserts = blUti.lastNdays(10);
-
-                      // ignore: use_build_context_synchronously
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                SearchSelectPage(dateinserts, 'Select date')),
-                      );
-                    },
-                    icon: const Icon(Icons.tag))
-              ],
-            )));
+        body: FutureBuilder<String>(
+      future: getData(), // a previously-obtained Future<String> or null
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        // ignore: unused_local_variable
+        List<Widget> children;
+        if (snapshot.hasData) {
+          children = <Widget>[
+            const Icon(
+              Icons.check_circle_outline,
+              color: Colors.green,
+              size: 60,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Text('Result: ${snapshot.data}'),
+            ),
+          ];
+        } else if (snapshot.hasError) {
+          children = <Widget>[
+            const Icon(
+              Icons.error_outline,
+              color: Colors.red,
+              size: 60,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Text('Error: ${snapshot.error}'),
+            ),
+          ];
+        } else {
+          children = const <Widget>[
+            SizedBox(
+              width: 60,
+              height: 60,
+              child: CircularProgressIndicator(),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: Text('Awaiting tags...'),
+            ),
+          ];
+        }
+        return tagsCard();
+      },
+    ));
   }
 }
+//----------------------------------

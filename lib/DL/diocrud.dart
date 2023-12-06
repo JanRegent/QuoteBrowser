@@ -105,6 +105,14 @@ class HttpService {
     return response.data['data'];
   }
 
+  Future getSheetNamesTags() async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {'action': 'getSheetNamesTags'},
+    );
+    return response.data['data'];
+  }
+
   //-------------------------------------------------------------------search
   Future<List<String>> searchSS(String searchText) async {
     Response response = await dio.get(
