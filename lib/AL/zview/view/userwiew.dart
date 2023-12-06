@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:highlight_text/highlight_text.dart';
 
 import '../../../BL/bl.dart';
+import '../edit/battr/originalview.dart';
 import 'userheadfields.dart';
 
 //-----------------------------------------------------------------highl
@@ -52,13 +53,12 @@ void initYellowParts() {
   }
 }
 
-bool highligthOnOff = false;
 void initHighlight() {
   words = {};
-  if (highligthOnOff == false) return;
+  if (bl.highligthOnOff == false) return;
 
-  initTags();
   initYellowParts();
+  initTags();
 }
 
 //-------------------------------------------------------------userviewPage
@@ -80,7 +80,7 @@ class _UserViewPageState extends State<UserViewPage> {
   IconButton highlight() {
     return IconButton(
         onPressed: () {
-          highligthOnOff = !highligthOnOff;
+          bl.highligthOnOff = !bl.highligthOnOff;
           initHighlight();
           setState(() {});
         },
@@ -106,7 +106,20 @@ class _UserViewPageState extends State<UserViewPage> {
                       );
                     },
                   ),
-                  title: Obx(() => Text(bl.orm.currentRow.author.value)),
+                  title: Row(
+                    children: [
+                      Obx(() => Text(bl.orm.currentRow.author.value)),
+                      IconButton(
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const OriginalView()),
+                            );
+                          },
+                          icon: const Icon(Icons.crop_original)),
+                    ],
+                  ),
                   trailing: highlight()),
               Card(
                 shape: const RoundedRectangleBorder(

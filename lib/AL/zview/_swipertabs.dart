@@ -15,6 +15,9 @@ import 'edit/atext/editpage.dart';
 import 'view/userwiew.dart';
 
 void indexChanged(int rowIndex) async {
+  bl.orm.currentRow.selectedText.value = '';
+  bl.orm.currentRow.attribNameLast.value = '';
+
   currentSS.swiperIndex.value = rowIndex;
   if (currentSS.swiperIndex > currentSS.keys.length - 1) {
     currentSS.swiperIndex.value = 0;

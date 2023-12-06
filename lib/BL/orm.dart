@@ -121,7 +121,6 @@ void pureTags() {
 final TextEditingController quoteEditController = TextEditingController();
 
 Future currentRowSet(String sheetRownoKey) async {
-  //String sheetRownoKey = currentSS.keys[currentSS.swiperIndex];
   List<String> rowArr = await bl.sheetrowsCRUD.getRowArr(sheetRownoKey);
   String sheetName = sheetRownoKey.split('__|__')[0];
   bl.orm.currentRow.cols =
@@ -183,6 +182,7 @@ Future currentRowSet(String sheetRownoKey) async {
 
   pureTags();
   initHighlight();
+
   //--------------------------ids
 
   bl.orm.currentRow.sheetName.value = sheetName;

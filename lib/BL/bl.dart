@@ -32,6 +32,7 @@ List<IsarGeneratedSchema> schemas = [
 class Bl {
   bool devMode = false;
   bool userViewMode = true;
+  bool highligthOnOff = false;
 
   Map<String, dynamic> sheetGroups = {};
   Map<String, String> sheetUrls = {};
