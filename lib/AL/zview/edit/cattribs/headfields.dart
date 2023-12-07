@@ -108,6 +108,30 @@ class _HeadFieldsState extends State<HeadFields> {
     }
   }
 
+  Future bookParse_() async {
+    List<String> quoteContainsList = bl.booksCRUD.quoteContainsList();
+    String quote = bl.orm.currentRow.quote.value.toLowerCase();
+    for (String key in quoteContainsList) {
+      String qcontains = key.trim().toLowerCase();
+      if (qcontains.length == 1) continue;
+      if (quote.toLowerCase().contains(qcontains)) {
+        warningDialog('Book, Author  update by\n$qcontains', context);
+        setState(() {
+          bookAuthorUpdating = true;
+        });
+        var bookAuthor = bl.booksCRUD.readBookAuthor(key);
+
+        await bl.orm.currentRow.setCellBL('book', bookAuthor.$1);
+        await bl.orm.currentRow.setCellBL('author', bookAuthor.$2);
+        setState(() {
+          bookAuthorUpdating = false;
+        });
+
+        return;
+      }
+    }
+  }
+
   bool bookAuthorUpdating = false;
   IconButton bookAuthorParse() {
     return IconButton(
@@ -115,27 +139,7 @@ class _HeadFieldsState extends State<HeadFields> {
             ? const CircularProgressIndicator()
             : const Icon(Icons.arrow_upward),
         onPressed: () async {
-          List<String> quoteContainsList = bl.booksCRUD.quoteContainsList();
-          String quote = bl.orm.currentRow.quote.value.toLowerCase();
-          for (String key in quoteContainsList) {
-            String qcontains = key.trim().toLowerCase();
-            if (qcontains.length == 1) continue;
-            if (quote.toLowerCase().contains(qcontains)) {
-              warningDialog('Book, Author  update by\n$qcontains', context);
-              setState(() {
-                bookAuthorUpdating = true;
-              });
-              var bookAuthor = bl.booksCRUD.readBookAuthor(key);
-
-              await bl.orm.currentRow.setCellBL('book', bookAuthor.$1);
-              await bl.orm.currentRow.setCellBL('author', bookAuthor.$2);
-              setState(() {
-                bookAuthorUpdating = false;
-              });
-
-              return;
-            }
-          }
+          await bookParse_();
         });
   }
 
