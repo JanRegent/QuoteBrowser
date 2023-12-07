@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/bluti.dart';
@@ -40,6 +41,16 @@ class BooksCRUD {
   (String book, String author) readBookAuthor(String key) {
     Books? row = isar.books.where().quoteContainsEqualTo(key).findFirst();
     return (row!.book, row.author);
+  }
+
+  List<String> readAuthorsUniq() {
+    List<String> authorsAll =
+        isar.books.where().authorProperty().findAll().sorted();
+    Set authors = {};
+    for (var author in authorsAll) {
+      authors.add(author);
+    }
+    return blUti.toListString(authors.toList());
   }
 
   //-----------------------------------------------------------------update

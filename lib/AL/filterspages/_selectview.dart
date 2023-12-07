@@ -27,13 +27,18 @@ Future<String> wordSelect(BuildContext context) async {
 }
 
 Future<String> authorSelect(BuildContext context) async {
-  List<String> authors = await bl.authorCRUD.readAllAuthors();
-  // ignore: use_build_context_synchronously
-  return await Navigator.push(
-    context,
-    MaterialPageRoute(
-        builder: (context) => SearchSelectPage(authors, 'Select author')),
-  );
+  List<String> authors = bl.booksCRUD.readAuthorsUniq();
+  try {
+    // ignore: use_build_context_synchronously
+    String? selected = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => SearchSelectPage(authors, 'Select author')),
+    );
+    return selected!;
+  } catch (_) {
+    return '';
+  }
 }
 
 Future<String> authorTextSelect(BuildContext context) async {

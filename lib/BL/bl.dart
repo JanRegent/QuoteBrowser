@@ -6,7 +6,7 @@ import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/authorsbooks/bookscrud.dart';
 
 import '../DL/dl.dart';
-import 'authorsbooks/authorscrud.dart';
+
 import 'bluti.dart';
 import 'categories/catscrud.dart';
 
@@ -24,7 +24,6 @@ List<IsarGeneratedSchema> schemas = [
   SheetColSchema,
   SimpleFilterSchema,
   ColumnTextFilterSchema,
-  AuthorSchema,
   BooksSchema,
   RssSchema
 ];
@@ -48,7 +47,7 @@ class Bl {
   SheetcolsCRUD sheetcolsCRUD = SheetcolsCRUD();
   FiltersCRUD filtersCRUD = FiltersCRUD();
   ColumnTextFilterCRUD columnTextFilterCRUD = ColumnTextFilterCRUD();
-  AuthorCRUD authorCRUD = AuthorCRUD();
+
   BooksCRUD booksCRUD = BooksCRUD();
   RssCRUD rssCRUD = RssCRUD();
 
@@ -62,7 +61,6 @@ class Bl {
 
   void updateSlowly() {
     bl.catsCRUD.update();
-    authorCRUD.updateAuthors();
     booksCRUD.updateBooks();
     sheetUrlsBuild();
   }
