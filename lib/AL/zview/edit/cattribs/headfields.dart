@@ -6,6 +6,7 @@ import 'package:quotebrowser/AL/zview/edit/battr/stars.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../BL/bl.dart';
+import '../../../alib/alertinfo/circullarsnack.dart';
 import '../../../alib/alicons.dart';
 import '../../../filterspages/_selectview.dart';
 import '../battr/quotepopup.dart';
@@ -109,6 +110,7 @@ class _HeadFieldsState extends State<HeadFields> {
   }
 
   Future bookParse_() async {
+    circularSnack(context, 4, 'Check book/author');
     List<String> quoteContainsList = bl.booksCRUD.quoteContainsList();
     String quote = bl.orm.currentRow.quote.value.toLowerCase();
     for (String key in quoteContainsList) {
@@ -116,16 +118,11 @@ class _HeadFieldsState extends State<HeadFields> {
       if (qcontains.length == 1) continue;
       if (quote.toLowerCase().contains(qcontains)) {
         warningDialog('Book, Author  update by\n$qcontains', context);
-        setState(() {
-          bookAuthorUpdating = true;
-        });
+
         var bookAuthor = bl.booksCRUD.readBookAuthor(key);
 
         await bl.orm.currentRow.setCellBL('book', bookAuthor.$1);
         await bl.orm.currentRow.setCellBL('author', bookAuthor.$2);
-        setState(() {
-          bookAuthorUpdating = false;
-        });
 
         return;
       }
@@ -133,14 +130,20 @@ class _HeadFieldsState extends State<HeadFields> {
   }
 
   bool bookAuthorUpdating = false;
-  IconButton bookAuthorParse() {
-    return IconButton(
-        icon: bookAuthorUpdating
-            ? const CircularProgressIndicator()
-            : const Icon(Icons.arrow_upward),
-        onPressed: () async {
-          await bookParse_();
-        });
+  ElevatedButton bookAuthorParse() {
+    return ElevatedButton.icon(
+      label: const Text('BA'),
+      icon: bookAuthorUpdating
+          ? const CircularProgressIndicator()
+          : const Icon(Icons.arrow_upward),
+      onPressed: () async {
+        await bookParse_();
+      },
+      onLongPress: () async {
+        await bl.booksCRUD.updateBooks();
+        await bookParse_();
+      },
+    );
   }
 
   List<Widget> headFields() {
@@ -181,11 +184,12 @@ class _HeadFieldsState extends State<HeadFields> {
         trailing: copyPasteClearPopupMenuButton(
             bl.orm.currentRow.parPage.value, 'parPage')));
     headCard.add(ListTile(
-        tileColor: Colors.white,
-        leading: bookAuthorParse(),
-        title: Row(
-          children: [favButt(), RatingStarsPage(setstateAattribs)],
-        )));
+      tileColor: Colors.white,
+      title: Row(
+        children: [favButt(), RatingStarsPage(setstateAattribs)],
+      ),
+      trailing: bookAuthorParse(),
+    ));
     headCard.add(categories());
 
     return headCard;
