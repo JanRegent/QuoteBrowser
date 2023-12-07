@@ -10,8 +10,8 @@ part 'bookscrud.g.dart'; //dart run build_runner build
 @collection
 class Books {
   @Id()
-  String book = '';
   String quoteContains = '';
+  String book = '';
   String author = '';
   String cleanString = '';
 }
@@ -32,21 +32,36 @@ class BooksCRUD {
     }
   }
 
+  List<String> quoteContainsList() {
+    List<String> qc = isar.books.where().quoteContainsProperty().findAll();
+    return qc;
+  }
+
+  (String book, String author) readBookAuthor(String key) {
+    Books? row = isar.books.where().quoteContainsEqualTo(key).findFirst();
+    return (row!.book, row.author);
+  }
+
   //-----------------------------------------------------------------update
   Future updateBooks() async {
     await clear();
 
     List booksDyn = await dl.httpService.getBooks();
+    List<String> cols = blUti.toListString(booksDyn[0]);
+    int quoteContainsIx = cols.indexOf('quoteContains');
+    int bookIx = cols.indexOf('book');
+    int authorIx = cols.indexOf('author');
+
     for (var i = 1; i < booksDyn.length; i++) {
       // print('------------');
       // print(booksDyn[i]);
       List<String> book = blUti.toListString(booksDyn[i]);
-      updateRow(book[0], book[1], book[2], book[3]);
+      updateRow(book[quoteContainsIx], book[bookIx], book[authorIx], '');
     }
     debugPrint('BooksCRUD.updateBooks() ${booksDyn.length}');
   }
 
-  Future updateRow(String book, String author, String quoteContains,
+  Future updateRow(String quoteContains, String book, String author,
       String cleanString) async {
     if (book.isEmpty) return;
 

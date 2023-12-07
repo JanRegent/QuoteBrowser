@@ -17,15 +17,15 @@ extension GetBooksCollection on Isar {
 const BooksSchema = IsarGeneratedSchema(
   schema: IsarSchema(
     name: 'Books',
-    idName: 'book',
+    idName: 'quoteContains',
     embedded: false,
     properties: [
       IsarPropertySchema(
-        name: 'book',
+        name: 'quoteContains',
         type: IsarType.string,
       ),
       IsarPropertySchema(
-        name: 'quoteContains',
+        name: 'book',
         type: IsarType.string,
       ),
       IsarPropertySchema(
@@ -49,18 +49,18 @@ const BooksSchema = IsarGeneratedSchema(
 
 @isarProtected
 int serializeBooks(IsarWriter writer, Books object) {
-  IsarCore.writeString(writer, 1, object.book);
-  IsarCore.writeString(writer, 2, object.quoteContains);
+  IsarCore.writeString(writer, 1, object.quoteContains);
+  IsarCore.writeString(writer, 2, object.book);
   IsarCore.writeString(writer, 3, object.author);
   IsarCore.writeString(writer, 4, object.cleanString);
-  return Isar.fastHash(object.book);
+  return Isar.fastHash(object.quoteContains);
 }
 
 @isarProtected
 Books deserializeBooks(IsarReader reader) {
   final object = Books();
-  object.book = IsarCore.readString(reader, 1) ?? '';
-  object.quoteContains = IsarCore.readString(reader, 2) ?? '';
+  object.quoteContains = IsarCore.readString(reader, 1) ?? '';
+  object.book = IsarCore.readString(reader, 2) ?? '';
   object.author = IsarCore.readString(reader, 3) ?? '';
   object.cleanString = IsarCore.readString(reader, 4) ?? '';
   return object;
@@ -84,8 +84,8 @@ dynamic deserializeBooksProp(IsarReader reader, int property) {
 
 sealed class _BooksUpdate {
   bool call({
-    required String book,
-    String? quoteContains,
+    required String quoteContains,
+    String? book,
     String? author,
     String? cleanString,
   });
@@ -98,15 +98,15 @@ class _BooksUpdateImpl implements _BooksUpdate {
 
   @override
   bool call({
-    required String book,
-    Object? quoteContains = ignore,
+    required String quoteContains,
+    Object? book = ignore,
     Object? author = ignore,
     Object? cleanString = ignore,
   }) {
     return collection.updateProperties([
-          book
+          quoteContains
         ], {
-          if (quoteContains != ignore) 2: quoteContains as String?,
+          if (book != ignore) 2: book as String?,
           if (author != ignore) 3: author as String?,
           if (cleanString != ignore) 4: cleanString as String?,
         }) >
@@ -116,8 +116,8 @@ class _BooksUpdateImpl implements _BooksUpdate {
 
 sealed class _BooksUpdateAll {
   int call({
-    required List<String> book,
-    String? quoteContains,
+    required List<String> quoteContains,
+    String? book,
     String? author,
     String? cleanString,
   });
@@ -130,13 +130,13 @@ class _BooksUpdateAllImpl implements _BooksUpdateAll {
 
   @override
   int call({
-    required List<String> book,
-    Object? quoteContains = ignore,
+    required List<String> quoteContains,
+    Object? book = ignore,
     Object? author = ignore,
     Object? cleanString = ignore,
   }) {
-    return collection.updateProperties(book, {
-      if (quoteContains != ignore) 2: quoteContains as String?,
+    return collection.updateProperties(quoteContains, {
+      if (book != ignore) 2: book as String?,
       if (author != ignore) 3: author as String?,
       if (cleanString != ignore) 4: cleanString as String?,
     });
@@ -151,7 +151,7 @@ extension BooksUpdate on IsarCollection<String, Books> {
 
 sealed class _BooksQueryUpdate {
   int call({
-    String? quoteContains,
+    String? book,
     String? author,
     String? cleanString,
   });
@@ -165,12 +165,12 @@ class _BooksQueryUpdateImpl implements _BooksQueryUpdate {
 
   @override
   int call({
-    Object? quoteContains = ignore,
+    Object? book = ignore,
     Object? author = ignore,
     Object? cleanString = ignore,
   }) {
     return query.updateProperties(limit: limit, {
-      if (quoteContains != ignore) 2: quoteContains as String?,
+      if (book != ignore) 2: book as String?,
       if (author != ignore) 3: author as String?,
       if (cleanString != ignore) 4: cleanString as String?,
     });
@@ -191,14 +191,14 @@ class _BooksQueryBuilderUpdateImpl implements _BooksQueryUpdate {
 
   @override
   int call({
-    Object? quoteContains = ignore,
+    Object? book = ignore,
     Object? author = ignore,
     Object? cleanString = ignore,
   }) {
     final q = query.build();
     try {
       return q.updateProperties(limit: limit, {
-        if (quoteContains != ignore) 2: quoteContains as String?,
+        if (book != ignore) 2: book as String?,
         if (author != ignore) 3: author as String?,
         if (cleanString != ignore) 4: cleanString as String?,
       });
@@ -216,176 +216,6 @@ extension BooksQueryBuilderUpdate on QueryBuilder<Books, Books, QOperations> {
 }
 
 extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookGreaterThanOrEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookLessThan(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookLessThanOrEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 1,
-          lower: lower,
-          upper: upper,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        StartsWithCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EndsWithCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        ContainsCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        MatchesCondition(
-          property: 1,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 1,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<Books, Books, QAfterFilterCondition> bookIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterCondition(
-          property: 1,
-          value: '',
-        ),
-      );
-    });
-  }
-
   QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -393,7 +223,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         EqualCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -408,7 +238,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -424,7 +254,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         GreaterOrEqualCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -439,7 +269,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -455,7 +285,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         LessOrEqualCondition(
-          property: 2,
+          property: 1,
           value: value,
           caseSensitive: caseSensitive,
         ),
@@ -464,6 +294,178 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
   }
 
   QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        BetweenCondition(
+          property: 1,
+          lower: lower,
+          upper: upper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        StartsWithCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EndsWithCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        ContainsCondition(
+          property: 1,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        MatchesCondition(
+          property: 1,
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const EqualCondition(
+          property: 1,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const GreaterCondition(
+          property: 1,
+          value: '',
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        EqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookGreaterThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        GreaterOrEqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookLessThan(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookLessThanOrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        LessOrEqualCondition(
+          property: 2,
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -480,7 +482,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsStartsWith(
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -495,7 +497,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsEndsWith(
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -510,8 +512,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsContains(
-      String value,
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -524,8 +525,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsMatches(
-      String pattern,
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -538,7 +538,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsIsEmpty() {
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const EqualCondition(
@@ -549,7 +549,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Books, Books, QAfterFilterCondition> quoteContainsIsNotEmpty() {
+  QueryBuilder<Books, Books, QAfterFilterCondition> bookIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         const GreaterCondition(
@@ -909,7 +909,7 @@ extension BooksQueryFilter on QueryBuilder<Books, Books, QFilterCondition> {
 extension BooksQueryObject on QueryBuilder<Books, Books, QFilterCondition> {}
 
 extension BooksQuerySortBy on QueryBuilder<Books, Books, QSortBy> {
-  QueryBuilder<Books, Books, QAfterSortBy> sortByBook(
+  QueryBuilder<Books, Books, QAfterSortBy> sortByQuoteContains(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -919,7 +919,7 @@ extension BooksQuerySortBy on QueryBuilder<Books, Books, QSortBy> {
     });
   }
 
-  QueryBuilder<Books, Books, QAfterSortBy> sortByBookDesc(
+  QueryBuilder<Books, Books, QAfterSortBy> sortByQuoteContainsDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -930,7 +930,7 @@ extension BooksQuerySortBy on QueryBuilder<Books, Books, QSortBy> {
     });
   }
 
-  QueryBuilder<Books, Books, QAfterSortBy> sortByQuoteContains(
+  QueryBuilder<Books, Books, QAfterSortBy> sortByBook(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -940,7 +940,7 @@ extension BooksQuerySortBy on QueryBuilder<Books, Books, QSortBy> {
     });
   }
 
-  QueryBuilder<Books, Books, QAfterSortBy> sortByQuoteContainsDesc(
+  QueryBuilder<Books, Books, QAfterSortBy> sortByBookDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(
@@ -995,28 +995,28 @@ extension BooksQuerySortBy on QueryBuilder<Books, Books, QSortBy> {
 }
 
 extension BooksQuerySortThenBy on QueryBuilder<Books, Books, QSortThenBy> {
-  QueryBuilder<Books, Books, QAfterSortBy> thenByBook(
+  QueryBuilder<Books, Books, QAfterSortBy> thenByQuoteContains(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(1, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Books, Books, QAfterSortBy> thenByBookDesc(
+  QueryBuilder<Books, Books, QAfterSortBy> thenByQuoteContainsDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(1, sort: Sort.desc, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Books, Books, QAfterSortBy> thenByQuoteContains(
+  QueryBuilder<Books, Books, QAfterSortBy> thenByBook(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(2, caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Books, Books, QAfterSortBy> thenByQuoteContainsDesc(
+  QueryBuilder<Books, Books, QAfterSortBy> thenByBookDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(2, sort: Sort.desc, caseSensitive: caseSensitive);
@@ -1053,7 +1053,7 @@ extension BooksQuerySortThenBy on QueryBuilder<Books, Books, QSortThenBy> {
 }
 
 extension BooksQueryWhereDistinct on QueryBuilder<Books, Books, QDistinct> {
-  QueryBuilder<Books, Books, QAfterDistinct> distinctByQuoteContains(
+  QueryBuilder<Books, Books, QAfterDistinct> distinctByBook(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(2, caseSensitive: caseSensitive);
@@ -1076,13 +1076,13 @@ extension BooksQueryWhereDistinct on QueryBuilder<Books, Books, QDistinct> {
 }
 
 extension BooksQueryProperty1 on QueryBuilder<Books, Books, QProperty> {
-  QueryBuilder<Books, String, QAfterProperty> bookProperty() {
+  QueryBuilder<Books, String, QAfterProperty> quoteContainsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<Books, String, QAfterProperty> quoteContainsProperty() {
+  QueryBuilder<Books, String, QAfterProperty> bookProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });
@@ -1102,13 +1102,13 @@ extension BooksQueryProperty1 on QueryBuilder<Books, Books, QProperty> {
 }
 
 extension BooksQueryProperty2<R> on QueryBuilder<Books, R, QAfterProperty> {
-  QueryBuilder<Books, (R, String), QAfterProperty> bookProperty() {
+  QueryBuilder<Books, (R, String), QAfterProperty> quoteContainsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<Books, (R, String), QAfterProperty> quoteContainsProperty() {
+  QueryBuilder<Books, (R, String), QAfterProperty> bookProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });
@@ -1129,13 +1129,13 @@ extension BooksQueryProperty2<R> on QueryBuilder<Books, R, QAfterProperty> {
 
 extension BooksQueryProperty3<R1, R2>
     on QueryBuilder<Books, (R1, R2), QAfterProperty> {
-  QueryBuilder<Books, (R1, R2, String), QOperations> bookProperty() {
+  QueryBuilder<Books, (R1, R2, String), QOperations> quoteContainsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(1);
     });
   }
 
-  QueryBuilder<Books, (R1, R2, String), QOperations> quoteContainsProperty() {
+  QueryBuilder<Books, (R1, R2, String), QOperations> bookProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addProperty(2);
     });

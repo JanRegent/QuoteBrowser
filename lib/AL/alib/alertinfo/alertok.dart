@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void emptyDialog(String warning, BuildContext context) async {
+void warningDialog(String warning, BuildContext context) async {
   showDialog(
     context: context,
     builder: (BuildContext context) {

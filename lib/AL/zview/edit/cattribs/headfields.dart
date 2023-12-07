@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/AL/alib/alertinfo/alertok.dart';
 import 'package:quotebrowser/AL/zview/edit/battr/stars.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -107,6 +108,37 @@ class _HeadFieldsState extends State<HeadFields> {
     }
   }
 
+  bool bookAuthorUpdating = false;
+  IconButton bookAuthorParse() {
+    return IconButton(
+        icon: bookAuthorUpdating
+            ? const CircularProgressIndicator()
+            : const Icon(Icons.arrow_upward),
+        onPressed: () async {
+          List<String> quoteContainsList = bl.booksCRUD.quoteContainsList();
+          String quote = bl.orm.currentRow.quote.value.toLowerCase();
+          for (String key in quoteContainsList) {
+            String qcontains = key.trim().toLowerCase();
+            if (qcontains.length == 1) continue;
+            if (quote.toLowerCase().contains(qcontains)) {
+              warningDialog('Book, Author  update by\n$qcontains', context);
+              setState(() {
+                bookAuthorUpdating = true;
+              });
+              var bookAuthor = bl.booksCRUD.readBookAuthor(key);
+
+              await bl.orm.currentRow.setCellBL('book', bookAuthor.$1);
+              await bl.orm.currentRow.setCellBL('author', bookAuthor.$2);
+              setState(() {
+                bookAuthorUpdating = false;
+              });
+
+              return;
+            }
+          }
+        });
+  }
+
   List<Widget> headFields() {
     headCard = [];
 
@@ -145,10 +177,11 @@ class _HeadFieldsState extends State<HeadFields> {
         trailing: copyPasteClearPopupMenuButton(
             bl.orm.currentRow.parPage.value, 'parPage')));
     headCard.add(ListTile(
-      tileColor: Colors.white,
-      leading: favButt(),
-      title: RatingStarsPage(setstateAattribs),
-    ));
+        tileColor: Colors.white,
+        leading: bookAuthorParse(),
+        title: Row(
+          children: [favButt(), RatingStarsPage(setstateAattribs)],
+        )));
     headCard.add(categories());
 
     return headCard;

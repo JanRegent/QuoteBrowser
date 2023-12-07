@@ -4,7 +4,7 @@ import 'package:quotebrowser/BL/bluti.dart';
 
 import '../../../../BL/bl.dart';
 
-import 'quoteedit.dart';
+import '_quoteedit.dart';
 
 // ignore: must_be_immutable
 class AttrEdit extends StatefulWidget {

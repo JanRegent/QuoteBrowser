@@ -50,13 +50,14 @@ class _RatingStarsPageState extends State<RatingStarsPage> {
     return Row(
       children: [
         IconButton(
-            onPressed: () {
-              setState(() {
-                value = 0;
-                starsValueInsert();
-              });
-            },
-            icon: const Icon(Icons.cancel)),
+          icon: const Icon(Icons.cancel),
+          onPressed: () {
+            setState(() {
+              value = 0;
+              starsValueInsert();
+            });
+          },
+        ),
         RatingStars(
           value: value,
           onValueChanged: (v) {

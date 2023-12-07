@@ -6,6 +6,8 @@ import '../../../../BL/bl.dart';
 
 import '../../../../BL/orm.dart';
 
+import '../../../alib/alertinfo/alertok.dart';
+
 import '../../../alib/alicons.dart';
 
 import '../atext/tagsyellowlist.dart';
@@ -141,6 +143,10 @@ class _QuoteEditState extends State<QuoteEdit> {
       case 'tags':
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
+        if (bl.orm.currentRow.selectedText.value.length > 20) {
+          warningDialog('Tag length > 20', context);
+          return;
+        }
         bl.orm.currentRow.tags.value +=
             '#${bl.orm.currentRow.selectedText.value}';
         pureTags();
@@ -174,6 +180,31 @@ class _QuoteEditState extends State<QuoteEdit> {
     //error might indicate a memory leak if setState() is being called because another object is retaining a reference to this State object after it has been removed from the tree. To avoid memory leaks, consider breaking the reference to this object during dispose().
     widget.swiperSetstate();
     widget.attreditSetstate(); //quote content refresh
+  }
+
+  Widget favButt() {
+    if (!bl.orm.currentRow.cols.contains('favorite')) {
+      return const Text('');
+    }
+    Icon favIcon = const Icon(Icons.favorite_outline);
+
+    if (bl.orm.currentRow.fav.value == 'f') {
+      favIcon = const Icon(Icons.favorite);
+    } else {
+      favIcon = const Icon(Icons.favorite_outline);
+    }
+    return IconButton(
+        icon: favIcon,
+        onPressed: () async {
+          if (bl.orm.currentRow.fav.value.isEmpty) {
+            bl.orm.currentRow.fav.value = 'f';
+          } else {
+            bl.orm.currentRow.fav.value = '';
+          }
+
+          await bl.orm.currentRow
+              .setCellBL('favorite', bl.orm.currentRow.fav.value);
+        });
   }
 
   PopupMenuButton personPopup() {
