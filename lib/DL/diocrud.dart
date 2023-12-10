@@ -61,16 +61,26 @@ class HttpService {
 
   Future<List<String>> getSheetGroup(
       String sheetGroup, String searchText) async {
+    late Response response;
     try {
-      Response response = await dio.get(
-        backendUrl,
-        queryParameters: {
-          'action': 'getSheetGroup',
-          'searchText': searchText,
-          'sheetGroup': sheetGroup
-        },
-      );
-
+      if (sheetGroup.contains(' book')) {
+        response = await dio.get(
+          backendUrl,
+          queryParameters: {
+            'action': 'getBookContent',
+            'sheetGroup': sheetGroup
+          },
+        );
+      } else {
+        response = await dio.get(
+          backendUrl,
+          queryParameters: {
+            'action': 'getSheetGroup',
+            'searchText': searchText,
+            'sheetGroup': sheetGroup
+          },
+        );
+      }
       await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
 
       return await sheetRowsSaveGetKeys(response.data['data']);
@@ -84,6 +94,15 @@ class HttpService {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {'action': 'getRootConfig'},
+    );
+    return response.data['data'];
+  }
+
+  //---------------------------------------------------------------getBooksMap
+  Future getBooksMap() async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {'action': 'getBooksMap'},
     );
     return response.data['data'];
   }

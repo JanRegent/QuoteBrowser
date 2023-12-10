@@ -37,7 +37,6 @@ Future<String> searchTextSheetGroupSheetName(
     String sheetGroup, String sheetName, String searchText) async {
   currentSS.filterKey = '$searchText __|__ $sheetGroup';
   currentSS.swiperIndex.value = 0;
-
   try {
     currentSS.keys = (await bl.filtersCRUD.readFilter(currentSS.filterKey));
   } catch (_) {}
@@ -116,9 +115,9 @@ Future<int> searchColumnAndQuote(String columnName, String columnValue,
 Future<List<String>> sheetRowsSaveGetKeys(List rowsArrDyn) async {
   List<String> sheetRownoKeys = [];
   for (List row in rowsArrDyn) {
-    List<String> rowArr = blUti.toListString(row[1]);
+    List<String> rowArr = blUti.toListString(row);
 
-    String sheetRownoKey = row[0];
+    String sheetRownoKey = rowArr[0];
     List<String> sheetNo = sheetRownoKey.toString().split('__|__');
     currentSS.sheetNames.add(sheetNo[0]);
     //rowNos.add(sheetNo[1]);

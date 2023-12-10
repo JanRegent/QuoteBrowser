@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 import '1last.dart';
+import '2boksmenu.dart';
 import '9appsettings.dart';
 import 'wordhome.dart';
 
@@ -14,12 +15,13 @@ class HomeTab extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             bottom: const TabBar(
               tabs: [
                 Tab(text: 'Last'),
+                Tab(text: 'Books'),
                 Tab(text: 'Word'),
                 Tab(text: 'Filters'),
               ],
@@ -61,6 +63,7 @@ class HomeTab extends StatelessWidget {
           body: const TabBarView(
             children: [
               LastMenu(),
+              BooksMenu(),
               WordHomePage(),
               Icon(Icons.directions_bike),
             ],

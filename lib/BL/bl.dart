@@ -39,6 +39,7 @@ class Bl {
   String sheetGroupCurrent = '';
   RxString filteredSheetName = ''.obs;
   RxMap lastCount = {}.obs;
+  RxMap booksCount = {}.obs;
   RxString homeTitle = '(qb)Home'.obs;
 
   Orm orm = Orm();
@@ -59,7 +60,10 @@ class Bl {
     devModeSet();
   }
 
-  void updateSlowly() {
+  Map booksMap = {};
+  void updateSlowly() async {
+    booksMap = await dl.httpService.getBooksMap();
+    debugPrint(booksMap.toString());
     bl.catsCRUD.update();
     booksCRUD.updateBooks();
     sheetUrlsBuild();
