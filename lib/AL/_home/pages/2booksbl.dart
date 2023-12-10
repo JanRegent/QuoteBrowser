@@ -41,7 +41,7 @@ Future<String> book4swipper(String bookName, String sheetName) async {
   if (currentSS.keys.isEmpty) {
     return '0';
   }
-  currentSS.keys = await bl.sheetrowsCRUD.readKeysSheetname(sheetName);
+  currentSS.keys = await bl.sheetrowsCRUD.readKeysRowNoSorted(sheetName);
   await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
   return currentSS.keys.length.toString();
 }

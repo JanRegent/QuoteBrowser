@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
@@ -9,6 +10,7 @@ part 'sheetrowscrud.g.dart'; //dart run build_runner build
 class SheetRow {
   @Id()
   String sheetRownoKey = '';
+  int rowNo = 0;
   List<String> sheetRowArr = [];
 }
 
@@ -43,13 +45,20 @@ class SheetrowsCRUD {
     }
   }
 
-  Future<List<String>> readKeysSheetname(String sheetName) async {
+  Future<List<String>> readKeysRowNoSorted(String sheetName) async {
+    List<String> keys = [];
     try {
-      return isar.sheetRows
+      List<int> rowInts = isar.sheetRows
           .where()
           .sheetRownoKeyStartsWith(sheetName)
-          .sheetRownoKeyProperty()
-          .findAll();
+          .rowNoProperty()
+          .findAll()
+          .sorted();
+      for (var i = 0; i < rowInts.length; i++) {
+        keys.add('${sheetName}__|__${rowInts[i]}');
+      }
+
+      return keys;
     } catch (e) {
       debugPrint('sheetrowsCRUD().readAll()\n$e');
       return [];
@@ -60,6 +69,11 @@ class SheetrowsCRUD {
   Future updateRow(String sheetRownoKey, List<String> rowArr) async {
     final sheetrow = SheetRow();
     sheetrow.sheetRownoKey = sheetRownoKey;
+    try {
+      sheetrow.rowNo = int.tryParse(sheetRownoKey.split('__|__')[1])!;
+    } catch (_) {
+      sheetrow.rowNo = 0;
+    }
     sheetrow.sheetRowArr = rowArr;
     // rowArr.join('__|__');
 
