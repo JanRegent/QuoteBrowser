@@ -1,1 +1,1 @@
-String buildDate = ' 2023_12_10__12_59_build_AL---bookMap-2-backend ';  
+String buildDate = ' 2023_12_10__14_47_build_AL---getBookContent ';  

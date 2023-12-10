@@ -63,15 +63,7 @@ class HttpService {
       String sheetGroup, String searchText) async {
     late Response response;
     try {
-      if (sheetGroup.contains(' book')) {
-        response = await dio.get(
-          backendUrl,
-          queryParameters: {
-            'action': 'getBookContent',
-            'sheetGroup': sheetGroup
-          },
-        );
-      } else {
+      {
         response = await dio.get(
           backendUrl,
           queryParameters: {
@@ -105,6 +97,16 @@ class HttpService {
       queryParameters: {'action': 'getBooksMap'},
     );
     return response.data['data'];
+  }
+
+  Future getBookContent(String bookName) async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {'action': 'getBookContent', 'sheetGroup': bookName},
+    );
+    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+
+    return await sheetRowsSaveGetKeys(response.data['data']);
   }
 
   //---------------------------------------------------------------authors,books

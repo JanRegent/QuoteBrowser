@@ -43,6 +43,19 @@ class SheetrowsCRUD {
     }
   }
 
+  Future<List<String>> readKeysSheetname(String sheetName) async {
+    try {
+      return isar.sheetRows
+          .where()
+          .sheetRownoKeyStartsWith(sheetName)
+          .sheetRownoKeyProperty()
+          .findAll();
+    } catch (e) {
+      debugPrint('sheetrowsCRUD().readAll()\n$e');
+      return [];
+    }
+  }
+
   //------------------------------------------------------------------update
   Future updateRow(String sheetRownoKey, List<String> rowArr) async {
     final sheetrow = SheetRow();

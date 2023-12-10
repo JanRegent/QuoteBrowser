@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../BL/bl.dart';
 import '../../../BL/bluti.dart';
 import '../../alib/alib.dart';
+import '2booksbl.dart';
 import 'searchshow.dart';
 
 class BooksMenu extends StatefulWidget {
@@ -40,8 +41,7 @@ class _BooksMenuState extends State<BooksMenu> {
           children: [Obx(() => Text(bl.filteredSheetName.value))],
         ),
         onTap: () async {
-          await searchSheetGroup(
-              bookSheet, '', '${blUti.todayStr()}.', context);
+          await getBookContentShow(bookSheet, bookSheet, context);
         },
       ));
     }
@@ -78,12 +78,6 @@ class _BooksMenuState extends State<BooksMenu> {
 
   @override
   Widget build(BuildContext context) {
-    bl.sheetrowsCRUD.count().then((count) {
-      if (count == 0) {
-        searchSheetGroups('${blUti.todayStr()}.', '').then((value) {});
-      }
-    });
-
     return Scaffold(
         body: CustomScrollView(
       slivers: [
