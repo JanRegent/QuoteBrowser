@@ -126,10 +126,6 @@ Future currentRowSet(String sheetRownoKey) async {
   bl.orm.currentRow.cols =
       (await bl.sheetcolsCRUD.readColsBySheetName(sheetName))!;
 
-  if (bl.orm.currentRow.cols[0] == 'quote') {
-    bl.orm.currentRow.cols.insert(0, 'rownoKey');
-  }
-
   String valueGet(String columnName) {
     int fieldIndex = bl.orm.currentRow.cols.indexOf(columnName);
     if (fieldIndex == -1) return '';

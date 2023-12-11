@@ -128,21 +128,3 @@ Future<List<String>> sheetRowsSaveGetKeys(List rowsArrDyn) async {
   }
   return sheetRownoKeys;
 }
-
-Future<int> getLastRows(String sheetName, BuildContext context) async {
-  currentSS.filterKey = '';
-  currentSS.swiperIndex.value = 0;
-
-  debugPrint(sheetName);
-
-  //ignore: use_build_context_synchronously
-  al.messageLoading(context, 'Search', 'Get last rows of $sheetName', 25);
-
-  currentSS.keys = await dl.httpService.getLastRows(sheetName);
-
-  if (currentSS.keys.isEmpty) {
-    return 0;
-  }
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
-  return currentSS.keys.length;
-}

@@ -32,21 +32,6 @@ class HttpService {
     return response.data['data'];
   }
 
-  Future<List<String>> getLastRows(String sheetName) async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {
-        'action': 'getLastRows',
-        'sheetName': sheetName,
-        'sheetId': bl.sheetGroups[bl.sheetGroupCurrent][sheetName]
-      },
-    );
-
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-
-    return await sheetRowsSaveGetKeys(response.data['data']);
-  }
-
   //-----------------------------------------------------------------SheetGroups
   Future getSheetGroups() async {
     // The below request is the same as above.
