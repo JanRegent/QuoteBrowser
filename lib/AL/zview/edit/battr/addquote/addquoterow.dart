@@ -25,10 +25,10 @@ Future appendrowCurrentRowSet(BuildContext context) async {
 }
 
 Future<String> setCellAppendRow() async {
-  String sheetRownoKey = await dl.httpService
+  List newRow = await dl.httpService
       .setCellDL(bl.orm.currentRow.sheetName.value, 'quote', '?', '');
-  bl.orm.currentRow.rowNo.value = sheetRownoKey.split('__|__')[1];
-  return sheetRownoKey;
+  bl.orm.currentRow.rowNo.value = newRow[0].toString().split('__|__')[1];
+  return newRow[0].toString();
 }
 
 void emptyDialog(String fieldName, BuildContext context) async {
@@ -58,13 +58,13 @@ Widget addQuoteRow(BuildContext context, Function swiperSetstate) {
           FlutterClipboard.paste().then((value) async {
             if (value.isEmpty) return;
 
-            String sheetRownoKey = await dl.httpService.setCellDL(
+            List newRow = await dl.httpService.setCellDL(
                 bl.orm.currentRow.sheetName.value,
                 'original',
                 value,
                 bl.orm.currentRow.rowNo.value);
-            debugPrint('sheetRownoKey $sheetRownoKey');
-            await currentRowSet(sheetRownoKey);
+            debugPrint('sheetRownoKey $newRow[0]');
+            await currentRowSet(newRow[0].toString());
           });
           swiperSetstate();
           ScaffoldMessenger.of(context).showSnackBar(

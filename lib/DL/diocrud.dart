@@ -154,7 +154,7 @@ class HttpService {
   }
 
   //----------------------------------------------------------------------set
-  Future<String> setCellDL(String sheetName, String columnName,
+  Future<List> setCellDL(String sheetName, String columnName,
       String cellContent, String rowNo) async {
     // The below request is the same as above.
     late Response response;
@@ -172,24 +172,23 @@ class HttpService {
         },
       );
     } catch (_) {
-      return '';
+      return [];
     }
-    String sheetRownoKey = '';
+    List<String> newRow = [];
     try {
-      sheetRownoKey = response.data['data'][0];
+      newRow = blUti.toListString(response.data['data']);
     } catch (_) {
       debugPrint(response.data['error']);
-      return '';
+      return [];
     }
 
     bl.orm.currentRow.setCellDLOn = true;
 
-    List<String> updatedRow = blUti.toListString(response.data['data'][1]);
-    bl.sheetrowsCRUD.updateRow(sheetRownoKey, updatedRow);
+    bl.sheetrowsCRUD.updateRow(newRow[0], newRow);
 
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
     bl.orm.currentRow.setCellDLOn = false;
-    return sheetRownoKey;
+    return newRow;
   }
 
   // Future<int?> postAppendRow(

@@ -89,13 +89,13 @@ class CurrentRow {
     if (columnName.isEmpty) return;
     if (bl.orm.currentRow.sheetName.value.isEmpty) return;
     try {
-      String sheetRownokey = await dl.httpService.setCellDL(
+      List newRow = await dl.httpService.setCellDL(
           bl.orm.currentRow.sheetName.value,
           columnName,
           cellContent,
           bl.orm.currentRow.rowNo.value);
-      if (sheetRownokey.isNotEmpty) {
-        await currentRowSet(sheetRownokey);
+      if (newRow[0].toString().isNotEmpty) {
+        await currentRowSet(newRow[0].toString());
       }
     } catch (e) {
       debugPrint('setCellBL($columnName) \n$e');
