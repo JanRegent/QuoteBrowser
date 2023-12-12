@@ -68,8 +68,16 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
     itemBuilder: (BuildContext context) => <PopupMenuEntry<PopupMenuButton>>[
       PopupMenuItem(
         child: PopupMenuItem<String>(
-            child: Text(
-                '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}\n${bl.orm.currentRow.dateinsert}')),
+            child: TextButton(
+          child: Text(
+              '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}\n${bl.orm.currentRow.dateinsert}'),
+          onPressed: () async {
+            String? fileUrl = bl.sheetUrls[bl.orm.currentRow.sheetName.value];
+
+            await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowNo.value,
+                context, 'Jump to row');
+          },
+        )),
       ),
       PopupMenuItem(
           child: InkWell(

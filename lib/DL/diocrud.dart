@@ -165,7 +165,7 @@ class HttpService {
         queryParameters: {
           'action': 'setCell',
           'sheetName': sheetName,
-          'sheetId': bl.sheetGroups[bl.sheetGroupCurrent][sheetName],
+          'sheetId': blUti.url2fileid(bl.sheetUrls[sheetName]!),
           'columnName': columnName,
           'cellContent': cellContent,
           'rowNo': rowNo
