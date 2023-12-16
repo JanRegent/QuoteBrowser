@@ -2,36 +2,34 @@ import 'package:quotebrowser/BL/bluti.dart';
 import 'package:quotebrowser/DL/backendurl.dart';
 import 'package:quotebrowser/DL/dl.dart';
 
-class DailyList {
-  List<DailyListRow> rows = [];
-  Set sheetGroups = {};
+class BooksList {
+  List<BookListRow> rows = [];
   int currentIndex = 1;
 
-  String sheetGroupCurrent = '';
+  String bookCurrent = '';
 
   List<String> cols = [];
 
   Future getData() async {
-    List data = await dl.httpService.getAllrows('dailyList', rootSheetId);
+    List data = await dl.httpService.getAllrows('booksList', rootSheetId);
     cols = blUti.toListString(data[0]);
-    int sheetGroupIx = cols.indexOf('sheetGroup');
+    int bookNameIx = cols.indexOf('bookName');
     int sheetNameIx = cols.indexOf('sheetName');
     int sheetUrlIx = cols.indexOf('sheetUrl');
     rows.clear();
     for (var i = 1; i < data.length; i++) {
-      String sheetGroup = data[i][sheetGroupIx].toString().trim();
-      if (sheetGroup.isEmpty) continue;
-      sheetGroups.add(data[i][sheetGroupIx]);
-      rows.add(DailyListRow()
-        ..sheetGroup = sheetGroup
+      String bookName = data[i][bookNameIx].toString().trim();
+      if (bookName.isEmpty) continue;
+      rows.add(BookListRow()
+        ..bookName = bookName
         ..sheetName = data[i][sheetNameIx]
         ..sheetUrl = data[i][sheetUrlIx]);
     }
   }
 }
 
-class DailyListRow {
-  String sheetGroup = '';
+class BookListRow {
+  String bookName = '';
   String sheetName = '';
   String sheetUrl = '';
 }

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
 import 'daily/1daily.dart';
-import '2boksmenu.dart';
+import 'books/2boksmenu.dart';
 import '9appsettings.dart';
 import 'wordhome.dart';
 

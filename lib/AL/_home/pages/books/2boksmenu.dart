@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../BL/bl.dart';
-import '../../../BL/bluti.dart';
-import '../../alib/alib.dart';
-import '2booksbl.dart';
-import 'searchshow.dart';
+import '../../../../BL/bl.dart';
+import '../../../../BL/bluti.dart';
+import '../../../alib/alib.dart';
+import '../2booksbl.dart';
+import '../searchshow.dart';
 
 class BooksMenu extends StatefulWidget {
   const BooksMenu({super.key});
@@ -23,16 +23,19 @@ class _BooksMenuState extends State<BooksMenu> {
     super.initState();
 
     listTiles.add(buttTile());
-    for (var bookSheet in bl.booksMap.keys) {
-      bl.booksCount[bookSheet] = '';
+    for (var bix = 0; bix < bl.bookList.rows.length; bix++) {
+      String sheetName = bl.bookList.rows[bix].sheetName;
+      if (sheetName.isEmpty) continue;
+
+      bl.booksCount[sheetName] = '';
       listTiles.add(ListTile(
-        leading: Obx(() => bl.booksCount[bookSheet] != 'loading'
-            ? Text(bl.booksCount[bookSheet])
+        leading: Obx(() => bl.booksCount[sheetName] != 'loading'
+            ? Text(bl.booksCount[sheetName])
             : const CircularProgressIndicator()),
         title: Row(
           children: [
             Text(
-              bookSheet,
+              bl.bookList.rows[bix].bookName,
               style: const TextStyle(fontSize: 15),
             )
           ],
@@ -41,7 +44,8 @@ class _BooksMenuState extends State<BooksMenu> {
           children: [Obx(() => Text(bl.filteredSheetName.value))],
         ),
         onTap: () async {
-          await getBookContentShow(bookSheet, bookSheet, context);
+          String sheetId = blUti.url2fileid(bl.bookList.rows[bix].sheetUrl);
+          await getBookContentShow(sheetName, sheetName, sheetId, context);
         },
       ));
     }

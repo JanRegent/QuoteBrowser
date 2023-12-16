@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/authorsbooks/bookscrud.dart';
 
+import '../AL/_home/pages/books/bookslist.dart';
 import '../AL/_home/pages/daily/dailylist.dart';
 import '../DL/dl.dart';
 
@@ -35,6 +36,7 @@ class Bl {
   bool highligthOnOff = false;
 
   DailyList dailyList = DailyList();
+  BooksList bookList = BooksList();
   Map<String, String> sheetUrls = {};
 
   RxString filteredSheetName = ''.obs;
@@ -60,10 +62,7 @@ class Bl {
     devModeSet();
   }
 
-  Map booksMap = {};
   void updateSlowly() async {
-    booksMap = await dl.httpService.getBooksMap();
-    debugPrint(booksMap.toString());
     bl.catsCRUD.update();
     booksCRUD.updateBooks();
     sheetUrlsBuild();

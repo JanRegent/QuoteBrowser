@@ -7,12 +7,12 @@ import '../../../BL/orm.dart';
 import '../../../DL/dl.dart';
 import '../../zview/_swiper.dart';
 
-Future getBookContentShow(
-    String bookName, String sheetName, BuildContext context) async {
+Future getBookContentShow(String bookName, String sheetName, String sheetId,
+    BuildContext context) async {
   bl.booksCount[bookName] = 'loading';
 
   try {
-    bl.booksCount[bookName] = await book4swipper(bookName, sheetName);
+    bl.booksCount[bookName] = await book4swipper(sheetName, sheetId);
   } catch (_) {
     bl.booksCount[bookName] = '0';
   }
@@ -26,17 +26,17 @@ Future getBookContentShow(
   );
 }
 
-Future<String> book4swipper(String bookName, String sheetName) async {
-  currentSS.filterKey = 'book__|__ $bookName';
+Future<String> book4swipper(String sheetName, String sheetId) async {
+  currentSS.filterKey = 'book__|__ $sheetName';
   currentSS.swiperIndex.value = 0;
   try {
     currentSS.keys = (await bl.filtersCRUD.readFilter(currentSS.filterKey));
   } catch (_) {}
   // ignore: prefer_is_empty
   if (currentSS.keys.length == 0) {
-    currentSS.keys = await dl.httpService.getBookContent(bookName);
+    currentSS.keys = await dl.httpService.getBookContent(sheetName, sheetId);
 
-    await bl.filtersCRUD.updateFilter('book__|__ $bookName', currentSS.keys);
+    await bl.filtersCRUD.updateFilter('book__|__ $sheetName', currentSS.keys);
   }
   if (currentSS.keys.isEmpty) {
     return '0';

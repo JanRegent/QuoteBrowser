@@ -14,6 +14,7 @@ void main() async {
   await bl.init();
   await dl.init();
   await bl.dailyList.getData();
+  await bl.bookList.getData();
 
   bl.updateSlowly();
   //rows2db();

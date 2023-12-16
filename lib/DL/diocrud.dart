@@ -29,6 +29,8 @@ class HttpService {
       },
     );
 
+    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+
     return response.data['data'];
   }
 
@@ -76,22 +78,10 @@ class HttpService {
   }
 
   //---------------------------------------------------------------getBooksMap
-  Future getBooksMap() async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {'action': 'getBooksMap'},
-    );
-    return response.data['data'];
-  }
 
-  Future getBookContent(String bookName) async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {'action': 'getBookContent', 'sheetGroup': bookName},
-    );
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-
-    return await sheetRowsSaveGetKeys(response.data['data']);
+  Future getBookContent(String sheetName, String sheetId) async {
+    List allrows = await getAllrows(sheetName, sheetId);
+    return await sheetRowsSaveGetKeys(allrows);
   }
 
   //---------------------------------------------------------------authors,books
