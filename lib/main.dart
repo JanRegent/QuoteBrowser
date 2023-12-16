@@ -13,7 +13,7 @@ void main() async {
 
   await bl.init();
   await dl.init();
-  bl.sheetGroups = await dl.httpService.getSheetGroups();
+  await bl.dailyList.getData();
 
   bl.updateSlowly();
   //rows2db();

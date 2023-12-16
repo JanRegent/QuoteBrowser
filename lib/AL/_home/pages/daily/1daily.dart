@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../BL/bl.dart';
-import '../../../BL/bluti.dart';
-import '../../../BL/filtersbl/emptyresults.dart';
-import '../../alib/alib.dart';
-import '../../filterspages/_selectview.dart';
-import 'searchshow.dart';
+import '../../../../BL/bl.dart';
+import '../../../../BL/bluti.dart';
+import '../../../../BL/filtersbl/emptyresults.dart';
+import '../../../alib/alib.dart';
+import '../../../filterspages/_selectview.dart';
+import '../searchshow.dart';
 
 class LastMenu extends StatefulWidget {
   const LastMenu({super.key});
@@ -43,11 +43,14 @@ class _LastMenuState extends State<LastMenu> {
 
   PopupMenuButton sheetNamesPopupGen(String sheetGroup) {
     List<PopupMenuItem> items = [];
-    for (String sheetName in bl.sheetGroups[sheetGroup].keys) {
+    for (var six = 0; six < bl.dailyList.rows.length; six++) {
+      if (bl.dailyList.rows[six].sheetGroup != sheetGroup) continue;
+
+      String sheetName = bl.dailyList.rows[six].sheetName;
       items.add(PopupMenuItem(
         child: ListTile(
             leading: al.linkIconOpenDoc(
-                bl.sheetGroups[sheetGroup][sheetName], context, ''),
+                bl.dailyList.rows[six].sheetUrl, context, ''),
             title: Text(sheetName)),
         onTap: () async {
           bl.filteredSheetName.value = sheetName;
@@ -68,7 +71,8 @@ class _LastMenuState extends State<LastMenu> {
   void initState() {
     super.initState();
     listTiles.add(buttTile());
-    for (var sheetGroup in bl.sheetGroups.keys) {
+
+    for (var sheetGroup in bl.dailyList.sheetGroups) {
       bl.lastCount[sheetGroup] = '';
       listTiles.add(ListTile(
           leading: Obx(() => bl.lastCount[sheetGroup] != 'loading'

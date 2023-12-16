@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../BL/bl.dart';
-import '1last.dart';
+import 'daily/1daily.dart';
 import '2boksmenu.dart';
 import '9appsettings.dart';
 import 'wordhome.dart';

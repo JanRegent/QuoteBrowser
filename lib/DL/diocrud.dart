@@ -126,7 +126,7 @@ class HttpService {
       queryParameters: {
         'action': 'searchSS',
         'searchText': searchText,
-        'ssId': bl.sheetGroups[bl.sheetGroupCurrent][0]
+        'ssId': 'bl.sheetGroups[bl.sheetGroupCurrent][0]'
       },
     );
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
@@ -141,7 +141,7 @@ class HttpService {
       queryParameters: {
         'action': 'searchColumnAndQuote',
         'searchText': searchText,
-        'ssId': bl.sheetGroups[bl.sheetGroupCurrent][0],
+        'ssId': 'bl.sheetGroups[bl.sheetGroupCurrent][0]',
         'author': columnName == 'author' ? columnValue : '',
         'book': columnName == 'book' ? columnValue : '',
         'tag': columnName == 'tag' ? columnValue : ''

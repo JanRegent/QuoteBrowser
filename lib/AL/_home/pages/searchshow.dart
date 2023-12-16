@@ -37,10 +37,10 @@ Future searchText(String sheetGroup, String sheetName, String searchText,
 }
 
 Future searchSheetGroups(String searchText, sheetName) async {
-  for (var sheetGroup in bl.sheetGroups.keys) {
+  for (var sheetGroup in bl.dailyList.sheetGroups) {
     bl.lastCount[sheetGroup] = '?';
   }
-  for (var sheetGroup in bl.sheetGroups.keys) {
+  for (var sheetGroup in bl.dailyList.sheetGroups) {
     bl.lastCount[sheetGroup] = 'loading';
     await searchGroup_(sheetGroup, sheetName, searchText);
   }
@@ -58,7 +58,7 @@ Future searchGroup_(
 
 Future searchSheetGroup(String sheetGroup, sheetName, String searchText,
     BuildContext context) async {
-  bl.sheetGroupCurrent = sheetGroup;
+  bl.dailyList.sheetGroupCurrent = sheetGroup;
 
   bl.lastCount[sheetGroup] = 'loading';
 

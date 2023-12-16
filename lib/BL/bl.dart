@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/authorsbooks/bookscrud.dart';
 
+import '../AL/_home/pages/daily/dailylist.dart';
 import '../DL/dl.dart';
 
 import 'bluti.dart';
@@ -33,10 +34,9 @@ class Bl {
   bool userViewMode = true;
   bool highligthOnOff = false;
 
-  Map<String, dynamic> sheetGroups = {};
+  DailyList dailyList = DailyList();
   Map<String, String> sheetUrls = {};
 
-  String sheetGroupCurrent = '';
   RxString filteredSheetName = ''.obs;
   RxMap lastCount = {}.obs;
   RxMap booksCount = {}.obs;
