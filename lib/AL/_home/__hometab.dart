@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../BL/bl.dart';
-import 'daily/1daily.dart';
-import 'books/2boksmenu.dart';
-import '9appsettings.dart';
-import 'wordhome.dart';
+import '../../BL/bl.dart';
+import 'pages/daily/1daily.dart';
+import 'pages/books/2boksmenu.dart';
+import 'pages/9appsettings.dart';
+import 'pages/wordhome.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
@@ -20,10 +20,10 @@ class HomeTab extends StatelessWidget {
           appBar: AppBar(
             bottom: const TabBar(
               tabs: [
-                Tab(text: 'Last'),
-                Tab(text: 'Books'),
-                Tab(text: 'Word'),
-                Tab(text: 'Filters'),
+                Tab(icon: Icon(Icons.date_range)),
+                Tab(icon: Icon(Icons.book_sharp)),
+                Tab(icon: Icon(Icons.wordpress)),
+                Tab(icon: Icon(Icons.filter_alt)),
               ],
             ),
             title: Obx(() => Text(bl.homeTitle.value)),

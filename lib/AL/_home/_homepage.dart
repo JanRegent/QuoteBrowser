@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/__hometab.dart';
+import '__hometab.dart';
 
 class SidebarHome extends StatefulWidget {
   const SidebarHome({super.key});

@@ -162,7 +162,7 @@ class _SwiperTabsState extends State<SwiperTabs>
                           currentSS.quoteEdit = false;
                           setState(() {});
                         },
-                        icon: const Icon(Icons.format_quote)),
+                        icon: const Icon(Icons.edit)),
                     const Spacer(),
                     IconButton(
                         onPressed: () {
@@ -170,7 +170,7 @@ class _SwiperTabsState extends State<SwiperTabs>
                           currentSS.quoteEdit = true;
                           setState(() {});
                         },
-                        icon: const Icon(Icons.edit))
+                        icon: const Icon(Icons.format_quote))
                   ],
                 )),
                 Tab(child: Row(children: iconList())),

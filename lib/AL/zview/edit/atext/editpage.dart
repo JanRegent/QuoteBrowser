@@ -47,9 +47,8 @@ class _EditPageState extends State<EditPage> {
               ListTile(
                   leading: isSaving
                       ? const CircularProgressIndicator()
-                      : const Text(' '),
-                  title: Obx(() => Text(bl.orm.currentRow.author.value)),
-                  trailing: saveQuote()),
+                      : saveQuote(),
+                  title: Obx(() => Text(bl.orm.currentRow.author.value))),
               Card(
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
