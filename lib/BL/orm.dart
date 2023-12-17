@@ -143,6 +143,7 @@ Future currentRowSet(String sheetRownoKey) async {
 
   bl.orm.currentRow.author.value = valueGet('author');
   bl.orm.currentRow.book.value = valueGet('book');
+
   bl.orm.currentRow.parPage.value = valueGet('parPage');
   bl.orm.currentRow.tags.value = valueGet('tags');
   bl.orm.currentRow.stars.value = valueGet('stars');
@@ -216,4 +217,24 @@ Future currentRowSet(String sheetRownoKey) async {
     bl.orm.currentRow.optionalvalues.refresh();
   }
   bl.orm.currentRow.optionalvalues.refresh();
+  if (bl.orm.currentRow.book.value.isEmpty) quoteContainsBookTrySet();
+}
+
+Future quoteContainsBookTrySet() async {
+  if (bl.userViewMode == true) return;
+
+  List<String> quoteContainsList = bl.booksCRUD.quoteContainsList();
+  String quote = bl.orm.currentRow.quote.value.toLowerCase();
+  for (String key in quoteContainsList) {
+    String qcontains = key.trim().toLowerCase();
+    if (qcontains.length == 1) continue;
+    if (quote.toLowerCase().contains(qcontains)) {
+      var bookAuthor = bl.booksCRUD.readBookAuthor(key);
+
+      bl.orm.currentRow.book.value = bookAuthor.$1;
+      bl.orm.currentRow.author.value = bookAuthor.$2;
+
+      return;
+    }
+  }
 }

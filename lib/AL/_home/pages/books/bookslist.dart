@@ -9,6 +9,7 @@ class BooksList {
   String bookCurrent = '';
 
   List<String> cols = [];
+  Map<String, String> sheetUrls = {};
 
   Future getData() async {
     List data = await dl.httpService.getAllrows('booksList', rootSheetId);
@@ -24,6 +25,8 @@ class BooksList {
         ..bookName = bookName
         ..sheetName = data[i][sheetNameIx]
         ..sheetUrl = data[i][sheetUrlIx]);
+      sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
+      dl.httpService.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
     }
   }
 }

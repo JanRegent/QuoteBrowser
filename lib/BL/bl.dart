@@ -7,9 +7,7 @@ import 'package:quotebrowser/BL/authorsbooks/bookscrud.dart';
 
 import '../AL/_home/pages/books/bookslist.dart';
 import '../AL/_home/pages/daily/dailylist.dart';
-import '../DL/dl.dart';
 
-import 'bluti.dart';
 import 'categories/catscrud.dart';
 
 import 'columntext/columntextfilter.dart';
@@ -37,7 +35,6 @@ class Bl {
 
   DailyList dailyList = DailyList();
   BooksList bookList = BooksList();
-  Map<String, String> sheetUrls = {};
 
   RxString filteredSheetName = ''.obs;
   RxMap lastCount = {}.obs;
@@ -65,7 +62,6 @@ class Bl {
   void updateSlowly() async {
     bl.catsCRUD.update();
     booksCRUD.updateBooks();
-    sheetUrlsBuild();
   }
 
   void devModeSet() {
@@ -96,20 +92,4 @@ Future isarOpen() async {
       inspector: true);
 
   debugPrint('Isar open ${isar.isOpen}');
-}
-
-void sheetUrlsBuild() async {
-  List rootRows = await dl.httpService.getRootConfig();
-  List<String> cols = blUti.toListString(rootRows[0]);
-  int sheetNameIx = cols.indexOf('sheetName');
-  int sheetUrlIx = cols.indexOf('sheetUrl');
-  for (List row in rootRows) {
-    List<String> rowStr = blUti.toListString(row);
-
-    try {
-      if (rowStr[sheetNameIx].isEmpty) continue;
-      bl.sheetUrls[rowStr[sheetNameIx]] = rowStr[sheetUrlIx];
-    } catch (_) {}
-  }
-  debugPrint('sheetUrlsBuild() ${bl.sheetUrls.length}');
 }

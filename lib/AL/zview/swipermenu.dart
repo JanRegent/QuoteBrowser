@@ -72,7 +72,8 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
           child: Text(
               '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}\n${bl.orm.currentRow.dateinsert}'),
           onPressed: () async {
-            String? fileUrl = bl.sheetUrls[bl.orm.currentRow.sheetName.value];
+            String? fileUrl =
+                bl.dailyList.sheetUrls[bl.orm.currentRow.sheetName.value];
 
             await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowNo.value,
                 context, 'Jump to row');
@@ -100,7 +101,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
               child: const Text('Jump to row'),
               onTap: () async {
                 String? fileUrl =
-                    bl.sheetUrls[bl.orm.currentRow.sheetName.value];
+                    bl.dailyList.sheetUrls[bl.orm.currentRow.sheetName.value];
 
                 // ignore: use_build_context_synchronously //Icons.open_in_browser
                 await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowNo.value,

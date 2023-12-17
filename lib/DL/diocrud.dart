@@ -61,20 +61,11 @@ class HttpService {
         );
       }
       await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-
       return await sheetRowsSaveGetKeys(response.data['data']);
     } catch (e) {
       debugPrint('getSheetGroup($sheetGroup, $searchText\n$e');
       return [];
     }
-  }
-
-  Future getRootConfig() async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {'action': 'getRootConfig'},
-    );
-    return response.data['data'];
   }
 
   //---------------------------------------------------------------getBooksMap
@@ -144,6 +135,7 @@ class HttpService {
   }
 
   //----------------------------------------------------------------------set
+  Map<String, String> sheetUrls = {};
   Future<List> setCellDL(String sheetName, String columnName,
       String cellContent, String rowNo) async {
     // The below request is the same as above.
@@ -155,7 +147,7 @@ class HttpService {
         queryParameters: {
           'action': 'setCell',
           'sheetName': sheetName,
-          'sheetId': blUti.url2fileid(bl.sheetUrls[sheetName]!),
+          'sheetId': blUti.url2fileid(sheetUrls[sheetName]!),
           'columnName': columnName,
           'cellContent': cellContent,
           'rowNo': rowNo

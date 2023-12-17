@@ -44,7 +44,6 @@ Future<String> searchTextSheetGroupSheetName(
   // ignore: prefer_is_empty
   if (currentSS.keys.length == 0) {
     currentSS.keys = await dl.httpService.getSheetGroup(sheetGroup, searchText);
-
     await bl.filtersCRUD
         .updateFilter('$searchText __|__ $sheetGroup', currentSS.keys);
   }
