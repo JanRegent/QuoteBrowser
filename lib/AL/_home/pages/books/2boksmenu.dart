@@ -25,7 +25,7 @@ class _BooksMenuState extends State<BooksMenu> {
     listTiles.add(buttTile());
     for (var bix = 0; bix < bl.bookList.rows.length; bix++) {
       String sheetName = bl.bookList.rows[bix].sheetName;
-      if (sheetName.isEmpty) continue;
+      if (bl.bookList.rows[bix].bookName.isEmpty) continue;
 
       bl.booksCount[sheetName] = '';
       listTiles.add(ListTile(
