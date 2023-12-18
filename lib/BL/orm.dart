@@ -222,7 +222,7 @@ Future currentRowSet(String sheetRownoKey) async {
 
 Future quoteContainsBookTrySet() async {
   if (bl.userViewMode == true) return;
-
+  bl.saveHeadColor = Colors.yellow;
   List<String> quoteContainsList = bl.booksCRUD.quoteContainsList();
   String quote = bl.orm.currentRow.quote.value.toLowerCase();
   for (String key in quoteContainsList) {

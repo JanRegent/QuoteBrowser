@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:isar/isar.dart';
 import 'package:quotebrowser/BL/authorsbooks/bookscrud.dart';
@@ -32,6 +33,8 @@ class Bl {
   bool devMode = false;
   bool userViewMode = true;
   bool highligthOnOff = false;
+
+  Color saveHeadColor = Colors.lightBlue;
 
   DailyList dailyList = DailyList();
   BooksList bookList = BooksList();

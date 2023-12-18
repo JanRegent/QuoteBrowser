@@ -13,7 +13,7 @@ class AL {
     await canLaunchUrl(url)
         ? await launchUrl(url)
         // ignore: use_build_context_synchronously
-        : messageBottom(context, 'could_not_launch_this_url\n $url');
+        : al.showTopSnackBar(context, 'could_not_launch_this_url\n $url', 9);
   }
 
   Widget linkIconOpenDoc(String fileid, BuildContext context, String label) {
@@ -155,6 +155,27 @@ class AL {
 
   //-----------------------------------------------------------------info/alerts
 
+  void showTopSnackBar(context, String message, int seconds) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        dismissDirection: DismissDirection.up,
+        duration: Duration(seconds: seconds),
+        backgroundColor: Colors.grey,
+        margin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height - 100,
+            left: 10,
+            right: 10),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          message,
+          style: const TextStyle(
+            fontSize: 20,
+          ),
+        ),
+      ),
+    );
+  }
+
   Future<BuildContext> infoLoading2(BuildContext context, String descr) async {
     // ignore: unused_local_variable
     BuildContext dialogContext = context;
@@ -175,16 +196,6 @@ class AL {
       },
     );
     return dialogContext;
-  }
-
-  void messageBottom(context, String text) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-    final snackBar = SnackBar(
-      content: Text(text),
-    );
-
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   IconButton infoButton(
@@ -229,12 +240,6 @@ class AL {
     );
   }
 
-  String infoPopupLongTextExampleText =
-      '''
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra. Consectetur adipiscing elit ut aliquam purus sit. Nisl vel pretium lectus quam. Et odio pellentesque diam volutpat commodo. Diam vulputate ut pharetra sit amet aliquam id diam maecenas. Malesuada fames ac turpis egestas. Et sollicitudin ac orci phasellus egestas tellus rutrum. Pretium lectus quam id leo in. Semper risus in hendrerit gravida. Nullam ac tortor vitae purus faucibus ornare suspendisse sed. Non tellus orci ac auctor. Quis risus sed vulputate odio ut enim blandit.
-\n
-Nullam eget felis eget nunc lobortis mattis aliquam faucibus purus. Aenean et tortor at risus viverra adipiscing at in. Augue eget arcu dictum varius duis at consectetur. Est pellentesque elit ullamcorper dignissim cras. At consectetur lorem donec massa sapien faucibus et. Sit amet venenatis urna cursus eget. Dignissim cras tincidunt lobortis feugiat vivamus. Eget arcu dictum varius duis at. Aenean pharetra magna ac placerat. Enim nec dui nunc mattis enim ut tellus elementum. Laoreet suspendisse interdum consectetur libero. Tellus mauris a diam maecenas sed enim. Tortor posuere ac ut consequat semper viverra nam libero. Tellus molestie nunc non blandit massa.
-''';
   void messageInfo(
       BuildContext context, String title, String mess, int seconds) async {
     final snackBar = SnackBar(

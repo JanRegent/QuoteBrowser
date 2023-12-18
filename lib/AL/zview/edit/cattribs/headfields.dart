@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../BL/bl.dart';
 import '../../../alib/alicons.dart';
+import '../../../alib/alib.dart';
 import '../../../filterspages/_selectview.dart';
 import '../battr/quotepopup.dart';
 import '../category/catable.dart';
@@ -108,6 +109,22 @@ class _HeadFieldsState extends State<HeadFields> {
     }
   }
 
+  IconButton saveHead() {
+    return IconButton(
+        onPressed: () async {
+          al.showTopSnackBar(context, 'Saving author, book', 5);
+          await bl.orm.currentRow
+              .setCellBL('author', bl.orm.currentRow.author.value);
+          await bl.orm.currentRow
+              .setCellBL('book', bl.orm.currentRow.book.value);
+          bl.saveHeadColor = Colors.lightBlue;
+        },
+        icon: Icon(
+          Icons.save,
+          color: bl.saveHeadColor,
+        ));
+  }
+
   List<Widget> headFields() {
     headCard = [];
 
@@ -150,6 +167,7 @@ class _HeadFieldsState extends State<HeadFields> {
       title: Row(
         children: [favButt(), RatingStarsPage(setstateAattribs)],
       ),
+      trailing: saveHead(),
     ));
     headCard.add(categories());
 
