@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/AL/alib/alib.dart';
+import 'package:quotebrowser/DL/dl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../BL/bl.dart';
@@ -73,7 +75,27 @@ class _OthersFieldsState extends State<OthersFields> {
               onPressed: () => _onOpen(bl.orm.currentRow.folder.value)),
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.sourceUrl.value, 'folder')),
+      ListTile(
+          tileColor: Colors.white,
+          leading: TextButton(
+              onPressed: () async {
+                String rownoKey =
+                    '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}';
+                al.showTopSnackBar(
+                    context, 'Imorting comments at \n\n$rownoKey', 15);
+
+                await dl.httpService.comments2tagsYellowparts(rownoKey);
+              },
+              child: const Text('docUrl')),
+          title: TextButton(
+              child: Row(
+                children: [Obx(() => Text(bl.orm.currentRow.folder.value))],
+              ),
+              onPressed: () => _onOpen(bl.orm.currentRow.folder.value)),
+          trailing: copyPasteClearPopupMenuButton(
+              bl.orm.currentRow.sourceUrl.value, 'docUrl')),
     ];
+
     for (var i = 0; i < bl.orm.currentRow.optionalColumNames.length; i++) {
       String columnName = bl.orm.currentRow.optionalColumNames[i];
       if (columnName.toString().isEmpty) continue;
@@ -83,7 +105,8 @@ class _OthersFieldsState extends State<OthersFields> {
       if (columnName == 'vydal') continue;
       if (columnName == 'folder') continue;
       if (columnName == 'yellowParts') continue;
-
+      if (columnName == 'rownoKey') continue;
+      if (columnName == 'docUrl') continue;
       othersFieldsWidgets.add(
         ListTile(
             tileColor: Colors.white,

@@ -1,1 +1,1 @@
-String buildDate = ' 2023_12_18__14_47_build_BL---currentIndex-booklist ';  
+String buildDate = ' 2023_12_18__18_47_build_AL---comments2tagsYellowparts ';  

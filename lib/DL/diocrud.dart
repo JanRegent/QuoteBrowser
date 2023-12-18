@@ -18,14 +18,27 @@ class HttpService {
 
   //-------------------------------------------------------------------get rows
   Future<List> getAllrows(String sheetName, String sheetId) async {
-    // The below request is the same as above.
-    // ignore: unused_local_variable
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
         'action': 'getAllrows',
         'sheetName': sheetName,
         'sheetId': sheetId
+      },
+    );
+
+    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+
+    return response.data['data'];
+  }
+
+  //-------------------------------------------------------------------comments2tagsYellowparts
+  Future<List> comments2tagsYellowparts(String rownoKey) async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {
+        'action': 'comments2tagsYellowparts',
+        'rownoKey': rownoKey
       },
     );
 

@@ -127,8 +127,11 @@ Future currentRowSet(String sheetRownoKey) async {
   String sheetName = sheetRownoKey.split('__|__')[0];
   bl.orm.currentRow.cols =
       (await bl.sheetcolsCRUD.readColsBySheetName(sheetName))!;
-
+  print(bl.orm.currentRow.cols);
   String valueGet(String columnName) {
+    print('--------------------------------------------------$columnName');
+    print(bl.orm.currentRow.cols.indexOf(columnName));
+
     int fieldIndex = bl.orm.currentRow.cols.indexOf(columnName);
     if (fieldIndex == -1) return '';
     try {
