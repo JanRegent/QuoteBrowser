@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/BL/orm.dart';
 
 import '../../../../BL/bl.dart';
 import '../../../../BL/bluti.dart';
@@ -45,6 +46,8 @@ class _BooksMenuState extends State<BooksMenu> {
         ),
         onTap: () async {
           String sheetId = blUti.url2fileid(bl.bookList.rows[bix].sheetUrl);
+          currentSS.currentBooksListRowno = bix + 2;
+          currentSS.swiperIndex.value = bl.bookList.rows[bix].currentIndex;
           await getBookContentShow(sheetName, sheetName, sheetId, context);
         },
       ));

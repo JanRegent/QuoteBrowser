@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../BL/bl.dart';
 import '../../BL/orm.dart';
+import '../../DL/dl.dart';
 import '../alib/alib.dart';
 import 'edit/battr/attredit.dart';
 
@@ -89,6 +90,14 @@ class _SwiperTabsState extends State<SwiperTabs>
           currentSS.swiperIndex += 1;
           indexChanged(currentSS.swiperIndex.value);
           widget.setStateSwiper();
+
+          if (currentSS.currentHomeTabIndex == 1) {
+            dl.httpService.setCellDL(
+                'booksList',
+                'currentIndex',
+                currentSS.swiperIndex.toString(),
+                currentSS.currentBooksListRowno.toString());
+          }
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),

@@ -31,6 +31,7 @@ class DailyList {
       sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
       dl.httpService.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
     }
+    dl.httpService.sheetUrls['dailyList'] = rootSheetId;
   }
 }
 

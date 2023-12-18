@@ -28,7 +28,6 @@ Future getBookContentShow(String bookName, String sheetName, String sheetId,
 
 Future<String> book4swipper(String sheetName, String sheetId) async {
   currentSS.filterKey = 'book__|__ $sheetName';
-  currentSS.swiperIndex.value = 0;
   try {
     currentSS.keys = (await bl.filtersCRUD.readFilter(currentSS.filterKey));
   } catch (_) {}

@@ -17,6 +17,7 @@ class BooksList {
     int bookNameIx = cols.indexOf('bookName');
     int sheetNameIx = cols.indexOf('sheetName');
     int sheetUrlIx = cols.indexOf('sheetUrl');
+    int currentIndexIx = cols.indexOf('currentIndex');
     rows.clear();
     for (var i = 1; i < data.length; i++) {
       String bookName = data[i][bookNameIx].toString().trim();
@@ -25,9 +26,15 @@ class BooksList {
         ..bookName = bookName
         ..sheetName = data[i][sheetNameIx]
         ..sheetUrl = data[i][sheetUrlIx]);
+      try {
+        rows.last.currentIndex = data[i][currentIndexIx]!;
+      } catch (e) {
+        rows.last.currentIndex = 0;
+      }
       sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
       dl.httpService.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
     }
+    dl.httpService.sheetUrls['booksList'] = rootSheetId;
   }
 }
 
@@ -35,4 +42,5 @@ class BookListRow {
   String bookName = '';
   String sheetName = '';
   String sheetUrl = '';
+  int currentIndex = 0;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/BL/orm.dart';
 
 import '../../BL/bl.dart';
 import 'pages/daily/1daily.dart';
@@ -7,9 +8,16 @@ import 'pages/books/2boksmenu.dart';
 import 'pages/9appsettings.dart';
 import 'pages/wordhome.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
+
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
   final int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,8 +26,11 @@ class HomeTab extends StatelessWidget {
         length: 4,
         child: Scaffold(
           appBar: AppBar(
-            bottom: const TabBar(
-              tabs: [
+            bottom: TabBar(
+              onTap: (index) {
+                currentSS.currentHomeTabIndex = index;
+              },
+              tabs: const [
                 Tab(icon: Icon(Icons.date_range)),
                 Tab(icon: Icon(Icons.book_sharp)),
                 Tab(icon: Icon(Icons.wordpress)),
