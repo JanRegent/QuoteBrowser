@@ -1,17 +1,82 @@
 
+function comments2tagsYellowparts(rownoKey) {
+
+  logi(rownoKey)
 
 
+  var sheetRowKey = rownoKey.split('__|__');
+  var sheetName = sheetRowKey[0];
+  var sheetUrl  = sheeturlBySheetname(sheetName)
+  var sheet = SpreadsheetApp.openByUrl(sheetUrl).getSheetByName(sheetName);
+  var cols = sheet.getDataRange().getValues()[0]
+  var rowNo = sheetRowKey[1];
+ 
+  logi(rowNo)
+
+  var docUrl = sheet.getDataRange().getValues()[rowNo-1][cols.indexOf('docUrl')]
+
+  //'1ZE1OHahSy1VBwfDgjzUu4uqO1noGl50f0_ZRnsVpWxI
+
+  var doc = DocumentApp.openByUrl(docUrl)
+
+  var tagComment = getCommentsFromDocument(doc.getId());
+
+  
+  var tags = '';
+  var yellowParts = ''
+  var quote = '#tags__|__yelowparts\n\n';
+  for (var i = 1; i < tagComment.length; i++)  {
+    var row = tagComment[i];
+    tags += '#' + row['tags']
+    yellowParts += '__|__' + row['yellowPart']
+
+    quote += row['tags'] + '\n' + row['yellowPart'] + '\n\n'
+  }
+
+  try {
+      var letter = columnToLetter( cols.indexOf('quote')+1)
+      sheet.getRange(letter+rowNo).setValue(quote);
+  }catch(_){}
 
 
+  try {
+      var letter = columnToLetter( cols.indexOf('yellowParts')+1)
+      sheet.getRange(letter+rowNo).setValue(yellowParts);
+  }catch(_){}
 
-//--------------------------------------------------comment2tags
-//--------------
-function getCommentsFromDocument(fileId) {
+  var tagsSet  = new Set(tags.split('#'));
+  var tagsPure = Array.from(tagsSet).join('#') 
+  try {
+      var letter = columnToLetter( cols.indexOf('tags')+1)
+      sheet.getRange(letter+rowNo).setValue(tagsPure);
+  }catch(_){}
 
-  var comments = Drive.Comments.list(fileId);``
+
+  try {
+    colsSet[sheetName] = cols;
+    var data = []
+    data.push(sheet.getDataRange().getValues()[rowNo-1])
+    data[0].unshift(rownoKey)
+    return buildResponse(data,'');
+  }catch(e) {
+    log(e)
+    return buildResponse([],e.toString());
+  }
+
+}
+
+function comments2sheetRow___test() {
+
+  comments2tagsYellowparts('JÁ JSEM TO__|__55')
+}
+
+
+//---------------------------------------------------------------------------getCommentsFromDocument
+function getCommentsFromDocument(docId) {
+
+  var comments = Drive.Comments.list(docId);
   
   if (comments.items && comments.items.length == 0) return;
-  //----------------------------------------------------------------getTagsTg, yellowParts
   var tagComment = []
   var tagsTgStr = '';
   for (var i = 0; i < comments.items.length; i++) {
@@ -32,6 +97,8 @@ function getCommentsFromDocument(fileId) {
   return tagComment
 
 }
+
+
 
 
 function appendComments(docUrl, sheet, author, book,parPage, title, folderId) {
