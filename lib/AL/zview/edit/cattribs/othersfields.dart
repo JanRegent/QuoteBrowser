@@ -75,25 +75,6 @@ class _OthersFieldsState extends State<OthersFields> {
               onPressed: () => _onOpen(bl.orm.currentRow.folder.value)),
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.sourceUrl.value, 'folder')),
-      ListTile(
-          tileColor: Colors.white,
-          leading: TextButton(
-              onPressed: () async {
-                String rownoKey =
-                    '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}';
-                al.showTopSnackBar(
-                    context, 'Imorting comments at \n\n$rownoKey', 15);
-
-                await dl.httpService.comments2tagsYellowparts(rownoKey);
-              },
-              child: const Text('docUrl')),
-          title: TextButton(
-              child: Row(
-                children: [Obx(() => Text(bl.orm.currentRow.folder.value))],
-              ),
-              onPressed: () => _onOpen(bl.orm.currentRow.folder.value)),
-          trailing: copyPasteClearPopupMenuButton(
-              bl.orm.currentRow.sourceUrl.value, 'docUrl')),
     ];
 
     for (var i = 0; i < bl.orm.currentRow.optionalColumNames.length; i++) {
@@ -106,23 +87,48 @@ class _OthersFieldsState extends State<OthersFields> {
       if (columnName == 'folder') continue;
       if (columnName == 'yellowParts') continue;
       if (columnName == 'rownoKey') continue;
-      if (columnName == 'docUrl') continue;
-      othersFieldsWidgets.add(
-        ListTile(
+
+      if (columnName == 'docUrl') {
+        othersFieldsWidgets.add(ListTile(
             tileColor: Colors.white,
-            leading: Text(columnName),
-            title: Row(children: [
-              TextButton(
-                  child: Obx(
-                      () => Text(bl.orm.currentRow.optionalvalues[i].value)),
-                  onPressed: () =>
-                      _onOpen(bl.orm.currentRow.optionalvalues[i].value))
-            ]),
+            leading: TextButton(
+                onPressed: () async {
+                  String rownoKey =
+                      '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}';
+                  al.showTopSnackBar(
+                      context, 'Importing comments at \n\n$rownoKey', 15);
+
+                  await dl.httpService.comments2tagsYellowparts(rownoKey);
+                  // ignore: use_build_context_synchronously
+                  al.showTopSnackBar(
+                      context, 'Import done at \n\n$rownoKey', 3);
+                },
+                child: const Text('docUrl')),
+            title: TextButton(
+                child: Row(
+                  children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
+                ),
+                onPressed: () => _onOpen(bl.orm.currentRow.fileUrl.value)),
             trailing: copyPasteClearPopupMenuButton(
-              bl.orm.currentRow.optionalvalues[i].value,
-              columnName,
-            )),
-      );
+                bl.orm.currentRow.sourceUrl.value, 'docUrl')));
+      } else {
+        othersFieldsWidgets.add(
+          ListTile(
+              tileColor: Colors.white,
+              leading: Text(columnName),
+              title: Row(children: [
+                TextButton(
+                    child: Obx(
+                        () => Text(bl.orm.currentRow.optionalvalues[i].value)),
+                    onPressed: () =>
+                        _onOpen(bl.orm.currentRow.optionalvalues[i].value))
+              ]),
+              trailing: copyPasteClearPopupMenuButton(
+                bl.orm.currentRow.optionalvalues[i].value,
+                columnName,
+              )),
+        );
+      }
     }
 
     return othersFieldsWidgets;
