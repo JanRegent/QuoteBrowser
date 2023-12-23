@@ -1,1 +1,1 @@
-String buildDate = ' 2023_12_22__19_35_build_DL---back-bookd-trigger ';  
+String buildDate = ' 2023_12_23__15_30_build_DL---back-rssDaily2books ';  
