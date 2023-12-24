@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:quotebrowser/BL/orm.dart';
 
 import '../../BL/bl.dart';
+import '../../DL/drift/maind.dart';
 import 'pages/daily/1daily.dart';
 import 'pages/books/2boksmenu.dart';
 import 'pages/9appsettings.dart';
@@ -71,12 +72,19 @@ class _HomeTabState extends State<HomeTab> {
               ],
             ),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              LastMenu(),
-              BooksMenu(),
-              WordHomePage(),
-              Icon(Icons.directions_bike),
+              const LastMenu(),
+              const BooksMenu(),
+              const WordHomePage(),
+              IconButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DriftApp()),
+                    );
+                  },
+                  icon: const Icon(Icons.drive_eta)),
             ],
           ),
         ),
