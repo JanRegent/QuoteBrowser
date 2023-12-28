@@ -1,9 +1,13 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:isar/isar.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+
 import 'package:quotebrowser/BL/authorsbooks/bookscrud.dart';
 
 import '../AL/_home/pages/books/bookslist.dart';
@@ -55,11 +59,30 @@ class Bl {
   RssCRUD rssCRUD = RssCRUD();
 
   Future init() async {
+    await deviceInfoInit();
+
     await isarOpen();
 
     isar = Isar.get(schemas: schemas);
 
     devModeSet();
+  }
+
+  final deviceInfoPlugin = DeviceInfoPlugin();
+
+  // ignore: prefer_typing_uninitialized_variables
+  late final deviceInfoAll;
+
+  Future deviceInfoInit() async {
+    //DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    //AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    //print(json.decode(androidInfo.display)); // e.g. "Moto G (4)"
+
+    // IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    // print('Running on ${iosInfo.utsname.machine}'); // e.g. "iPod7,1"
+
+    // WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+    // print('Running on ${webBrowserInfo.userAgent}');
   }
 
   void updateSlowly() async {

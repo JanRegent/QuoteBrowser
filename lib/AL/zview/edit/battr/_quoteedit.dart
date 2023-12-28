@@ -260,6 +260,15 @@ class _QuoteEditState extends State<QuoteEdit> {
   }
 
   Container buttRow(BuildContext context) {
+    int selectedChars = 5;
+    try {
+      final width = MediaQuery.of(context).size.width;
+      if (width > 600) selectedChars = 10;
+    } catch (_) {}
+    if (bl.orm.currentRow.selectedText.value.trim().isEmpty) {
+      bl.orm.currentRow.selectedText.value = '          ';
+    }
+
     return Container(
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(5),
@@ -269,23 +278,25 @@ class _QuoteEditState extends State<QuoteEdit> {
               color: bl.orm.currentRow.setCellDLOn ? Colors.red : Colors.white,
               width: 5,
             )),
-        child: Row(
-          children: [
-            personPopup(),
-            tagsYellowPopup(),
-            const Spacer(),
-            Obx(() =>
-                Text(bl.orm.currentRow.selectedText.value.substring(0, 5))),
-            const Text('...'),
-            Obx(() => Text(bl.orm.currentRow.selectedText.value.substring(
-                bl.orm.currentRow.selectedText.value.length - 5,
-                bl.orm.currentRow.selectedText.value.length))),
-            PopupMenuButton(
-              itemBuilder: (BuildContext context) {
-                return buttonRowMenu(context);
-              },
-            )
-          ],
+        child: ListTile(
+          leading: personPopup(),
+          title: Row(
+            children: [
+              tagsYellowPopup(),
+              const Spacer(),
+              Obx(() => Text(bl.orm.currentRow.selectedText.value
+                  .substring(0, selectedChars))),
+              const Text('...'),
+              Obx(() => Text(bl.orm.currentRow.selectedText.value.substring(
+                  bl.orm.currentRow.selectedText.value.length - selectedChars,
+                  bl.orm.currentRow.selectedText.value.length))),
+            ],
+          ),
+          trailing: PopupMenuButton(
+            itemBuilder: (BuildContext context) {
+              return buttonRowMenu(context);
+            },
+          ),
         ));
   }
 
