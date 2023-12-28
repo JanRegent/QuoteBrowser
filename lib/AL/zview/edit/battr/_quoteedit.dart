@@ -10,6 +10,7 @@ import '../../../alib/alertinfo/alertok.dart';
 
 import '../../../alib/alicons.dart';
 
+import '../atext/editpage.dart';
 import '../atext/tagsyellowlist.dart';
 import 'addquote/addquoterow.dart';
 import 'quotepopup.dart';
@@ -18,12 +19,10 @@ import 'originalview.dart';
 // ignore: must_be_immutable
 class QuoteEdit extends StatefulWidget {
   VoidCallback swiperSetstate;
-  VoidCallback attreditSetstate;
+
   BuildContext context;
   // ignore: use_key_in_widget_constructors
-  QuoteEdit(this.swiperSetstate, this.attreditSetstate, this.context,
-      {Key? key})
-      : super(key: key);
+  QuoteEdit(this.swiperSetstate, this.context, {Key? key}) : super(key: key);
 
   @override
   State<QuoteEdit> createState() => _QuoteEditState();
@@ -179,7 +178,6 @@ class _QuoteEditState extends State<QuoteEdit> {
     });
     //error might indicate a memory leak if setState() is being called because another object is retaining a reference to this State object after it has been removed from the tree. To avoid memory leaks, consider breaking the reference to this object during dispose().
     widget.swiperSetstate();
-    widget.attreditSetstate(); //quote content refresh
   }
 
   Widget favButt() {
@@ -276,6 +274,12 @@ class _QuoteEditState extends State<QuoteEdit> {
             personPopup(),
             tagsYellowPopup(),
             const Spacer(),
+            Obx(() =>
+                Text(bl.orm.currentRow.selectedText.value.substring(0, 5))),
+            const Text('...'),
+            Obx(() => Text(bl.orm.currentRow.selectedText.value.substring(
+                bl.orm.currentRow.selectedText.value.length - 5,
+                bl.orm.currentRow.selectedText.value.length))),
             PopupMenuButton(
               itemBuilder: (BuildContext context) {
                 return buttonRowMenu(context);
@@ -312,6 +316,19 @@ class _QuoteEditState extends State<QuoteEdit> {
       colItems.insert(0, addQuoteRow(context, widget.swiperSetstate));
     }
 
-    return Column(children: colItems);
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EditPage()),
+              );
+            },
+          ),
+          title: buttRow(context),
+        ),
+        body: SingleChildScrollView(child: quoteTextField()));
   }
 }

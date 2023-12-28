@@ -7,12 +7,12 @@ import '../../BL/bl.dart';
 import '../../BL/orm.dart';
 import '../../DL/dl.dart';
 import '../alib/alib.dart';
-import 'edit/battr/attredit.dart';
+import 'edit/battr/_quoteedit.dart';
 
 import 'edit/cattribs/headfields.dart';
 import 'edit/cattribs/othersfields.dart';
 import 'swipermenu.dart';
-import 'edit/atext/editpage.dart';
+
 import 'view/userwiew.dart';
 
 void indexChanged(int rowIndex) async {
@@ -165,18 +165,10 @@ class _SwiperTabsState extends State<SwiperTabs>
                 Tab(
                     child: Row(
                   children: [
-                    IconButton(
-                        onPressed: () {
-                          _tabController.index = 0;
-                          currentSS.quoteEdit = false;
-                          setState(() {});
-                        },
-                        icon: const Icon(Icons.edit)),
                     const Spacer(),
                     IconButton(
                         onPressed: () {
                           _tabController.index = 0;
-                          currentSS.quoteEdit = true;
                           setState(() {});
                         },
                         icon: const Icon(Icons.format_quote))
@@ -190,9 +182,9 @@ class _SwiperTabsState extends State<SwiperTabs>
             physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: [
-              !currentSS.quoteEdit
-                  ? const EditPage()
-                  : AttrEdit(widget.setStateSwiper),
+              QuoteEdit(widget.setStateSwiper, context),
+
+              //AttrEdit(widget.setStateSwiper),
               attribTabs(),
             ],
           ),

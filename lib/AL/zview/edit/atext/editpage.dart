@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../BL/bl.dart';
+import '../../../alib/alib.dart';
 
 class EditPage extends StatefulWidget {
   const EditPage({super.key});
@@ -45,10 +46,15 @@ class _EditPageState extends State<EditPage> {
           child: ListView(
             children: <Widget>[
               ListTile(
-                  leading: isSaving
-                      ? const CircularProgressIndicator()
-                      : saveQuote(),
-                  title: Obx(() => Text(bl.orm.currentRow.author.value))),
+                  leading: al.iconBack(context),
+                  title: Row(
+                    children: [
+                      isSaving
+                          ? const CircularProgressIndicator()
+                          : saveQuote(),
+                      Obx(() => Text(bl.orm.currentRow.author.value))
+                    ],
+                  )),
               Card(
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
