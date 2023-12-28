@@ -8,6 +8,7 @@ import '../../../../BL/orm.dart';
 
 import '../../../alib/alertinfo/alertok.dart';
 
+import '../../../alib/alib.dart';
 import '../../../alib/alicons.dart';
 
 import '../atext/editpage.dart';
@@ -260,13 +261,20 @@ class _QuoteEditState extends State<QuoteEdit> {
   }
 
   Container buttRow(BuildContext context) {
-    int selectedChars = 5;
-    try {
-      final width = MediaQuery.of(context).size.width;
-      if (width > 600) selectedChars = 10;
-    } catch (_) {}
-    if (bl.orm.currentRow.selectedText.value.trim().isEmpty) {
-      bl.orm.currentRow.selectedText.value = '          ';
+    Text selectedView() {
+      int selectedChars = 5;
+
+      if (bl.orm.currentRow.selectedText.value.isEmpty) return const Text(' ');
+      try {
+        String left =
+            bl.orm.currentRow.selectedText.value.substring(0, selectedChars);
+        String right = bl.orm.currentRow.selectedText.value.substring(
+            bl.orm.currentRow.selectedText.value.length - selectedChars,
+            bl.orm.currentRow.selectedText.value.length);
+        return Text('$left...$right');
+      } catch (_) {
+        return Text(bl.orm.currentRow.selectedText.value);
+      }
     }
 
     return Container(
@@ -284,12 +292,9 @@ class _QuoteEditState extends State<QuoteEdit> {
             children: [
               tagsYellowPopup(),
               const Spacer(),
-              Obx(() => Text(bl.orm.currentRow.selectedText.value
-                  .substring(0, selectedChars))),
-              const Text('...'),
-              Obx(() => Text(bl.orm.currentRow.selectedText.value.substring(
-                  bl.orm.currentRow.selectedText.value.length - selectedChars,
-                  bl.orm.currentRow.selectedText.value.length))),
+              al.infoButton(
+                  context, 'Selected', bl.orm.currentRow.selectedText.value),
+              Obx(() => selectedView()),
             ],
           ),
           trailing: PopupMenuButton(

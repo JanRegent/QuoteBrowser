@@ -96,31 +96,21 @@ class _UserViewPageState extends State<UserViewPage> {
           child: ListView(
             children: <Widget>[
               ListTile(
-                  leading: IconButton(
-                    icon: const Icon(Icons.list),
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const UserHeadFields()),
-                      );
-                    },
-                  ),
+                  leading: highlight(),
                   title: Row(
                     children: [
                       Obx(() => Text(bl.orm.currentRow.author.value)),
-                      IconButton(
-                          onPressed: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const OriginalView()),
-                            );
-                          },
-                          icon: const Icon(Icons.crop_original)),
                     ],
                   ),
-                  trailing: highlight()),
+                  trailing: IconButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const OriginalView()),
+                        );
+                      },
+                      icon: const Icon(Icons.crop_original))),
               Card(
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(

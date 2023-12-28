@@ -117,7 +117,7 @@ class _SwiperTabsState extends State<SwiperTabs>
         onPressed: () {
           _tabController.index = 1;
           setState(() {});
-          attribIndex = 0;
+          attribTabIndex = 0;
         },
       ),
       const Spacer(),
@@ -125,7 +125,7 @@ class _SwiperTabsState extends State<SwiperTabs>
         icon: const Icon(Icons.view_list_outlined),
         onPressed: () {
           _tabController.index = 1;
-          attribIndex = 1;
+          attribTabIndex = 1;
           setState(() {});
         },
       ),
@@ -136,7 +136,8 @@ class _SwiperTabsState extends State<SwiperTabs>
   // We need a TabController to control the selected tab programmatically
   late final _tabController = TabController(length: 2, vsync: this);
 
-  int attribIndex = 0;
+  int attribTabIndex = 0;
+  int quoteTabIndex = 0;
 
   Widget userView() {
     return Scaffold(
@@ -165,13 +166,21 @@ class _SwiperTabsState extends State<SwiperTabs>
                 Tab(
                     child: Row(
                   children: [
-                    const Spacer(),
                     IconButton(
                         onPressed: () {
+                          quoteTabIndex = 0;
                           _tabController.index = 0;
                           setState(() {});
                         },
-                        icon: const Icon(Icons.format_quote))
+                        icon: const Icon(Icons.format_quote)),
+                    const Spacer(),
+                    IconButton(
+                        onPressed: () {
+                          quoteTabIndex = 1;
+                          _tabController.index = 0;
+                          setState(() {});
+                        },
+                        icon: const Icon(Icons.edit_attributes_sharp))
                   ],
                 )),
                 Tab(child: Row(children: iconList())),
@@ -182,9 +191,7 @@ class _SwiperTabsState extends State<SwiperTabs>
             physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: [
-              QuoteEdit(widget.setStateSwiper, context),
-
-              //AttrEdit(widget.setStateSwiper),
+              quoteTabs(),
               attribTabs(),
             ],
           ),
@@ -193,15 +200,22 @@ class _SwiperTabsState extends State<SwiperTabs>
 
   @override
   Widget build(BuildContext context) {
-    if (bl.userViewMode) {
-      return GestureDetector(child: userView());
-    } else {
-      return editTabs();
+    return editTabs();
+  }
+
+  Widget quoteTabs() {
+    switch (quoteTabIndex) {
+      case 0:
+        return const UserViewPage();
+      case 1:
+        return QuoteEdit(widget.setStateSwiper, context);
+      default:
+        return QuoteEdit(widget.setStateSwiper, context);
     }
   }
 
   Widget attribTabs() {
-    switch (attribIndex) {
+    switch (attribTabIndex) {
       case 0:
         return const HeadFields();
       case 1:
