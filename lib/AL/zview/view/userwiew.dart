@@ -4,7 +4,6 @@ import 'package:highlight_text/highlight_text.dart';
 
 import '../../../BL/bl.dart';
 import '../edit/battr/originalview.dart';
-import 'userheadfields.dart';
 
 //-----------------------------------------------------------------highl
 Map<String, HighlightedWord> words = {};
