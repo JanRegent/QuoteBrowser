@@ -74,6 +74,8 @@ class _UserViewPageState extends State<UserViewPage> {
   void initState() {
     super.initState();
     words = {};
+    bl.highligthOnOff = true;
+    initHighlight();
   }
 
   IconButton highlight() {
