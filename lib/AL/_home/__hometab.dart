@@ -4,8 +4,10 @@ import 'package:quotebrowser/BL/orm.dart';
 
 import '../../BL/bl.dart';
 import '../../DL/drift/maind.dart';
+import '../alib/alicons.dart';
+import 'pages/books/__authtabs.dart';
 import 'pages/daily/1daily.dart';
-import 'pages/books/2boksmenu.dart';
+
 import 'pages/9appsettings.dart';
 import 'pages/wordhome.dart';
 
@@ -31,11 +33,11 @@ class _HomeTabState extends State<HomeTab> {
               onTap: (index) {
                 currentSS.currentHomeTabIndex = index;
               },
-              tabs: const [
-                Tab(icon: Icon(Icons.date_range)),
-                Tab(icon: Icon(Icons.book_sharp)),
-                Tab(icon: Icon(Icons.wordpress)),
-                Tab(icon: Icon(Icons.filter_alt)),
+              tabs: [
+                const Tab(icon: Icon(Icons.newspaper)),
+                Tab(icon: ALicons.attrIcons.bookIcon),
+                const Tab(icon: Icon(Icons.wordpress)),
+                const Tab(icon: Icon(Icons.filter_alt)),
               ],
             ),
             title: Obx(() => Text(bl.homeTitle.value)),
@@ -75,7 +77,7 @@ class _HomeTabState extends State<HomeTab> {
           body: TabBarView(
             children: [
               const LastMenu(),
-              const BooksMenu(),
+              const BooksAuthorsTab(),
               const WordHomePage(),
               IconButton(
                   onPressed: () async {

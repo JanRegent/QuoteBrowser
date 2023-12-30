@@ -13,7 +13,7 @@ import '../../../alib/alicons.dart';
 
 import '../atext/editpage.dart';
 import '../atext/tagsyellowlist.dart';
-import 'addquote/addquoterow.dart';
+
 import 'quotepopup.dart';
 import 'originalview.dart';
 
@@ -103,6 +103,18 @@ class _QuoteEditState extends State<QuoteEdit> {
           quoteEditController.selection.baseOffset,
           quoteEditController.selection.extentOffset);
       bl.orm.currentRow.attribNameLast.value = '?';
+
+      try {
+        int len = bl.orm.currentRow.selectedText.value.length;
+        al.messageInfo(
+            context,
+            'Selected',
+            '${bl.orm.currentRow.selectedText.value.substring(0, 10)}...${bl.orm.currentRow.selectedText.value.substring(len - 10, len)}',
+            3);
+      } catch (_) {
+        al.messageInfo(
+            context, 'Selected', bl.orm.currentRow.selectedText.value, 3);
+      }
     } catch (_) {
       return;
     }
@@ -261,22 +273,6 @@ class _QuoteEditState extends State<QuoteEdit> {
   }
 
   Container buttRow(BuildContext context) {
-    Text selectedView() {
-      int selectedChars = 5;
-
-      if (bl.orm.currentRow.selectedText.value.isEmpty) return const Text(' ');
-      try {
-        String left =
-            bl.orm.currentRow.selectedText.value.substring(0, selectedChars);
-        String right = bl.orm.currentRow.selectedText.value.substring(
-            bl.orm.currentRow.selectedText.value.length - selectedChars,
-            bl.orm.currentRow.selectedText.value.length);
-        return Text('$left...$right');
-      } catch (_) {
-        return Text(bl.orm.currentRow.selectedText.value);
-      }
-    }
-
     return Container(
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(5),
@@ -290,11 +286,18 @@ class _QuoteEditState extends State<QuoteEdit> {
           leading: personPopup(),
           title: Row(
             children: [
-              tagsYellowPopup(),
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const EditPage()),
+                  );
+                },
+              ),
               const Spacer(),
               al.infoButton(
                   context, 'Selected', bl.orm.currentRow.selectedText.value),
-              Obx(() => selectedView()),
             ],
           ),
           trailing: PopupMenuButton(
@@ -322,27 +325,9 @@ class _QuoteEditState extends State<QuoteEdit> {
 
   @override //printSelectedText()
   Widget build(BuildContext context) {
-    List<Widget> colItems = [
-      buttRow(context),
-      const Text('  '),
-      quoteTextField(),
-      buttRow(context)
-    ];
-    if (currentSS.addQuoteMode) {
-      colItems.insert(0, addQuoteRow(context, widget.swiperSetstate));
-    }
-
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const EditPage()),
-              );
-            },
-          ),
+          leading: tagsYellowPopup(),
           title: buttRow(context),
         ),
         body: SingleChildScrollView(child: quoteTextField()));

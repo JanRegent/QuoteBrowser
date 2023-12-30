@@ -10,29 +10,29 @@ import '../../../alib/alib.dart';
 import '../2booksbl.dart';
 import '../searchshow.dart';
 
-class BooksMenu extends StatefulWidget {
-  const BooksMenu({super.key});
+class AuthorBooksMenu extends StatefulWidget {
+  final String author;
+  const AuthorBooksMenu(this.author, {super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _BooksMenuState createState() => _BooksMenuState();
+  _AuthorBooksMenuState createState() => _AuthorBooksMenuState();
 }
 
-class _BooksMenuState extends State<BooksMenu> {
+class _AuthorBooksMenuState extends State<AuthorBooksMenu> {
   @override
   void initState() {
     super.initState();
-
+    listTiles = [];
     listTiles.add(buttTile());
     for (var bix = 0; bix < bl.bookList.rows.length; bix++) {
+      if (bl.bookList.rows[bix].author != widget.author) continue;
       String sheetName = bl.bookList.rows[bix].sheetName;
       if (bl.bookList.rows[bix].bookName.isEmpty) continue;
 
       bl.booksCount[sheetName] = '';
       listTiles.add(ListTile(
-        leading: Obx(() => bl.booksCount[sheetName] != 'loading'
-            ? Text(bl.booksCount[sheetName])
-            : const CircularProgressIndicator()),
+        leading: Text(bl.booksCount[sheetName]),
         title: Row(
           children: [
             Text(
