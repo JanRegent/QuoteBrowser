@@ -10,16 +10,16 @@ import '../../../alib/alib.dart';
 import '../2booksbl.dart';
 import '../searchshow.dart';
 
-class AuthorBooksMenu extends StatefulWidget {
+class AuthorBooks extends StatefulWidget {
   final String author;
-  const AuthorBooksMenu(this.author, {super.key});
+  const AuthorBooks(this.author, {super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _AuthorBooksMenuState createState() => _AuthorBooksMenuState();
+  _AuthorBooksState createState() => _AuthorBooksState();
 }
 
-class _AuthorBooksMenuState extends State<AuthorBooksMenu> {
+class _AuthorBooksState extends State<AuthorBooks> {
   @override
   void initState() {
     super.initState();
@@ -86,31 +86,34 @@ class _AuthorBooksMenuState extends State<AuthorBooksMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CustomScrollView(
-      slivers: [
-        //----------------------------------------------------------Last
-
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              if (index == 0) {
-                return listTiles[index];
-              } else {
-                return Card(
-                  margin: const EdgeInsets.all(15),
-                  child: Container(
-                    color: Colors.orange[100 * (index % 12 + 1)],
-                    height: 60,
-                    alignment: Alignment.center,
-                    child: listTiles[index],
-                  ),
-                );
-              }
-            },
-            childCount: listTiles.length,
-          ),
+        appBar: AppBar(
+          title: Text(widget.author),
         ),
-      ],
-    ));
+        body: CustomScrollView(
+          slivers: [
+            //----------------------------------------------------------Last
+
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  if (index == 0) {
+                    return listTiles[index];
+                  } else {
+                    return Card(
+                      margin: const EdgeInsets.all(15),
+                      child: Container(
+                        color: Colors.orange[100 * (index % 12 + 1)],
+                        height: 60,
+                        alignment: Alignment.center,
+                        child: listTiles[index],
+                      ),
+                    );
+                  }
+                },
+                childCount: listTiles.length,
+              ),
+            ),
+          ],
+        ));
   }
 }

@@ -21,31 +21,22 @@ class _BooksAuthorsTabState extends State<BooksAuthorsTab> {
     tabPages = [];
     for (int bix = 0; bix < bl.bookList.authorsUniq.length; bix++) {
       String author = bl.bookList.authorsUniq[bix];
-      tabTitles.add(Text(author));
-      tabPages.add(AuthorBooksMenu(author));
+      tabTitles.add(ListTile(
+        title: Text(author),
+        onTap: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AuthorBooks(author)),
+          );
+        },
+      ));
+      tabPages.add(AuthorBooks(author));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DefaultTabController(
-        length: bl.bookList.authorsUniq.length,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: TabBar(
-              onTap: (index) {
-                currentSS.currentHomeTabIndex = index;
-              },
-              tabs: tabTitles,
-            ),
-          ),
-          body: TabBarView(
-            children: tabPages,
-          ),
-        ),
-      ),
-    );
+        debugShowCheckedModeBanner: false, home: ListView(children: tabTitles));
   }
 }
