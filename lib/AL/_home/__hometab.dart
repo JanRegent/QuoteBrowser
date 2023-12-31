@@ -5,7 +5,7 @@ import 'package:quotebrowser/BL/orm.dart';
 import '../../BL/bl.dart';
 import '../../DL/drift/maind.dart';
 import '../alib/alicons.dart';
-import 'pages/books/__authtabs.dart';
+import 'pages/books/__authors.dart';
 import 'pages/daily/1daily.dart';
 
 import 'pages/9appsettings.dart';
@@ -77,7 +77,7 @@ class _HomeTabState extends State<HomeTab> {
           body: TabBarView(
             children: [
               const LastMenu(),
-              const BooksAuthorsTab(),
+              const BooksAuthors(),
               const WordHomePage(),
               IconButton(
                   onPressed: () async {
