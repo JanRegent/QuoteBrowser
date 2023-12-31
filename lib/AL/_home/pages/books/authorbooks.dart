@@ -32,7 +32,7 @@ class _AuthorBooksState extends State<AuthorBooks> {
 
       bl.booksCount[sheetName] = '';
       listTiles.add(ListTile(
-        leading: Text(bl.booksCount[sheetName]),
+        leading: Text(bl.bookList.rows[bix].currentIndex.toString()),
         title: Row(
           children: [
             Text(
