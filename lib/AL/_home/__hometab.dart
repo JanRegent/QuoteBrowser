@@ -4,7 +4,6 @@ import 'package:quotebrowser/BL/orm.dart';
 
 import '../../BL/bl.dart';
 
-import '../../DL/tagsdrift/tagsmain.dart';
 import '../alib/alicons.dart';
 import 'pages/books/__authors.dart';
 import 'pages/daily/1daily.dart';
@@ -82,10 +81,9 @@ class _HomeTabState extends State<HomeTab> {
               const WordHomePage(),
               IconButton(
                   onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TagsDriftApp()),
-                    );
+                    // //This should be a singleton
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => DriftDbViewer()));
                   },
                   icon: const Icon(Icons.drive_eta)),
             ],
