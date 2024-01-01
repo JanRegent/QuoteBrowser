@@ -108,8 +108,8 @@ class _QuoteEditState extends State<QuoteEdit> {
         int len = bl.orm.currentRow.selectedText.value.length;
         al.messageInfo(
             context,
-            'Selected',
-            '${bl.orm.currentRow.selectedText.value.substring(0, 10)}...${bl.orm.currentRow.selectedText.value.substring(len - 10, len)}',
+            bl.orm.currentRow.selectedText.value.substring(0, 10),
+            bl.orm.currentRow.selectedText.value.substring(len - 10, len),
             3);
       } catch (_) {
         al.messageInfo(

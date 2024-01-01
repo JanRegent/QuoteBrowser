@@ -470,173 +470,10 @@ class TodoEntriesCompanion extends UpdateCompanion<TodoEntry> {
   }
 }
 
-class TextEntries extends Table
-    with
-        TableInfo<TextEntries, TextEntry>,
-        VirtualTableInfo<TextEntries, TextEntry> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  TextEntries(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
-  late final GeneratedColumn<String> description = GeneratedColumn<String>(
-      'description', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      $customConstraints: '');
-  @override
-  List<GeneratedColumn> get $columns => [description];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'text_entries';
-  @override
-  VerificationContext validateIntegrity(Insertable<TextEntry> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('description')) {
-      context.handle(
-          _descriptionMeta,
-          description.isAcceptableOrUnknown(
-              data['description']!, _descriptionMeta));
-    } else if (isInserting) {
-      context.missing(_descriptionMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  TextEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TextEntry(
-      description: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
-    );
-  }
-
-  @override
-  TextEntries createAlias(String alias) {
-    return TextEntries(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-  @override
-  String get moduleAndArgs =>
-      'fts5(description, content=todo_entries, content_rowid=id)';
-}
-
-class TextEntry extends DataClass implements Insertable<TextEntry> {
-  final String description;
-  const TextEntry({required this.description});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['description'] = Variable<String>(description);
-    return map;
-  }
-
-  TextEntriesCompanion toCompanion(bool nullToAbsent) {
-    return TextEntriesCompanion(
-      description: Value(description),
-    );
-  }
-
-  factory TextEntry.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TextEntry(
-      description: serializer.fromJson<String>(json['description']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'description': serializer.toJson<String>(description),
-    };
-  }
-
-  TextEntry copyWith({String? description}) => TextEntry(
-        description: description ?? this.description,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('TextEntry(')
-          ..write('description: $description')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => description.hashCode;
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is TextEntry && other.description == this.description);
-}
-
-class TextEntriesCompanion extends UpdateCompanion<TextEntry> {
-  final Value<String> description;
-  final Value<int> rowid;
-  const TextEntriesCompanion({
-    this.description = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  TextEntriesCompanion.insert({
-    required String description,
-    this.rowid = const Value.absent(),
-  }) : description = Value(description);
-  static Insertable<TextEntry> custom({
-    Expression<String>? description,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (description != null) 'description': description,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  TextEntriesCompanion copyWith(
-      {Value<String>? description, Value<int>? rowid}) {
-    return TextEntriesCompanion(
-      description: description ?? this.description,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (description.present) {
-      map['description'] = Variable<String>(description.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TextEntriesCompanion(')
-          ..write('description: $description, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   late final $CategoriesTable categories = $CategoriesTable(this);
   late final $TodoEntriesTable todoEntries = $TodoEntriesTable(this);
-  late final TextEntries textEntries = TextEntries(this);
   late final Trigger todosInsert = Trigger(
       'CREATE TRIGGER todos_insert AFTER INSERT ON todo_entries BEGIN INSERT INTO text_entries ("rowid", description) VALUES (new.id, new.description);END',
       'todos_insert');
@@ -669,7 +506,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
           Variable<String>(query)
         ],
         readsFrom: {
-          textEntries,
           todoEntries,
           categories,
         }).asyncMap((QueryRow row) async => SearchResult(
@@ -682,37 +518,25 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [
-        categories,
-        todoEntries,
-        textEntries,
-        todosInsert,
-        todosDelete,
-        todosUpdate
-      ];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [categories, todoEntries, todosInsert, todosDelete, todosUpdate];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
         [
           WritePropagation(
             on: TableUpdateQuery.onTableName('todo_entries',
                 limitUpdateKind: UpdateKind.insert),
-            result: [
-              TableUpdate('text_entries', kind: UpdateKind.insert),
-            ],
+            result: [],
           ),
           WritePropagation(
             on: TableUpdateQuery.onTableName('todo_entries',
                 limitUpdateKind: UpdateKind.delete),
-            result: [
-              TableUpdate('text_entries', kind: UpdateKind.insert),
-            ],
+            result: [],
           ),
           WritePropagation(
             on: TableUpdateQuery.onTableName('todo_entries',
                 limitUpdateKind: UpdateKind.update),
-            result: [
-              TableUpdate('text_entries', kind: UpdateKind.insert),
-            ],
+            result: [],
           ),
         ],
       );
