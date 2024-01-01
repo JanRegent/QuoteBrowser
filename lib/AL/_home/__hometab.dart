@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:quotebrowser/BL/orm.dart';
 
 import '../../BL/bl.dart';
-import '../../DL/drift/maind.dart';
+
+import '../../DL/tagsdrift/tagsmain.dart';
 import '../alib/alicons.dart';
 import 'pages/books/__authors.dart';
 import 'pages/daily/1daily.dart';
@@ -83,7 +84,7 @@ class _HomeTabState extends State<HomeTab> {
                   onPressed: () async {
                     await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DriftApp()),
+                      MaterialPageRoute(builder: (context) => TagsDriftApp()),
                     );
                   },
                   icon: const Icon(Icons.drive_eta)),
