@@ -3,6 +3,7 @@ import 'package:drift_db_viewer/drift_db_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quotebrowser/AL/alib/alib.dart';
 
 import '../database/database.dart';
 
@@ -48,6 +49,7 @@ class _HomePageState extends ConsumerState<TagsHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: al.iconBack(context),
         title: const Text('Tags list'),
         actions: [
 //          const BackupIcon(),
@@ -65,7 +67,6 @@ class _HomePageState extends ConsumerState<TagsHomePage> {
           ),
         ],
       ),
-      drawer: const Drawer(),
       body: currentEntries.when(
         data: (entries) {
           return ListView.builder(
