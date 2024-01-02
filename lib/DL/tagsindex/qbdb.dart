@@ -4,13 +4,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 import '../../BL/bluti.dart';
+import '../../BL/dailylist/dailylistcrud.dart';
 import '../backendurl.dart';
 import '../dl.dart';
 
 void tagsIndexSqLite() async {
+  DailyListHelper dailylistHelper = DailyListHelper();
+
+  await dailylistHelper.initWinDB();
+  await dailylistHelper.batchInsert();
+  List<User> users = await dailylistHelper.getAllUsers();
+  debugPrint(users[10].toMap().toString());
+
 // Use the ffi web factory in web apps (flutter or dart)
   var factory = databaseFactoryFfiWeb;
-  var db = await factory.openDatabase('./tagIndex');
+  var db = await factory.openDatabase('./qbdb');
   var sqliteVersion =
       (await db.rawQuery('select sqlite_version()')).first.values.first;
   debugPrint('sqliteVersion $sqliteVersion'); // should print 3.39.3

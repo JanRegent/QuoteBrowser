@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'wordsearchpage.dart';
+import '../_home/pages/wordsearchpage.dart';
 
 class WordHomePage extends StatelessWidget {
   const WordHomePage({super.key});

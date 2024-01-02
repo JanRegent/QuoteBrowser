@@ -9,8 +9,8 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:quotebrowser/BL/authorsbooks/bookscrud.dart';
 
 import '../AL/_home/pages/books/bookslist.dart';
-import '../AL/_home/pages/daily/dailylist.dart';
 
+import 'dailylist/dailylist.dart';
 import 'categories/catscrud.dart';
 
 import 'columntext/columntextfilter.dart';
