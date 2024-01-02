@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/AL/alib/alib.dart';
+import 'package:quotebrowser/BL/orm.dart';
 import 'package:quotebrowser/DL/dl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,7 +38,8 @@ class _OthersFieldsState extends State<OthersFields> {
     othersFieldsWidgets = [
       ListTile(
           tileColor: Colors.white,
-          leading: const Text('fileUrl'),
+          leading: TextButton(
+              onPressed: () => importComments(), child: const Text('fileUrl')),
           title: TextButton(
               child: Row(
                 children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
@@ -88,22 +90,11 @@ class _OthersFieldsState extends State<OthersFields> {
       if (columnName == 'yellowParts') continue;
       if (columnName == 'rownoKey') continue;
 
-      if (columnName == 'docUrl') {
+      if (columnName == 'docUrl' || columnName == 'fileUrl') {
         othersFieldsWidgets.add(ListTile(
             tileColor: Colors.white,
             leading: TextButton(
-                onPressed: () async {
-                  String rownoKey =
-                      '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}';
-                  al.showTopSnackBar(
-                      context, 'Importing comments at \n\n$rownoKey', 15);
-
-                  await dl.httpService.comments2tagsYellowparts(rownoKey);
-                  // ignore: use_build_context_synchronously
-                  al.showTopSnackBar(
-                      context, 'Import done at \n\n$rownoKey', 3);
-                },
-                child: const Text('docUrl')),
+                onPressed: () => importComments(), child: Text(columnName)),
             title: TextButton(
                 child: Row(
                   children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
@@ -132,6 +123,18 @@ class _OthersFieldsState extends State<OthersFields> {
     }
 
     return othersFieldsWidgets;
+  }
+
+  Future importComments() async {
+    String rownoKey =
+        '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}';
+    al.showTopSnackBar(context, 'Importing comments at \n\n$rownoKey', 15);
+
+    await dl.httpService.comments2tagsYellowparts(rownoKey);
+
+    await currentRowSet(rownoKey);
+    // ignore: use_build_context_synchronously
+    al.showTopSnackBar(context, 'Import done at \n\n$rownoKey', 3);
   }
 
   Card othersListview() {

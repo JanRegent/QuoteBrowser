@@ -43,7 +43,7 @@ class HttpService {
     );
 
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-
+    sheetRowsSaveGetKeys(response.data['data']);
     return response.data['data'];
   }
 

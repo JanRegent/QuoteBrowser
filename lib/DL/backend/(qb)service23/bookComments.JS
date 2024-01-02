@@ -1,66 +1,80 @@
-
+// ?action=comments2tagsYellowparts&rownoKey=avadhuta.com__|__115
 function comments2tagsYellowparts(rownoKey) {
 
   logi(rownoKey)
-
-
+  sheetnamesUrlsMapBuild();
   var sheetRowKey = rownoKey.split('__|__');
   var sheetName = sheetRowKey[0];
-  var sheetUrl  = sheeturlBySheetname(sheetName)
+  logi('sheetName: ' + sheetName)
+  var sheetUrl = sheetnamesUrlsMap.get(sheetName)
+
+  logi(sheetUrl)
+
   var sheet = SpreadsheetApp.openByUrl(sheetUrl).getSheetByName(sheetName);
   var cols = sheet.getDataRange().getValues()[0]
   var rowNo = sheetRowKey[1];
- 
+
   logi(rowNo)
 
-  var docUrl = sheet.getDataRange().getValues()[rowNo-1][cols.indexOf('docUrl')]
-
-  //'1ZE1OHahSy1VBwfDgjzUu4uqO1noGl50f0_ZRnsVpWxI
+  var docUrl = sheet.getDataRange().getValues()[rowNo - 1][cols.indexOf('docUrl')]
+  if (docUrl == undefined)
+    docUrl = sheet.getDataRange().getValues()[rowNo - 1][cols.indexOf('fileUrl')]
+  log('docUrl: ' + docUrl);
 
   var doc = DocumentApp.openByUrl(docUrl)
 
   var tagComment = getCommentsFromDocument(doc.getId());
 
-  
+
   var tags = '';
   var yellowParts = ''
   var quote = '#tags__|__yelowparts\n\n';
-  for (var i = 1; i < tagComment.length; i++)  {
+  var tagsYellowMap = {}
+  for (var i = 1; i < tagComment.length; i++) {
     var row = tagComment[i];
     tags += '#' + row['tags']
     yellowParts += '__|__' + row['yellowPart']
+    tagsYellowMap[row['tags']] = row['yellowPart']
 
     quote += row['tags'] + '\n' + row['yellowPart'] + '\n\n'
   }
 
+  //-----------------------------------------------------------set, save
   try {
-      var letter = columnToLetter( cols.indexOf('quote')+1)
-      sheet.getRange(letter+rowNo).setValue(quote);
-  }catch(_){}
-
-
-  try {
-      var letter = columnToLetter( cols.indexOf('yellowParts')+1)
-      sheet.getRange(letter+rowNo).setValue(yellowParts);
-  }catch(_){}
-
-  var tagsSet  = new Set(tags.split('#'));
-  var tagsPure = Array.from(tagsSet).join('#') 
-  try {
-      var letter = columnToLetter( cols.indexOf('tags')+1)
-      sheet.getRange(letter+rowNo).setValue(tagsPure);
-  }catch(_){}
+    var letter = columnToLetter(cols.indexOf('quote') + 1)
+    sheet.getRange(letter + rowNo).setValue(quote);
+  } catch (_) { }
 
 
   try {
+    var letter = columnToLetter(cols.indexOf('yellowParts') + 1)
+    sheet.getRange(letter + rowNo).setValue(yellowParts);
+  } catch (_) { }
+
+  var tagsSet = new Set(tags.split('#'));
+  var tagsPure = Array.from(tagsSet).join('#')
+  try {
+    var letter = columnToLetter(cols.indexOf('tags') + 1)
+    sheet.getRange(letter + rowNo).setValue(tagsPure);
+  } catch (_) { }
+
+  try {
+    var letter = columnToLetter(cols.indexOf('tagsYellowMap') + 1)
+    sheet.getRange(letter + rowNo).setValue(tagsYellowMap);
+  } catch (_) { }
+
+
+  //---------------------------------------------------------return row
+  try {
+    cols.unshift('rownoKey');
     colsSet[sheetName] = cols;
     var data = []
-    data.push(sheet.getDataRange().getValues()[rowNo-1])
+    data.push(sheet.getDataRange().getValues()[rowNo - 1])
     data[0].unshift(rownoKey)
-    return buildResponse(data,'');
-  }catch(e) {
+    return buildResponse(data, '');
+  } catch (e) {
     log(e)
-    return buildResponse([],e.toString());
+    return buildResponse([], e.toString());
   }
 
 }
@@ -75,25 +89,25 @@ function comments2sheetRow___test() {
 function getCommentsFromDocument(docId) {
 
   var comments = Drive.Comments.list(docId);
-  
+
   if (comments.items && comments.items.length == 0) return;
   var tagComment = []
   var tagsTgStr = '';
   for (var i = 0; i < comments.items.length; i++) {
-    var comment = comments.items[i];     
-    tagsTgStr = '#' + comment.content.replaceAll('tg ','').trim();
-    tagsTgStr = tagsTgStr.replaceAll('\n','#')
-    tagsTgStr = tagsTgStr.replaceAll(',','#')
-    
+    var comment = comments.items[i];
+    tagsTgStr = '#' + comment.content.replaceAll('tg ', '').trim();
+    tagsTgStr = tagsTgStr.replaceAll('\n', '#')
+    tagsTgStr = tagsTgStr.replaceAll(',', '#')
+
     var decode = XmlService.parse('<d>' + comment.context.value + '</d>');
     var yellowDecoded = decode.getRootElement().getText();
     if (yellowDecoded.trim().length == 0) continue;
 
-    tagComment.push({"tags": tagsTgStr, "yellowPart": yellowDecoded});
+    tagComment.push({ "tags": tagsTgStr, "yellowPart": yellowDecoded });
     //log(comment.content)
 
   }
- 
+
   return tagComment
 
 }
@@ -101,17 +115,17 @@ function getCommentsFromDocument(docId) {
 
 
 
-function appendComments(docUrl, sheet, author, book,parPage, title, folderId) {
+function appendComments(docUrl, sheet, author, book, parPage, title, folderId) {
   log(docUrl)
-  var doc = DocumentApp .openByUrl(docUrl);
+  var doc = DocumentApp.openByUrl(docUrl);
   var body = doc.getBody();
   var sourceUrl = '';
   try {
     sourceUrl = body.getText().split('\n')[0]
-  }catch(_){
+  } catch (_) {
     sourceUrl = '    '
   }
-  if (sourceUrl.substring(0,4) != 'http' ) sourceUrl = '';
+  if (sourceUrl.substring(0, 4) != 'http') sourceUrl = '';
   var folderUrl = 'https://drive.google.com/drive/folders/' + folderId;
   var comments = getCommentsFromDocument(doc.getId());
   if (comments == undefined) {
@@ -121,7 +135,7 @@ function appendComments(docUrl, sheet, author, book,parPage, title, folderId) {
   log(title);
   for (var i = 0; i < comments.length; i = i + 1) {
     var pair = comments[i]
-   
+
     sheet.appendRow([pair['yellowPart'], author, book, parPage, pair['tags'], pair['yellowPart'], '', '', '', '', '', folderUrl, sourceUrl, title, docUrl]);
   }
 }
@@ -132,9 +146,9 @@ function getDocumentsCommentsFromFolder(folderId, sheet) {
   while (files.hasNext()) {
     var file = files.next();
 
-    if ('application/vnd.google-apps.document' != file.getMimeType() ) continue;
+    if ('application/vnd.google-apps.document' != file.getMimeType()) continue;
 
-    appendComments(file.getUrl(), sheet, 'Nisadadatta Maharaj', 'JÁ JSEM TO',file.getName(), file.getName(), folderId)
+    appendComments(file.getUrl(), sheet, 'Nisadadatta Maharaj', 'JÁ JSEM TO', file.getName(), file.getName(), folderId)
 
 
   }
