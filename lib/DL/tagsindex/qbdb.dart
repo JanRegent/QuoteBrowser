@@ -27,13 +27,13 @@ void tagsIndexSqLite() async {
   List<Map<String, Object?>> rows = await db.rawQuery(
       "select * from TagsIndex where tag like 'laska%' AND sheetname like '%amana%'");
   for (var row in rows) {
-    print(row);
+    debugPrint(row.toString());
   }
 
   rows = await db.rawQuery(
       "select * from TagsIndex where tag = '*****'  AND sheetname like '%EMT%' ");
   for (var row in rows) {
-    print(row);
+    debugPrint(row.toString());
   }
 }
 
