@@ -91,12 +91,17 @@ class CurrentRow {
     if (columnName.isEmpty) return;
     if (bl.orm.currentRow.sheetName.value.isEmpty) return;
     try {
-      await dl.httpService.setCellDL(bl.orm.currentRow.sheetName.value,
-          columnName, cellContent, bl.orm.currentRow.rowNo.value);
+      List newRow = await dl.httpService.setCellDL(
+          bl.orm.currentRow.sheetName.value,
+          columnName,
+          cellContent,
+          bl.orm.currentRow.rowNo.value);
 
       bl.orm.currentRow.selectedText.value = '';
+      return newRow[0]; //rownoKey
     } catch (e) {
       debugPrint('setCellBL($columnName) \n$e');
+      return ''; //rownoKey
     }
   }
 }
@@ -139,6 +144,7 @@ Future currentRowSet(String sheetRownoKey) async {
   bl.orm.currentRow.yellowParts.value = valueGet('yellowParts');
 
   bl.orm.currentRow.author.value = valueGet('author');
+
   bl.orm.currentRow.book.value = valueGet('book');
 
   bl.orm.currentRow.parPage.value = valueGet('parPage');

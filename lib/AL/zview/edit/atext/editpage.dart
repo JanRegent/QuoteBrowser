@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../BL/bl.dart';
+import '../../../../BL/orm.dart';
 import '../../../alib/alib.dart';
 
 class EditPage extends StatefulWidget {
@@ -27,8 +28,9 @@ class _EditPageState extends State<EditPage> {
             isSaving = true;
           });
           bl.orm.currentRow.quote.value = editControler.text;
-          await bl.orm.currentRow
+          String rownoKey = await bl.orm.currentRow
               .setCellBL('quote', bl.orm.currentRow.quote.value);
+          currentRowSet(rownoKey);
           setState(() {
             isSaving = false;
           });

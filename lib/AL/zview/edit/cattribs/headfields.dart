@@ -3,6 +3,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
 
 import 'package:quotebrowser/AL/zview/edit/battr/stars.dart';
+import 'package:quotebrowser/BL/orm.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../BL/bl.dart';
@@ -119,7 +120,9 @@ class _HeadFieldsState extends State<HeadFields> {
           onPressed: () async {
             String authorSelected = await authorSelect(context);
             if (authorSelected.isEmpty) return;
-            await bl.orm.currentRow.setCellBL('author', authorSelected);
+            String rownoKey =
+                await bl.orm.currentRow.setCellBL('author', authorSelected);
+            currentRowSet(rownoKey);
           },
         ),
         title: Obx(() => Text(bl.orm.currentRow.author.value)),
@@ -134,7 +137,9 @@ class _HeadFieldsState extends State<HeadFields> {
           onPressed: () async {
             String bookSelected = await bookSelect(context);
             if (bookSelected.isEmpty) return;
-            await bl.orm.currentRow.setCellBL('book', bookSelected);
+            String rownoKey =
+                await bl.orm.currentRow.setCellBL('book', bookSelected);
+            currentRowSet(rownoKey);
           },
         ),
         title: Obx(() => Text(bl.orm.currentRow.book.value)),
