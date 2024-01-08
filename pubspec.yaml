@@ -37,6 +37,9 @@ dependencies:
   #form
   flutter_riverpod: ^2.4.9
   flutter_form_builder: ^9.1.1
+  uuid: ^4.0.0
+  flutter_hooks: ^0.20.4
+  hooks_riverpod: ^2.4.9
 
   ##----db
   isar: ^4.0.0-dev.14 #https://pub.dev/packages/isar/versions/4.0.0-dev.14

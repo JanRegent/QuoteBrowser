@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'AL/_home/_homepage.dart';
 import 'BL/bl.dart';
@@ -21,7 +22,7 @@ void main() async {
   //rows2db();
   //rssInDo();
 
-  runApp(const SidebarHome());
+  runApp(const ProviderScope(child: SidebarHome()));
 
   //mainTagKap();
 }
