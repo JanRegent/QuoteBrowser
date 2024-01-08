@@ -19,6 +19,7 @@ import 'orm.dart';
 import 'rss/rss.dart';
 import 'sheetrows/sheetcolscrud.dart';
 import 'sheetrows/sheetrowscrud.dart';
+import 'tagsindex/tagsindexhelper.dart';
 
 Bl bl = Bl();
 List<IsarGeneratedSchema> schemas = [
@@ -57,8 +58,6 @@ class Bl {
   RssCRUD rssCRUD = RssCRUD();
 
   Future init() async {
-    await deviceInfoInit();
-
     await isarOpen();
 
     isar = Isar.get(schemas: schemas);
@@ -71,19 +70,8 @@ class Bl {
   // ignore: prefer_typing_uninitialized_variables
   late final deviceInfoAll;
 
-  Future deviceInfoInit() async {
-    //DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    //AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    //print(json.decode(androidInfo.display)); // e.g. "Moto G (4)"
-
-    // IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-    // print('Running on ${iosInfo.utsname.machine}'); // e.g. "iPod7,1"
-
-    // WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
-    // print('Running on ${webBrowserInfo.userAgent}');
-  }
-
   void updateSlowly() async {
+    tagIndexPrepare();
     bl.catsCRUD.update();
     booksCRUD.updateBooks();
   }

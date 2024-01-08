@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/foundation.dart' show debugPrint, immutable, kIsWeb;
 
 // ignore: unnecessary_import
@@ -7,27 +6,38 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+import '../../DL/backendurl.dart';
+import '../../DL/dl.dart';
+import '../bluti.dart';
+
 @immutable
 class TagIndex {
-  final int id;
   final String tag;
   final String sheetName;
   final String rownos;
 
   const TagIndex({
-    required this.id,
     required this.tag,
     required this.sheetName,
     required this.rownos,
   });
   Map<String, dynamic> toMap() {
     return {
-      "id": id,
       "tag": tag,
       "sheetname": sheetName,
       "rownos": rownos,
     };
   }
+}
+
+void tagIndexPrepare() async {
+  TagIndexHelper tagIndexHelper = TagIndexHelper();
+
+  await tagIndexHelper.initDB();
+  await tagIndexHelper.deleteAllTags();
+  await tagIndexHelper.batchInsert();
+  List<TagIndex> users = await tagIndexHelper.getAllTags();
+  debugPrint(users[10].toMap().toString());
 }
 
 class TagIndexHelper {
@@ -78,19 +88,18 @@ class TagIndexHelper {
 
   Future<void> onCreate(Database database, int version) async {
     final db = database;
-    await db.execute(""" CREATE TABLE IF NOT EXISTS users(
-            id INTEGER PRIMARY KEY,
-            tag TEXT,
+    await db.execute(""" CREATE TABLE IF NOT EXISTS tagindex(
+            tag TEXT PRIMARY KEY,
             sheetname TEXT,
             rownos TEXT
           )
  """);
   }
 
-  Future<TagIndex> insertUSer(TagIndex user) async {
+  Future<TagIndex> insertTag(TagIndex user) async {
     final db = await database;
     db.insert(
-      "users",
+      "tagindex",
       user.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -100,34 +109,42 @@ class TagIndexHelper {
   Future<List<TagIndex>> batchInsert() async {
     final db = await database;
     final batch = db.batch();
-    final Random random = Random();
-    final List<TagIndex> userList = List.generate(
-      1000,
-      (index) => TagIndex(
-        id: index + 1,
-        tag: 'User $index',
-        sheetName: 'user$index@example.com',
-        rownos: random.nextInt(9999).toString(),
-      ),
-    );
-    for (final TagIndex user in userList) {
+    List<TagIndex> userList = [];
+    List tagIndex =
+        await dl.httpService.getAllrows('__tagSheets__', rootSheetId);
+
+    List<String> cols = blUti.toListString(tagIndex[0]);
+
+    int tagIx = cols.indexOf('tag');
+    int sheetNameIx = cols.indexOf('sheetName');
+    int rownosIx = cols.indexOf('rownos');
+
+    for (var i = 1; i < tagIndex.length; i++) {
+      List<String> row = blUti.toListString(tagIndex[i]);
+
+      TagIndex user = TagIndex(
+        tag: row[tagIx],
+        sheetName: row[sheetNameIx],
+        rownos: row[rownosIx],
+      );
+      userList.add(user);
       batch.insert(
-        'users',
+        'tagindex',
         user.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
+
     await batch.commit();
     return userList;
   }
 
-  Future<List<TagIndex>> getAllUsers() async {
+  Future<List<TagIndex>> getAllTags() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('users');
+    final List<Map<String, dynamic>> maps = await db.query('tagindex');
 
     return List.generate(maps.length, (index) {
       return TagIndex(
-        id: maps[index]['id'],
         tag: maps[index]['tag'] ?? '',
         sheetName: maps[index]['sheetName'] ?? '',
         rownos: maps[index]['rownos'] ?? '',
@@ -138,28 +155,27 @@ class TagIndexHelper {
   Future<TagIndex?> getUserById(int userId) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
-      'users',
+      'tagindex',
       where: 'id = ?',
       whereArgs: [userId],
     );
 
     if (maps.isNotEmpty) {
       return TagIndex(
-        id: maps[0]['id'],
-        tag: maps[0]['name'],
-        sheetName: maps[0]['email'],
-        rownos: maps[0]['password'],
+        tag: maps[0]['tag'],
+        sheetName: maps[0]['sheetname'],
+        rownos: maps[0]['rownos'],
       );
     }
 
     return null;
   }
 
-  Future<void> deleteAllUsers() async {
+  Future<void> deleteAllTags() async {
     final db = await database;
     final Batch batch = db.batch();
 
-    batch.delete('users');
+    batch.delete('tagindex');
 
     await batch.commit();
   }

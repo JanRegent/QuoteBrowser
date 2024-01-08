@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'AL/_home/_homepage.dart';
-
 import 'BL/bl.dart';
 
 import 'DL/dl.dart';
+
 import 'DL/tagsindex/qbdb.dart';
 
 // flutter run -d windows  --dart-define=devmode=1
@@ -22,4 +22,6 @@ void main() async {
   //rssInDo();
 
   runApp(const SidebarHome());
+
+  //mainTagKap();
 }
