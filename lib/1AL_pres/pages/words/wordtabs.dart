@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../controllers/riverpod3/features/counterapp.dart';
-
 import '../wordsearchpage.dart';
 
-class WordHomePage extends StatelessWidget {
-  const WordHomePage({super.key});
+class WordTabsPage extends StatelessWidget {
+  const WordTabsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +63,27 @@ class WordSelectState extends State<WordSelect> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: River3App());
-
+    return MaterialApp(
+        home: DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.tag)),
+              Tab(icon: Icon(Icons.wordpress)),
+            ],
+          ),
+          title: const Text('By words Demo'),
+        ),
+        body: const TabBarView(
+          children: [
+            Icon(Icons.cabin),
+            Icon(Icons.directions_transit),
+          ],
+        ),
+      ),
+    ));
     //SearchUserRiverpod());
 
     //ListView(children: actions));

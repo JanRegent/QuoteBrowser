@@ -30,14 +30,14 @@ class TagIndex {
   }
 }
 
-void tagIndexPrepare() async {
-  TagIndexHelper tagIndexHelper = TagIndexHelper();
+TagIndexHelper tagIndexHelper = TagIndexHelper();
 
+void tagIndexPrepare() async {
   await tagIndexHelper.initDB();
   await tagIndexHelper.deleteAllTags();
   await tagIndexHelper.batchInsert();
-  List<TagIndex> users = await tagIndexHelper.getAllTags();
-  debugPrint(users[10].toMap().toString());
+  List<TagIndex> tagIndex = await tagIndexHelper.getAllTags();
+  debugPrint(tagIndex[10].toMap().toString());
 }
 
 class TagIndexHelper {
@@ -106,10 +106,12 @@ class TagIndexHelper {
     return user;
   }
 
+  List<String> tagsPrefix = [];
+
   Future<List<TagIndex>> batchInsert() async {
     final db = await database;
     final batch = db.batch();
-    List<TagIndex> userList = [];
+    List<TagIndex> tagList = [];
     List tagIndex =
         await dl.httpService.getAllrows('__tagSheets__', rootSheetId);
 
@@ -118,25 +120,30 @@ class TagIndexHelper {
     int tagIx = cols.indexOf('tag');
     int sheetNameIx = cols.indexOf('sheetName');
     int rownosIx = cols.indexOf('rownos');
-
+    Set tagsSet = {};
     for (var i = 1; i < tagIndex.length; i++) {
       List<String> row = blUti.toListString(tagIndex[i]);
 
-      TagIndex user = TagIndex(
+      TagIndex tagrow = TagIndex(
         tag: row[tagIx],
         sheetName: row[sheetNameIx],
         rownos: row[rownosIx],
       );
-      userList.add(user);
+      tagList.add(tagrow);
+      try {
+        tagsSet.add(tagrow.tag.substring(0, 2));
+      } catch (_) {}
       batch.insert(
         'tagindex',
-        user.toMap(),
+        tagrow.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
 
     await batch.commit();
-    return userList;
+    tagsPrefix = blUti.toListString(tagsSet.toList());
+
+    return tagList;
   }
 
   Future<List<TagIndex>> getAllTags() async {

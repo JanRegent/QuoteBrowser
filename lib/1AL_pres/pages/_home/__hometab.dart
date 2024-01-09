@@ -4,11 +4,13 @@ import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../controllers/alib/alicons.dart';
-import '../filterspages/wordhome.dart';
+
 import '../books/__authors.dart';
 import '../daily/1daily.dart';
 
-import '../9appsettings.dart';
+import '../../../0app/config/9appsettings.dart';
+import '../tags/tagsselect.dart';
+import '../words/wordtabs.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -25,7 +27,7 @@ class _HomeTabState extends State<HomeTab> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 4,
+        length: 5,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
@@ -35,6 +37,7 @@ class _HomeTabState extends State<HomeTab> {
               tabs: [
                 const Tab(icon: Icon(Icons.newspaper)),
                 Tab(icon: ALicons.attrIcons.bookIcon),
+                const Tab(icon: Icon(Icons.tag)),
                 const Tab(icon: Icon(Icons.wordpress)),
                 const Tab(icon: Icon(Icons.filter_alt)),
               ],
@@ -77,7 +80,8 @@ class _HomeTabState extends State<HomeTab> {
             children: [
               const LastMenu(),
               const BooksAuthors(),
-              const WordHomePage(),
+              const TagsSelectPage(),
+              const WordTabsPage(),
               IconButton(
                   onPressed: () async {
                     // //This should be a singleton

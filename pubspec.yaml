@@ -29,6 +29,7 @@ dependencies:
   ##----elements
   dropdown_button2: ^2.3.8 #https://pub.dev/packages/dropdown_button2
   flutter_rating_stars: ^1.0.3+4 #https://pub.dev/packages/flutter_rating_stars
+  filter_list: ^1.0.2
 
   #============================================================================BL
   ##-----bl status
