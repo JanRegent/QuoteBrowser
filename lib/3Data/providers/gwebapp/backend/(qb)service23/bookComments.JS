@@ -1,27 +1,23 @@
 // ?action=comments2tagsYellowparts&rownoKey=avadhuta.com__|__115
 function comments2tagsYellowparts(rownoKey) {
 
-  logi(rownoKey)
+  logi('-------------------------------------------comments2tagsYellowparts')
   sheetnamesUrlsMapBuild();
   var sheetRowKey = rownoKey.split('__|__');
   var sheetName = sheetRowKey[0];
-  logi('sheetName: ' + sheetName)
   var sheetUrl = sheetnamesUrlsMap.get(sheetName)
 
-  logi(sheetUrl)
 
   var sheet = SpreadsheetApp.openByUrl(sheetUrl).getSheetByName(sheetName);
   var cols = sheet.getDataRange().getValues()[0]
   var rowNo = sheetRowKey[1];
 
-  logi(rowNo)
 
   var docUrl = sheet.getDataRange().getValues()[rowNo - 1][cols.indexOf('docUrl')]
   if (docUrl == undefined)
     docUrl = sheet.getDataRange().getValues()[rowNo - 1][cols.indexOf('fileUrl')]
-  log('docUrl: ' + docUrl);
 
-  var doc = DocumentApp.openByUrl(docUrl)
+  var doc = DocumentApp.openByUrl(docUrl + '/view')
 
   var tagComment = getCommentsFromDocument(doc.getId());
 
@@ -30,7 +26,7 @@ function comments2tagsYellowparts(rownoKey) {
   var yellowParts = ''
   var quote = '#tags__|__yelowparts\n\n';
   var tagsYellowMap = {}
-  for (var i = 1; i < tagComment.length; i++) {
+  for (var i = 0; i < tagComment.length; i++) {
     var row = tagComment[i];
     tags += '#' + row['tags']
     yellowParts += '__|__' + row['yellowPart']
@@ -79,21 +75,22 @@ function comments2tagsYellowparts(rownoKey) {
 
 }
 
-function comments2sheetRow___test() {
-
-  comments2tagsYellowparts('JÁ JSEM TO__|__55')
+function comments2tagsYellowparts___test() {
+  logclear()
+  comments2tagsYellowparts('Dopisy Ramana__|__2')
 }
 
 
 //---------------------------------------------------------------------------getCommentsFromDocument
 function getCommentsFromDocument(docId) {
-
+  logi('getCommentsFromDocument(docId) ' + docId)
   var comments = Drive.Comments.list(docId);
 
-  if (comments.items && comments.items.length == 0) return;
+  //if (comments.items && comments.items.length == 0) return;
   var tagComment = []
   var tagsTgStr = '';
   for (var i = 0; i < comments.items.length; i++) {
+    log(i)
     var comment = comments.items[i];
     tagsTgStr = '#' + comment.content.replaceAll('tg ', '').trim();
     tagsTgStr = tagsTgStr.replaceAll('\n', '#')
@@ -104,10 +101,9 @@ function getCommentsFromDocument(docId) {
     if (yellowDecoded.trim().length == 0) continue;
 
     tagComment.push({ "tags": tagsTgStr, "yellowPart": yellowDecoded });
-    //log(comment.content)
+    logi(tagsTgStr + '\n' + yellowDecoded)
 
   }
-
   return tagComment
 
 }
