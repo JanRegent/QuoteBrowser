@@ -34,6 +34,8 @@ class _EditPageState extends State<EditPage> {
           setState(() {
             isSaving = false;
           });
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
         },
         icon: const Icon(Icons.save));
   }
