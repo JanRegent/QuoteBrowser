@@ -33,6 +33,22 @@ class HttpService {
   }
 
   //-------------------------------------------------------------------comments2tagsYellowparts
+  Future<List<String>> getrowsByTagPrefix(String tagPrefix) async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {'action': 'getrowsByTagPrefix', 'tagPrefix': tagPrefix},
+    );
+    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+    sheetRowsSaveGetKeys(response.data['data']);
+    List rows = response.data['data'];
+    List<String> rownoKeys = [];
+    for (int i = 0; i < rows.length; i++) {
+      rownoKeys.add(rows[i][0]);
+    }
+    return rownoKeys;
+  }
+
+  //-------------------------------------------------------------------comments2tagsYellowparts
   Future<List> comments2tagsYellowparts(String rownoKey) async {
     Response response = await dio.get(
       backendUrl,

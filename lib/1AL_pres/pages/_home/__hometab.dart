@@ -9,7 +9,7 @@ import '../books/__authors.dart';
 import '../daily/1daily.dart';
 
 import '../../../0app/config/9appsettings.dart';
-import '../tags/tagsselect.dart';
+import '../tags/incrementalsearch.dart';
 import '../words/wordtabs.dart';
 
 class HomeTab extends StatefulWidget {
@@ -80,7 +80,7 @@ class _HomeTabState extends State<HomeTab> {
             children: [
               const LastMenu(),
               const BooksAuthors(),
-              const TagsSelectPage(),
+              const IncrementalTagsPage(),
               const WordTabsPage(),
               IconButton(
                   onPressed: () async {

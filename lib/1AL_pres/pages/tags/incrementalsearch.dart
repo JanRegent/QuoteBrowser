@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:quotebrowser/2BL_domain/tagsindex/tagsindexhelper.dart';
 
-// Define a custom Form widget.
-class IncrementalForm extends StatefulWidget {
-  const IncrementalForm({super.key});
+import '../../../2BL_domain/bl.dart';
+import '../../../2BL_domain/orm.dart';
+import '../../../3Data/dl.dart';
+import '../../controllers/alib/alib.dart';
+import '../../zview/_swiper.dart';
 
-  @override
-  State<IncrementalForm> createState() => _IncrementalFormState();
+Future<String> tag4swipper(String tagPrefix) async {
+  currentSS.filterKey = 'tagPrefix_rownoKeys';
+
+  currentSS.keys = await dl.httpService.getrowsByTagPrefix(tagPrefix);
+  // ignore: use_build_context_synchronously
+  await bl.filtersCRUD.updateFilter(currentSS.filterKey, currentSS.keys);
+
+  if (currentSS.keys.isEmpty) {
+    return '0';
+  }
+  currentSS.swiperIndex.value = 0;
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
+  return currentSS.keys.length.toString();
 }
 
-// Define a corresponding State class.
-// This class holds data related to the Form.
-class _IncrementalFormState extends State<IncrementalForm> {
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
+class IncrementalTagsPage extends StatefulWidget {
+  const IncrementalTagsPage({super.key});
+
+  @override
+  State<IncrementalTagsPage> createState() => _IncrementalTagsPageState();
+}
+
+class _IncrementalTagsPageState extends State<IncrementalTagsPage> {
   final tagPrefixController = TextEditingController();
 
   @override
@@ -26,8 +41,6 @@ class _IncrementalFormState extends State<IncrementalForm> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    // This also removes the _printLatestValue listener.
     tagPrefixController.dispose();
     super.dispose();
   }
@@ -37,23 +50,22 @@ class _IncrementalFormState extends State<IncrementalForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Retrieve Tags'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
-              readOnly: true,
-              onChanged: (text) {},
-            ),
-            TextField(
               controller: tagPrefixController,
               decoration: InputDecoration(
-                hintText: 'Enter tag first chars',
+                hintText: 'Enter tag\'s first chars',
                 suffixIcon: IconButton(
-                  onPressed: tagPrefixController.clear,
+                  onPressed: () {
+                    incList = [];
+                    selectedList = [];
+                    tagPrefixController.clear;
+                    tagPrefixController.text = '';
+                    setState(() {});
+                  },
                   icon: const Icon(Icons.clear),
                 ),
               ),
@@ -63,13 +75,20 @@ class _IncrementalFormState extends State<IncrementalForm> {
                 setState(() {});
               },
             ),
-            MultiSelectDialogField(
+            MultiSelectChipDisplay(
               items: incList.map((e) => MultiSelectItem(e, e)).toList(),
-              listType: MultiSelectListType.CHIP,
-              onConfirm: (values) {
-                selectedList = values;
+              onTap: (tagPrefix) async {
+                al.messageInfo(
+                    context, 'geting quotes with tag', tagPrefix, 10);
+                await tag4swipper(tagPrefix);
+                // ignore: use_build_context_synchronously
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CardSwiper(tagPrefix, const {})),
+                );
               },
-            ),
+            )
           ],
         ),
       ),
