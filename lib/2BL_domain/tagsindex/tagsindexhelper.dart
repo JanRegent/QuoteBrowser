@@ -146,6 +146,20 @@ class TagIndexHelper {
     return tagList;
   }
 
+  Future<List<String>> getTagsStarts(String tagPrefix) async {
+    if (tagPrefix.trim().length < 2) return [];
+    final db = await database;
+    var res = await db
+        .query("tagindex", where: "tag LIKE ?", whereArgs: ['$tagPrefix%']);
+
+    List<String> tagList = [];
+    for (var element in res) {
+      tagList.add(element['tag'].toString());
+    }
+
+    return tagList;
+  }
+
   Future<List<TagIndex>> getAllTags() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('tagindex');

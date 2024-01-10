@@ -26,6 +26,7 @@ function comments2tagsYellowparts(rownoKey) {
   var yellowParts = ''
   var quote = '#tags__|__yelowparts\n\n';
   var tagsYellowMap = {}
+  logi(tagComment.length)
   for (var i = 0; i < tagComment.length; i++) {
     var row = tagComment[i];
     tags += '#' + row['tags']
@@ -77,7 +78,7 @@ function comments2tagsYellowparts(rownoKey) {
 
 function comments2tagsYellowparts___test() {
   logclear()
-  comments2tagsYellowparts('Dopisy Ramana__|__2')
+  comments2tagsYellowparts('advaita.cz__|__175')
 }
 
 
@@ -89,8 +90,7 @@ function getCommentsFromDocument(docId) {
   //if (comments.items && comments.items.length == 0) return;
   var tagComment = []
   var tagsTgStr = '';
-  for (var i = 0; i < comments.items.length; i++) {
-    log(i)
+  for (var i = comments.items.length - 1; i >= 0; i--) {
     var comment = comments.items[i];
     tagsTgStr = '#' + comment.content.replaceAll('tg ', '').trim();
     tagsTgStr = tagsTgStr.replaceAll('\n', '#')
@@ -100,6 +100,7 @@ function getCommentsFromDocument(docId) {
     var yellowDecoded = decode.getRootElement().getText();
     if (yellowDecoded.trim().length == 0) continue;
 
+    logi(i + ': ' + yellowDecoded)
     tagComment.push({ "tags": tagsTgStr, "yellowPart": yellowDecoded });
     logi(tagsTgStr + '\n' + yellowDecoded)
 
