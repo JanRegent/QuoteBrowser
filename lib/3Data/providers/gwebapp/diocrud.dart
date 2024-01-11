@@ -32,11 +32,25 @@ class HttpService {
     return response.data['data'];
   }
 
-  //-------------------------------------------------------------------comments2tagsYellowparts
-  Future<List<String>> getrowsByTagPrefix(String tagPrefix) async {
+  //-------------------------------------------------------------------tags
+  Future<List<String>> getTagsByPrefix(String tagPrefix) async {
     Response response = await dio.get(
       backendUrl,
-      queryParameters: {'action': 'getrowsByTagPrefix', 'tagPrefix': tagPrefix},
+      queryParameters: {'action': 'getTagsByPrefix', 'tagPrefix': tagPrefix},
+    );
+    List<String> tags = blUti.toListString(response.data['data']);
+
+    return tags;
+  }
+
+  Future<List<String>> getrowsByTagPrefixes(String tagPrefixes) async {
+    if (tagPrefixes.isEmpty) return [];
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {
+        'action': 'getrowsByTagPrefixes',
+        'tagPrefixes': tagPrefixes
+      },
     );
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
     sheetRowsSaveGetKeys(response.data['data']);

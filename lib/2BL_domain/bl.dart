@@ -19,7 +19,6 @@ import 'orm.dart';
 import 'usecases/rss/rss.dart';
 import 'entities/sheetrows/sheetcolscrud.dart';
 import 'entities/sheetrows/sheetrowscrud.dart';
-import 'tagsindex/tagsindexhelper.dart';
 
 Bl bl = Bl();
 List<IsarGeneratedSchema> schemas = [
@@ -71,7 +70,6 @@ class Bl {
   late final deviceInfoAll;
 
   void updateSlowly() async {
-    tagIndexPrepare();
     bl.catsCRUD.update();
     booksCRUD.updateBooks();
   }
