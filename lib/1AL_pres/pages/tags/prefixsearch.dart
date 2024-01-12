@@ -23,14 +23,14 @@ Future<String> tag4swipper(String tagPrefixes) async {
   return currentSS.keys.length.toString();
 }
 
-class IncrementalTagsPage extends StatefulWidget {
-  const IncrementalTagsPage({super.key});
+class PrefixSearchPage extends StatefulWidget {
+  const PrefixSearchPage({super.key});
 
   @override
-  State<IncrementalTagsPage> createState() => _IncrementalTagsPageState();
+  State<PrefixSearchPage> createState() => _PrefixSearchPageState();
 }
 
-class _IncrementalTagsPageState extends State<IncrementalTagsPage> {
+class _PrefixSearchPageState extends State<PrefixSearchPage> {
   final tagPrefixController = TextEditingController();
 
   @override
@@ -44,22 +44,29 @@ class _IncrementalTagsPageState extends State<IncrementalTagsPage> {
     super.dispose();
   }
 
+  void searchClean() {
+    {
+      incList = [];
+      selectedList = [];
+      tagPrefixController.clear;
+      tagPrefixController.text = '';
+      setState(() {});
+    }
+  }
+
   TextField tagsTextfield() {
     return TextField(
       controller: tagPrefixController,
       decoration: InputDecoration(
-        hintText: 'Enter tag\'s first chars',
-        suffixIcon: IconButton(
-          onPressed: () {
-            incList = [];
-            selectedList = [];
-            tagPrefixController.clear;
-            tagPrefixController.text = '';
-            setState(() {});
-          },
-          icon: const Icon(Icons.clear),
-        ),
-      ),
+          hintText: 'Enter tag\'s first chars',
+          prefixIcon: IconButton(
+            onPressed: () => searchClean(),
+            icon: const Icon(Icons.clear),
+          ),
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () => getTagsByPrefix(),
+          )),
     );
   }
 
@@ -87,40 +94,49 @@ class _IncrementalTagsPageState extends State<IncrementalTagsPage> {
     );
   }
 
-  List<String> incList = [];
-  List<String> selectedList = [];
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            ListTile(
-              leading: IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () => getTagsByPrefix(),
-              ),
-              title: tagsTextfield(),
-              trailing: TextButton(
-                child: const Text('All'),
-                onPressed: () {
-                  if (incList.isEmpty) return;
-                  String all = incList.first.toString();
-                  for (var i = 1; i < incList.length; i++) {
-                    all += '__|__${incList[i]}';
-                  }
-                  getrowsByTagPrefixes(all);
-                },
-              ),
-            ),
-            MultiSelectChipDisplay(
-              items: incList.map((e) => MultiSelectItem(e, e)).toList(),
-              onTap: (tagPrefix) => getrowsByTagPrefixes(tagPrefix),
-            )
-          ],
+  String lastPrefixesStr = 'ego,lask,blaho';
+  ListView bodyListview() {
+    List<Widget> items = [
+      ListTile(
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.save),
+        ),
+        title: tagsTextfield(),
+        trailing: TextButton(
+          child: const Text('All'),
+          onPressed: () {
+            if (incList.isEmpty) return;
+            String all = incList.first.toString();
+            for (var i = 1; i < incList.length; i++) {
+              all += '__|__${incList[i]}';
+            }
+            getrowsByTagPrefixes(all);
+          },
         ),
       ),
-    );
+      MultiSelectChipDisplay(
+        items: incList.map((e) => MultiSelectItem(e, e)).toList(),
+        onTap: (tagPrefix) => getrowsByTagPrefixes(tagPrefix),
+      )
+    ];
+    List<String> prefs = lastPrefixesStr.split(',');
+    for (var prefix in prefs) {
+      items.add(ListTile(
+          leading: TextButton(
+              onPressed: () {
+                tagPrefixController.text = prefix;
+              },
+              child: Text(prefix))));
+    }
+    return ListView(children: items);
+  }
+
+  List<String> incList = [];
+  List<String> selectedList = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return bodyListview();
   }
 }
