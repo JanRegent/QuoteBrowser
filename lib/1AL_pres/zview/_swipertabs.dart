@@ -10,6 +10,7 @@ import '../controllers/alib/alib.dart';
 import 'edit/battr/_quoteedit.dart';
 
 import 'edit/cattribs/headfields.dart';
+import 'edit/cattribs/inportcomments.dart';
 import 'edit/cattribs/othersfields.dart';
 import 'swipermenu.dart';
 
@@ -208,7 +209,12 @@ class _SwiperTabsState extends State<SwiperTabs>
       case 0:
         return const UserViewPage();
       case 1:
-        return QuoteEdit(widget.setStateSwiper, context);
+        if (bl.orm.currentRow.quote.value != '__toRead__') {
+          return QuoteEdit(widget.setStateSwiper, context);
+        } else {
+          return toReadListview(context);
+        }
+
       default:
         return QuoteEdit(widget.setStateSwiper, context);
     }

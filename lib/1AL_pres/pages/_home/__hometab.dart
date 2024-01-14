@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../2BL_domain/bl.dart';
+import '../../../3Data/builddate.dart';
 import '../../controllers/alib/alicons.dart';
 
 import '../books/__authors.dart';
@@ -49,12 +50,18 @@ class _HomeTabState extends State<HomeTab> {
               // Important: Remove any padding from the ListView.
               padding: EdgeInsets.zero,
               children: [
-                const DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: Text('(qb)settings'),
-                ),
+                DrawerHeader(
+                    decoration: const BoxDecoration(
+                      color: Colors.blue,
+                    ),
+                    child: Column(
+                      children: [
+                        const Text('(qb)settings'),
+                        const Text(' '),
+                        const Text(' '),
+                        Text(buildDate)
+                      ],
+                    )),
                 ListTile(
                   title: const Text('Home'),
                   selected: _selectedIndex == 0,

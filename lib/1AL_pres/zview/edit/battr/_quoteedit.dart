@@ -14,6 +14,7 @@ import '../../../controllers/alib/alicons.dart';
 import '../atext/editpage.dart';
 import '../atext/tagsyellowlist.dart';
 
+import '../cattribs/inportcomments.dart';
 import 'quotepopup.dart';
 import 'originalview.dart';
 
@@ -306,6 +307,14 @@ class _QuoteEditState extends State<QuoteEdit> {
             },
           ),
         ));
+  }
+
+  void openDoc() {
+    TextButton(
+        child: Row(
+          children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
+        ),
+        onPressed: () => onOpen(bl.orm.currentRow.fileUrl.value));
   }
 
   TextField quoteTextField() {

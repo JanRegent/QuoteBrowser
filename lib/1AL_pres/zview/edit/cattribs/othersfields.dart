@@ -1,14 +1,10 @@
 // ignore: must_be_immutable
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/1AL_pres/controllers/alib/alib.dart';
-import 'package:quotebrowser/2BL_domain/orm.dart';
-import 'package:quotebrowser/3Data/dl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../2BL_domain/bl.dart';
 import '../battr/quotepopup.dart';
+import 'inportcomments.dart';
 
 class OthersFields extends StatefulWidget {
   const OthersFields({super.key});
@@ -27,24 +23,18 @@ class _OthersFieldsState extends State<OthersFields> {
     expandedOthersBuild();
   }
 
-  Future<void> _onOpen(String url) async {
-    LinkableElement link = LinkableElement('Link in text', url);
-    if (!await launchUrl(Uri.parse(link.url))) {
-      //ebugPrint('_onOpen--Could not launch ${link.url}');
-    }
-  }
-
   List<Widget> expandedOthersBuild() {
     othersFieldsWidgets = [
       ListTile(
           tileColor: Colors.white,
           leading: TextButton(
-              onPressed: () => importComments(), child: const Text('fileUrl')),
+              onPressed: () => importComments(context),
+              child: const Text('fileUrl')),
           title: TextButton(
               child: Row(
                 children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
               ),
-              onPressed: () => _onOpen(bl.orm.currentRow.fileUrl.value)),
+              onPressed: () => onOpen(bl.orm.currentRow.fileUrl.value)),
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.fileUrl.value, 'fileUrl')),
       ListTile(
@@ -54,7 +44,7 @@ class _OthersFieldsState extends State<OthersFields> {
               child: Row(
                 children: [Obx(() => Text(bl.orm.currentRow.sourceUrl.value))],
               ),
-              onPressed: () => _onOpen(bl.orm.currentRow.sourceUrl.value)),
+              onPressed: () => onOpen(bl.orm.currentRow.sourceUrl.value)),
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.sourceUrl.value, 'sourceUrl')),
       ListTile(
@@ -64,7 +54,7 @@ class _OthersFieldsState extends State<OthersFields> {
               child: Row(
                 children: [Obx(() => Text(bl.orm.currentRow.publisher.value))],
               ),
-              onPressed: () => _onOpen(bl.orm.currentRow.publisher.value)),
+              onPressed: () => onOpen(bl.orm.currentRow.publisher.value)),
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.publisher.value, 'vydal')),
       ListTile(
@@ -74,7 +64,7 @@ class _OthersFieldsState extends State<OthersFields> {
               child: Row(
                 children: [Obx(() => Text(bl.orm.currentRow.folder.value))],
               ),
-              onPressed: () => _onOpen(bl.orm.currentRow.folder.value)),
+              onPressed: () => onOpen(bl.orm.currentRow.folder.value)),
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.sourceUrl.value, 'folder')),
     ];
@@ -94,12 +84,13 @@ class _OthersFieldsState extends State<OthersFields> {
         othersFieldsWidgets.add(ListTile(
             tileColor: Colors.white,
             leading: TextButton(
-                onPressed: () => importComments(), child: Text(columnName)),
+                onPressed: () => importComments(context),
+                child: Text(columnName)),
             title: TextButton(
                 child: Row(
                   children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
                 ),
-                onPressed: () => _onOpen(bl.orm.currentRow.fileUrl.value)),
+                onPressed: () => onOpen(bl.orm.currentRow.fileUrl.value)),
             trailing: copyPasteClearPopupMenuButton(
                 bl.orm.currentRow.sourceUrl.value, 'docUrl')));
       } else {
@@ -112,7 +103,7 @@ class _OthersFieldsState extends State<OthersFields> {
                     child: Obx(
                         () => Text(bl.orm.currentRow.optionalvalues[i].value)),
                     onPressed: () =>
-                        _onOpen(bl.orm.currentRow.optionalvalues[i].value))
+                        onOpen(bl.orm.currentRow.optionalvalues[i].value))
               ]),
               trailing: copyPasteClearPopupMenuButton(
                 bl.orm.currentRow.optionalvalues[i].value,
@@ -123,18 +114,6 @@ class _OthersFieldsState extends State<OthersFields> {
     }
 
     return othersFieldsWidgets;
-  }
-
-  Future importComments() async {
-    String rownoKey =
-        '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}';
-    al.showTopSnackBar(context, 'Importing comments at \n\n$rownoKey', 15);
-
-    await dl.httpService.comments2tagsYellowparts(rownoKey);
-
-    await currentRowSet(rownoKey);
-    // ignore: use_build_context_synchronously
-    al.showTopSnackBar(context, 'Import done at \n\n$rownoKey', 3);
   }
 
   Card othersListview() {
