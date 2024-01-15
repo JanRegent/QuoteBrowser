@@ -93,6 +93,7 @@ class _SwiperTabsState extends State<SwiperTabs>
           widget.setStateSwiper();
 
           if (currentSS.currentHomeTabIndex == 1) {
+            bl.booksCount[bl.orm.currentRow.sheetName] = currentSS.swiperIndex;
             dl.httpService.setCellDL(
                 'booksList',
                 'currentIndex',
@@ -212,7 +213,7 @@ class _SwiperTabsState extends State<SwiperTabs>
         if (bl.orm.currentRow.quote.value != '__toRead__') {
           return QuoteEdit(widget.setStateSwiper, context);
         } else {
-          return toReadListview(context);
+          return toReadListview(context, widget.setStateSwiper);
         }
 
       default:

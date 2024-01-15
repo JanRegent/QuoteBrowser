@@ -28,7 +28,10 @@ class _OthersFieldsState extends State<OthersFields> {
       ListTile(
           tileColor: Colors.white,
           leading: TextButton(
-              onPressed: () => importComments(context),
+              onPressed: () {
+                importComments(context);
+                setState(() {});
+              },
               child: const Text('fileUrl')),
           title: TextButton(
               child: Row(
@@ -84,7 +87,10 @@ class _OthersFieldsState extends State<OthersFields> {
         othersFieldsWidgets.add(ListTile(
             tileColor: Colors.white,
             leading: TextButton(
-                onPressed: () => importComments(context),
+                onPressed: () {
+                  importComments(context);
+                  setState(() {});
+                },
                 child: Text(columnName)),
             title: TextButton(
                 child: Row(

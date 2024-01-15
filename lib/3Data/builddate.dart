@@ -1,1 +1,1 @@
-String buildDate = ' 2024_01_14__11_05_build_AL---quote-toReadLv ';  
+String buildDate = ' 2024_01_15__10_53_build_AL---booklist-currentIndex ';  

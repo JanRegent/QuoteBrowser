@@ -27,7 +27,7 @@ Future<void> onOpen(String url) async {
   }
 }
 
-ListView toReadListview(BuildContext context) {
+ListView toReadListview(BuildContext context, VoidCallback setStateSwiper) {
   return ListView(
     children: [
       const Text('__toRead__'),
@@ -37,7 +37,11 @@ ListView toReadListview(BuildContext context) {
           ),
           onPressed: () => onOpen(bl.orm.currentRow.fileUrl.value)),
       TextButton(
-          onPressed: () => importComments(context), child: const Text('import'))
+          onPressed: () {
+            importComments(context);
+            setStateSwiper();
+          },
+          child: const Text('import'))
     ],
   );
 }
