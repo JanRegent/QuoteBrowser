@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
@@ -94,8 +95,69 @@ class _PrefixSearchPageState extends State<PrefixSearchPage> {
     );
   }
 
+  ExpandedTileList tagsets() {
+    return ExpandedTileList.builder(
+      itemCount: 3,
+      maxOpened: 2,
+      reverse: true,
+      itemBuilder: (context, index, controller) {
+        return ExpandedTile(
+          theme: const ExpandedTileThemeData(
+            headerColor: Colors.green,
+            headerRadius: 24.0,
+            headerPadding: EdgeInsets.all(24.0),
+            headerSplashColor: Colors.red,
+            //
+            contentBackgroundColor: Colors.blue,
+            contentPadding: EdgeInsets.all(24.0),
+            contentRadius: 12.0,
+          ),
+          controller:
+              index == 2 ? controller.copyWith(isExpanded: true) : controller,
+          title: Text("this is the title $index"),
+          content: Container(
+            color: Colors.red,
+            child: Column(
+              children: [
+                const Center(
+                  child: Text(
+                      "This is the content!ksdjfl kjsdflk sjdflksjdf lskjfd lsdkfj  ls kfjlsfkjsdlfkjsfldkjsdflkjsfdlksjdflskdjf lksdjflskfjlsfkjslfkjsldfkjslfkjsldfkjsflksjflskjflskfjlsfkjslfkjsflksjflskfjlsfkjslfkjslfkjslfkjslfkjsldfkjsdf"),
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    controller.collapse();
+                  },
+                  child: const Text("close it!"),
+                )
+              ],
+            ),
+          ),
+          onTap: () {
+            debugPrint("tapped!!");
+          },
+          onLongTap: () {
+            debugPrint("looooooooooong tapped!!");
+          },
+        );
+      },
+    );
+  }
+
   String lastPrefixesStr = 'ego,lask,blaho';
   ListView bodyListview() {
+    Row lastPrefixes() {
+      List<TextButton> lastbutts = [];
+      List<String> prefs = lastPrefixesStr.split(',');
+      for (var prefix in prefs) {
+        lastbutts.add(TextButton(
+            onPressed: () {
+              tagPrefixController.text = prefix;
+            },
+            child: Text(prefix)));
+      }
+      return Row(children: lastbutts);
+    }
+
     List<Widget> items = [
       ListTile(
         leading: IconButton(
@@ -120,15 +182,8 @@ class _PrefixSearchPageState extends State<PrefixSearchPage> {
         onTap: (tagPrefix) => getrowsByTagPrefixes(tagPrefix),
       )
     ];
-    List<String> prefs = lastPrefixesStr.split(',');
-    for (var prefix in prefs) {
-      items.add(ListTile(
-          leading: TextButton(
-              onPressed: () {
-                tagPrefixController.text = prefix;
-              },
-              child: Text(prefix))));
-    }
+    items.add(lastPrefixes());
+    items.add(tagsets());
     return ListView(children: items);
   }
 
