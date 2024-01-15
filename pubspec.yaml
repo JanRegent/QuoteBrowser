@@ -30,7 +30,6 @@ dependencies:
   dropdown_button2: ^2.3.8 #https://pub.dev/packages/dropdown_button2
   flutter_rating_stars: ^1.0.3+4 #https://pub.dev/packages/flutter_rating_stars
   multi_select_flutter: ^4.1.3 #https://pub.dev/packages/multi_select_flutter
-  flutter_expanded_tile: ^0.3.7 #https://pub.dev/packages/flutter_expanded_tile
 
   #============================================================================BL
   ##-----bl status

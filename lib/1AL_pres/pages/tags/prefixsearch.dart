@@ -1,5 +1,5 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
@@ -84,7 +84,7 @@ class _PrefixSearchPageState extends State<PrefixSearchPage> {
     setState(() {});
   }
 
-  void getrowsByTagPrefixes(String tagPrefixes) async {
+  void getQuotesByTagPrefixes(String tagPrefixes) async {
     al.messageInfo(context, 'geting quotes with tag', tagPrefixes, 10);
     await tag4swipper(tagPrefixes);
     // ignore: use_build_context_synchronously
@@ -95,75 +95,53 @@ class _PrefixSearchPageState extends State<PrefixSearchPage> {
     );
   }
 
-  ExpandedTileList tagsets() {
-    return ExpandedTileList.builder(
-      itemCount: 3,
-      maxOpened: 2,
-      reverse: true,
-      itemBuilder: (context, index, controller) {
-        return ExpandedTile(
-          theme: const ExpandedTileThemeData(
-            headerColor: Colors.green,
-            headerRadius: 24.0,
-            headerPadding: EdgeInsets.all(24.0),
-            headerSplashColor: Colors.red,
-            //
-            contentBackgroundColor: Colors.blue,
-            contentPadding: EdgeInsets.all(24.0),
-            contentRadius: 12.0,
+  //-------------------------------------------------------------tagset
+  List<String> tagsetPrefixes = [];
+  List<Widget> prefixQuoteButtons = [];
+  void prefixesAdd() {
+    List<String> prefixes = [];
+    if (incList.isEmpty) return;
+    for (var i = 1; i < incList.length; i++) {
+      prefixes.add(incList[i]);
+    }
+    prefixes.addAll(tagsetPrefixes);
+    tagsetPrefixes = [];
+    tagsetPrefixes.addAll(prefixes.sorted());
+
+    prefixQuoteButtons = [];
+    for (var i = 0; i < tagsetPrefixes.length; i++) {
+      String prefix = tagsetPrefixes[i];
+      prefixQuoteButtons.add(
+        ListTile(
+          title: Row(
+            children: [
+              TextButton(
+                child: Text(prefix),
+                onPressed: () => getQuotesByTagPrefixes(prefix),
+              )
+            ],
           ),
-          controller:
-              index == 2 ? controller.copyWith(isExpanded: true) : controller,
-          title: Text("this is the title $index"),
-          content: Container(
-            color: Colors.red,
-            child: Column(
-              children: [
-                const Center(
-                  child: Text(
-                      "This is the content!ksdjfl kjsdflk sjdflksjdf lskjfd lsdkfj  ls kfjlsfkjsdlfkjsfldkjsdflkjsfdlksjdflskdjf lksdjflskfjlsfkjslfkjsldfkjslfkjsldfkjsflksjflskjflskfjlsfkjslfkjsflksjflskfjlsfkjslfkjslfkjslfkjslfkjsldfkjsdf"),
-                ),
-                MaterialButton(
-                  onPressed: () {
-                    controller.collapse();
-                  },
-                  child: const Text("close it!"),
-                )
-              ],
-            ),
+          trailing: IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {},
           ),
-          onTap: () {
-            debugPrint("tapped!!");
-          },
-          onLongTap: () {
-            debugPrint("looooooooooong tapped!!");
-          },
-        );
-      },
-    );
+        ),
+      );
+    }
   }
 
-  String lastPrefixesStr = 'ego,lask,blaho';
   ListView bodyListview() {
-    Row lastPrefixes() {
-      List<TextButton> lastbutts = [];
-      List<String> prefs = lastPrefixesStr.split(',');
-      for (var prefix in prefs) {
-        lastbutts.add(TextButton(
-            onPressed: () {
-              tagPrefixController.text = prefix;
-            },
-            child: Text(prefix)));
-      }
-      return Row(children: lastbutts);
-    }
-
     List<Widget> items = [
       ListTile(
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.save),
-        ),
+        leading: incList.isEmpty
+            ? const Text(' ')
+            : IconButton(
+                onPressed: () {
+                  prefixesAdd();
+                  setState(() {});
+                },
+                icon: const Icon(Icons.add),
+              ),
         title: tagsTextfield(),
         trailing: TextButton(
           child: const Text('All'),
@@ -173,20 +151,35 @@ class _PrefixSearchPageState extends State<PrefixSearchPage> {
             for (var i = 1; i < incList.length; i++) {
               all += '__|__${incList[i]}';
             }
-            getrowsByTagPrefixes(all);
+            getQuotesByTagPrefixes(all);
           },
         ),
       ),
       MultiSelectChipDisplay(
         items: incList.map((e) => MultiSelectItem(e, e)).toList(),
-        onTap: (tagPrefix) => getrowsByTagPrefixes(tagPrefix),
+        onTap: (tagPrefix) => getQuotesByTagPrefixes(tagPrefix),
       )
     ];
-    items.add(lastPrefixes());
-    items.add(tagsets());
+    items.add(ListTile(
+        leading: prefixQuoteButtons.isEmpty
+            ? const Text(' ')
+            : IconButton(
+                icon: const Icon(Icons.save),
+                onPressed: () {},
+              ),
+        title: Text(tagsetName),
+        trailing: IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            prefixQuoteButtons = [];
+            setState(() {});
+          },
+        )));
+    items.addAll(prefixQuoteButtons);
     return ListView(children: items);
   }
 
+  String tagsetName = '??tagsetName';
   List<String> incList = [];
   List<String> selectedList = [];
 
