@@ -7,6 +7,7 @@ import '../../2BL_domain/bl.dart';
 import '../../2BL_domain/orm.dart';
 import '../../3Data/dl.dart';
 import '../controllers/alib/alib.dart';
+import '../pages/searchshow.dart';
 import 'edit/battr/_quoteedit.dart';
 
 import 'edit/cattribs/headfields.dart';
@@ -63,11 +64,41 @@ class _SwiperTabsState extends State<SwiperTabs>
 
   void currentRowIndexFromBookmarksGet() {}
 
+  List<String> currentSSkeys = [];
+  IconButton searchWord() {
+    return IconButton(
+        onPressed: () async {
+          String searchWord = await inputWord(context);
+          List<String> keys = await bl.sheetrowsCRUD.searchWord(searchWord);
+          if (keys.isEmpty) {
+            if (currentSSkeys.isEmpty) {
+              // ignore: use_build_context_synchronously
+              al.messageInfo(context, 'Search', 'Nothing found', 5);
+              return;
+            }
+            // ignore: use_build_context_synchronously
+            al.messageInfo(context, 'Search', 'Restored all', 5);
+            currentSS.keys = [];
+            currentSS.keys.addAll(currentSSkeys);
+            indexChanged(0);
+            setState(() {});
+            return;
+          }
+          currentSSkeys.addAll(currentSS.keys);
+          currentSS.keys = [];
+          currentSS.keys.addAll(keys);
+          indexChanged(0);
+          setState(() {});
+        },
+        icon: const Icon(Icons.search));
+  }
+
   Row titleArrowsRowOff() {
     return Row(children: [
       al.infoButton(context, 'Search by expression',
           'SheetGroup contains \n\n${widget.title}'),
       const Spacer(),
+      searchWord(),
       ElevatedButton(
         onPressed: () {
           if (bl.orm.currentRow.setCellDLOn) return;

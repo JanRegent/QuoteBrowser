@@ -7,13 +7,17 @@ import '../controllers/alib/alib.dart';
 import '../zview/_swiper.dart';
 
 Future<String> inputWord(BuildContext context) async {
-  final word = await InputDialog.show(
-    context: context,
-    title: 'Enter word', // The default.
-    okText: 'OK', // The default.
-    cancelText: 'Cancel', // The default.
-  );
-  return word!;
+  try {
+    final word = await InputDialog.show(
+      context: context,
+      title: 'Enter word', // The default.
+      okText: 'OK', // The default.
+      cancelText: 'Cancel', // The default.
+    );
+    return word!;
+  } catch (_) {
+    return '';
+  }
 }
 
 //----------------------------------------------------------search/view

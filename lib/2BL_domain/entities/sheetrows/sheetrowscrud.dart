@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
 import '../../bl.dart';
+import '../../bluti.dart';
 
 part 'sheetrowscrud.g.dart'; //dart run build_runner build
 
@@ -63,6 +64,26 @@ class SheetrowsCRUD {
       debugPrint('sheetrowsCRUD().readAll()\n$e');
       return [];
     }
+  }
+
+  Future<List<String>> searchWord(String word) async {
+    List rows = [];
+    try {
+      rows = isar.sheetRows
+          .where()
+          .sheetRowArrElementContains(word)
+          .sheetRowArrProperty()
+          .findAll();
+    } catch (e) {
+      debugPrint('searchWord().readAll()\n$e');
+    }
+
+    List<String> keys = [];
+    for (var i = 0; i < rows.length; i++) {
+      List<String> row = blUti.toListString(rows[i]);
+      keys.add(row[0]);
+    }
+    return keys;
   }
 
   //------------------------------------------------------------------update
