@@ -63,7 +63,7 @@ dependencies:
   #----------------------------------------------uti
   intl: ^0.18.1 #https://pub.dev/packages/intl
   dartx: ^1.2.0 #https://pub.dev/packages/dartx
-  csv: ^5.0.2 #https://pub.dev/packages/csv
+  csv: ^5.1.1 #https://pub.dev/packages/csv
   device_info_plus: ^9.1.1
 
   ##----icons
@@ -85,3 +85,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  #-----------------------------------------assets
+  assets:
+    - assets/data/

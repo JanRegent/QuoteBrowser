@@ -206,14 +206,19 @@ class _SwiperTabsState extends State<SwiperTabs>
   }
 
   Widget quoteTabs() {
+    if (bl.devMode == false) quoteTabIndex = 0;
     switch (quoteTabIndex) {
       case 0:
         return const UserViewPage();
       case 1:
-        if (bl.orm.currentRow.quote.value != '__toRead__') {
-          return QuoteEdit(widget.setStateSwiper, context);
+        if (bl.devMode == false) {
+          return const Text(' ');
         } else {
-          return toReadListview(context, widget.setStateSwiper);
+          if (bl.orm.currentRow.quote.value != '__toRead__') {
+            return QuoteEdit(widget.setStateSwiper, context);
+          } else {
+            return toReadListview(context, widget.setStateSwiper);
+          }
         }
 
       default:
@@ -226,7 +231,11 @@ class _SwiperTabsState extends State<SwiperTabs>
       case 0:
         return const HeadFields();
       case 1:
-        return const OthersFields();
+        if (bl.devMode == false) {
+          return const Text(' ');
+        } else {
+          return const OthersFields();
+        }
       default:
         return const HeadFields();
     }
