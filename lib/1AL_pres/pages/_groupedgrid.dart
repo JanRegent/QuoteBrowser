@@ -1,6 +1,6 @@
 import '1simplefilters.dart';
 import '2columntext.dart';
-import '3lastadd.dart';
+import '../widgets/3lastadd.dart';
 import 'searchshow.dart';
 
 import 'package:flutter/material.dart';

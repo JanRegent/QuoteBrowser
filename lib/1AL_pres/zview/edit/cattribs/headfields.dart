@@ -11,7 +11,7 @@ import '../../../controllers/alib/alicons.dart';
 
 import '../../../pages/filterspages/_selectview.dart';
 import '../battr/quotepopup.dart';
-import '../category/catable.dart';
+import '../../../pages/category/catable.dart';
 
 class HeadFields extends StatefulWidget {
   const HeadFields({super.key});

@@ -10,7 +10,11 @@ import '../../../2BL_domain/usecases/filtersbl/searchss.dart';
 Future loadCSV() async {
   final rawData = await rootBundle.loadString("assets/data/RobertAdams.csv");
   List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
-  await bl.sheetcolsCRUD.updateCols('Robert', blUti.toListString(listData[0]));
+
+  List<String> cols = blUti.toListString(listData[0]);
+  cols.insert(0, 'rownoKey');
+  await bl.sheetcolsCRUD.updateCols('Robert', cols);
+  listData.removeAt(0);
 
   for (var i = 0; i < listData.length; i++) {
     listData[i].insert(0, 'Robert__|__$i');

@@ -6,7 +6,7 @@ import '../../2BL_domain/orm.dart';
 
 import '../zview/_swiper.dart';
 import '../zview/edit/battr/addquote/addquoterow.dart';
-import 'searchshow.dart';
+import '../pages/searchshow.dart';
 
 class LastRowsAddQuote {
   Future doItem(

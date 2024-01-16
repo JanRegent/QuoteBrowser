@@ -11,7 +11,7 @@ import '../daily/1daily.dart';
 
 import '../../../0app/config/9appsettings.dart';
 import '../tags/prefixsearch.dart';
-import '../words/wordtabs.dart';
+import '../filterspages/words/wordtabs.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});

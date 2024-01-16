@@ -61,15 +61,15 @@ void initHighlight() {
 }
 
 //-------------------------------------------------------------userviewPage
-class UserViewPage extends StatefulWidget {
-  const UserViewPage({super.key});
+class HighViewPage extends StatefulWidget {
+  const HighViewPage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _UserViewPageState createState() => _UserViewPageState();
+  _HighViewPageState createState() => _HighViewPageState();
 }
 
-class _UserViewPageState extends State<UserViewPage> {
+class _HighViewPageState extends State<HighViewPage> {
   @override
   void initState() {
     super.initState();
