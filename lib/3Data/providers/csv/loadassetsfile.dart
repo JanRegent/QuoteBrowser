@@ -17,11 +17,11 @@ Future loadCSV(int index) async {
 
   List<String> cols = blUti.toListString(listData[0]);
   cols.insert(0, 'rownoKey');
-  await bl.sheetcolsCRUD.updateCols('Robert', cols);
+  await bl.sheetcolsCRUD.updateCols(assetFile, cols);
   listData.removeAt(0);
 
   for (var i = 0; i < listData.length; i++) {
-    listData[i].insert(0, 'Robert__|__$i');
+    listData[i].insert(0, '${assetFile}__|__$i');
   }
   await bl.sheetrowsCRUD.deleteAllDb();
   currentSS.keys = await sheetRowsSaveGetKeys(listData);
