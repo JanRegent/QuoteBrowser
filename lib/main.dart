@@ -24,7 +24,7 @@ void main() async {
   if (bl.devMode) {
     runApp(const ProviderScope(child: SidebarHome()));
   } else {
-    await loadCSV();
+    await loadCSV(0);
     runApp(const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(body: CardSwiper('Robert', {})),

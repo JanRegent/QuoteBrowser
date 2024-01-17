@@ -24,6 +24,7 @@ class _CardSwiperState extends State<CardSwiper> {
   void initState() {
     super.initState();
     initialIndex = 0;
+    indexChanged(0);
   }
 
   @override
@@ -34,6 +35,11 @@ class _CardSwiperState extends State<CardSwiper> {
 
   void swiperSetstate() {
     setState(() {});
+  }
+
+  void swiperSetstateIndexChanged() {
+    setState(() {});
+    indexChanged(0);
   }
 
   void onIndexChanged(int rowIndex) async {
@@ -47,7 +53,8 @@ class _CardSwiperState extends State<CardSwiper> {
             MediaQuery.of(context).size.height)),
         child: Swiper(
           itemBuilder: (BuildContext context, int rowIndex) {
-            return SwiperTabs(swiperSetstate, widget.title);
+            return SwiperTabs(
+                swiperSetstate, widget.title, swiperSetstateIndexChanged);
           },
           itemCount: currentSS.keys.length,
           onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),

@@ -38,7 +38,10 @@ void indexChanged(int rowIndex) async {
 class SwiperTabs extends StatefulWidget {
   VoidCallback setStateSwiper;
   String title;
-  SwiperTabs(this.setStateSwiper, this.title, {Key? key}) : super(key: key);
+  VoidCallback swiperSetstateIndexChanged;
+  SwiperTabs(this.setStateSwiper, this.title, this.swiperSetstateIndexChanged,
+      {Key? key})
+      : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -61,8 +64,6 @@ class _SwiperTabsState extends State<SwiperTabs>
 
   //----------------------------------------------------------------------buts
   //---------------------------------------------------------- int startRow
-
-  void currentRowIndexFromBookmarksGet() {}
 
   List<String> currentSSkeys = [];
   IconButton searchWord() {
@@ -238,7 +239,7 @@ class _SwiperTabsState extends State<SwiperTabs>
             physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: bl.devMode == false
-                ? [const UserviewPage()]
+                ? [UserviewPage(widget.swiperSetstateIndexChanged)]
                 : [
                     quoteTabs(),
                     attribTabs(),
