@@ -37,7 +37,7 @@ Future<String> book4swipper(
   if (currentSS.keys.length == 0) {
     // ignore: use_build_context_synchronously
     al.messageInfo(context, 'Loading', sheetName, 3);
-    currentSS.keys = await dl.httpService.getBookContent(sheetName, sheetId);
+    currentSS.keys = await dl.httpService.getSheetSave(sheetName, sheetId);
 
     await bl.filtersCRUD.updateFilter('book__|__ $sheetName', currentSS.keys);
   }

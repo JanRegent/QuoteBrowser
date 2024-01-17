@@ -113,7 +113,7 @@ class HttpService {
 
   //---------------------------------------------------------------getBooksMap
 
-  Future getBookContent(String sheetName, String sheetId) async {
+  Future getSheetSave(String sheetName, String sheetId) async {
     List allrows = await getAllrows(sheetName, sheetId);
     return await sheetRowsSaveGetKeys(allrows);
   }

@@ -18,9 +18,7 @@ void main() async {
   await bl.bookList.getData();
 
   bl.updateSlowly();
-  //rows2db();
-  //rssInDo();
-  bl.devMode = false;
+  //bl.devMode = false; //sheetview
   if (bl.devMode) {
     runApp(const ProviderScope(child: SidebarHome()));
   } else {

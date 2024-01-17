@@ -54,8 +54,8 @@ class _LastMenuState extends State<LastMenu> {
             title: Text(sheetName)),
         onTap: () async {
           bl.filteredSheetName.value = sheetName;
-          await searchSheetGroup(
-              sheetGroup, sheetName, '${blUti.todayStr()}.', context);
+          await searchAllSheet(sheetGroup, sheetName,
+              bl.dailyList.rows[six].sheetUrl, 'All sheet', context);
         },
       ));
     }
@@ -80,18 +80,19 @@ class _LastMenuState extends State<LastMenu> {
               : const CircularProgressIndicator()),
           title: Row(
             children: [
+              sheetNamesPopupGen(sheetGroup),
               Text(
                 sheetGroup,
                 style: const TextStyle(fontSize: 15),
               )
             ],
           ),
-          subtitle: Row(
-            children: [
-              sheetNamesPopupGen(sheetGroup),
-              Obx(() => Text(bl.filteredSheetName.value))
-            ],
-          ),
+          // subtitle: Row(
+          //   children: [
+          //     sheetNamesPopupGen(sheetGroup),
+          //     Obx(() => Text(bl.filteredSheetName.value))
+          //   ],
+          // ),
           onTap: () async {
             await searchSheetGroup(
                 sheetGroup, '', '${blUti.todayStr()}.', context);

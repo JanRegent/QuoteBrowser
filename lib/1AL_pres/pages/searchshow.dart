@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:input_dialog/input_dialog.dart';
+import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../2BL_domain/bl.dart';
+import '../../2BL_domain/bluti.dart';
 import '../../2BL_domain/usecases/filtersbl/searchss.dart';
+import '../../3Data/dl.dart';
 import '../controllers/alib/alib.dart';
 import '../zview/_swiper.dart';
 
@@ -74,6 +77,24 @@ Future searchSheetGroup(String sheetGroup, sheetName, String searchText,
   await Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => CardSwiper(searchText, const {})),
+  );
+}
+
+Future searchAllSheet(String sheetGroup, sheetName, String sheetUrl,
+    String searchText, BuildContext context) async {
+  bl.dailyList.sheetGroupCurrent = sheetGroup;
+
+  bl.lastCount[sheetGroup] = 'loading';
+  await dl.httpService.getSheetSave(sheetName, blUti.url2fileid(sheetUrl));
+  List<String> keys = await bl.sheetrowsCRUD.readKeysRowNoSorted(sheetName);
+  if (keys.isEmpty) return;
+  currentSS.keys = [];
+  currentSS.keys.addAll(keys);
+  bl.lastCount[sheetGroup] = '';
+  // ignore: use_build_context_synchronously
+  await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => CardSwiper(sheetName, const {})),
   );
 }
 
