@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:holdable_button/holdable_button.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
@@ -41,6 +42,30 @@ class _LastMenuState extends State<LastMenu> {
     );
   }
 
+  HoldableButton holdableSheet(String sheetName, int six, sheetGroup) {
+    return HoldableButton(
+      width: 200,
+      height: 40,
+      buttonColor: Colors.green,
+      loadingColor: Colors.black87,
+      duration: 5,
+      radius: 1,
+      strokeWidth: 20,
+      startPoint: 0.5,
+      padding: const EdgeInsets.all(2),
+      onConfirm: () {
+        setState(() {});
+      },
+      child: InkWell(
+          child: Text(sheetName),
+          onTap: () async {
+            bl.filteredSheetName.value = sheetName;
+            await searchAllSheet(sheetGroup, sheetName,
+                bl.dailyList.rows[six].sheetUrl, 'All sheet', context);
+          }),
+    );
+  }
+
   PopupMenuButton sheetNamesPopupGen(String sheetGroup) {
     List<PopupMenuItem> items = [];
     for (var six = 0; six < bl.dailyList.rows.length; six++) {
@@ -51,12 +76,7 @@ class _LastMenuState extends State<LastMenu> {
         child: ListTile(
             leading: al.linkIconOpenDoc(
                 bl.dailyList.rows[six].sheetUrl, context, ''),
-            title: Text(sheetName)),
-        onTap: () async {
-          bl.filteredSheetName.value = sheetName;
-          await searchAllSheet(sheetGroup, sheetName,
-              bl.dailyList.rows[six].sheetUrl, 'All sheet', context);
-        },
+            title: holdableSheet(sheetName, six, sheetGroup)),
       ));
     }
     return PopupMenuButton(

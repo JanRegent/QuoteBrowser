@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '1AL_pres/pages/_home/_homepage.dart';
 import '1AL_pres/zview/_swiper.dart';
 import '2BL_domain/bl.dart';
@@ -20,12 +18,15 @@ void main() async {
   bl.updateSlowly();
   //bl.devMode = false; //sheetview
   if (bl.devMode) {
-    runApp(const ProviderScope(child: SidebarHome()));
+    runApp(const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SidebarHome(),
+    ));
   } else {
     await loadCSV(0);
     runApp(const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: CardSwiper('Robert', {})),
+      home: Scaffold(body: CardSwiper('Sheets', {})),
     ));
   }
 }

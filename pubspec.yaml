@@ -35,13 +35,6 @@ dependencies:
   ##-----bl status
   get: ^4.6.5 #https://pub.dev/packages/get
 
-  #form
-  flutter_riverpod: ^2.4.9
-  flutter_form_builder: ^9.1.1
-  uuid: ^4.0.0
-  flutter_hooks: ^0.20.4
-  hooks_riverpod: ^2.4.9
-
   ##----db
   isar: ^4.0.0-dev.14 #https://pub.dev/packages/isar/versions/4.0.0-dev.14
   isar_flutter_libs: ^4.0.0-dev.14
@@ -59,6 +52,7 @@ dependencies:
   url_launcher: ^6.1.12 #https://pub.dev/packages/url_launcher
   dart_rss: ^3.0.1 #https://pub.dev/packages/dart_rss
   dio: ^5.3.2 #https://pub.dev/packages/dio
+  http: ^0.13.6
 
   #----------------------------------------------uti
   intl: ^0.18.1 #https://pub.dev/packages/intl
@@ -66,11 +60,10 @@ dependencies:
   csv: ^5.1.1 #https://pub.dev/packages/csv
   device_info_plus: ^9.1.1
 
-  ##----icons
+  ##----icons, buttons
   fluentui_system_icons: ^1.1.210 #https://pub.dev/packages/fluentui_system_icons
   cupertino_icons: ^1.0.5 #https://pub.dev/packages/cupertino_icons
-  http: ^0.13.6
-
+  holdable_button: ^0.0.9 #https://pub.dev/packages/holdable_button
 #******************************************************************************DEV
 dev_dependencies:
   analyzer: 5.13.0
