@@ -94,6 +94,25 @@ class _SwiperTabsState extends State<SwiperTabs>
         icon: const Icon(Icons.search));
   }
 
+  void swiperIndexIncrementInCloud() async {
+    if (currentSS.swiperIndexIncrement == false) return;
+    if (currentSS.currentHomeTabIndex == 1) {
+      bl.booksCount[bl.orm.currentRow.sheetName] = currentSS.swiperIndex;
+      dl.httpService.setCellDL(
+          'booksList',
+          'swiperIndex',
+          currentSS.swiperIndex.toString(),
+          currentSS.currentBooksListRowno.toString());
+    }
+    if (currentSS.currentHomeTabIndex == 0) {
+      dl.httpService.setCellDL(
+          'dailyList',
+          'swiperIndex',
+          currentSS.swiperIndex.toString(),
+          currentSS.currentDailySheet.rowNo.toString());
+    }
+  }
+
   Row titleArrowsRowOff() {
     return Row(children: [
       al.infoButton(context, 'Search by expression',
@@ -131,22 +150,7 @@ class _SwiperTabsState extends State<SwiperTabs>
           currentSS.swiperIndex += 1;
           indexChanged(currentSS.swiperIndex.value);
           widget.setStateSwiper();
-
-          if (currentSS.currentHomeTabIndex == 1) {
-            bl.booksCount[bl.orm.currentRow.sheetName] = currentSS.swiperIndex;
-            dl.httpService.setCellDL(
-                'booksList',
-                'swiperIndex',
-                currentSS.swiperIndex.toString(),
-                currentSS.currentBooksListRowno.toString());
-          }
-          if (currentSS.currentHomeTabIndex == 0) {
-            dl.httpService.setCellDL(
-                'dailyList',
-                'swiperIndex',
-                currentSS.swiperIndex.toString(),
-                currentSS.currentDailySheet.rowNo.toString());
-          }
+          swiperIndexIncrementInCloud();
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
