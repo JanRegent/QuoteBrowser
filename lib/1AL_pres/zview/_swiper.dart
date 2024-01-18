@@ -40,10 +40,6 @@ class _CardSwiperState extends State<CardSwiper> {
     indexChanged(0);
   }
 
-  void onIndexChanged(int rowIndex) async {
-    indexChanged(rowIndex);
-  }
-
   ConstrainedBox bodySwiper() {
     return ConstrainedBox(
         constraints: BoxConstraints.loose(Size(
@@ -55,7 +51,7 @@ class _CardSwiperState extends State<CardSwiper> {
                 swiperSetstate, widget.title, swiperSetstateIndexChanged);
           },
           itemCount: currentSS.keys.length,
-          onIndexChanged: (rowIndex) => onIndexChanged(rowIndex),
+          onIndexChanged: (rowIndex) => indexChanged(rowIndex),
           index: currentSS.swiperIndex.value,
           controller: controller,
         ));

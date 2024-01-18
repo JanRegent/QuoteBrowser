@@ -62,16 +62,15 @@ class _LastMenuState extends State<LastMenu> {
           onTap: () async {
             bl.filteredSheetName.value = sheetName;
             currentSS.currentDailySheet = bl.dailyList.rows[six];
-            int? currentIndex =
-                int.tryParse(bl.dailyList.rows[six].currentIndex);
-
+            int? swiperIndex = int.tryParse(bl.dailyList.rows[six].swiperIndex);
+            currentSS.swiperIndexIncrement = true;
             await searchAllSheet(
                 sheetGroup,
                 sheetName,
                 bl.dailyList.rows[six].sheetUrl,
                 'All sheet',
                 context,
-                currentIndex!);
+                swiperIndex!);
           }),
     );
   }
@@ -84,7 +83,7 @@ class _LastMenuState extends State<LastMenu> {
       String sheetName = bl.dailyList.rows[six].sheetName;
       items.add(PopupMenuItem(
         child: ListTile(
-            leading: Text(bl.dailyList.rows[six].currentIndex.toString()),
+            leading: Text(bl.dailyList.rows[six].swiperIndex.toString()),
             title: holdableSheet(sheetName, six, sheetGroup),
             trailing: al.linkIconOpenDoc(
                 bl.dailyList.rows[six].sheetUrl, context, '')),
@@ -125,6 +124,7 @@ class _LastMenuState extends State<LastMenu> {
           //   ],
           // ),
           onTap: () async {
+            currentSS.swiperIndexIncrement = false;
             await searchSheetGroup(
                 sheetGroup, '', '${blUti.todayStr()}.', context);
           },

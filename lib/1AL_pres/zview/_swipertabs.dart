@@ -136,14 +136,14 @@ class _SwiperTabsState extends State<SwiperTabs>
             bl.booksCount[bl.orm.currentRow.sheetName] = currentSS.swiperIndex;
             dl.httpService.setCellDL(
                 'booksList',
-                'currentIndex',
+                'swiperIndex',
                 currentSS.swiperIndex.toString(),
                 currentSS.currentBooksListRowno.toString());
           }
           if (currentSS.currentHomeTabIndex == 0) {
             dl.httpService.setCellDL(
                 'dailyList',
-                'currentIndex',
+                'swiperIndex',
                 currentSS.swiperIndex.toString(),
                 currentSS.currentDailySheet.rowNo.toString());
           }

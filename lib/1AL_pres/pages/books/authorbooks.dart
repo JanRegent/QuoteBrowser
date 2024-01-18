@@ -32,7 +32,7 @@ class _AuthorBooksState extends State<AuthorBooks> {
 
       bl.booksCount[sheetName] = '';
       listTiles.add(ListTile(
-        leading: Text(bl.bookList.rows[bix].currentIndex.toString()),
+        leading: Text(bl.bookList.rows[bix].swiperIndex.toString()),
         title: Row(
           children: [
             Text(
@@ -47,7 +47,8 @@ class _AuthorBooksState extends State<AuthorBooks> {
         onTap: () async {
           String sheetId = blUti.url2fileid(bl.bookList.rows[bix].sheetUrl);
           currentSS.currentBooksListRowno = bix + 2;
-          currentSS.swiperIndex.value = bl.bookList.rows[bix].currentIndex;
+          currentSS.swiperIndex.value = bl.bookList.rows[bix].swiperIndex;
+          currentSS.swiperIndexIncrement = true;
           await getBookContentShow(sheetName, sheetName, sheetId, context);
         },
       ));

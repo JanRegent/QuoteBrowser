@@ -17,6 +17,7 @@ class CurrentSS {
   bool addQuoteMode = false;
   RxInt swiperIndex = 0.obs;
   bool swiperIndexChanged = false;
+  bool swiperIndexIncrement = false;
 
   int currentHomeTabIndex = 0;
   int currentBooksListRowno = 2;

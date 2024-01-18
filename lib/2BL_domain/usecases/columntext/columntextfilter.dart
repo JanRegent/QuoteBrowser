@@ -54,14 +54,14 @@ class ColumnTextFilterCRUD {
     }
   }
 
-  Future<String> readFilterAtCurrentindex(
-      String filterKey, int currentIndex) async {
+  Future<String> readFilterAtswiperIndex(
+      String filterKey, int swiperIndex) async {
     try {
       String keys = isar.columnTextFilters
           .where()
           .columnTextKeyEqualTo(filterKey)
           .sheetRownoKeysProperty()
-          .findFirst()![currentIndex];
+          .findFirst()![swiperIndex];
       return keys;
     } catch (_) {
       return '';

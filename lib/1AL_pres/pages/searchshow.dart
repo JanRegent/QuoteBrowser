@@ -81,7 +81,7 @@ Future searchSheetGroup(String sheetGroup, sheetName, String searchText,
 }
 
 Future searchAllSheet(String sheetGroup, sheetName, String sheetUrl,
-    String searchText, BuildContext context, int currentIndex) async {
+    String searchText, BuildContext context, int swiperIndex) async {
   bl.dailyList.sheetGroupCurrent = sheetGroup;
 
   bl.lastCount[sheetGroup] = 'loading';
@@ -91,7 +91,7 @@ Future searchAllSheet(String sheetGroup, sheetName, String sheetUrl,
   currentSS.keys = [];
   currentSS.keys.addAll(keys);
   bl.lastCount[sheetGroup] = '';
-  currentSS.swiperIndex.value = currentIndex;
+  currentSS.swiperIndex.value = swiperIndex;
 
   // ignore: use_build_context_synchronously
   await Navigator.push(

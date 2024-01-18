@@ -4,7 +4,7 @@ import 'package:quotebrowser/3Data/dl.dart';
 
 class BooksList {
   List<BookListRow> rows = [];
-  int currentIndex = 1;
+  int swiperIndex = 1;
 
   String bookCurrent = '';
 
@@ -18,7 +18,7 @@ class BooksList {
     int authorIx = cols.indexOf('author');
     int sheetNameIx = cols.indexOf('sheetName');
     int sheetUrlIx = cols.indexOf('sheetUrl');
-    int currentIndexIx = cols.indexOf('currentIndex');
+    int swiperIndexIx = cols.indexOf('swiperIndex');
     rows.clear();
     for (var i = 1; i < data.length; i++) {
       String bookName = data[i][bookNameIx].toString().trim();
@@ -29,9 +29,9 @@ class BooksList {
         ..sheetName = data[i][sheetNameIx]
         ..sheetUrl = data[i][sheetUrlIx]);
       try {
-        rows.last.currentIndex = data[i][currentIndexIx]!;
+        rows.last.swiperIndex = data[i][swiperIndexIx]!;
       } catch (e) {
-        rows.last.currentIndex = 0;
+        rows.last.swiperIndex = 0;
       }
       sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
       dl.httpService.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
@@ -56,5 +56,5 @@ class BookListRow {
   String author = '';
   String sheetName = '';
   String sheetUrl = '';
-  int currentIndex = 0;
+  int swiperIndex = 0;
 }
