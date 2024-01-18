@@ -18,15 +18,21 @@ class DailyList {
     int sheetGroupIx = cols.indexOf('sheetGroup');
     int sheetNameIx = cols.indexOf('sheetName');
     int sheetUrlIx = cols.indexOf('sheetUrl');
+    int currentIndexIx = cols.indexOf('currentIndex');
     rows.clear();
     for (var i = 1; i < data.length; i++) {
       String sheetGroup = data[i][sheetGroupIx].toString().trim();
       if (sheetGroup.isEmpty) continue;
       sheetGroups.add(data[i][sheetGroupIx]);
+      String currentIndex = data[i][currentIndexIx].toString();
+      if (currentIndex.isEmpty) currentIndex = '2';
+
       rows.add(DailyListRow()
+        ..rowNo = i + 1
         ..sheetGroup = sheetGroup
         ..sheetName = data[i][sheetNameIx]
-        ..sheetUrl = data[i][sheetUrlIx]);
+        ..sheetUrl = data[i][sheetUrlIx]
+        ..currentIndex = currentIndex);
 
       sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
       dl.httpService.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
@@ -39,4 +45,6 @@ class DailyListRow {
   String sheetGroup = '';
   String sheetName = '';
   String sheetUrl = '';
+  String currentIndex = '2';
+  int rowNo = 0;
 }

@@ -6,6 +6,7 @@ import 'package:holdable_button/holdable_button.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
+import '../../../2BL_domain/orm.dart';
 import '../../../2BL_domain/usecases/filtersbl/emptyresults.dart';
 import '../../controllers/alib/alib.dart';
 import '../filterspages/_selectview.dart';
@@ -60,8 +61,17 @@ class _LastMenuState extends State<LastMenu> {
           child: Text(sheetName),
           onTap: () async {
             bl.filteredSheetName.value = sheetName;
-            await searchAllSheet(sheetGroup, sheetName,
-                bl.dailyList.rows[six].sheetUrl, 'All sheet', context);
+            currentSS.currentDailySheet = bl.dailyList.rows[six];
+            int? currentIndex =
+                int.tryParse(bl.dailyList.rows[six].currentIndex);
+
+            await searchAllSheet(
+                sheetGroup,
+                sheetName,
+                bl.dailyList.rows[six].sheetUrl,
+                'All sheet',
+                context,
+                currentIndex!);
           }),
     );
   }
@@ -74,9 +84,10 @@ class _LastMenuState extends State<LastMenu> {
       String sheetName = bl.dailyList.rows[six].sheetName;
       items.add(PopupMenuItem(
         child: ListTile(
-            leading: al.linkIconOpenDoc(
-                bl.dailyList.rows[six].sheetUrl, context, ''),
-            title: holdableSheet(sheetName, six, sheetGroup)),
+            leading: Text(bl.dailyList.rows[six].currentIndex.toString()),
+            title: holdableSheet(sheetName, six, sheetGroup),
+            trailing: al.linkIconOpenDoc(
+                bl.dailyList.rows[six].sheetUrl, context, '')),
       ));
     }
     return PopupMenuButton(

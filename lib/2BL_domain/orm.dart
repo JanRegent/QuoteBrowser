@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../1AL_pres/zview/viewhigh/highwiew.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
+import 'usecases/dailylist/dailylist.dart';
 
 List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
 CurrentSS currentSS = CurrentSS();
@@ -19,6 +20,7 @@ class CurrentSS {
 
   int currentHomeTabIndex = 0;
   int currentBooksListRowno = 2;
+  DailyListRow currentDailySheet = DailyListRow();
 }
 
 class Orm {

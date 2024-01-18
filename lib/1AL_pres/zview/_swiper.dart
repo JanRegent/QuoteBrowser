@@ -19,12 +19,10 @@ class CardSwiper extends StatefulWidget {
 
 class _CardSwiperState extends State<CardSwiper> {
   SwiperController controller = SwiperController();
-  late int initialIndex;
   @override
   void initState() {
     super.initState();
-    initialIndex = 0;
-    indexChanged(0);
+    indexChanged(currentSS.swiperIndex.value);
   }
 
   @override

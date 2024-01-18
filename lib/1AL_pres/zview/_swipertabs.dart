@@ -125,6 +125,7 @@ class _SwiperTabsState extends State<SwiperTabs>
               ' ${(currentSS.swiperIndex.value + 1)}/${currentSS.keys.length}',
               style: const TextStyle(color: Colors.black, fontSize: 20)))),
       ElevatedButton(
+        //----------------------------------------forward --next
         onPressed: () {
           if (bl.orm.currentRow.setCellDLOn) return;
           currentSS.swiperIndex += 1;
@@ -138,6 +139,13 @@ class _SwiperTabsState extends State<SwiperTabs>
                 'currentIndex',
                 currentSS.swiperIndex.toString(),
                 currentSS.currentBooksListRowno.toString());
+          }
+          if (currentSS.currentHomeTabIndex == 0) {
+            dl.httpService.setCellDL(
+                'dailyList',
+                'currentIndex',
+                currentSS.swiperIndex.toString(),
+                currentSS.currentDailySheet.rowNo.toString());
           }
         },
         style: ElevatedButton.styleFrom(

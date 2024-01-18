@@ -16,7 +16,7 @@ void main() async {
   await bl.bookList.getData();
 
   bl.updateSlowly();
-  //bl.devMode = false; //sheetview
+  bl.devMode = true; // false; //sheetview
   if (bl.devMode) {
     runApp(const MaterialApp(
       debugShowCheckedModeBanner: false,
