@@ -61,7 +61,7 @@ class _LastMenuState extends State<LastMenu> {
           child: Text(sheetName),
           onTap: () async {
             bl.filteredSheetName.value = sheetName;
-            currentSS.currentDailySheet = bl.dailyList.rows[six];
+            currentSS.dailyListRow = bl.dailyList.rows[six];
             int? swiperIndex = int.tryParse(bl.dailyList.rows[six].swiperIndex);
             currentSS.swiperIndexIncrement = true;
             await searchAllSheet(

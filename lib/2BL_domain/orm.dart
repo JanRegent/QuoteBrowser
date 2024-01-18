@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../1AL_pres/pages/books/bookslist.dart';
 import '../1AL_pres/zview/viewhigh/highwiew.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
@@ -20,8 +21,8 @@ class CurrentSS {
   bool swiperIndexIncrement = false;
 
   int currentHomeTabIndex = 0;
-  int currentBooksListRowno = 2;
-  DailyListRow currentDailySheet = DailyListRow();
+  DailyListRow dailyListRow = DailyListRow();
+  BookListRow bookListRow = BookListRow();
 }
 
 class Orm {

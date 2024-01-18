@@ -96,20 +96,18 @@ class _SwiperTabsState extends State<SwiperTabs>
 
   void swiperIndexIncrementInCloud() async {
     if (currentSS.swiperIndexIncrement == false) return;
+
     if (currentSS.currentHomeTabIndex == 1) {
       bl.booksCount[bl.orm.currentRow.sheetName] = currentSS.swiperIndex;
-      dl.httpService.setCellDL(
-          'booksList',
-          'swiperIndex',
-          currentSS.swiperIndex.toString(),
-          currentSS.currentBooksListRowno.toString());
+      dl.httpService.setCellDL('booksList', 'swiperIndex',
+          currentSS.swiperIndex.toString(), currentSS.bookListRow.rowNo);
     }
     if (currentSS.currentHomeTabIndex == 0) {
       dl.httpService.setCellDL(
           'dailyList',
           'swiperIndex',
           currentSS.swiperIndex.toString(),
-          currentSS.currentDailySheet.rowNo.toString());
+          currentSS.dailyListRow.rowNo.toString());
     }
   }
 

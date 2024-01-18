@@ -4,7 +4,6 @@ import 'package:quotebrowser/3Data/dl.dart';
 
 class BooksList {
   List<BookListRow> rows = [];
-  int swiperIndex = 1;
 
   String bookCurrent = '';
 
@@ -27,7 +26,8 @@ class BooksList {
         ..bookName = bookName
         ..author = data[i][authorIx]
         ..sheetName = data[i][sheetNameIx]
-        ..sheetUrl = data[i][sheetUrlIx]);
+        ..sheetUrl = data[i][sheetUrlIx]
+        ..rowNo = (i + 1).toString());
       try {
         rows.last.swiperIndex = data[i][swiperIndexIx]!;
       } catch (e) {
@@ -57,4 +57,5 @@ class BookListRow {
   String sheetName = '';
   String sheetUrl = '';
   int swiperIndex = 0;
+  String rowNo = '';
 }

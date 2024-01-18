@@ -46,7 +46,7 @@ class _AuthorBooksState extends State<AuthorBooks> {
         ),
         onTap: () async {
           String sheetId = blUti.url2fileid(bl.bookList.rows[bix].sheetUrl);
-          currentSS.currentBooksListRowno = bix + 2;
+          currentSS.bookListRow = bl.bookList.rows[bix];
           currentSS.swiperIndex.value = bl.bookList.rows[bix].swiperIndex;
           currentSS.swiperIndexIncrement = true;
           await getBookContentShow(sheetName, sheetName, sheetId, context);
