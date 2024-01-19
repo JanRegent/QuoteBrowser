@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-import '../controllers/alib/alib.dart';
-import 'filterspages/_selectview.dart';
+import '../widgets/alib/alib.dart';
 
+import '../pages/filterspages/_selectview.dart';
 import 'searchshow.dart';
 
 class ColumnTextFiltersAL {

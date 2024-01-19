@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../1AL_pres/controllers/alib/alib.dart';
+import '../../../1AL_pres/widgets/alib/alib.dart';
 
 import '../../bl.dart';
 import '../../bluti.dart';

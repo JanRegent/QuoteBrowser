@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../2BL_domain/bl.dart';
 
 import '../../../2BL_domain/bluti.dart';
-import '../../controllers/alib/searchvalue/searchselectpage.dart';
+import '../../widgets/alib/searchvalue/searchselectpage.dart';
 
 Future<String> dateSelect(BuildContext context) async {
   List<String> dateinserts = blUti.lastNdays(10);

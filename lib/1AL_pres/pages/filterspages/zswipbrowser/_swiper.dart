@@ -1,7 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import '../../2BL_domain/usecases/filtersbl/emptyresults.dart';
-import '../../2BL_domain/orm.dart';
+import '../../../../2BL_domain/usecases/filtersbl/emptyresults.dart';
+import '../../../../2BL_domain/orm.dart';
 
 import '_swipertabs.dart';
 

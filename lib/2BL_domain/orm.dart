@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../1AL_pres/pages/books/bookslist.dart';
-import '../1AL_pres/zswipbrowser/viewhigh/highwiew.dart';
+import '../1AL_pres/pages/daily/dailylist.dart';
+import '../1AL_pres/pages/filterspages/zswipbrowser/viewhigh/highwiew.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
-import 'usecases/dailylist/dailylist.dart';
 
 List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
 CurrentSS currentSS = CurrentSS();

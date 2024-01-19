@@ -5,8 +5,8 @@ import 'package:quotebrowser/2BL_domain/orm.dart';
 import '../../2BL_domain/bl.dart';
 import '../../2BL_domain/usecases/filtersbl/searchss.dart';
 import '../../3Data/dl.dart';
-import '../controllers/alib/alib.dart';
-import '../zswipbrowser/_swiper.dart';
+import '../widgets/alib/alib.dart';
+import '../pages/filterspages/zswipbrowser/_swiper.dart';
 
 Future<String> inputWord(BuildContext context) async {
   try {

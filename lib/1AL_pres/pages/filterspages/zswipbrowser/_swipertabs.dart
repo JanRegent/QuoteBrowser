@@ -3,11 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../2BL_domain/bl.dart';
-import '../../2BL_domain/orm.dart';
-import '../../3Data/dl.dart';
-import '../controllers/alib/alib.dart';
-import '../pages/searchshow.dart';
+import '../../../../2BL_domain/bl.dart';
+import '../../../../2BL_domain/orm.dart';
+import '../../../../3Data/dl.dart';
+import '../../../widgets/alib/alib.dart';
+
+import '../../../controllers/searchshow.dart';
 import 'edit/battr/_quoteedit.dart';
 
 import 'edit/cattribs/headfields.dart';

@@ -4,7 +4,7 @@ import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../../3Data/builddate.dart';
-import '../../controllers/alib/alicons.dart';
+import '../../widgets/alib/alicons.dart';
 
 import '../books/__authors.dart';
 import '../daily/1daily.dart';

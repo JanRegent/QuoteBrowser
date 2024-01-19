@@ -33,7 +33,7 @@ class BooksList {
       }
       dl.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
     }
-    dl.sheetUrls['booksList'] = dl.sheetUrls['rootSheetId'];
+
     authorsUniqBuild();
   }
 

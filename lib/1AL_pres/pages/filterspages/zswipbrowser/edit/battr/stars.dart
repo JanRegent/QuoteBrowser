@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
-import '../../../../2BL_domain/bl.dart';
+import '../../../../../../2BL_domain/bl.dart';
 
 // ignore: must_be_immutable
 class RatingStarsPage extends StatefulWidget {

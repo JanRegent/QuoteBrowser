@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import '../../2BL_domain/bl.dart';
 import '../../2BL_domain/bluti.dart';
 
-import '../controllers/alib/alib.dart';
-import 'filterspages/_selectview.dart';
+import '../widgets/alib/alib.dart';
+
+import '../pages/filterspages/_selectview.dart';
 import 'searchshow.dart';
 
 class SimpleFiltersAL {

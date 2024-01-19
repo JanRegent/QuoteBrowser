@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:highlight_text/highlight_text.dart';
 
-import '../../../2BL_domain/bl.dart';
+import '../../../../../2BL_domain/bl.dart';
 import '../edit/battr/originalview.dart';
 
 //-----------------------------------------------------------------highl

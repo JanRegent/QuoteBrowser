@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../wordsearchpage.dart';
+import '../../../controllers/wordsearchpage.dart';
 
 class WordTabsPage extends StatelessWidget {
   const WordTabsPage({super.key});
