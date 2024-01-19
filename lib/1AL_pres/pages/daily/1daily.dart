@@ -65,12 +65,7 @@ class _LastMenuState extends State<LastMenu> {
             int? swiperIndex = int.tryParse(bl.dailyList.rows[six].swiperIndex);
             currentSS.swiperIndexIncrement = true;
             await searchAllSheet(
-                sheetGroup,
-                sheetName,
-                bl.dailyList.rows[six].sheetUrl,
-                'All sheet',
-                context,
-                swiperIndex!);
+                sheetGroup, sheetName, 'All sheet', context, swiperIndex!);
           }),
     );
   }

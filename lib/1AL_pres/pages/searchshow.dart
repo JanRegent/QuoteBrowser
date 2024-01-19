@@ -3,7 +3,6 @@ import 'package:input_dialog/input_dialog.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../2BL_domain/bl.dart';
-import '../../2BL_domain/bluti.dart';
 import '../../2BL_domain/usecases/filtersbl/searchss.dart';
 import '../../3Data/dl.dart';
 import '../controllers/alib/alib.dart';
@@ -80,12 +79,12 @@ Future searchSheetGroup(String sheetGroup, sheetName, String searchText,
   );
 }
 
-Future searchAllSheet(String sheetGroup, sheetName, String sheetUrl,
-    String searchText, BuildContext context, int swiperIndex) async {
+Future searchAllSheet(String sheetGroup, sheetName, String searchText,
+    BuildContext context, int swiperIndex) async {
   bl.dailyList.sheetGroupCurrent = sheetGroup;
 
   bl.lastCount[sheetGroup] = 'loading';
-  await dl.httpService.getSheetSave(sheetName, blUti.url2fileid(sheetUrl));
+  await dl.httpService.getSheetSave(sheetName);
   List<String> keys = await bl.sheetrowsCRUD.readKeysRowNoSorted(sheetName);
   if (keys.isEmpty) return;
   currentSS.keys = [];

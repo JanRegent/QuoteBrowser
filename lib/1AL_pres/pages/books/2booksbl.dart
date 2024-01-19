@@ -2,18 +2,18 @@
 
 import 'package:flutter/material.dart';
 
-import '../../2BL_domain/bl.dart';
-import '../../2BL_domain/orm.dart';
-import '../../3Data/dl.dart';
-import '../controllers/alib/alib.dart';
-import '../zswipbrowser/_swiper.dart';
+import '../../../2BL_domain/bl.dart';
+import '../../../2BL_domain/orm.dart';
+import '../../../3Data/dl.dart';
+import '../../controllers/alib/alib.dart';
+import '../../zswipbrowser/_swiper.dart';
 
-Future getBookContentShow(String bookName, String sheetName, String sheetId,
-    BuildContext context) async {
+Future getBookContentShow(
+    String bookName, String sheetName, BuildContext context) async {
   bl.booksCount[bookName] = 'loading';
 
   try {
-    bl.booksCount[bookName] = await book4swipper(sheetName, sheetId, context);
+    bl.booksCount[bookName] = await book4swipper(sheetName, context);
   } catch (_) {
     bl.booksCount[bookName] = '0';
   }
@@ -27,8 +27,7 @@ Future getBookContentShow(String bookName, String sheetName, String sheetId,
   );
 }
 
-Future<String> book4swipper(
-    String sheetName, String sheetId, BuildContext context) async {
+Future<String> book4swipper(String sheetName, BuildContext context) async {
   currentSS.filterKey = 'book__|__ $sheetName';
   try {
     currentSS.keys = (await bl.filtersCRUD.readFilter(currentSS.filterKey));
@@ -37,14 +36,13 @@ Future<String> book4swipper(
   if (currentSS.keys.length == 0) {
     // ignore: use_build_context_synchronously
     al.messageInfo(context, 'Loading', sheetName, 3);
-    currentSS.keys = await dl.httpService.getSheetSave(sheetName, sheetId);
+    currentSS.keys = await dl.httpService.getSheetSave(sheetName);
 
     await bl.filtersCRUD.updateFilter('book__|__ $sheetName', currentSS.keys);
   }
   if (currentSS.keys.isEmpty) {
     return '0';
   }
-  currentSS.keys = await bl.sheetrowsCRUD.readKeysRowNoSorted(sheetName);
   await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
   return currentSS.keys.length.toString();
 }

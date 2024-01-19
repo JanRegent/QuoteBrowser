@@ -13,7 +13,7 @@ class DailyList {
   Map<String, String> sheetUrls = {};
 
   Future getData() async {
-    List data = await dl.httpService.getAllrows('dailyList', rootSheetId);
+    List data = await dl.httpService.getAllrows('dailyList');
     cols = blUti.toListString(data[0]);
     int sheetGroupIx = cols.indexOf('sheetGroup');
     int sheetNameIx = cols.indexOf('sheetName');
@@ -35,9 +35,9 @@ class DailyList {
         ..swiperIndex = swiperIndex);
 
       sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
-      dl.httpService.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
+      dl.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
     }
-    dl.httpService.sheetUrls['dailyList'] = rootSheetId;
+    dl.sheetUrls['dailyList'] = rootSheetId;
   }
 }
 

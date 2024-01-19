@@ -6,6 +6,7 @@ import '../../../2BL_domain/bluti.dart';
 
 import '../../../2BL_domain/usecases/filtersbl/searchss.dart';
 
+import '../../dl.dart';
 import 'backendurl.dart';
 
 //CORS
@@ -17,13 +18,13 @@ class HttpService {
   final dio = Dio();
 
   //-------------------------------------------------------------------get rows
-  Future<List> getAllrows(String sheetName, String sheetId) async {
+  Future<List> getAllrows(String sheetName) async {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
         'action': 'getAllrows',
         'sheetName': sheetName,
-        'sheetId': sheetId
+        'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName])
       },
     );
 
@@ -113,8 +114,8 @@ class HttpService {
 
   //---------------------------------------------------------------getBooksMap
 
-  Future getSheetSave(String sheetName, String sheetId) async {
-    List allrows = await getAllrows(sheetName, sheetId);
+  Future getSheetSave(String sheetName) async {
+    List allrows = await getAllrows(sheetName);
     return await sheetRowsSaveGetKeys(allrows);
   }
 
@@ -178,7 +179,7 @@ class HttpService {
   }
 
   //----------------------------------------------------------------------set
-  Map<String, String> sheetUrls = {};
+
   Future<List> setCellDL(String sheetName, String columnName,
       String cellContent, String rowNo) async {
     // The below request is the same as above.
@@ -190,7 +191,7 @@ class HttpService {
         queryParameters: {
           'action': 'setCell',
           'sheetName': sheetName,
-          'sheetId': blUti.url2fileid(sheetUrls[sheetName]!),
+          'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName]!),
           'columnName': columnName,
           'cellContent': cellContent,
           'rowNo': rowNo

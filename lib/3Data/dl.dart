@@ -4,6 +4,7 @@ Dl dl = Dl();
 
 class Dl {
   HttpService httpService = HttpService();
+  Map sheetUrls = {};
   Future init() async {}
 }
 

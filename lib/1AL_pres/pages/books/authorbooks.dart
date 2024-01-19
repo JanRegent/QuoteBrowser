@@ -7,7 +7,7 @@ import 'package:quotebrowser/2BL_domain/orm.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 import '../../controllers/alib/alib.dart';
-import '../2booksbl.dart';
+import '2booksbl.dart';
 import '../searchshow.dart';
 
 class AuthorBooks extends StatefulWidget {
@@ -45,11 +45,10 @@ class _AuthorBooksState extends State<AuthorBooks> {
           children: [Obx(() => Text(bl.filteredSheetName.value))],
         ),
         onTap: () async {
-          String sheetId = blUti.url2fileid(bl.bookList.rows[bix].sheetUrl);
           currentSS.bookListRow = bl.bookList.rows[bix];
           currentSS.swiperIndex.value = bl.bookList.rows[bix].swiperIndex;
           currentSS.swiperIndexIncrement = true;
-          await getBookContentShow(sheetName, sheetName, sheetId, context);
+          await getBookContentShow(sheetName, sheetName, context);
         },
       ));
     }

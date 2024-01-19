@@ -8,10 +8,9 @@ class BooksList {
   String bookCurrent = '';
 
   List<String> cols = [];
-  Map<String, String> sheetUrls = {};
 
   Future getData() async {
-    List data = await dl.httpService.getAllrows('booksList', rootSheetId);
+    List data = await dl.httpService.getAllrows('booksList');
     cols = blUti.toListString(data[0]);
     int bookNameIx = cols.indexOf('bookName');
     int authorIx = cols.indexOf('author');
@@ -33,10 +32,9 @@ class BooksList {
       } catch (e) {
         rows.last.swiperIndex = 0;
       }
-      sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
-      dl.httpService.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
+      dl.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
     }
-    dl.httpService.sheetUrls['booksList'] = rootSheetId;
+    dl.sheetUrls['booksList'] = rootSheetId;
     authorsUniqBuild();
   }
 
