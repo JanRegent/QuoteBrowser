@@ -1,5 +1,4 @@
 import 'package:quotebrowser/2BL_domain/bluti.dart';
-import 'package:quotebrowser/3Data/providers/gwebapp/backendurl.dart';
 import 'package:quotebrowser/3Data/dl.dart';
 
 class DailyList {
@@ -37,7 +36,7 @@ class DailyList {
       sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
       dl.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
     }
-    dl.sheetUrls['dailyList'] = rootSheetId;
+    dl.sheetUrls['dailyList'] = dl.sheetUrls['rootSheetId'];
   }
 }
 

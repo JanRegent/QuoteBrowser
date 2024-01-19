@@ -2,9 +2,16 @@ import 'providers/gwebapp/diocrud.dart';
 
 Dl dl = Dl();
 
+String rootSheetId = '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU';
+
 class Dl {
   HttpService httpService = HttpService();
-  Map sheetUrls = {};
+
+  Map sheetUrls = {
+    'rootSheetId': rootSheetId,
+    'dailyList': rootSheetId,
+    'booksList': rootSheetId
+  };
   Future init() async {}
 }
 

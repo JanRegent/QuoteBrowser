@@ -1,5 +1,4 @@
 import 'package:quotebrowser/2BL_domain/bluti.dart';
-import 'package:quotebrowser/3Data/providers/gwebapp/backendurl.dart';
 import 'package:quotebrowser/3Data/dl.dart';
 
 class BooksList {
@@ -34,7 +33,7 @@ class BooksList {
       }
       dl.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
     }
-    dl.sheetUrls['booksList'] = rootSheetId;
+    dl.sheetUrls['booksList'] = dl.sheetUrls['rootSheetId'];
     authorsUniqBuild();
   }
 

@@ -19,6 +19,7 @@ class HttpService {
 
   //-------------------------------------------------------------------get rows
   Future<List> getAllrows(String sheetName) async {
+    print(sheetName);
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
