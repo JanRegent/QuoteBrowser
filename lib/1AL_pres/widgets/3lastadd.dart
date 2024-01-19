@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../../2BL_domain/orm.dart';
 
-import '../zview/_swiper.dart';
-import '../zview/edit/battr/addquote/addquoterow.dart';
+import '../zswipbrowser/_swiper.dart';
+import '../zswipbrowser/edit/battr/addquote/addquoterow.dart';
 import '../pages/searchshow.dart';
 
 class LastRowsAddQuote {

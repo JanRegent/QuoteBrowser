@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../1AL_pres/pages/books/bookslist.dart';
-import '../1AL_pres/zview/viewhigh/highwiew.dart';
+import '../1AL_pres/zswipbrowser/viewhigh/highwiew.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
 import 'usecases/dailylist/dailylist.dart';

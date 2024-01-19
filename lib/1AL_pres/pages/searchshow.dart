@@ -7,7 +7,7 @@ import '../../2BL_domain/bluti.dart';
 import '../../2BL_domain/usecases/filtersbl/searchss.dart';
 import '../../3Data/dl.dart';
 import '../controllers/alib/alib.dart';
-import '../zview/_swiper.dart';
+import '../zswipbrowser/_swiper.dart';
 
 Future<String> inputWord(BuildContext context) async {
   try {

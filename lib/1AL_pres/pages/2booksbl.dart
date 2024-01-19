@@ -6,7 +6,7 @@ import '../../2BL_domain/bl.dart';
 import '../../2BL_domain/orm.dart';
 import '../../3Data/dl.dart';
 import '../controllers/alib/alib.dart';
-import '../zview/_swiper.dart';
+import '../zswipbrowser/_swiper.dart';
 
 Future getBookContentShow(String bookName, String sheetName, String sheetId,
     BuildContext context) async {
