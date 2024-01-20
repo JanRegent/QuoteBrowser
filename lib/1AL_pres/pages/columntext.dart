@@ -7,7 +7,7 @@ import '../../2BL_domain/usecases/filters4swiper/searchword.dart';
 import '../zswipbrowser/_swiper.dart';
 import '../widgets/alib/alib.dart';
 
-import '5filterspages/_selectview.dart';
+import '../controllers/selectvalue.dart';
 
 class ColumnTextFiltersAL {
   Future doItem(MenuTile item, BuildContext context) async {

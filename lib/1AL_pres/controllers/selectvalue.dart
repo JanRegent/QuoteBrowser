@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 
-import '../../../2BL_domain/bl.dart';
+import '../../2BL_domain/bl.dart';
 
-import '../../../2BL_domain/bluti.dart';
-import '../../widgets/alib/searchvalue/searchselectpage.dart';
+import '../../2BL_domain/bluti.dart';
+import '../widgets/alib/searchvalue/searchselectpage.dart';
 
 Future<String> dateSelect(BuildContext context) async {
   List<String> dateinserts = blUti.lastNdays(10);
+  String searchDate = '';
+  try {
+    // ignore: use_build_context_synchronously
+    searchDate = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => SearchSelectPage(dateinserts, 'Select date')),
+    );
+  } catch (_) {
+    searchDate = '';
+  }
 
-  // ignore: use_build_context_synchronously
-  return await Navigator.push(
-    context,
-    MaterialPageRoute(
-        builder: (context) => SearchSelectPage(dateinserts, 'Select date')),
-  );
+  return searchDate;
 }
 
 Future<String> wordSelect(BuildContext context) async {

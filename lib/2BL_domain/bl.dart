@@ -41,7 +41,7 @@ class Bl {
   DailyList dailyList = DailyList();
   BooksList bookList = BooksList();
 
-  RxString filteredSheetName = ''.obs;
+  //RxString filteredSheetName = ''.obs;
   RxMap lastCount = {}.obs;
   RxMap booksCount = {}.obs;
   RxString homeTitle = '(qb)Home'.obs;

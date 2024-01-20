@@ -11,7 +11,7 @@ import '../../../2BL_domain/usecases/filters4swiper/emptyresults.dart';
 import '../../../2BL_domain/usecases/filters4swiper/searchword.dart';
 import '../../widgets/alib/alib.dart';
 
-import '../5filterspages/_selectview.dart';
+import '../../controllers/selectvalue.dart';
 import '../../zswipbrowser/_swiper.dart';
 
 class LastMenu extends StatefulWidget {
@@ -27,20 +27,18 @@ class _LastMenuState extends State<LastMenu> {
     return ElevatedButton(
       child: const Icon(Icons.date_range),
       onPressed: () async {
-        String searchDate = '';
-        try {
-          // ignore: use_build_context_synchronously
-          searchDate = await dateSelect(context);
-        } catch (_) {
-          return;
-        }
-
+        String searchDate = await dateSelect(context);
         emptyResult =
             (searchText: searchDate, sheetGroup: sheetGroup, sheetName: '');
-
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
         await searchWord(sheetGroup, '', searchDate, context);
+        // ignore: use_build_context_synchronously
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => CardSwiper(sheetGroup, const {})),
+        );
       },
     );
   }
@@ -62,12 +60,9 @@ class _LastMenuState extends State<LastMenu> {
       child: InkWell(
           child: Text(sheetName),
           onTap: () async {
-            bl.filteredSheetName.value = sheetName;
             currentSS.dailyListRow = bl.dailyList.rows[six];
-            int? swiperIndex = int.tryParse(bl.dailyList.rows[six].swiperIndex);
             currentSS.swiperIndexIncrement = true;
-            await sheet4swiperKeys(
-                sheetGroup, sheetName, 'All sheet', context, swiperIndex!);
+            await sheet4swiperKeys();
 
             // ignore: use_build_context_synchronously
             await Navigator.push(

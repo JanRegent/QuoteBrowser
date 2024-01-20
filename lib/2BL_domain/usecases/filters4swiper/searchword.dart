@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:input_dialog/input_dialog.dart';
+import 'package:quotebrowser/1AL_pres/pages/1daily/dailylist.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../3Data/dl.dart';
@@ -61,14 +62,16 @@ Future searchWordInSheetGroup(
   await searchGroup_(sheetGroup, sheetName, searchWord);
 }
 
-Future sheet4swiperKeys(String sheetGroup, sheetName, String searchText,
-    BuildContext context, int swiperIndex) async {
+Future sheet4swiperKeys() async {
+  DailyListRow dailyListRow = currentSS.dailyListRow;
+  String sheetGroup = dailyListRow.sheetGroup;
   bl.lastCount[sheetGroup] = 'loading';
+  String sheetName = dailyListRow.sheetName;
   await dl.httpService.getSheetSave(sheetName);
   List<String> keys = await bl.sheetrowsCRUD.readKeysRowNoSorted(sheetName);
   if (keys.isEmpty) return;
   currentSS.keys = [];
   currentSS.keys.addAll(keys);
   bl.lastCount[sheetGroup] = '';
-  currentSS.swiperIndex.value = swiperIndex;
+  currentSS.swiperIndex.value = int.tryParse(dailyListRow.swiperIndex)!;
 }

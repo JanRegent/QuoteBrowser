@@ -42,9 +42,6 @@ class _AuthorBooksState extends State<AuthorBooks> {
             )
           ],
         ),
-        subtitle: Row(
-          children: [Obx(() => Text(bl.filteredSheetName.value))],
-        ),
         onTap: () async {
           currentSS.bookListRow = bl.bookList.rows[bix];
           currentSS.swiperIndex.value = bl.bookList.rows[bix].swiperIndex;
