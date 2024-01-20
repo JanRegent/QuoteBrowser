@@ -11,7 +11,7 @@ import '../controllers/selectvalue.dart';
 
 class ColumnTextFiltersAL {
   Future doItem(MenuTile item, BuildContext context) async {
-    al.messageLoading(context, 'Searching in cloud', item.tileName, 25);
+    al.messageLoading('Searching in cloud', item.tileName, 25);
     switch (item.tileName) {
       case 'New Author&text':
         //currentSS.filterIcon = const Icon(Icons.person);

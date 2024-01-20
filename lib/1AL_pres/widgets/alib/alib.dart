@@ -9,6 +9,8 @@ import '../../../2BL_domain/bluti.dart';
 AL al = AL();
 
 class AL {
+  late BuildContext homeContext;
+
   Future<void> openhUrl(Uri url, BuildContext context) async {
     await canLaunchUrl(url)
         ? await launchUrl(url)
@@ -275,8 +277,7 @@ class AL {
       ..showSnackBar(snackBar);
   }
 
-  void messageLoading(
-      BuildContext context, String title, String mess, int seconds) async {
+  void messageLoading(String title, String mess, int seconds) async {
     final snackBar = SnackBar(
       elevation: 0,
       duration: Duration(seconds: seconds),
@@ -311,7 +312,7 @@ class AL {
           )),
     );
 
-    ScaffoldMessenger.of(context)
+    ScaffoldMessenger.of(homeContext)
       ..hideCurrentSnackBar()
       ..showSnackBar(snackBar);
   }
