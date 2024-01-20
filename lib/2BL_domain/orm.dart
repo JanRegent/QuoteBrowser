@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../1AL_pres/pages/books/bookslist.dart';
+import '../1AL_pres/pages/2books/bookslist.dart';
 import '../1AL_pres/pages/1daily/dailylist.dart';
 import '../1AL_pres/zswipbrowser/viewhigh/highwiew.dart';
 import '../3Data/dl.dart';

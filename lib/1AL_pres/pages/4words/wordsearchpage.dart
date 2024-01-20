@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../2BL_domain/bluti.dart';
-import '../../3Data/dl.dart';
-import '../widgets/alib/searchvalue/searchselectpage.dart';
+import '../../../2BL_domain/bluti.dart';
+import '../../../3Data/dl.dart';
+import '../../widgets/alib/searchvalue/searchselectpage.dart';
 
 class WordSearchPage extends StatefulWidget {
   final String tagsYellow;

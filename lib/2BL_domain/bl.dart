@@ -8,7 +8,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:quotebrowser/2BL_domain/entities/authorsbooks/bookscrud.dart';
 
-import '../1AL_pres/pages/books/bookslist.dart';
+import '../1AL_pres/pages/2books/bookslist.dart';
 import '../1AL_pres/pages/1daily/dailylist.dart';
 
 import 'entities/categories/catscrud.dart';

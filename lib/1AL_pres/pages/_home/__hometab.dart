@@ -6,12 +6,12 @@ import '../../../2BL_domain/bl.dart';
 import '../../../3Data/builddate.dart';
 import '../../widgets/alib/alicons.dart';
 
-import '../books/__authors.dart';
+import '../2books/__authors.dart';
 import '../1daily/1daily.dart';
 
 import '../../../0app/config/9appsettings.dart';
-import '../tags/prefixsearch.dart';
-import '../filterspages/words/wordtabs.dart';
+import '../3tags/prefixsearch.dart';
+import '../4words/wordtabs.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});

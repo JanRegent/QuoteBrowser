@@ -9,9 +9,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../2BL_domain/bl.dart';
 import '../../../widgets/alib/alicons.dart';
 
-import '../../../pages/filterspages/_selectview.dart';
+import '../../../pages/5filterspages/_selectview.dart';
 import '../battr/quotepopup.dart';
-import '../../../pages/category/catable.dart';
+import '../../../pages/6category/catable.dart';
 
 class HeadFields extends StatefulWidget {
   const HeadFields({super.key});
