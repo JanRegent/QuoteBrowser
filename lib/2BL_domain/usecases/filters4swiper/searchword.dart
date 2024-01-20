@@ -33,18 +33,16 @@ Future searchGroup_(
 }
 //----------------------------------------------------------search word
 
-Future searchWord(String sheetGroup, String sheetName, String searchText,
-    BuildContext context) async {
+Future searchWord(
+    String sheetGroup, String sheetName, String searchText) async {
   bl.lastCount[sheetGroup] = 'loading';
   bl.homeTitle.value = 'load: $sheetGroup';
-  searchTextSheetGroupSheetName(sheetGroup, sheetName, searchText).then(
-      (value) async {
-    bl.lastCount[sheetGroup] = value;
-    bl.homeTitle.value = '';
-  }, onError: (e) {
-    debugPrint('searchText($searchText) \n $e');
-    bl.homeTitle.value = '';
-  });
+  String rowsCount =
+      await searchTextSheetGroupSheetName(sheetGroup, sheetName, searchText);
+
+  bl.lastCount[sheetGroup] = rowsCount;
+  bl.homeTitle.value = '';
+  return bl.lastCount[sheetGroup];
 }
 
 Future searchSheetGroups(String searchText, sheetName) async {

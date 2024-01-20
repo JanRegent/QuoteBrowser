@@ -7,7 +7,6 @@ import 'package:holdable_button/holdable_button.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/orm.dart';
-import '../../../2BL_domain/usecases/filters4swiper/emptyresults.dart';
 import '../../../2BL_domain/usecases/filters4swiper/searchword.dart';
 import '../../widgets/alib/alib.dart';
 
@@ -28,13 +27,15 @@ class _LastMenuState extends State<LastMenu> {
       child: const Icon(Icons.date_range),
       onPressed: () async {
         String searchDate = await dateSelect(context);
-        emptyResult =
-            (searchText: searchDate, sheetGroup: sheetGroup, sheetName: '');
+        // emptyResult =
+        //     (searchText: searchDate, sheetGroup: sheetGroup, sheetName: '');
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchWord(sheetGroup, '', searchDate, context);
+        String rowsCount = await searchWord(sheetGroup, '', searchDate);
+        if (rowsCount == '0') return;
+
         // ignore: use_build_context_synchronously
-        await Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => CardSwiper(sheetGroup, const {})),
