@@ -3,14 +3,15 @@ import 'package:input_dialog/input_dialog.dart';
 import 'package:quotebrowser/1AL_pres/pages/1daily/dailylist.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
 
+import '../../../1AL_pres/widgets/alib/alib.dart';
 import '../../../3Data/dl.dart';
 import '../../bl.dart';
 import 'searchss.dart';
 
-Future<String> inputWord(BuildContext context) async {
+Future<String> inputWord() async {
   try {
     final word = await InputDialog.show(
-      context: context,
+      context: al.homeContext,
       title: 'Enter word', // The default.
       okText: 'OK', // The default.
       cancelText: 'Cancel', // The default.

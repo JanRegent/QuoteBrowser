@@ -70,7 +70,7 @@ List<String> sheetNameKeysFilter(String sheetGroup, String sheetName) {
   return sheetNameKeys;
 }
 
-Future<int> columnTextShow(String columnTextKey, BuildContext context) async {
+Future<int> columnTextShow(String columnTextKey) async {
   currentSS.filterKey = columnTextKey;
   currentSS.swiperIndex.value = 0;
 
@@ -84,8 +84,8 @@ Future<int> columnTextShow(String columnTextKey, BuildContext context) async {
   return currentSS.keys.length;
 }
 
-Future<int> searchColumnAndQuote(String columnName, String columnValue,
-    String searchText, BuildContext context) async {
+Future<int> searchColumnAndQuote(
+    String columnName, String columnValue, String searchText) async {
   currentSS.filterKey = searchText;
   currentSS.swiperIndex.value = 0;
 

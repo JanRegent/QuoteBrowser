@@ -118,7 +118,7 @@ class _HeadFieldsState extends State<HeadFields> {
         leading: IconButton(
           icon: ALicons.attrIcons.authorIcon,
           onPressed: () async {
-            String authorSelected = await authorSelect(context);
+            String authorSelected = await authorSelect();
             if (authorSelected.isEmpty) return;
             String rownoKey =
                 await bl.orm.currentRow.setCellBL('author', authorSelected);

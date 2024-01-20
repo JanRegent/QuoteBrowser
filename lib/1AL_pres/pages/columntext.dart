@@ -10,14 +10,14 @@ import '../widgets/alib/alib.dart';
 import '../controllers/selectvalue.dart';
 
 class ColumnTextFiltersAL {
-  Future doItem(MenuTile item, BuildContext context) async {
+  Future doItem(MenuTile item) async {
     al.messageLoading('Searching in cloud', item.tileName, 25);
     switch (item.tileName) {
       case 'New Author&text':
         //currentSS.filterIcon = const Icon(Icons.person);
         String author = '';
         try {
-          author = await authorSelect(context);
+          author = await authorSelect();
         } catch (_) {
           return;
         }
@@ -27,7 +27,7 @@ class ColumnTextFiltersAL {
         String searchWord = '';
         try {
           // ignore: use_build_context_synchronously
-          searchWord = await inputWord(context);
+          searchWord = await inputWord();
         } catch (_) {
           return;
         }
@@ -35,10 +35,10 @@ class ColumnTextFiltersAL {
           return;
         }
         // ignore: use_build_context_synchronously
-        await searchColumnQuote('author', author, searchWord, context);
+        await searchColumnQuote('author', author, searchWord);
         // ignore: use_build_context_synchronously
         await Navigator.push(
-          context,
+          al.homeContext,
           MaterialPageRoute(
               builder: (context) =>
                   CardSwiper('$author & $searchWord', const {})),
@@ -50,17 +50,17 @@ class ColumnTextFiltersAL {
         //currentSS.filterIcon = const Icon(Icons.person);
         try {
           // ignore: use_build_context_synchronously
-          columnTextKey = await authorTextSelect(context);
+          columnTextKey = await authorTextSelect();
         } catch (_) {
           return;
         }
 
         if (columnTextKey.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchColumnText(columnTextKey, context);
+        await searchColumnText(columnTextKey);
         // ignore: use_build_context_synchronously
         await Navigator.push(
-          context,
+          al.homeContext,
           MaterialPageRoute(
               builder: (context) => CardSwiper(columnTextKey, const {})),
         );

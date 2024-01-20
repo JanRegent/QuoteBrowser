@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../2BL_domain/bl.dart';
 
 import '../../2BL_domain/bluti.dart';
+import '../widgets/alib/alib.dart';
 import '../widgets/alib/searchvalue/searchselectpage.dart';
 
 Future<String> dateSelect(BuildContext context) async {
@@ -32,12 +33,12 @@ Future<String> wordSelect(BuildContext context) async {
   );
 }
 
-Future<String> authorSelect(BuildContext context) async {
+Future<String> authorSelect() async {
   List<String> authors = bl.booksCRUD.readAuthorsUniq();
   try {
     // ignore: use_build_context_synchronously
     String? selected = await Navigator.push(
-      context,
+      al.homeContext,
       MaterialPageRoute(
           builder: (context) => SearchSelectPage(authors, 'Select author')),
     );
@@ -47,11 +48,11 @@ Future<String> authorSelect(BuildContext context) async {
   }
 }
 
-Future<String> authorTextSelect(BuildContext context) async {
+Future<String> authorTextSelect() async {
   List<String> words = await bl.columnTextFilterCRUD.readColumnTextKeys();
   // ignore: use_build_context_synchronously
   return await Navigator.push(
-    context,
+    al.homeContext,
     MaterialPageRoute(
         builder: (context) => SearchSelectPage(words, 'Select Author|text ')),
   );
