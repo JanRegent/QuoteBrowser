@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/orm.dart';
-import '../../../2BL_domain/usecases/filtersbl/searchss.dart';
+import '../../../2BL_domain/usecases/filters4swiper/searchss.dart';
 
 List assetsFiles = ['Robert', 'karmel', 'Eckhart'];
 String assetFile = assetsFiles[0];

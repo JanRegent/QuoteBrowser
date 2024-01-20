@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 
+import '../../2BL_domain/usecases/filters4swiper/searchcolumn.dart';
+import '../../2BL_domain/usecases/filters4swiper/searchword.dart';
+import '../zswipbrowser/_swiper.dart';
 import '../widgets/alib/alib.dart';
 
 import '../pages/filterspages/_selectview.dart';
-import 'searchshow.dart';
 
 class ColumnTextFiltersAL {
   Future doItem(MenuTile item, BuildContext context) async {
@@ -34,6 +36,13 @@ class ColumnTextFiltersAL {
         }
         // ignore: use_build_context_synchronously
         await searchColumnQuote('author', author, searchWord, context);
+        // ignore: use_build_context_synchronously
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  CardSwiper('$author & $searchWord', const {})),
+        );
         break;
 
       case 'Stored Author&text':
@@ -49,6 +58,12 @@ class ColumnTextFiltersAL {
         if (columnTextKey.isEmpty) return;
         // ignore: use_build_context_synchronously
         await searchColumnText(columnTextKey, context);
+        // ignore: use_build_context_synchronously
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => CardSwiper(columnTextKey, const {})),
+        );
         break;
 
       default:

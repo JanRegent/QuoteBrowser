@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
-import '../../../pages/filterspages/zswipbrowser/edit/battr/addquote/emptyview.dart';
+import '../../../zswipbrowser/edit/battr/addquote/emptyview.dart';
 
 class SearchSelectPage extends StatefulWidget {
   final List<String> values;

@@ -7,7 +7,7 @@ import '../../../3Data/builddate.dart';
 import '../../widgets/alib/alicons.dart';
 
 import '../books/__authors.dart';
-import '../daily/1daily.dart';
+import '../1daily/1daily.dart';
 
 import '../../../0app/config/9appsettings.dart';
 import '../tags/prefixsearch.dart';

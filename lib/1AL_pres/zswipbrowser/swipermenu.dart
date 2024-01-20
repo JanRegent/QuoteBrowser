@@ -4,9 +4,9 @@ import 'package:clipboard/clipboard.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../2BL_domain/bl.dart';
-import '../../../../2BL_domain/orm.dart';
-import '../../../widgets/alib/alib.dart';
+import '../../2BL_domain/bl.dart';
+import '../../2BL_domain/orm.dart';
+import '../widgets/alib/alib.dart';
 
 //----------------------------------------------------------------goto
 // ↓ get the tap position Offset

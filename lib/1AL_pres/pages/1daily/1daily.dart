@@ -7,10 +7,12 @@ import 'package:holdable_button/holdable_button.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/orm.dart';
-import '../../../2BL_domain/usecases/filtersbl/emptyresults.dart';
+import '../../../2BL_domain/usecases/filters4swiper/emptyresults.dart';
+import '../../../2BL_domain/usecases/filters4swiper/searchword.dart';
 import '../../widgets/alib/alib.dart';
-import '../../controllers/searchshow.dart';
+
 import '../filterspages/_selectview.dart';
+import '../../zswipbrowser/_swiper.dart';
 
 class LastMenu extends StatefulWidget {
   const LastMenu({super.key});
@@ -38,7 +40,7 @@ class _LastMenuState extends State<LastMenu> {
 
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchText(sheetGroup, '', searchDate, context);
+        await searchWord(sheetGroup, '', searchDate, context);
       },
     );
   }
@@ -64,8 +66,15 @@ class _LastMenuState extends State<LastMenu> {
             currentSS.dailyListRow = bl.dailyList.rows[six];
             int? swiperIndex = int.tryParse(bl.dailyList.rows[six].swiperIndex);
             currentSS.swiperIndexIncrement = true;
-            await searchAllSheet(
+            await sheet4swiperKeys(
                 sheetGroup, sheetName, 'All sheet', context, swiperIndex!);
+
+            // ignore: use_build_context_synchronously
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CardSwiper(sheetName, const {})),
+            );
           }),
     );
   }
@@ -112,16 +121,18 @@ class _LastMenuState extends State<LastMenu> {
               )
             ],
           ),
-          // subtitle: Row(
-          //   children: [
-          //     sheetNamesPopupGen(sheetGroup),
-          //     Obx(() => Text(bl.filteredSheetName.value))
-          //   ],
-          // ),
           onTap: () async {
             currentSS.swiperIndexIncrement = false;
-            await searchSheetGroup(
-                sheetGroup, '', '${blUti.todayStr()}.', context);
+            String searchWord = '${blUti.todayStr()}.';
+            await searchWordInSheetGroup(sheetGroup, '', searchWord);
+            if (bl.lastCount[sheetGroup] == 0) return;
+
+            // ignore: use_build_context_synchronously
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CardSwiper(searchWord, const {})),
+            );
           },
           trailing: lastdays(sheetGroup)));
     }

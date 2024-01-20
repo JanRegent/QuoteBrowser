@@ -6,8 +6,9 @@ import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
+import '../../../2BL_domain/usecases/filters4swiper/searchword.dart';
 import '../../widgets/alib/alib.dart';
-import '../../controllers/searchshow.dart';
+
 import '2booksbl.dart';
 
 class AuthorBooks extends StatefulWidget {

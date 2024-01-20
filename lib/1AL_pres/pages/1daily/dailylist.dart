@@ -6,8 +6,6 @@ class DailyList {
   Set sheetGroups = {};
   int swiperIndex = 1;
 
-  String sheetGroupCurrent = '';
-
   List<String> cols = [];
   Map<String, String> sheetUrls = {};
 
