@@ -4,8 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 
-import '../../../2BL_domain/usecases/filters4swiper/searchss.dart';
-
+import '../../../2BL_domain/usecases/keys4swiper/searchss.dart';
 import '../../dl.dart';
 import 'backendurl.dart';
 

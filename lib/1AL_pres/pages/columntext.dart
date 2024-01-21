@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../../2BL_domain/usecases/filters4swiper/searchcolumn.dart';
-import '../../2BL_domain/usecases/filters4swiper/searchword.dart';
+import '../../2BL_domain/usecases/keys4swiper/searchcolumn.dart';
+import '../../2BL_domain/usecases/keys4swiper/searchword.dart';
 import '../zswipbrowser/_swiper.dart';
 import '../widgets/alib/alib.dart';
 

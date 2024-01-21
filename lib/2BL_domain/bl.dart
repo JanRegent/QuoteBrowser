@@ -14,8 +14,9 @@ import '../1AL_pres/pages/1daily/dailylist.dart';
 import 'entities/categories/catscrud.dart';
 
 import 'usecases/columntext/columntextfilter.dart';
-import 'usecases/filters4swiper/simplefilter.dart';
 import 'orm.dart';
+import 'usecases/keys4swiper/_preparekeys.dart';
+import 'usecases/keys4swiper/simplefilter.dart';
 import 'usecases/rss/rss.dart';
 import 'entities/sheetrows/sheetcolscrud.dart';
 import 'entities/sheetrows/sheetrowscrud.dart';
@@ -55,6 +56,8 @@ class Bl {
 
   BooksCRUD booksCRUD = BooksCRUD();
   RssCRUD rssCRUD = RssCRUD();
+
+  PrepareKeys prepareKeys = PrepareKeys();
 
   Future init() async {
     await isarOpen();

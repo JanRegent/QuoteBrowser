@@ -7,7 +7,6 @@ import 'package:holdable_button/holdable_button.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/orm.dart';
-import '../../../2BL_domain/usecases/filters4swiper/searchword.dart';
 import '../../widgets/alib/alib.dart';
 
 import '../../controllers/selectvalue.dart';
@@ -31,7 +30,8 @@ class _LastMenuState extends State<LastMenu> {
         //     (searchText: searchDate, sheetGroup: sheetGroup, sheetName: '');
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        String rowsCount = await searchWord(sheetGroup, '', searchDate);
+        String rowsCount = await bl.prepareKeys.byWord
+            .sheetGroupSheetName(sheetGroup, '', searchDate);
         if (rowsCount == '0') return;
 
         // ignore: use_build_context_synchronously
@@ -63,7 +63,7 @@ class _LastMenuState extends State<LastMenu> {
           onTap: () async {
             currentSS.dailyListRow = bl.dailyList.rows[six];
             currentSS.swiperIndexIncrement = true;
-            await sheet4swiperKeys();
+            await bl.prepareKeys.sheetAllKeys();
 
             // ignore: use_build_context_synchronously
             await Navigator.push(
@@ -120,7 +120,8 @@ class _LastMenuState extends State<LastMenu> {
           onTap: () async {
             currentSS.swiperIndexIncrement = false;
             String searchWord = '${blUti.todayStr()}.';
-            await searchWordInSheetGroup(sheetGroup, '', searchWord);
+            await bl.prepareKeys.byWord
+                .sheetGroupSheetName(sheetGroup, '', searchWord);
             if (bl.lastCount[sheetGroup] == 0) return;
 
             // ignore: use_build_context_synchronously
@@ -144,11 +145,13 @@ class _LastMenuState extends State<LastMenu> {
             icon: const Icon(Icons.refresh),
             label: const Text('All'),
             onPressed: () async {
-              await searchSheetGroups('${blUti.todayStr()}.', '');
+              // await bl.prepareKeys.byWord
+              //     .sheetGroupSheetName('${blUti.todayStr()}.', '');
             },
             onLongPress: () async {
               await bl.sheetrowsCRUD.deleteAllDb();
-              await searchSheetGroups('${blUti.todayStr()}.', '');
+              // await bl.prepareKeys.byWord
+              //     .sheetGroupSheetName('${blUti.todayStr()}.', '');
             },
           ),
           const Text(''),

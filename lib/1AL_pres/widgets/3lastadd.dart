@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../2BL_domain/orm.dart';
 
-import '../../2BL_domain/usecases/filters4swiper/searchcolumn.dart';
+import '../../2BL_domain/usecases/keys4swiper/searchcolumn.dart';
 import '../zswipbrowser/_swiper.dart';
 import '../zswipbrowser/edit/battr/addquote/addquoterow.dart';
 

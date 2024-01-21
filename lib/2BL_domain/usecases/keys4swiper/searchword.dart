@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:input_dialog/input_dialog.dart';
-import 'package:quotebrowser/1AL_pres/pages/1daily/dailylist.dart';
-import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../1AL_pres/widgets/alib/alib.dart';
-import '../../../3Data/dl.dart';
 import '../../bl.dart';
 import 'searchss.dart';
 
@@ -33,18 +29,6 @@ Future searchGroup_(
 }
 //----------------------------------------------------------search word
 
-Future searchWord(
-    String sheetGroup, String sheetName, String searchText) async {
-  bl.lastCount[sheetGroup] = 'loading';
-  bl.homeTitle.value = 'load: $sheetGroup';
-  String rowsCount =
-      await searchTextSheetGroupSheetName(sheetGroup, sheetName, searchText);
-
-  bl.lastCount[sheetGroup] = rowsCount;
-  bl.homeTitle.value = '';
-  return bl.lastCount[sheetGroup];
-}
-
 Future searchSheetGroups(String searchText, sheetName) async {
   for (var sheetGroup in bl.dailyList.sheetGroups) {
     bl.lastCount[sheetGroup] = '?';
@@ -59,18 +43,4 @@ Future searchWordInSheetGroup(
     String sheetGroup, sheetName, String searchWord) async {
   bl.lastCount[sheetGroup] = 'loading';
   await searchGroup_(sheetGroup, sheetName, searchWord);
-}
-
-Future sheet4swiperKeys() async {
-  DailyListRow dailyListRow = currentSS.dailyListRow;
-  String sheetGroup = dailyListRow.sheetGroup;
-  bl.lastCount[sheetGroup] = 'loading';
-  String sheetName = dailyListRow.sheetName;
-  await dl.httpService.getSheetSave(sheetName);
-  List<String> keys = await bl.sheetrowsCRUD.readKeysRowNoSorted(sheetName);
-  if (keys.isEmpty) return;
-  currentSS.keys = [];
-  currentSS.keys.addAll(keys);
-  bl.lastCount[sheetGroup] = '';
-  currentSS.swiperIndex.value = int.tryParse(dailyListRow.swiperIndex)!;
 }

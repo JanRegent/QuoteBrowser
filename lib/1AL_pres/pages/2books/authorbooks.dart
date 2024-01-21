@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/bluti.dart';
-import '../../../2BL_domain/usecases/filters4swiper/searchword.dart';
 import '../../widgets/alib/alib.dart';
 
 import '2booksbl.dart';
@@ -62,11 +60,13 @@ class _AuthorBooksState extends State<AuthorBooks> {
             icon: const Icon(Icons.refresh),
             label: const Text('All'),
             onPressed: () async {
-              await searchSheetGroups('${blUti.todayStr()}.', '');
+              // await bl.prepareKeys.byWord
+              //     .sheetGroupSheetName('${blUti.todayStr()}.', '');
             },
             onLongPress: () async {
-              await bl.sheetrowsCRUD.deleteAllDb();
-              await searchSheetGroups('${blUti.todayStr()}.', '');
+              // await bl.sheetrowsCRUD.deleteAllDb();
+              // await bl.prepareKeys.byWord
+              //     .sheetGroupSheetName('${blUti.todayStr()}.', '');
             },
           ),
           const Text(''),
