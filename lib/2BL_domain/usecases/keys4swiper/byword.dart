@@ -3,7 +3,7 @@ import '../../bl.dart';
 import '../../orm.dart';
 
 class ByWord {
-  Future<String> getSheetGroup(String sheetGroup, String searchText) async {
+  Future<int> getSheetGroup(String sheetGroup, String searchText) async {
     currentSS.filterKey = '$searchText __|__ $sheetGroup';
     bl.lastCount[sheetGroup] = 'loading';
     currentSS.swiperIndex.value = 0;
@@ -19,9 +19,9 @@ class ByWord {
     }
     bl.lastCount[sheetGroup] = '';
     if (currentSS.keys.isEmpty) {
-      return '0';
+      return 0;
     }
     await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
-    return currentSS.keys.length.toString();
+    return currentSS.keys.length;
   }
 }

@@ -7,6 +7,24 @@ import '../1AL_pres/zswipbrowser/viewhigh/highwiew.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
 
+void indexChanged(int rowIndex) async {
+  bl.orm.currentRow.selectedText.value = '';
+  bl.orm.currentRow.attribNameLast.value = '';
+
+  currentSS.swiperIndex.value = rowIndex;
+  if (currentSS.swiperIndex > currentSS.keys.length - 1) {
+    currentSS.swiperIndex.value = 0;
+  }
+  if (currentSS.swiperIndex < 0) {
+    currentSS.swiperIndex.value = currentSS.keys.length - 1;
+  }
+
+  if (currentSS.keys.isEmpty) return;
+  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
+
+  currentSS.swiperIndexChanged = true;
+}
+
 List<String> colsMain = ['quote', 'author', 'book', 'parPage', 'tags'];
 CurrentSS currentSS = CurrentSS();
 RxString loadingTitle = ''.obs;

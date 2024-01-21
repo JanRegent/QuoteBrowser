@@ -26,13 +26,11 @@ class _LastMenuState extends State<LastMenu> {
       child: const Icon(Icons.date_range),
       onPressed: () async {
         String searchDate = await dateSelect(context);
-        // emptyResult =
-        //     (searchText: searchDate, sheetGroup: sheetGroup, sheetName: '');
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        String rowsCount =
+        int rowsCount =
             await bl.prepareKeys.byWord.getSheetGroup(sheetGroup, searchDate);
-        if (rowsCount == '0') return;
+        if (rowsCount == 0) return;
 
         // ignore: use_build_context_synchronously
         Navigator.push(

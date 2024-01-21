@@ -11,7 +11,7 @@ import '../1daily/1daily.dart';
 
 import '../../../0app/config/9appsettings.dart';
 import '../3tags/prefixsearch.dart';
-import '../4words/wordtabs.dart';
+import '../4words/bywordpage.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -88,7 +88,7 @@ class _HomeTabState extends State<HomeTab> {
               const LastMenu(),
               const BooksAuthors(),
               const PrefixSearchPage(),
-              const WordTabsPage(),
+              const BywordPage(),
               IconButton(
                   onPressed: () async {
                     // //This should be a singleton

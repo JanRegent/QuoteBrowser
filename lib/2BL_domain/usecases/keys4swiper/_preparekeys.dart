@@ -2,7 +2,7 @@ import '../../../1AL_pres/pages/1daily/dailylist.dart';
 import '../../../3Data/dl.dart';
 import '../../bl.dart';
 import '../../orm.dart';
-import 'wordranges.dart';
+import 'byword.dart';
 
 class PrepareKeys {
   ByWord byWord = ByWord();

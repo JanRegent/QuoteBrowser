@@ -18,24 +18,6 @@ import 'swipermenu.dart';
 import 'viewhigh/highwiew.dart';
 import 'viewuser/userview.dart';
 
-void indexChanged(int rowIndex) async {
-  bl.orm.currentRow.selectedText.value = '';
-  bl.orm.currentRow.attribNameLast.value = '';
-
-  currentSS.swiperIndex.value = rowIndex;
-  if (currentSS.swiperIndex > currentSS.keys.length - 1) {
-    currentSS.swiperIndex.value = 0;
-  }
-  if (currentSS.swiperIndex < 0) {
-    currentSS.swiperIndex.value = currentSS.keys.length - 1;
-  }
-
-  if (currentSS.keys.isEmpty) return;
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
-
-  currentSS.swiperIndexChanged = true;
-}
-
 // ignore: must_be_immutable
 class SwiperTabs extends StatefulWidget {
   VoidCallback setStateSwiper;
