@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import '../../2BL_domain/bl.dart';
 import '../../2BL_domain/orm.dart';
-import '../../2BL_domain/usecases/keys4swiper/searchword.dart';
+
 import '../../3Data/dl.dart';
 import '../widgets/alib/alib.dart';
 
@@ -70,7 +70,7 @@ class _SwiperTabsState extends State<SwiperTabs>
   IconButton searchWord() {
     return IconButton(
         onPressed: () async {
-          String searchWord = await inputWord();
+          String searchWord = await al.inputWord();
           List<String> keys = await bl.sheetrowsCRUD.searchWord(searchWord);
           if (keys.isEmpty) {
             if (currentSSkeys.isEmpty) {

@@ -7,68 +7,6 @@ import '../../bluti.dart';
 
 import '../../orm.dart';
 import '../../../3Data/dl.dart';
-import 'emptyresults.dart';
-
-Future<int> filterSearchText(String searchText, BuildContext context) async {
-  currentSS.filterKey = searchText;
-  currentSS.swiperIndex.value = 0;
-
-  debugPrint(searchText);
-  try {
-    currentSS.keys = (await bl.filtersCRUD.readFilter(searchText));
-  } catch (_) {}
-
-  // ignore: prefer_is_empty
-  if (currentSS.keys.length == 0) {
-    //ignore: use_build_context_synchronously
-    al.messageLoading('Searching in cloud', searchText, 25);
-
-    currentSS.keys = await dl.httpService.searchSS(searchText);
-
-    await bl.filtersCRUD.updateFilter(searchText, currentSS.keys);
-  }
-  if (currentSS.keys.isEmpty) {
-    return 0;
-  }
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
-  return currentSS.keys.length;
-}
-
-Future<String> searchTextSheetGroupSheetName(
-    String sheetGroup, String sheetName, String searchText) async {
-  currentSS.filterKey = '$searchText __|__ $sheetGroup';
-  currentSS.swiperIndex.value = 0;
-  try {
-    currentSS.keys = (await bl.filtersCRUD.readFilter(currentSS.filterKey));
-  } catch (_) {}
-
-  // ignore: prefer_is_empty
-  if (currentSS.keys.length == 0) {
-    currentSS.keys = await dl.httpService.getSheetGroup(sheetGroup, searchText);
-    await bl.filtersCRUD
-        .updateFilter('$searchText __|__ $sheetGroup', currentSS.keys);
-  }
-  if (currentSS.keys.isEmpty) {
-    return '0';
-  }
-  currentSS.keys = sheetNameKeysFilter(sheetGroup, sheetName);
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
-  return currentSS.keys.length.toString();
-}
-
-List<String> sheetNameKeysFilter(String sheetGroup, String sheetName) {
-  emptyResult = (searchText: '', sheetGroup: sheetGroup, sheetName: sheetName);
-  if (sheetName.isEmpty) return currentSS.keys;
-  List<String> sheetNameKeys = [];
-  for (String key in currentSS.keys) {
-    try {
-      List<String> sheetNameNo = key.split('__|__');
-      if (sheetNameNo[0] != sheetName) continue;
-      sheetNameKeys.add(key);
-    } catch (_) {}
-  }
-  return sheetNameKeys;
-}
 
 Future<int> columnTextShow(String columnTextKey) async {
   currentSS.filterKey = columnTextKey;

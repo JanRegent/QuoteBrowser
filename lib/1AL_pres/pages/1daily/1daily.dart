@@ -30,8 +30,8 @@ class _LastMenuState extends State<LastMenu> {
         //     (searchText: searchDate, sheetGroup: sheetGroup, sheetName: '');
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        String rowsCount = await bl.prepareKeys.byWord
-            .sheetGroupSheetName(sheetGroup, '', searchDate);
+        String rowsCount =
+            await bl.prepareKeys.byWord.getSheetGroup(sheetGroup, searchDate);
         if (rowsCount == '0') return;
 
         // ignore: use_build_context_synchronously
@@ -119,16 +119,15 @@ class _LastMenuState extends State<LastMenu> {
           ),
           onTap: () async {
             currentSS.swiperIndexIncrement = false;
-            String searchWord = '${blUti.todayStr()}.';
-            await bl.prepareKeys.byWord
-                .sheetGroupSheetName(sheetGroup, '', searchWord);
+            String word = '${blUti.todayStr()}.';
+            await bl.prepareKeys.byWord.getSheetGroup(sheetGroup, word);
             if (bl.lastCount[sheetGroup] == 0) return;
 
             // ignore: use_build_context_synchronously
             await Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => CardSwiper(searchWord, const {})),
+                  builder: (context) => CardSwiper(word, const {})),
             );
           },
           trailing: lastdays(sheetGroup)));

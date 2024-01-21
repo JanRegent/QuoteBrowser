@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:input_dialog/input_dialog.dart';
 
 //import 'package:sheetviewer/uti/viewers/json_viewer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,6 +12,7 @@ AL al = AL();
 class AL {
   late BuildContext homeContext;
 
+  //-----------------------------------------------------------------------url
   Future<void> openhUrl(Uri url, BuildContext context) async {
     await canLaunchUrl(url)
         ? await launchUrl(url)
@@ -72,6 +74,7 @@ class AL {
     );
   }
 
+  //-----------------------------------------------------------------------icons
   ElevatedButton iconBack(BuildContext context) {
     return ElevatedButton(
       child: const Icon(Icons.arrow_back),
@@ -155,6 +158,20 @@ class AL {
     });
   }
 
+  //-----------------------------------------------------------------input text
+  Future<String> inputWord() async {
+    try {
+      final word = await InputDialog.show(
+        context: al.homeContext,
+        title: 'Enter word', // The default.
+        okText: 'OK', // The default.
+        cancelText: 'Cancel', // The default.
+      );
+      return word!;
+    } catch (_) {
+      return '';
+    }
+  }
   //-----------------------------------------------------------------info/alerts
 
   void showTopSnackBar(context, String message, int seconds) {

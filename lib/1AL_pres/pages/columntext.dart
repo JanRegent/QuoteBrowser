@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../2BL_domain/usecases/keys4swiper/searchcolumn.dart';
-import '../../2BL_domain/usecases/keys4swiper/searchword.dart';
+
 import '../zswipbrowser/_swiper.dart';
 import '../widgets/alib/alib.dart';
 
@@ -27,7 +27,7 @@ class ColumnTextFiltersAL {
         String searchWord = '';
         try {
           // ignore: use_build_context_synchronously
-          searchWord = await inputWord();
+          searchWord = await al.inputWord();
         } catch (_) {
           return;
         }
