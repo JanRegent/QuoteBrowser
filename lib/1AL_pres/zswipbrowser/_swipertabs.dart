@@ -30,6 +30,7 @@ void indexChanged(int rowIndex) async {
     currentSS.swiperIndex.value = currentSS.keys.length - 1;
   }
 
+  if (currentSS.keys.isEmpty) return;
   await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
 
   currentSS.swiperIndexChanged = true;
