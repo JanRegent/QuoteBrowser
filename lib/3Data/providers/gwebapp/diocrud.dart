@@ -89,8 +89,7 @@ class HttpService {
     return response.data['data'];
   }
 
-  Future<List<String>> getSheetGroup(
-      String sheetGroup, String searchText) async {
+  Future<List<String>> getSheetGroup(String sheetGroup, String word) async {
     late Response response;
     try {
       {
@@ -98,7 +97,7 @@ class HttpService {
           backendUrl,
           queryParameters: {
             'action': 'getSheetGroup',
-            'searchText': searchText,
+            'searchText': word,
             'sheetGroup': sheetGroup
           },
         );
@@ -106,7 +105,7 @@ class HttpService {
       await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
       return await sheetRowsSaveGetKeys(response.data['data']);
     } catch (e) {
-      debugPrint('getSheetGroup($sheetGroup, $searchText\n$e');
+      debugPrint('getSheetGroup($sheetGroup, $word\n$e');
       return [];
     }
   }

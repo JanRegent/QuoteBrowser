@@ -61,8 +61,10 @@ class _LastMenuState extends State<LastMenu> {
           onTap: () async {
             currentSS.dailyListRow = bl.dailyList.rows[six];
             currentSS.swiperIndexIncrement = true;
+            String infoTitle = 'All sheet ${currentSS.dailyListRow.sheetName}';
+            bl.homeTitle.value = infoTitle;
             await bl.prepareKeys.sheetAllKeys();
-
+            bl.homeTitle.value = '';
             // ignore: use_build_context_synchronously
             await Navigator.push(
               context,
@@ -118,14 +120,20 @@ class _LastMenuState extends State<LastMenu> {
           onTap: () async {
             currentSS.swiperIndexIncrement = false;
             String word = '${blUti.todayStr()}.';
+            bl.lastCount[sheetGroup] = 'loading';
+            String infoTitle = '$word\nin $sheetGroup';
+            bl.homeTitle.value = infoTitle;
+
             await bl.prepareKeys.byWord.getSheetGroup(sheetGroup, word);
+            bl.lastCount[sheetGroup] = '';
+            bl.homeTitle.value = '';
             if (bl.lastCount[sheetGroup] == 0) return;
 
             // ignore: use_build_context_synchronously
             await Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => CardSwiper(word, const {})),
+                  builder: (context) => CardSwiper(infoTitle, const {})),
             );
           },
           trailing: lastdays(sheetGroup)));
