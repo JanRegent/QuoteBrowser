@@ -14,11 +14,9 @@ import '../1AL_pres/pages/1daily/dailylist.dart';
 import 'bluti.dart';
 import 'entities/categories/catscrud.dart';
 
-import 'usecases/columntext/columntextfilter.dart';
 import 'orm.dart';
 import 'usecases/keys4swiper/_preparekeys.dart';
-import 'usecases/keys4swiper/simplefilter.dart';
-import 'usecases/rss/rss.dart';
+
 import 'entities/sheetrows/sheetcolscrud.dart';
 import 'entities/sheetrows/sheetrowscrud.dart';
 
@@ -27,10 +25,7 @@ List<IsarGeneratedSchema> schemas = [
   CatSchema,
   SheetRowSchema,
   SheetColSchema,
-  SimpleFilterSchema,
-  ColumnTextFilterSchema,
   BooksSchema,
-  RssSchema
 ];
 
 class Bl {
@@ -52,11 +47,8 @@ class Bl {
   CatsCRUD catsCRUD = CatsCRUD();
   SheetrowsCRUD sheetrowsCRUD = SheetrowsCRUD();
   SheetcolsCRUD sheetcolsCRUD = SheetcolsCRUD();
-  FiltersCRUD filtersCRUD = FiltersCRUD();
-  ColumnTextFilterCRUD columnTextFilterCRUD = ColumnTextFilterCRUD();
 
   BooksCRUD booksCRUD = BooksCRUD();
-  RssCRUD rssCRUD = RssCRUD();
 
   PrepareKeys prepareKeys = PrepareKeys();
 

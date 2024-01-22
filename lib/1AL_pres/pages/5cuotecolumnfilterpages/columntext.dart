@@ -45,27 +45,6 @@ class QuoteColumnFilters {
         );
         break;
 
-      case 'Stored Author&text':
-        String columnTextKey = '';
-        //currentSS.filterIcon = const Icon(Icons.person);
-        try {
-          // ignore: use_build_context_synchronously
-          columnTextKey = await authorTextSelect();
-        } catch (_) {
-          return;
-        }
-
-        if (columnTextKey.isEmpty) return;
-        // ignore: use_build_context_synchronously
-        await searchColumnText(columnTextKey);
-        // ignore: use_build_context_synchronously
-        await Navigator.push(
-          al.homeContext,
-          MaterialPageRoute(
-              builder: (context) => CardSwiper(columnTextKey, const {})),
-        );
-        break;
-
       default:
     }
   }

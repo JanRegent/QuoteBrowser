@@ -23,16 +23,6 @@ Future<String> dateSelect(BuildContext context) async {
   return searchDate;
 }
 
-Future<String> wordSelect(BuildContext context) async {
-  List<String> words = await bl.filtersCRUD.readWords();
-  // ignore: use_build_context_synchronously
-  return await Navigator.push(
-    context,
-    MaterialPageRoute(
-        builder: (context) => SearchSelectPage(words, 'Select word')),
-  );
-}
-
 Future<String> authorSelect() async {
   List<String> authors = bl.booksCRUD.readAuthorsUniq();
   try {
@@ -46,16 +36,6 @@ Future<String> authorSelect() async {
   } catch (_) {
     return '';
   }
-}
-
-Future<String> authorTextSelect() async {
-  List<String> words = await bl.columnTextFilterCRUD.readColumnTextKeys();
-  // ignore: use_build_context_synchronously
-  return await Navigator.push(
-    al.homeContext,
-    MaterialPageRoute(
-        builder: (context) => SearchSelectPage(words, 'Select Author|text ')),
-  );
 }
 
 Future<String> bookSelect(BuildContext context) async {

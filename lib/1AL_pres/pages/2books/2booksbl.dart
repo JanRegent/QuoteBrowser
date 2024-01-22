@@ -28,18 +28,10 @@ Future getBookContentShow(
 }
 
 Future<String> book4swipper(String sheetName, BuildContext context) async {
-  currentSS.filterKey = 'book__|__ $sheetName';
-  try {
-    currentSS.keys = (await bl.filtersCRUD.readFilter(currentSS.filterKey));
-  } catch (_) {}
-  // ignore: prefer_is_empty
-  if (currentSS.keys.length == 0) {
-    // ignore: use_build_context_synchronously
-    al.messageInfo(context, 'Loading', sheetName, 3);
-    currentSS.keys = await dl.httpService.getSheetSave(sheetName);
+  // ignore: use_build_context_synchronously
+  al.messageInfo(context, 'Loading', sheetName, 3);
+  currentSS.keys = await dl.httpService.getSheetSave(sheetName);
 
-    await bl.filtersCRUD.updateFilter('book__|__ $sheetName', currentSS.keys);
-  }
   if (currentSS.keys.isEmpty) {
     return '0';
   }

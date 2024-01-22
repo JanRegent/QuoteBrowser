@@ -12,13 +12,3 @@ Future searchColumnQuote(
     debugPrint(e);
   });
 }
-
-Future searchColumnText(String columnTextKey) async {
-  al.messageLoading('Searching in cloud', columnTextKey, 25);
-
-  columnTextShow(columnTextKey).then((value) async {
-    if (value == 0) return;
-  }, onError: (e) {
-    debugPrint(e);
-  });
-}

@@ -3,18 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
-import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/orm.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
 import '../../zswipbrowser/_swiper.dart';
 
 Future<String> tag4swipper(String tagPrefixes) async {
-  currentSS.filterKey = 'tagPrefix_rownoKeys';
-
   currentSS.keys = await dl.httpService.getrowsByTagPrefixes(tagPrefixes);
-  // ignore: use_build_context_synchronously
-  await bl.filtersCRUD.updateFilter(currentSS.filterKey, currentSS.keys);
 
   if (currentSS.keys.isEmpty) {
     return '0';

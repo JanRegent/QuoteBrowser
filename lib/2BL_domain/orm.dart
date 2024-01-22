@@ -30,7 +30,6 @@ CurrentSS currentSS = CurrentSS();
 RxString loadingTitle = ''.obs;
 
 class CurrentSS {
-  String filterKey = '';
   List<String> keys = [];
   List<String> sheetNames = [];
   bool addQuoteMode = false;
