@@ -22,11 +22,3 @@ Future searchColumnText(String columnTextKey) async {
     debugPrint(e);
   });
 }
-
-class MenuTile {
-  final String tileName;
-  final String menuGroup;
-  final Icon icon;
-  final bool isTrailingMenu;
-  MenuTile(this.tileName, this.menuGroup, this.icon, this.isTrailingMenu);
-}

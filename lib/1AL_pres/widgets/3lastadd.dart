@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../../2BL_domain/orm.dart';
 
-import '../../2BL_domain/usecases/keys4swiper/searchcolumn.dart';
 import '../zswipbrowser/_swiper.dart';
 import '../zswipbrowser/edit/battr/addquote/addquoterow.dart';
 
 class LastRowsAddQuote {
   Future doItem(
-      MenuTile item, BuildContext context, Function setstateHome) async {
-    switch (item.tileName) {
+      String menuitem, BuildContext context, Function setstateHome) async {
+    switch (menuitem) {
       case 'Add quote':
         // ignore: use_build_context_synchronously
 

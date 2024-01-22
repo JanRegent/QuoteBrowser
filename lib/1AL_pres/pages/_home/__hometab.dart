@@ -12,6 +12,7 @@ import '../1daily/1daily.dart';
 import '../../../0app/config/9appsettings.dart';
 import '../3tags/prefixsearch.dart';
 import '../4words/bywordpage.dart';
+import '../5cuotecolumnfilterpages/quotecolumnpage.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -40,7 +41,10 @@ class _HomeTabState extends State<HomeTab> {
                 Tab(icon: ALicons.attrIcons.bookIcon),
                 const Tab(icon: Icon(Icons.tag)),
                 const Tab(icon: Icon(Icons.wordpress)),
-                const Tab(icon: Icon(Icons.filter_alt)),
+                const Tab(
+                    icon: Row(
+                  children: [Icon(Icons.wordpress), Icon(Icons.view_column)],
+                )),
               ],
             ),
             title: Obx(() => Text(bl.homeTitle.value)),
@@ -83,19 +87,13 @@ class _HomeTabState extends State<HomeTab> {
               ],
             ),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
-              const LastMenu(),
-              const BooksAuthors(),
-              const PrefixSearchPage(),
-              const BywordPage(),
-              IconButton(
-                  onPressed: () async {
-                    // //This should be a singleton
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => DriftDbViewer()));
-                  },
-                  icon: const Icon(Icons.drive_eta)),
+              LastMenu(),
+              BooksAuthors(),
+              PrefixSearchPage(),
+              BywordPage(),
+              QuoteColumnPage(),
             ],
           ),
         ),

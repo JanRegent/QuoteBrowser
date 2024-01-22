@@ -1,16 +1,17 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
+import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:isar/isar.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 
 import 'package:quotebrowser/2BL_domain/entities/authorsbooks/bookscrud.dart';
 
 import '../1AL_pres/pages/2books/bookslist.dart';
 import '../1AL_pres/pages/1daily/dailylist.dart';
 
+import 'bluti.dart';
 import 'entities/categories/catscrud.dart';
 
 import 'usecases/columntext/columntextfilter.dart';
@@ -67,12 +68,12 @@ class Bl {
     devModeSet();
   }
 
-  final deviceInfoPlugin = DeviceInfoPlugin();
-
-  // ignore: prefer_typing_uninitialized_variables
-  late final deviceInfoAll;
+  List<String> authors = [];
+  Set authorsSet = {};
 
   void updateSlowly() async {
+    authors = [];
+    authors.addAll(blUti.toListString(authorsSet.toList().sorted()));
     bl.catsCRUD.update();
     booksCRUD.updateBooks();
   }

@@ -1,6 +1,8 @@
 import 'package:quotebrowser/2BL_domain/bluti.dart';
 import 'package:quotebrowser/3Data/dl.dart';
 
+import '../../../2BL_domain/bl.dart';
+
 class DailyList {
   List<DailyListRow> rows = [];
   Set sheetGroups = {};
@@ -24,10 +26,13 @@ class DailyList {
       String swiperIndex = data[i][swiperIndexIx].toString();
       if (swiperIndex.isEmpty) swiperIndex = '2';
 
+      String sheetName = data[i][sheetNameIx];
+      bl.authorsSet.add(sheetName);
+
       rows.add(DailyListRow()
         ..rowNo = i + 1
         ..sheetGroup = sheetGroup
-        ..sheetName = data[i][sheetNameIx]
+        ..sheetName = sheetName
         ..sheetUrl = data[i][sheetUrlIx]
         ..swiperIndex = swiperIndex);
 

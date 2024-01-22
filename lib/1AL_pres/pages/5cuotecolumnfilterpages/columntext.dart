@@ -2,17 +2,17 @@
 
 import 'package:flutter/material.dart';
 
-import '../../2BL_domain/usecases/keys4swiper/searchcolumn.dart';
+import '../../../2BL_domain/usecases/keys4swiper/searchcolumn.dart';
 
-import '../zswipbrowser/_swiper.dart';
-import '../widgets/alib/alib.dart';
+import '../../zswipbrowser/_swiper.dart';
+import '../../widgets/alib/alib.dart';
 
-import '../controllers/selectvalue.dart';
+import '../../controllers/selectvalue.dart';
 
-class ColumnTextFiltersAL {
-  Future doItem(MenuTile item) async {
-    al.messageLoading('Searching in cloud', item.tileName, 25);
-    switch (item.tileName) {
+class QuoteColumnFilters {
+  Future doItem(String menuitem) async {
+    al.messageLoading('Searching in cloud', menuitem, 25);
+    switch (menuitem) {
       case 'New Author&text':
         //currentSS.filterIcon = const Icon(Icons.person);
         String author = '';

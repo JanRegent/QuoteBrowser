@@ -1,1 +1,1 @@
-String buildDate = ' 2024_01_21__17_55_build_BL---BywordPage ';  
+String buildDate = ' 2024_01_22__10_33_build_AL---QuoteColumnPage ';  
