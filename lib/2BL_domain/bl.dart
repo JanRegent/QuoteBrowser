@@ -41,7 +41,8 @@ class Bl {
   //RxString filteredSheetName = ''.obs;
   RxMap lastCount = {}.obs;
   RxMap booksCount = {}.obs;
-  RxString homeTitle = '(qb)Home'.obs;
+  RxString homeTitle = ''.obs;
+  RxString homeTitlePrefix = ''.obs;
 
   Orm orm = Orm();
   CatsCRUD catsCRUD = CatsCRUD();

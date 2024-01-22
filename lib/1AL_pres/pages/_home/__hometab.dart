@@ -24,6 +24,20 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   final int _selectedIndex = 0;
 
+  Row titleRowHome() {
+    List<Widget> items = [];
+
+    bl.homeTitlePrefix.value = '';
+    items = [
+      Obx(() => bl.homeTitle.value.isEmpty
+          ? const Text('(qb)Home')
+          : const CircularProgressIndicator()),
+      Obx(() => Text(bl.homeTitle.value))
+    ];
+
+    return Row(children: items);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,23 +46,22 @@ class _HomeTabState extends State<HomeTab> {
         length: 5,
         child: Scaffold(
           appBar: AppBar(
-            bottom: TabBar(
-              onTap: (index) {
-                currentSS.currentHomeTabIndex = index;
-              },
-              tabs: [
-                const Tab(icon: Icon(Icons.newspaper)),
-                Tab(icon: ALicons.attrIcons.bookIcon),
-                const Tab(icon: Icon(Icons.tag)),
-                const Tab(icon: Icon(Icons.wordpress)),
-                const Tab(
-                    icon: Row(
-                  children: [Icon(Icons.wordpress), Icon(Icons.view_column)],
-                )),
-              ],
-            ),
-            title: Obx(() => Text(bl.homeTitle.value)),
-          ),
+              bottom: TabBar(
+                onTap: (index) {
+                  currentSS.currentHomeTabIndex = index;
+                },
+                tabs: [
+                  const Tab(icon: Icon(Icons.newspaper)),
+                  Tab(icon: ALicons.attrIcons.bookIcon),
+                  const Tab(icon: Icon(Icons.tag)),
+                  const Tab(icon: Icon(Icons.wordpress)),
+                  const Tab(
+                      icon: Row(
+                    children: [Icon(Icons.wordpress), Icon(Icons.view_column)],
+                  )),
+                ],
+              ),
+              title: titleRowHome()),
           drawer: Drawer(
             child: ListView(
               // Important: Remove any padding from the ListView.

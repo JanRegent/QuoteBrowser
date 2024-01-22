@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
+import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/orm.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
@@ -73,15 +74,16 @@ class _PrefixSearchPageState extends State<PrefixSearchPage> {
           context, 'Get tags by prefix', 'write somme start chars', 5);
       return;
     }
-    al.messageInfo(context, 'geting tags with prefix', tagPrefix, 10);
-
+    bl.homeTitle.value = 'Get tags with prefix\n$tagPrefix';
     incList = await dl.httpService.getTagsByPrefix(tagPrefixController.text);
+    bl.homeTitle.value = '';
     setState(() {});
   }
 
   void getQuotesByTagPrefixes(String tagPrefixes) async {
-    al.messageInfo(context, 'geting quotes with tag', tagPrefixes, 10);
+    bl.homeTitle.value = 'Get quotes with tag\n$tagPrefixes';
     await tag4swipper(tagPrefixes);
+    bl.homeTitle.value = '';
     // ignore: use_build_context_synchronously
     await Navigator.push(
       context,
