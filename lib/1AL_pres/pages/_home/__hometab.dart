@@ -25,10 +25,7 @@ class _HomeTabState extends State<HomeTab> {
   final int _selectedIndex = 0;
 
   Row titleRowHome() {
-    List<Widget> items = [];
-
-    bl.homeTitlePrefix.value = '';
-    items = [
+    List<Widget> items = [
       Obx(() => bl.homeTitle.value.isEmpty
           ? const Text('(qb)Home')
           : const CircularProgressIndicator()),

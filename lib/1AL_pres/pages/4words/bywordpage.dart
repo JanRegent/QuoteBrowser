@@ -62,7 +62,8 @@ class BywordPageState extends State<BywordPage> {
       al.messageInfo(context, 'Get by word', 'write somme word', 5);
       return;
     }
-    al.messageInfo(context, 'geting rows with word', word, 10);
+    bl.homeTitle.value = 'Get rows with word\n$word';
+
     String sheetGroup = 'advaitaDaily';
     setState(() {
       loading = true;
@@ -70,6 +71,7 @@ class BywordPageState extends State<BywordPage> {
     int rowsCount = await bl.prepareKeys.byWord.getSheetGroup(sheetGroup, word);
     setState(() {
       loading = false;
+      bl.homeTitle.value = '';
     });
     if (rowsCount == 0) {
       tagPrefixController.text += ' !!! ';

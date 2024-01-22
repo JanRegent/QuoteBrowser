@@ -42,7 +42,6 @@ class Bl {
   RxMap lastCount = {}.obs;
   RxMap booksCount = {}.obs;
   RxString homeTitle = ''.obs;
-  RxString homeTitlePrefix = ''.obs;
 
   Orm orm = Orm();
   CatsCRUD catsCRUD = CatsCRUD();
