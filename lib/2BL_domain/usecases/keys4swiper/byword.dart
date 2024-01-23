@@ -12,10 +12,10 @@ class ByWord {
   }
 
   Future searchSheetsColumns2(
-      String columnName, String columnValue, String searchText) async {
+      String word1, String columnName1, word2, String columnName2) async {
     currentSS.keys = await dl.httpService
-        .searchSheetsColumns2(searchText, columnName, '', '');
+        .searchSheetsColumns2(word1, columnName1, word2, columnName2);
 
-    if (currentSS.keys.isEmpty) return;
+    return currentSS.keys.length;
   }
 }

@@ -104,10 +104,10 @@ class QuoteColumnPageState extends State<QuoteColumnPage> {
       return;
     }
     bl.homeTitle.value =
-        'Get rows with word\n$word, author$selectedValueAuthor';
+        'Get rows with word\n$word, author $selectedValueAuthor';
 
-    int rowsCount = await bl.prepareKeys.byWord
-        .searchSheetsColumns2('author', selectedValueAuthor!, word);
+    int rowsCount =
+        await bl.prepareKeys.byWord.searchSheetsColumns2(word, 'quote', '', '');
     bl.homeTitle.value = '';
 
     if (rowsCount == 0) {
