@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/orm.dart';
-import '../../../2BL_domain/usecases/keys4swiper/searchss.dart';
 
 List assetsFiles = ['Robert', 'karmel', 'Eckhart'];
 String assetFile = assetsFiles[0];
@@ -24,5 +23,5 @@ Future loadCSV(int index) async {
     listData[i].insert(0, '${assetFile}__|__$i');
   }
   await bl.sheetrowsCRUD.deleteAllDb();
-  currentSS.keys = await sheetRowsSaveGetKeys(listData);
+  currentSS.keys = await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(listData);
 }

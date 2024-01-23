@@ -4,6 +4,7 @@ import 'package:isar/isar.dart';
 
 import '../../bl.dart';
 import '../../bluti.dart';
+import '../../orm.dart';
 
 part 'sheetrowscrud.g.dart'; //dart run build_runner build
 
@@ -25,6 +26,23 @@ class SheetrowsCRUD {
       debugPrint('sheetrowsCRUD().count()\n$e');
       return 0;
     }
+  }
+
+  Future<List<String>> sheetRowsSaveGetKeys(List rowsArrDyn) async {
+    List<String> sheetRownoKeys = [];
+    for (List row in rowsArrDyn) {
+      List<String> rowArr = blUti.toListString(row);
+
+      String sheetRownoKey = rowArr[0];
+      List<String> sheetNo = sheetRownoKey.toString().split('__|__');
+
+      currentSS.sheetNames.add(sheetNo[0]);
+      //rowNos.add(sheetNo[1]);
+
+      await bl.sheetrowsCRUD.updateRow(sheetRownoKey, rowArr);
+      sheetRownoKeys.add(sheetRownoKey);
+    }
+    return sheetRownoKeys;
   }
   //------------------------------------------------------------------read
 

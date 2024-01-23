@@ -10,4 +10,12 @@ class ByWord {
     await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
     return currentSS.keys.length;
   }
+
+  Future searchSheetsColumns2(
+      String columnName, String columnValue, String searchText) async {
+    currentSS.keys = await dl.httpService
+        .searchSheetsColumns2(searchText, columnName, '', '');
+
+    if (currentSS.keys.isEmpty) return;
+  }
 }

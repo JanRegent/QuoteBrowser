@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 
-import '../../../2BL_domain/usecases/keys4swiper/searchss.dart';
 import '../../dl.dart';
 import 'backendurl.dart';
 
@@ -53,7 +52,7 @@ class HttpService {
       },
     );
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    sheetRowsSaveGetKeys(response.data['data']);
+    bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
     List rows = response.data['data'];
     List<String> rownoKeys = [];
     for (int i = 0; i < rows.length; i++) {
@@ -73,7 +72,7 @@ class HttpService {
     );
 
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    sheetRowsSaveGetKeys(response.data['data']);
+    bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
     return response.data['data'];
   }
 
@@ -103,7 +102,7 @@ class HttpService {
         );
       }
       await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-      return await sheetRowsSaveGetKeys(response.data['data']);
+      return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
     } catch (e) {
       debugPrint('getSheetGroup($sheetGroup, $word\n$e');
       return [];
@@ -114,7 +113,7 @@ class HttpService {
 
   Future getSheetSave(String sheetName) async {
     List allrows = await getAllrows(sheetName);
-    return await sheetRowsSaveGetKeys(allrows);
+    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(allrows);
   }
 
   //---------------------------------------------------------------authors,books
@@ -154,26 +153,25 @@ class HttpService {
     );
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
 
-    return await sheetRowsSaveGetKeys(response.data['data']);
+    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
   }
 
-  Future<List<String>> searchColumnAndQuote(
-      String searchText, String columnName, columnValue) async {
+  Future<List<String>> searchSheetsColumns2(String searchText1,
+      String columnName1, searchText2, String columnName2) async {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
-        'action': 'searchColumnAndQuote',
-        'searchText': searchText,
-        'ssId': 'bl.sheetGroups[bl.sheetGroupCurrent][0]',
-        'author': columnName == 'author' ? columnValue : '',
-        'book': columnName == 'book' ? columnValue : '',
-        'tag': columnName == 'tag' ? columnValue : ''
+        'action': 'searchSheetsColumns2',
+        'searchText1': searchText1,
+        'columnName1': columnName1,
+        'searchText2': searchText2,
+        'columnName2': columnName2,
       },
     );
 
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
 
-    return await sheetRowsSaveGetKeys(response.data['data']);
+    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
   }
 
   //----------------------------------------------------------------------set

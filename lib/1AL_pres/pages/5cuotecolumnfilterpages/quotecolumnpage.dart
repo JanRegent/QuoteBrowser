@@ -92,26 +92,24 @@ class QuoteColumnPageState extends State<QuoteColumnPage> {
           ),
           suffixIcon: IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () => gwtByWord(),
+            onPressed: () => gwtByColumnQuote(),
           )),
     );
   }
 
-  void gwtByWord() async {
+  void gwtByColumnQuote() async {
     String word = tagPrefixController.text;
     if (word.isEmpty) {
       al.messageInfo(context, 'Get by word', 'write somme word', 5);
       return;
     }
-    al.messageInfo(context, 'geting rows with word', word, 10);
-    String sheetGroup = 'advaitaDaily';
-    setState(() {
-      loading = true;
-    });
-    int rowsCount = await bl.prepareKeys.byWord.getSheetGroup(sheetGroup, word);
-    setState(() {
-      loading = false;
-    });
+    bl.homeTitle.value =
+        'Get rows with word\n$word, author$selectedValueAuthor';
+
+    int rowsCount = await bl.prepareKeys.byWord
+        .searchSheetsColumns2('author', selectedValueAuthor!, word);
+    bl.homeTitle.value = '';
+
     if (rowsCount == 0) {
       tagPrefixController.text += ' !!! ';
       return;
@@ -121,7 +119,8 @@ class QuoteColumnPageState extends State<QuoteColumnPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CardSwiper('$word\nin\n$sheetGroup', const {})),
+          builder: (context) =>
+              CardSwiper('word\n$word, author$selectedValueAuthor', const {})),
     );
   }
 
