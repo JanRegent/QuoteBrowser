@@ -9,7 +9,6 @@ class DailyList {
   int swiperIndex = 1;
 
   List<String> cols = [];
-  Map<String, String> sheetUrls = {};
 
   Future getData() async {
     List data = await dl.httpService.getAllrows('dailyList');
@@ -36,7 +35,6 @@ class DailyList {
         ..sheetUrl = data[i][sheetUrlIx]
         ..swiperIndex = swiperIndex);
 
-      sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
       dl.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
     }
     dl.sheetUrls['dailyList'] = dl.sheetUrls['rootSheetId'];

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../2BL_domain/bl.dart';
 import '../../2BL_domain/orm.dart';
+import '../../3Data/dl.dart';
 import '../widgets/alib/alib.dart';
 
 //----------------------------------------------------------------goto
@@ -72,8 +73,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
           child: Text(
               '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}\n${bl.orm.currentRow.dateinsert}'),
           onPressed: () async {
-            String? fileUrl =
-                bl.dailyList.sheetUrls[bl.orm.currentRow.sheetName.value];
+            String? fileUrl = dl.sheetUrls[bl.orm.currentRow.sheetName.value];
 
             await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowNo.value,
                 context, 'Jump to row');
@@ -101,7 +101,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
               child: const Text('Jump to row'),
               onTap: () async {
                 String? fileUrl =
-                    bl.dailyList.sheetUrls[bl.orm.currentRow.sheetName.value];
+                    dl.sheetUrls[bl.orm.currentRow.sheetName.value];
 
                 // ignore: use_build_context_synchronously //Icons.open_in_browser
                 await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowNo.value,
