@@ -5,18 +5,25 @@ import '../../../2BL_domain/bl.dart';
 import '../../widgets/alib/alib.dart';
 import '../../zswipbrowser/_swiper.dart';
 
-class QuoteColumnPage extends StatefulWidget {
-  const QuoteColumnPage({super.key});
+class Word5Page extends StatefulWidget {
+  const Word5Page({super.key});
 
   @override
-  QuoteColumnPageState createState() => QuoteColumnPageState();
+  Word5PageState createState() => Word5PageState();
 }
 
-class QuoteColumnPageState extends State<QuoteColumnPage> {
+class Word5PageState extends State<Word5Page> {
   bool isSelectionMode = false;
   final int listLength = 3;
 
-  final tagPrefixController = TextEditingController();
+  List<TextEditingController> textEditingController = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController()
+  ];
 
   @override
   void initState() {
@@ -31,10 +38,10 @@ class QuoteColumnPageState extends State<QuoteColumnPage> {
     super.dispose();
   }
 
-  void searchClean() {
+  void searchClean(wordIndex) {
     {
-      tagPrefixController.clear;
-      tagPrefixController.text = '';
+      textEditingController[wordIndex].clear;
+      textEditingController[wordIndex].text = '';
       setState(() {});
     }
   }
@@ -80,25 +87,23 @@ class QuoteColumnPageState extends State<QuoteColumnPage> {
   }
 
   bool loading = false;
+  List<String> words = ['allscope', '', '', '', '', ''];
 
-  TextField tagsTextfield() {
+  TextField tagsTextfield(wordIndex) {
     return TextField(
-      controller: tagPrefixController,
+      controller: textEditingController[wordIndex],
       decoration: InputDecoration(
-          hintText: 'Enter word',
-          prefixIcon: IconButton(
-            onPressed: () => searchClean(),
-            icon: const Icon(Icons.clear),
-          ),
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () => gwtByColumnQuote(),
-          )),
+        hintText: 'Enter word $wordIndex',
+        prefixIcon: IconButton(
+          onPressed: () => searchClean(wordIndex),
+          icon: const Icon(Icons.clear),
+        ),
+      ),
     );
   }
 
-  void gwtByColumnQuote() async {
-    String word = tagPrefixController.text;
+  Future getByWord5() async {
+    String word = textEditingController[1].text;
     if (word.isEmpty) {
       al.messageInfo(context, 'Get by word', 'write somme word', 5);
       return;
@@ -106,12 +111,16 @@ class QuoteColumnPageState extends State<QuoteColumnPage> {
     bl.homeTitle.value =
         'Get rows with word\n$word, author $selectedValueAuthor';
 
-    int rowsCount =
-        await bl.prepareKeys.byWord.searchSheetsColumns2(word, 'quote', '', '');
+    int rowsCount = await bl.prepareKeys.byWord.searchWord5(
+        textEditingController[1].text,
+        textEditingController[2].text,
+        textEditingController[3].text,
+        textEditingController[4].text,
+        textEditingController[5].text);
     bl.homeTitle.value = '';
 
     if (rowsCount == 0) {
-      tagPrefixController.text += ' !!! ';
+      textEditingController[0].text += ' !!! ';
       return;
     }
 
@@ -124,9 +133,23 @@ class QuoteColumnPageState extends State<QuoteColumnPage> {
     );
   }
 
+  IconButton search5() {
+    return IconButton(
+        onPressed: () async => await getByWord5(),
+        icon: const Icon(Icons.search));
+  }
+
   ListView bodyListview() {
     return ListView(
-      children: [authorsDropdownButton2(context), tagsTextfield()],
+      children: [
+        authorsDropdownButton2(context),
+        tagsTextfield(1),
+        tagsTextfield(2),
+        tagsTextfield(3),
+        tagsTextfield(4),
+        tagsTextfield(5),
+        search5()
+      ],
     );
   }
 

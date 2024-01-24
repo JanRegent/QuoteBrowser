@@ -156,6 +156,26 @@ class HttpService {
     return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
   }
 
+  Future<List<String>> searchWord5(String scope, String word1, String word2,
+      String word3, String word4, String word5) async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {
+        'action': 'searchWord5',
+        'scope': '',
+        'word1': word1,
+        'word2': word2,
+        'word3': word3,
+        'word4': word4,
+        'word5': word5,
+      },
+    );
+
+    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+
+    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
+  }
+
   Future<List<String>> searchSheetsColumns2(String searchText1,
       String columnName1, searchText2, String columnName2) async {
     Response response = await dio.get(
