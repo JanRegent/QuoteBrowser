@@ -171,10 +171,42 @@ class _LastMenuState extends State<LastMenu> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: CustomScrollView(
+  Future getByWord5() async {
+    String word1 = '${blUti.todayStr()}.';
+    bl.homeTitle.value = 'Get rows with word\n$word1';
+
+    int rowsCount =
+        await bl.prepareKeys.byWord.searchWord5(word1, '', '', '', '');
+    bl.homeTitle.value = '';
+
+    if (rowsCount == 0) {
+      // ignore: use_build_context_synchronously
+      al.messageInfo(context, 'Nothing foud for $word1', '', 8);
+      return;
+    }
+
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => CardSwiper('word\n$word1', const {})),
+    );
+  }
+
+  Column todayNews() {
+    return Column(
+      children: [
+        TextButton(
+            onPressed: () async {
+              await getByWord5();
+            },
+            child: const Text('Today news'))
+      ],
+    );
+  }
+
+  CustomScrollView sheetGroupsLv() {
+    return CustomScrollView(
       slivers: [
         //----------------------------------------------------------Last
 
@@ -199,6 +231,31 @@ class _LastMenuState extends State<LastMenu> {
           ),
         ),
       ],
-    ));
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: <Widget>[
+              Tab(
+                child: Text('Today'),
+              ),
+              Tab(
+                child: Text('Sheet groups'),
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: <Widget>[todayNews(), sheetGroupsLv()],
+        ),
+      ),
+    );
   }
 }
