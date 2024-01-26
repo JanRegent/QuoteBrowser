@@ -124,7 +124,8 @@ class _LastMenuState extends State<LastMenu> {
             String infoTitle = '$word\nin $sheetGroup';
             bl.homeTitle.value = infoTitle;
 
-            await bl.prepareKeys.byWord.getSheetGroup(sheetGroup, word);
+            await bl.prepareKeys.byWord
+                .searchSheetNames(sheetGroup, word, '', '', '', '');
             bl.lastCount[sheetGroup] = '';
             bl.homeTitle.value = '';
             if (bl.lastCount[sheetGroup] == 0) return;
@@ -176,12 +177,12 @@ class _LastMenuState extends State<LastMenu> {
     bl.homeTitle.value = 'Get rows with word\n$word1';
 
     int rowsCount =
-        await bl.prepareKeys.byWord.fulltextWord5(word1, '', '', '', '');
+        await bl.prepareKeys.byWord.searchSheetNames('', word1, '', '', '', '');
     bl.homeTitle.value = '';
 
     if (rowsCount == 0) {
       // ignore: use_build_context_synchronously
-      al.messageInfo(context, 'Nothing foud for $word1', '', 8);
+      al.messageInfo(context, 'Nothing found for $word1', '', 8);
       return;
     }
 

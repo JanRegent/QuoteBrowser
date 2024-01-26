@@ -11,8 +11,9 @@ import '../1daily/1daily.dart';
 
 import '../../../0app/config/9appsettings.dart';
 import '../3tags/prefixsearch.dart';
-import '../4words/bywordpage.dart';
-import '../5word5/word5page.dart';
+
+import '../4words/sheetnames5page.dart';
+import '../5word5/fulltext5page.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -102,7 +103,7 @@ class _HomeTabState extends State<HomeTab> {
               LastMenu(),
               BooksAuthors(),
               PrefixSearchPage(),
-              BywordPage(),
+              Sheetnames5Page(),
               Word5Page(),
             ],
           ),

@@ -39,6 +39,16 @@ class DailyList {
     }
     dl.sheetUrls['dailyList'] = dl.sheetUrls['rootSheetId'];
   }
+
+  String sheetNamesStr(String groupName) {
+    List<String> list = [];
+    for (var i = 0; i < bl.dailyList.rows.length; i++) {
+      if (bl.dailyList.rows[i].sheetGroup == groupName) {
+        list.add(bl.dailyList.rows[i].sheetName);
+      }
+    }
+    return list.join('__|__');
+  }
 }
 
 class DailyListRow {
