@@ -77,16 +77,6 @@ class HttpService {
   }
 
   //-----------------------------------------------------------------SheetGroups
-  Future getSheetGroups() async {
-    // The below request is the same as above.
-    // ignore: unused_local_variable
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {'action': 'getSheetGroups'},
-    );
-
-    return response.data['data'];
-  }
 
   Future<List<String>> getSheetGroup(String sheetGroup, String word) async {
     late Response response;
@@ -133,14 +123,6 @@ class HttpService {
     return response.data['data'];
   }
 
-  Future getSheetNamesTags() async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {'action': 'getSheetNamesTags'},
-    );
-    return response.data['data'];
-  }
-
   //-------------------------------------------------------------------search
   Future<List<String>> searchSS(String searchText) async {
     Response response = await dio.get(
@@ -156,7 +138,7 @@ class HttpService {
     return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
   }
 
-  Future<List<String>> searchWord5(String scope, String word1, String word2,
+  Future<List<String>> fulltextWord5(String scope, String word1, String word2,
       String word3, String word4, String word5) async {
     Response response = await dio.get(
       backendUrl,

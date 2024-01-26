@@ -19,15 +19,15 @@ class ByWord {
     return currentSS.keys.length;
   }
 
-  Future searchWord5(
+  Future fulltextWord5(
     String word1,
     String word2,
     String word3,
     String word4,
     String word5,
   ) async {
-    currentSS.keys =
-        await dl.httpService.searchWord5('', word1, word2, word3, word4, word5);
+    currentSS.keys = await dl.httpService
+        .fulltextWord5('', word1, word2, word3, word4, word5);
 
     return currentSS.keys.length;
   }

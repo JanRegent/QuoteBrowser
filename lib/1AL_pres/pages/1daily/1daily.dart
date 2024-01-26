@@ -176,7 +176,7 @@ class _LastMenuState extends State<LastMenu> {
     bl.homeTitle.value = 'Get rows with word\n$word1';
 
     int rowsCount =
-        await bl.prepareKeys.byWord.searchWord5(word1, '', '', '', '');
+        await bl.prepareKeys.byWord.fulltextWord5(word1, '', '', '', '');
     bl.homeTitle.value = '';
 
     if (rowsCount == 0) {
