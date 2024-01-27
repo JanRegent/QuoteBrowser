@@ -61,7 +61,7 @@ class HttpService {
     return rownoKeys;
   }
 
-  //-------------------------------------------------------------------comments2tagsYellowparts
+  //----------------------------------------------------comments2tagsYellowparts
   Future<List> comments2tagsYellowparts(String rownoKey) async {
     Response response = await dio.get(
       backendUrl,
@@ -74,29 +74,6 @@ class HttpService {
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
     bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
     return response.data['data'];
-  }
-
-  //-----------------------------------------------------------------SheetGroups
-
-  Future<List<String>> getSheetGroup(String sheetGroup, String word) async {
-    late Response response;
-    try {
-      {
-        response = await dio.get(
-          backendUrl,
-          queryParameters: {
-            'action': 'getSheetGroup',
-            'searchText': word,
-            'sheetGroup': sheetGroup
-          },
-        );
-      }
-      await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-      return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
-    } catch (e) {
-      debugPrint('getSheetGroup($sheetGroup, $word\n$e');
-      return [];
-    }
   }
 
   //---------------------------------------------------------------getBooksMap
@@ -138,13 +115,12 @@ class HttpService {
     return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
   }
 
-  Future<List<String>> fulltextWord5(String scope, String word1, String word2,
+  Future<List<String>> fullText5wordsinService(String word1, String word2,
       String word3, String word4, String word5) async {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
-        'action': 'searchWord5',
-        'scope': '',
+        'action': 'fullText5wordsinService',
         'word1': word1,
         'word2': word2,
         'word3': word3,

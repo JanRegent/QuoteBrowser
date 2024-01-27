@@ -111,7 +111,7 @@ class Word5PageState extends State<Word5Page> {
     bl.homeTitle.value =
         'Get rows with word\n$word, author $selectedValueAuthor';
 
-    int rowsCount = await bl.prepareKeys.byWord.fulltextWord5(
+    int rowsCount = await bl.prepareKeys.byWord.fullText5wordsinService(
         textEditingController[1].text,
         textEditingController[2].text,
         textEditingController[3].text,
