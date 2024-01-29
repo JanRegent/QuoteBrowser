@@ -134,13 +134,13 @@ class HttpService {
     return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
   }
 
-  Future<List<String>> searchSheetNames(String sheetNames, String word1,
+  Future<List<String>> searchSheetNames(String sheetNamesStr, String word1,
       String word2, String word3, String word4, String word5) async {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
         'action': 'searchSheetNames',
-        'sheetNames': sheetNames,
+        'sheetNames': sheetNamesStr,
         'word1': word1,
         'word2': word2,
         'word3': word3,

@@ -3,16 +3,18 @@ import '../../bl.dart';
 import '../../orm.dart';
 
 class ByWord {
-  Future<int> getSheetGroup(String sheetGroup, String searchText) async {
+  Future<int> getSheetGroup(String sheetGroup, String word1) async {
+    bl.homeTitle.value = '$word1\n$sheetGroup';
     String sheetnamesStr = bl.dailyList.sheetNamesStr(sheetGroup);
     currentSS.keys = await dl.httpService.searchSheetNames(
       sheetnamesStr,
-      searchText,
+      word1,
       '',
       '',
       '',
       '',
     );
+    bl.homeTitle.value = '';
     if (currentSS.keys.isEmpty) {
       return 0;
     }

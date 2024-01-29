@@ -30,7 +30,11 @@ class _LastMenuState extends State<LastMenu> {
         // ignore: use_build_context_synchronously
         int rowsCount =
             await bl.prepareKeys.byWord.getSheetGroup(sheetGroup, searchDate);
-        if (rowsCount == 0) return;
+        if (rowsCount == 0) {
+          // ignore: use_build_context_synchronously
+          al.messageInfo(context, '$searchDate in $sheetGroup', 'No found', 8);
+          return;
+        }
 
         // ignore: use_build_context_synchronously
         Navigator.push(
