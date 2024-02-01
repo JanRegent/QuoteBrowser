@@ -1,3 +1,79 @@
+
+function setYellowBack(docUrl, yellowPart) {
+  var doc = DocumentApp.openByUrl(docUrl);
+  setYellowBack_(doc, yellowPart)
+}
+
+function sheet2setYellowBack__batch(sheetUrl, sheetName, docUrl) {
+  var doc = DocumentApp.openByUrl(docUrl);
+  var par = doc.getBody().getParagraphs();
+  var data = SpreadsheetApp.openByUrl(sheetUrl).getSheetByName(sheetName).getDataRange().getValues();
+  var cols = data[0];
+  const yellowpartsIx = cols.indexOf('yellowParts')
+  var yellowProp = '';
+  for (var rix = 1; rix < data.length; rix++) {
+    try {
+      if (data[rix][yellowpartsIx] == undefined) continue;
+      if (data[rix][yellowpartsIx].toString().trim() == '') continue;
+      yellowProp += '__|__' + data[rix][yellowpartsIx];
+      var yellowArr = data[rix][yellowpartsIx].split('__|__')
+      log('--------------' + rix + ' ')
+      for (var i = 1; i < yellowArr.length; i++) {
+        var yellowPart = yellowArr[i].toString().trim();
+        setYellowBack_(par, yellowPart.toString());
+      }
+
+      if (rix == 1) break;
+    } catch (e) {
+      log(e)
+      continue
+    }
+  }
+
+  var source = DriveApp.getFileById(doc.getId());
+  var oldDesc = source.getDescription();
+  source.setDescription(oldDesc + '\n yellowParts: ' + yellowProp);
+
+
+}
+
+function sheet2setYellowBack__batch__runManually(sheetUrl, sheetName, docUrl) {
+  docUrl = 'https://docs.google.com/document/d/1F8-YC-v495iF8_wODb-aI30AlzIlm7vU716Hi3J2Xlc/edit'
+  sheetUrl = 'https://docs.google.com/spreadsheets/d/1RjqsHO-0d6YKlJGtiJjsANjwl29En3THDCP8r0Ush_k/edit#gid=705082603'
+  sheetName = 'vzpomNisargadatta';
+  sheet2setYellowBack__batch(sheetUrl, sheetName, docUrl);
+
+}
+
+
+function setYellowBack___test(docUrl, yellowPart) {
+  var docUrl = 'https://docs.google.com/document/d/1F8-YC-v495iF8_wODb-aI30AlzIlm7vU716Hi3J2Xlc/edit'
+  var yellowPart = 'papouškovat: „Jsi vědomí,“ „jsi brahman,“, ale bude to jen  jakási informace, kterou si mohou vycpávat mysl.';
+  setYellowBack(docUrl, yellowPart);
+}
+
+function setYellowBack_(par, yellow) {
+  if (yellow == undefined) return;
+  if (yellow == '') return;
+  for (var parNo = 0; parNo < par.length; parNo++) {
+    var parText = par[parNo].getText();
+    var start = parText.toString().indexOf(yellow.toString())
+    if (start < 0) continue;
+
+    const end = start + yellow.length; // Please set the end offset.
+
+    const text = par[parNo].editAsText();
+    const obj = { [DocumentApp.Attribute.BACKGROUND_COLOR]: "#ffff00" };
+    text.setAttributes(start, end, obj)
+    text.save;
+    break;
+  }
+
+}
+
+
+
+
 // ?action=comments2tagsYellowparts&rownoKey=avadhuta.com__|__115
 function comments2tagsYellowparts(rownoKey) {
 
