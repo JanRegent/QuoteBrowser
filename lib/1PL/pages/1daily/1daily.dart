@@ -21,27 +21,14 @@ class LastMenu extends StatefulWidget {
 }
 
 class _LastMenuState extends State<LastMenu> {
-  ElevatedButton lastdays(String sheetGroup) {
+  ElevatedButton lastdaysElection(String sheetGroup) {
     return ElevatedButton(
       child: const Icon(Icons.date_range),
       onPressed: () async {
         String searchDate = await dateSelect(context);
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        int rowsCount =
-            await bl.prepareKeys.byWord.getSheetGroup(sheetGroup, searchDate);
-        if (rowsCount == 0) {
-          // ignore: use_build_context_synchronously
-          al.messageInfo(context, '$searchDate in $sheetGroup', 'No found', 8);
-          return;
-        }
-
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => CardSwiper(sheetGroup, const {})),
-        );
+        await searchSheetNamesWord5Swip(sheetGroup, searchDate, '', '', '', '');
       },
     );
   }
@@ -122,26 +109,13 @@ class _LastMenuState extends State<LastMenu> {
             ],
           ),
           onTap: () async {
-            currentSS.swiperIndexIncrement = false;
-            String word = '${blUti.todayStr()}.';
+            String searchDate = '${blUti.todayStr()}.';
             bl.lastCount[sheetGroup] = 'loading';
-            String infoTitle = '$word\nin $sheetGroup';
-            bl.homeTitle.value = infoTitle;
-
-            await bl.prepareKeys.byWord
-                .searchSheetNames(sheetGroup, word, '', '', '', '');
+            await searchSheetNamesWord5Swip(
+                sheetGroup, searchDate, '', '', '', '');
             bl.lastCount[sheetGroup] = '';
-            bl.homeTitle.value = '';
-            if (bl.lastCount[sheetGroup] == 0) return;
-
-            // ignore: use_build_context_synchronously
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => CardSwiper(infoTitle, const {})),
-            );
           },
-          trailing: lastdays(sheetGroup)));
+          trailing: lastdaysElection(sheetGroup)));
     }
   }
 
@@ -167,6 +141,7 @@ class _LastMenuState extends State<LastMenu> {
           const Text(''),
           al.linkIconOpenDoc(
               '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU', context, ''),
+          lastdaysElection('')
         ],
       ),
       shape: RoundedRectangleBorder(
@@ -176,20 +151,20 @@ class _LastMenuState extends State<LastMenu> {
     );
   }
 
-  Future getByWord5() async {
-    String word1 = '${blUti.todayStr()}.';
-    bl.homeTitle.value = 'Get rows with word\n$word1';
+  Future searchSheetNamesWord5Swip(String groupName, String word1, String word2,
+      String word3, String word4, String word5) async {
+    bl.homeTitle.value = 'Get $word1\n$groupName';
 
-    int rowsCount =
-        await bl.prepareKeys.byWord.searchSheetNames('', word1, '', '', '', '');
+    int rowsCount = await bl.prepareKeys.byWord
+        .searchSheetNames(groupName, word1, '', '', '', '');
     bl.homeTitle.value = '';
-
     if (rowsCount == 0) {
       // ignore: use_build_context_synchronously
       al.messageInfo(context, 'Nothing found for $word1', '', 8);
       return;
     }
 
+    currentSS.swiperIndexIncrement = false;
     // ignore: use_build_context_synchronously
     Navigator.push(
       context,
@@ -203,7 +178,8 @@ class _LastMenuState extends State<LastMenu> {
       children: [
         TextButton(
             onPressed: () async {
-              await getByWord5();
+              await searchSheetNamesWord5Swip(
+                  '', '${blUti.todayStr()}.', '', '', '', '');
             },
             child: const Text('Today news'))
       ],

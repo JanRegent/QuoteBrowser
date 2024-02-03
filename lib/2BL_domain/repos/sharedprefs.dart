@@ -74,7 +74,13 @@ class SharedPrefs {
 
   static String getObject(String key) => jsonDecode(_prefs!.getString(key)!);
 
-  static List<String> getStringList(String key) => _prefs!.getStringList(key)!;
+  static List<String> getStringList(String key) {
+    try {
+      return _prefs!.getStringList(key)!;
+    } catch (_) {
+      return [];
+    }
+  }
 
   //-----------------------------------------------------------for delete data
   static Future<bool> remove(String key) async => await _prefs!.remove(key);

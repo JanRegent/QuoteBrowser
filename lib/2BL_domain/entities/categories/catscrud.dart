@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
-import '../../../1AL_pres/pages/6category/catsmock.dart';
+import '../../../1PL/pages/6category/catsmock.dart';
 import '../../bl.dart';
 
 part 'catscrud.g.dart'; //dart run build_runner build
