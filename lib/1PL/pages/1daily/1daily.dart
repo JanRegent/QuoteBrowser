@@ -7,6 +7,7 @@ import 'package:holdable_button/holdable_button.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/orm.dart';
+import '../../../2BL_domain/repos/sharedprefs.dart';
 import '../../widgets/alib/alib.dart';
 
 import '../../controllers/selectvalue.dart';
@@ -134,8 +135,7 @@ class _LastMenuState extends State<LastMenu> {
             },
             onLongPress: () async {
               await bl.sheetrowsCRUD.deleteAllDb();
-              // await bl.prepareKeys.byWord
-              //     .sheetGroupSheetName('${blUti.todayStr()}.', '');
+              SharedPrefs.clear();
             },
           ),
           const Text(''),
@@ -156,7 +156,7 @@ class _LastMenuState extends State<LastMenu> {
     bl.homeTitle.value = 'Get $word1\n$groupName';
 
     int rowsCount = await bl.prepareKeys.byWord
-        .searchSheetNames(groupName, word1, '', '', '', '');
+        .searchSheetNames(groupName, word1, word2, word3, word4, word5);
     bl.homeTitle.value = '';
     if (rowsCount == 0) {
       // ignore: use_build_context_synchronously
@@ -173,15 +173,15 @@ class _LastMenuState extends State<LastMenu> {
     );
   }
 
-  Column todayNews() {
+  Column todayNews(bool toRead) {
     return Column(
       children: [
         TextButton(
             onPressed: () async {
-              await searchSheetNamesWord5Swip(
-                  '', '${blUti.todayStr()}.', '', '', '', '');
+              await searchSheetNamesWord5Swip('', '${blUti.todayStr()}.',
+                  toRead ? '__toRead__' : '', '', '', '');
             },
-            child: const Text('Today news'))
+            child: Text(toRead ? '__toRead__ only' : 'Today news all'))
       ],
     );
   }
@@ -234,7 +234,10 @@ class _LastMenuState extends State<LastMenu> {
           ),
         ),
         body: TabBarView(
-          children: <Widget>[todayNews(), sheetGroupsLv()],
+          children: <Widget>[
+            Row(children: [todayNews(false), todayNews(true)]),
+            sheetGroupsLv()
+          ],
         ),
       ),
     );
