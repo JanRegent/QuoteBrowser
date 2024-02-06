@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../2BL_domain/bl.dart';
-import '../../../../2BL_domain/orm.dart';
-import '../../../widgets/alib/alib.dart';
+import '../../../../../2BL_domain/bl.dart';
+import '../../../../../2BL_domain/orm.dart';
+import '../../../../widgets/alib/alib.dart';
 
 class EditPage extends StatefulWidget {
   const EditPage({super.key});

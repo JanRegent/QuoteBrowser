@@ -2,14 +2,14 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../2BL_domain/bl.dart';
+import '../../../../../2BL_domain/bl.dart';
 
-import '../../../../2BL_domain/orm.dart';
+import '../../../../../2BL_domain/orm.dart';
 
-import '../../../widgets/alib/alertinfo/alertok.dart';
+import '../../../../widgets/alib/alertinfo/alertok.dart';
 
-import '../../../widgets/alib/alib.dart';
-import '../../../widgets/alib/alicons.dart';
+import '../../../../widgets/alib/alib.dart';
+import '../../../../widgets/alib/alicons.dart';
 
 import '../atext/editpage.dart';
 import '../atext/tagsyellowlist.dart';

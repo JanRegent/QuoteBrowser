@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:highlight_text/highlight_text.dart';
 
-import '../../../../2BL_domain/bl.dart';
+import '../../../../../2BL_domain/bl.dart';
 import 'quotepopup.dart';
 
 // ignore: must_be_immutable

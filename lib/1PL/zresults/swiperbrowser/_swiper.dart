@@ -1,8 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import '../../2BL_domain/orm.dart';
+import '../../../2BL_domain/orm.dart';
 
-import '../../2BL_domain/usecases/keys4swiper/emptyresults.dart';
+import '../../../2BL_domain/usecases/keys4swiper/emptyresults.dart';
 import '_swipertabs.dart';
 
 class CardSwiper extends StatefulWidget {

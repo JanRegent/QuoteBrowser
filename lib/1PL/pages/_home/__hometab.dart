@@ -6,6 +6,7 @@ import '../../../2BL_domain/bl.dart';
 import '../../../3Data/builddate.dart';
 import '../../widgets/alib/alicons.dart';
 
+import '../../zresults/resultbrowser/qresultbrowser.dart';
 import '../2books/__authors.dart';
 import '../1daily/1daily.dart';
 
@@ -41,7 +42,7 @@ class _HomeTabState extends State<HomeTab> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 5,
+        length: 6,
         child: Scaffold(
           appBar: AppBar(
               bottom: TabBar(
@@ -49,7 +50,8 @@ class _HomeTabState extends State<HomeTab> {
                   currentSS.currentHomeTabIndex = index;
                 },
                 tabs: [
-                  const Tab(icon: Icon(Icons.newspaper)),
+                  const Tab(icon: Icon(Icons.tv)),
+                  const Tab(icon: Icon(Icons.query_builder)),
                   Tab(icon: ALicons.attrIcons.bookIcon),
                   const Tab(icon: Icon(Icons.tag)),
                   const Tab(icon: Icon(Icons.wordpress)),
@@ -100,6 +102,7 @@ class _HomeTabState extends State<HomeTab> {
           ),
           body: const TabBarView(
             children: [
+              QResultBrowser(),
               LastMenu(),
               BooksAuthors(),
               PrefixSearchPage(),

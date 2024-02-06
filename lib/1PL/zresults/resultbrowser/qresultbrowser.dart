@@ -10,31 +10,17 @@ import '../../../2BL_domain/orm.dart';
 import '../../../2BL_domain/repos/sharedprefs.dart';
 import '../../widgets/alib/alib.dart';
 
-import '../../controllers/selectvalue.dart';
-import '../../zresults/resultbrowser/qresultbrowser.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
 
-class LastMenu extends StatefulWidget {
-  const LastMenu({super.key});
+class QResultBrowser extends StatefulWidget {
+  const QResultBrowser({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _LastMenuState createState() => _LastMenuState();
+  _QResultBrowserState createState() => _QResultBrowserState();
 }
 
-class _LastMenuState extends State<LastMenu> {
-  ElevatedButton lastdaysElection(String sheetGroup) {
-    return ElevatedButton(
-      child: const Icon(Icons.date_range),
-      onPressed: () async {
-        String searchDate = await dateSelect(context);
-        if (searchDate.isEmpty) return;
-        // ignore: use_build_context_synchronously
-        await searchSheetNamesWord5Swip(sheetGroup, searchDate, '', '', '', '');
-      },
-    );
-  }
-
+class _QResultBrowserState extends State<QResultBrowser> {
   HoldableButton holdableSheet(String sheetName, int six, sheetGroup) {
     return HoldableButton(
       width: 200,
@@ -94,6 +80,30 @@ class _LastMenuState extends State<LastMenu> {
   void initState() {
     super.initState();
     listTiles.add(buttTile());
+
+    for (var sheetGroup in bl.dailyList.sheetGroups) {
+      bl.lastCount[sheetGroup] = '';
+      listTiles.add(ListTile(
+          leading: Obx(() => bl.lastCount[sheetGroup] != 'loading'
+              ? Text(bl.lastCount[sheetGroup])
+              : const CircularProgressIndicator()),
+          title: Row(
+            children: [
+              sheetNamesPopupGen(sheetGroup),
+              Text(
+                sheetGroup,
+                style: const TextStyle(fontSize: 15),
+              )
+            ],
+          ),
+          onTap: () async {
+            String searchDate = '${blUti.todayStr()}.';
+            bl.lastCount[sheetGroup] = 'loading';
+            await searchSheetNamesWord5Swip(
+                sheetGroup, searchDate, '', '', '', '');
+            bl.lastCount[sheetGroup] = '';
+          }));
+    }
   }
 
   List<ListTile> listTiles = [];
@@ -117,7 +127,6 @@ class _LastMenuState extends State<LastMenu> {
           const Text(''),
           al.linkIconOpenDoc(
               '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU', context, ''),
-          lastdaysElection('')
         ],
       ),
       shape: RoundedRectangleBorder(
@@ -193,13 +202,10 @@ class _LastMenuState extends State<LastMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        initialIndex: 0,
-        length: 2,
-        child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Today'),
-            ),
-            body: Row(children: [todayNews(false), todayNews(true)])));
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Results browser'),
+        ),
+        body: sheetGroupsLv());
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../widgets/alib/alib.dart';
-import '../../zswipbrowser/_swiper.dart';
+import '../../zresults/swiperbrowser/_swiper.dart';
 
 class Sheetnames5Page extends StatefulWidget {
   const Sheetnames5Page({super.key});

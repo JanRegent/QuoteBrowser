@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '1PL/pages/_home/_homepage.dart';
 
-import '1PL/zswipbrowser/_swiper.dart';
+import '1PL/zresults/swiperbrowser/_swiper.dart';
 import '2BL_domain/bl.dart';
 
 import '2BL_domain/repos/sharedprefs.dart';

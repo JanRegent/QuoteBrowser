@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../1PL/pages/2books/bookslist.dart';
 import '../1PL/pages/1daily/dailylist.dart';
-import '../1PL/zswipbrowser/viewhigh/highwiew.dart';
+import '../1PL/zresults/swiperbrowser/viewhigh/highwiew.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
 
