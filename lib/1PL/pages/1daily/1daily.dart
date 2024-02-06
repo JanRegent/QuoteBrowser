@@ -1,17 +1,14 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:holdable_button/holdable_button.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/orm.dart';
 import '../../../2BL_domain/repos/sharedprefs.dart';
 import '../../widgets/alib/alib.dart';
 
 import '../../controllers/selectvalue.dart';
-import '../../zresults/resultbrowser/qresultbrowser.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
 
 class LastMenu extends StatefulWidget {
@@ -30,7 +27,9 @@ class _LastMenuState extends State<LastMenu> {
         String searchDate = await dateSelect(context);
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchSheetNamesWord5Swip(sheetGroup, searchDate, '', '', '', '');
+        await searchSheetNamesWord5Swip(
+            'daily', sheetGroup, searchDate, '', '', '', '');
+        setState(() {});
       },
     );
   }
@@ -94,6 +93,21 @@ class _LastMenuState extends State<LastMenu> {
   void initState() {
     super.initState();
     listTiles.add(buttTile());
+    localQueriesAdd();
+  }
+
+  localQueriesAdd() {
+    List<String> keys = SharedPrefs.getKeys('daily');
+    for (var key in keys) {
+      listTiles.add(ListTile(
+        title: Text(key.replaceAll('daily', '')),
+        onTap: () async {
+          String searchDate = key.replaceAll('daily', '').trim();
+          await searchSheetNamesWord5Swip(
+              'daily', '', searchDate, '', '', '', '');
+        },
+      ));
+    }
   }
 
   List<ListTile> listTiles = [];
@@ -102,19 +116,6 @@ class _LastMenuState extends State<LastMenu> {
     return ListTile(
       title: Row(
         children: [
-          ElevatedButton.icon(
-            icon: const Icon(Icons.refresh),
-            label: const Text('All'),
-            onPressed: () async {
-              // await bl.prepareKeys.byWord
-              //     .sheetGroupSheetName('${blUti.todayStr()}.', '');
-            },
-            onLongPress: () async {
-              await bl.sheetrowsCRUD.deleteAllDb();
-              SharedPrefs.clear();
-            },
-          ),
-          const Text(''),
           al.linkIconOpenDoc(
               '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU', context, ''),
           lastdaysElection('')
@@ -127,12 +128,18 @@ class _LastMenuState extends State<LastMenu> {
     );
   }
 
-  Future searchSheetNamesWord5Swip(String groupName, String word1, String word2,
-      String word3, String word4, String word5) async {
+  Future searchSheetNamesWord5Swip(
+      String filterPrefix,
+      String groupName,
+      String word1,
+      String word2,
+      String word3,
+      String word4,
+      String word5) async {
     bl.homeTitle.value = 'Get $word1\n$groupName';
 
-    int rowsCount = await bl.prepareKeys.byWord
-        .searchSheetNames(groupName, word1, word2, word3, word4, word5);
+    int rowsCount = await bl.prepareKeys.byWord.searchSheetNames(
+        filterPrefix, groupName, word1, word2, word3, word4, word5);
     bl.homeTitle.value = '';
     if (rowsCount == 0) {
       // ignore: use_build_context_synchronously
@@ -146,19 +153,6 @@ class _LastMenuState extends State<LastMenu> {
       context,
       MaterialPageRoute(
           builder: (context) => CardSwiper('word\n$word1', const {})),
-    );
-  }
-
-  Column todayNews(bool toRead) {
-    return Column(
-      children: [
-        TextButton(
-            onPressed: () async {
-              await searchSheetNamesWord5Swip('', '${blUti.todayStr()}.',
-                  toRead ? '__toRead__' : '', '', '', '');
-            },
-            child: Text(toRead ? '__toRead__ only' : 'Today news all'))
-      ],
     );
   }
 
@@ -193,13 +187,14 @@ class _LastMenuState extends State<LastMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        initialIndex: 0,
-        length: 2,
-        child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Today'),
-            ),
-            body: Row(children: [todayNews(false), todayNews(true)])));
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Today'),
+        ),
+        body: sheetGroupsLv()
+
+        //Row(children: [todayNews(false), todayNews(true)])
+
+        );
   }
 }

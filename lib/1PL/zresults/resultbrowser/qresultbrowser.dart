@@ -141,7 +141,7 @@ class _QResultBrowserState extends State<QResultBrowser> {
     bl.homeTitle.value = 'Get $word1\n$groupName';
 
     int rowsCount = await bl.prepareKeys.byWord
-        .searchSheetNames(groupName, word1, word2, word3, word4, word5);
+        .searchSheetNames('*', groupName, word1, word2, word3, word4, word5);
     bl.homeTitle.value = '';
     if (rowsCount == 0) {
       // ignore: use_build_context_synchronously
