@@ -1,4 +1,4 @@
-import '../../../1PL/pages/1daily/dailylist.dart';
+import '../../../1PL/pages/1bydate/dailylist.dart';
 import '../../../3Data/dl.dart';
 import '../../bl.dart';
 import '../../orm.dart';

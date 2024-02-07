@@ -8,7 +8,7 @@ import '../../widgets/alib/alicons.dart';
 
 import '../../zresults/resultbrowser/qresultbrowser.dart';
 import '../2books/__authors.dart';
-import '../1daily/1daily.dart';
+import '../1bydate/1bydate.dart';
 
 import '../../../0app/config/9appsettings.dart';
 import '../3tags/prefixsearch.dart';
@@ -51,7 +51,7 @@ class _HomeTabState extends State<HomeTab> {
                 },
                 tabs: [
                   const Tab(icon: Icon(Icons.tv)),
-                  const Tab(icon: Icon(Icons.query_builder)),
+                  const Tab(icon: Icon(Icons.calendar_month)),
                   Tab(icon: ALicons.attrIcons.bookIcon),
                   const Tab(icon: Icon(Icons.tag)),
                   const Tab(icon: Icon(Icons.wordpress)),
@@ -103,7 +103,7 @@ class _HomeTabState extends State<HomeTab> {
           body: const TabBarView(
             children: [
               QResultBrowser(),
-              LastMenu(),
+              ByDate(),
               BooksAuthors(),
               PrefixSearchPage(),
               Sheetnames5Page(),

@@ -9,7 +9,7 @@ import 'package:isar/isar.dart';
 import 'package:quotebrowser/2BL_domain/entities/authorsbooks/bookscrud.dart';
 
 import '../1PL/pages/2books/bookslist.dart';
-import '../1PL/pages/1daily/dailylist.dart';
+import '../1PL/pages/1bydate/dailylist.dart';
 
 import 'bluti.dart';
 import 'entities/categories/catscrud.dart';
