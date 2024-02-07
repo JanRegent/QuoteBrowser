@@ -62,9 +62,14 @@ class _BySheetGroupsState extends State<BySheetGroups> {
       listTiles.add(ListTile(
           title: Row(
         children: [
-          Text(
-            sheetName,
-            style: const TextStyle(fontSize: 15),
+          InkWell(
+            child: Text(
+              sheetName,
+              style: const TextStyle(fontSize: 15),
+            ),
+            onTap: () async {
+              await bl.prepareKeys.getSheetShow(sheetName, context);
+            },
           )
         ],
       )));
