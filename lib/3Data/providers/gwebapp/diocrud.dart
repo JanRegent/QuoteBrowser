@@ -26,6 +26,7 @@ class HttpService {
       },
     );
 
+    bl.sheetRowsHelper.insertResponse(response);
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
 
     return response.data['data'];

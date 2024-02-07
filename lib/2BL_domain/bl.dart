@@ -14,6 +14,7 @@ import '../1PL/pages/1bydate/dailylist.dart';
 import 'bluti.dart';
 import 'entities/categories/catscrud.dart';
 
+import 'entities/sheetrows/sheetrowshelper.dart';
 import 'orm.dart';
 import 'usecases/keys4swiper/_preparekeys.dart';
 
@@ -46,6 +47,7 @@ class Bl {
   Orm orm = Orm();
   CatsCRUD catsCRUD = CatsCRUD();
   SheetrowsCRUD sheetrowsCRUD = SheetrowsCRUD();
+  SheetRowsHelper sheetRowsHelper = SheetRowsHelper();
   SheetcolsCRUD sheetcolsCRUD = SheetcolsCRUD();
 
   BooksCRUD booksCRUD = BooksCRUD();
@@ -53,6 +55,7 @@ class Bl {
   PrepareKeys prepareKeys = PrepareKeys();
 
   Future init() async {
+    await sheetRowsHelper.initDB();
     await isarOpen();
 
     isar = Isar.get(schemas: schemas);
