@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/1PL/pages/_home/2bysheetgroups/bysheetgroups.dart';
+import 'package:quotebrowser/1PL/pages/2bysheetgroups/bysheetgroups.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../2BL_domain/bl.dart';
