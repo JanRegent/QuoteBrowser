@@ -105,7 +105,7 @@ class _HomeTabState extends State<HomeTab> {
           body: const TabBarView(
             children: [
               QResultBrowser(),
-              ByDate(),
+              ByDatePage(),
               BySheetGroups(),
               BooksAuthors(),
               PrefixSearchPage(),
