@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/1PL/pages/_home/2bysheetgroups/bysheetgroups.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../2BL_domain/bl.dart';
@@ -42,7 +43,7 @@ class _HomeTabState extends State<HomeTab> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 6,
+        length: 7,
         child: Scaffold(
           appBar: AppBar(
               bottom: TabBar(
@@ -52,6 +53,7 @@ class _HomeTabState extends State<HomeTab> {
                 tabs: [
                   const Tab(icon: Icon(Icons.tv)),
                   const Tab(icon: Icon(Icons.calendar_month)),
+                  const Tab(icon: Icon(Icons.table_rows_outlined)),
                   Tab(icon: ALicons.attrIcons.bookIcon),
                   const Tab(icon: Icon(Icons.tag)),
                   const Tab(icon: Icon(Icons.wordpress)),
@@ -104,6 +106,7 @@ class _HomeTabState extends State<HomeTab> {
             children: [
               QResultBrowser(),
               ByDate(),
+              BySheetGroups(),
               BooksAuthors(),
               PrefixSearchPage(),
               Sheetnames5Page(),
