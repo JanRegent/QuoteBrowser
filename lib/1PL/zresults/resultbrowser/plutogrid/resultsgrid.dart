@@ -64,7 +64,7 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
   /// You can manipulate the grid dynamically at runtime by passing this through the [onLoaded] callback.
   late final PlutoGridStateManager stateManager;
 
-  void getRownos() {
+  void getRownos(int swiperIndex) {
     var rownosDyn =
         stateManager.refRows.map((e) => e.cells['rownoKey']!.value.toString());
     rownos.value = [];
@@ -77,6 +77,7 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
       return;
     }
     currentSS.keys = [];
+    currentSS.swiperIndex.value = swiperIndex;
     for (String rownoKey in rownos) {
       currentSS.keys.add(rownoKey);
     }
@@ -118,7 +119,8 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
         children: [
           Obx(() => Text(rownos.length.toString())),
           IconButton(
-              onPressed: () => getRownos(), icon: const Icon(Icons.view_agenda))
+              onPressed: () => getRownos(1),
+              icon: const Icon(Icons.view_agenda))
         ],
       )),
       body: Container(
@@ -131,7 +133,17 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
             stateManager.setShowColumnFilter(true);
           },
           onChanged: (PlutoGridOnChangedEvent event) {},
+          mode: PlutoGridMode.select,
+          onSelected: (PlutoGridOnSelectedEvent event) {
+            if (event.row != null) {
+              getRownos(stateManager.currentRowIdx!);
+            }
+          },
           configuration: const PlutoGridConfiguration(),
+          createFooter: (stateManager) {
+            stateManager.setPageSize(50, notify: false); // default 40
+            return PlutoPagination(stateManager);
+          },
         ),
       ),
     );
