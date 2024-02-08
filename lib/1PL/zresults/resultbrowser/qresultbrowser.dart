@@ -10,6 +10,7 @@ import '../../../2BL_domain/repos/sharedprefs.dart';
 import '../../widgets/alib/alib.dart';
 
 import '../../zresults/swiperbrowser/_swiper.dart';
+import 'plutogrid/resultsgrid.dart';
 
 class QResultBrowser extends StatefulWidget {
   const QResultBrowser({super.key});
@@ -105,8 +106,8 @@ class _QResultBrowserState extends State<QResultBrowser> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Results browser'),
+          title: const Text('Results browser1'),
         ),
-        body: const Text(''));
+        body: const ResultsGridPage());
   }
 }

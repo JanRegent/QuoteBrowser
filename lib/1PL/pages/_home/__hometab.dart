@@ -51,7 +51,6 @@ class _HomeTabState extends State<HomeTab> {
                   currentSS.currentHomeTabIndex = index;
                 },
                 tabs: [
-                  const Tab(icon: Icon(Icons.tv)),
                   const Tab(icon: Icon(Icons.calendar_month)),
                   const Tab(icon: Icon(Icons.table_rows_outlined)),
                   Tab(icon: ALicons.attrIcons.bookIcon),
@@ -61,6 +60,7 @@ class _HomeTabState extends State<HomeTab> {
                       icon: Row(
                     children: [Icon(Icons.wordpress), Icon(Icons.view_column)],
                   )),
+                  const Tab(icon: Icon(Icons.tv)),
                 ],
               ),
               title: titleRowHome()),
@@ -104,13 +104,13 @@ class _HomeTabState extends State<HomeTab> {
           ),
           body: const TabBarView(
             children: [
-              QResultBrowser(),
               ByDatePage(),
               BySheetGroups(),
               BooksAuthors(),
               PrefixSearchPage(),
               Sheetnames5Page(),
               Word5Page(),
+              QResultBrowser(),
             ],
           ),
         ),
