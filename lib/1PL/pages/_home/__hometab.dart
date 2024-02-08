@@ -51,14 +51,14 @@ class _HomeTabState extends State<HomeTab> {
                   currentSS.currentHomeTabIndex = index;
                 },
                 tabs: [
-                  const Tab(icon: Icon(Icons.calendar_month)),
+                  const Tab(icon: Icon(Icons.timeline)),
                   const Tab(icon: Icon(Icons.table_rows_outlined)),
                   Tab(icon: ALicons.attrIcons.bookIcon),
                   const Tab(icon: Icon(Icons.tag)),
-                  const Tab(icon: Icon(Icons.wordpress)),
+                  const Tab(child: Text('W')),
                   const Tab(
                       icon: Row(
-                    children: [Icon(Icons.wordpress), Icon(Icons.view_column)],
+                    children: [Text('W'), Icon(Icons.view_column)],
                   )),
                   const Tab(icon: Icon(Icons.tv)),
                 ],

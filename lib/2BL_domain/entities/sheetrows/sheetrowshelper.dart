@@ -169,7 +169,7 @@ class SheetRowsHelper {
     List data = response.data['data'];
     List<String> cols = blUti.toListString(data[0]);
     if (!cols.contains('quote')) return;
-    await sheetrowsHelper.deleteAllRows();
+    //await sheetrowsHelper.deleteAllRows();
 
     await batchInsert(cols, data);
   }

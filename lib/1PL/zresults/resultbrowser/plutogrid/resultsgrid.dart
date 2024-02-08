@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:quotebrowser/2BL_domain/entities/sheetrows/sheetrowshelper.dart';
+
+import '../../../../2BL_domain/bl.dart';
+import '../../../../2BL_domain/orm.dart';
+import '../../../widgets/alib/alib.dart';
+import '../../swiperbrowser/_swiper.dart';
 
 class ResultsGridPage extends StatefulWidget {
   const ResultsGridPage({Key? key}) : super(key: key);
@@ -51,49 +58,69 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
     ),
   ];
 
-  final List<PlutoRow> rows = [
-    PlutoRow(
-      cells: {
-        'rownoKey': PlutoCell(value: 'user1'),
-        'quote': PlutoCell(value: 'Mike'),
-        'author': PlutoCell(value: 20),
-        'book': PlutoCell(value: 'Programmer'),
-        'stars': PlutoCell(value: '2021-01-01'),
-        'favorite': PlutoCell(value: '09:00'),
-        'dateinsert': PlutoCell(value: 300),
-      },
-    ),
-    PlutoRow(
-      cells: {
-        'rownoKey': PlutoCell(value: 'user2'),
-        'quote': PlutoCell(value: 'Jack'),
-        'author': PlutoCell(value: 25),
-        'book': PlutoCell(value: 'Designer'),
-        'stars': PlutoCell(value: '2021-02-01'),
-        'favorite': PlutoCell(value: '10:00'),
-        'dateinsert': PlutoCell(value: 400),
-      },
-    ),
-    PlutoRow(
-      cells: {
-        'rownoKey': PlutoCell(value: 'user3'),
-        'quote': PlutoCell(value: 'Suzi'),
-        'author': PlutoCell(value: 40),
-        'book': PlutoCell(value: 'Owner'),
-        'stars': PlutoCell(value: '2021-03-01'),
-        'favorite': PlutoCell(value: '11:00'),
-        'dateinsert': PlutoCell(value: 700),
-      },
-    ),
-  ];
+  List<PlutoRow> rows = [];
 
   /// [PlutoGridStateManager] has many methods and properties to dynamically manipulate the grid.
   /// You can manipulate the grid dynamically at runtime by passing this through the [onLoaded] callback.
   late final PlutoGridStateManager stateManager;
 
-  @override
-  Widget build(BuildContext context) {
+  void getRownos() {
+    var rownosDyn =
+        stateManager.refRows.map((e) => e.cells['rownoKey']!.value.toString());
+    rownos.value = [];
+    for (String rownoKey in rownosDyn) {
+      rownos.add(rownoKey);
+    }
+    if (rownos.isEmpty) {
+      // ignore: use_build_context_synchronously
+      al.messageInfo(context, 'Nothing filtered', '', 8);
+      return;
+    }
+    currentSS.keys = [];
+    for (String rownoKey in rownos) {
+      currentSS.keys.add(rownoKey);
+    }
+
+    currentSS.swiperIndexIncrement = false;
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => const CardSwiper('Grid filter', {})),
+    );
+  }
+
+  Future<String> getData() async {
+    rows = [];
+    List<SheetRows> sheetRows = await bl.sheetRowsHelper.getAllRows();
+    for (SheetRows row in sheetRows) {
+      rows.add(PlutoRow(
+        cells: {
+          'rownoKey': PlutoCell(value: row.rownoKey),
+          'quote': PlutoCell(value: row.quote),
+          'author': PlutoCell(value: row.author),
+          'book': PlutoCell(value: row.book),
+          'stars': PlutoCell(value: row.stars),
+          'favorite': PlutoCell(value: row.favorite),
+          'dateinsert': PlutoCell(value: row.dateinsert),
+        },
+      ));
+    }
+    return 'ok';
+  }
+
+  RxList rownos = [].obs;
+
+  Widget scaffoldPage() {
     return Scaffold(
+      appBar: AppBar(
+          title: Row(
+        children: [
+          Obx(() => Text(rownos.length.toString())),
+          IconButton(
+              onPressed: () => getRownos(), icon: const Icon(Icons.view_agenda))
+        ],
+      )),
       body: Container(
         padding: const EdgeInsets.all(15),
         child: PlutoGrid(
@@ -106,6 +133,53 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
           onChanged: (PlutoGridOnChangedEvent event) {},
           configuration: const PlutoGridConfiguration(),
         ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.displayMedium!,
+      textAlign: TextAlign.center,
+      child: FutureBuilder<String>(
+        future: getData(), // a previously-obtained Future<String> or null
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            return scaffoldPage();
+          } else if (snapshot.hasError) {
+            children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              ),
+            ];
+          } else {
+            children = const <Widget>[
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              ),
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
+            ),
+          );
+        },
       ),
     );
   }

@@ -104,10 +104,6 @@ class _QResultBrowserState extends State<QResultBrowser> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Results browser1'),
-        ),
-        body: const ResultsGridPage());
+    return const Scaffold(body: ResultsGridPage());
   }
 }
