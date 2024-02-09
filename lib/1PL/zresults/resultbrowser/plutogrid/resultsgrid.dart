@@ -115,14 +115,23 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
   Widget scaffoldPage() {
     return Scaffold(
       appBar: AppBar(
-          title: Row(
-        children: [
-          Obx(() => Text(rownos.length.toString())),
+        title: Row(
+          children: [
+            IconButton(
+                onPressed: () => getRownos(1),
+                icon: const Icon(Icons.view_agenda))
+          ],
+        ),
+        actions: [
           IconButton(
-              onPressed: () => getRownos(1),
-              icon: const Icon(Icons.view_agenda))
+              onPressed: () async {
+                await sheetrowsHelper.deleteAllRows();
+                await getData();
+                setState(() {});
+              },
+              icon: const Icon(Icons.delete))
         ],
-      )),
+      ),
       body: Container(
         padding: const EdgeInsets.all(15),
         child: PlutoGrid(

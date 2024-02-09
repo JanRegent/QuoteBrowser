@@ -1,4 +1,5 @@
 import 'package:dartx/dartx.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
@@ -28,7 +29,7 @@ class SheetrowsCRUD {
     }
   }
 
-  Future<List<String>> sheetRowsSaveGetKeys(List rowsArrDyn) async {
+  Future<List<String>> sheetRowsSaveGetKeysAll(List rowsArrDyn) async {
     List<String> sheetRownoKeys = [];
     for (List row in rowsArrDyn) {
       List<String> rowArr = blUti.toListString(row);
@@ -44,6 +45,7 @@ class SheetrowsCRUD {
     }
     return sheetRownoKeys;
   }
+
   //------------------------------------------------------------------read
 
   Future<List<String>> getRowArr(String key) async {

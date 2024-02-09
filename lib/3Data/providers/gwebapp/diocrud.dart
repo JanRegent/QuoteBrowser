@@ -26,7 +26,7 @@ class HttpService {
       },
     );
 
-    bl.sheetRowsHelper.insertResponse(response);
+    bl.sheetRowsHelper.insertResponseAll(response);
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
 
     return response.data['data'];
@@ -53,7 +53,7 @@ class HttpService {
       },
     );
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
+    bl.sheetrowsCRUD.sheetRowsSaveGetKeysAll(response.data['data']);
     List rows = response.data['data'];
     List<String> rownoKeys = [];
     for (int i = 0; i < rows.length; i++) {
@@ -73,7 +73,7 @@ class HttpService {
     );
 
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
+    bl.sheetrowsCRUD.sheetRowsSaveGetKeysAll(response.data['data']);
     return response.data['data'];
   }
 
@@ -81,7 +81,7 @@ class HttpService {
 
   Future getSheetSave(String sheetName) async {
     List allrows = await getAllrows(sheetName);
-    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(allrows);
+    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeysAll(allrows);
   }
 
   //---------------------------------------------------------------authors,books
@@ -112,8 +112,9 @@ class HttpService {
       },
     );
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-
-    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
+    bl.sheetRowsHelper.insertRowsCollection(response);
+    return await bl.sheetrowsCRUD
+        .sheetRowsSaveGetKeysAll(response.data['data']);
   }
 
   Future<List<String>> fullText5wordsinService(String word1, String word2,
@@ -131,8 +132,10 @@ class HttpService {
     );
 
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+    bl.sheetRowsHelper.insertRowsCollection(response);
 
-    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
+    return await bl.sheetrowsCRUD
+        .sheetRowsSaveGetKeysAll(response.data['data']);
   }
 
   Future<List<String>> searchSheetNames(String sheetNamesStr, String word1,
@@ -151,8 +154,10 @@ class HttpService {
     );
 
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+    bl.sheetRowsHelper.insertRowsCollection(response);
 
-    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
+    return await bl.sheetrowsCRUD
+        .sheetRowsSaveGetKeysAll(response.data['data']);
   }
 
   Future<List<String>> searchSheetsColumns2(String searchText1,
@@ -169,8 +174,10 @@ class HttpService {
     );
 
     await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
+    bl.sheetRowsHelper.insertRowsCollection(response);
 
-    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(response.data['data']);
+    return await bl.sheetrowsCRUD
+        .sheetRowsSaveGetKeysAll(response.data['data']);
   }
 
   //----------------------------------------------------------------------set

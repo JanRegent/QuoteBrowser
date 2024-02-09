@@ -23,5 +23,6 @@ Future loadCSV(int index) async {
     listData[i].insert(0, '${assetFile}__|__$i');
   }
   await bl.sheetrowsCRUD.deleteAllDb();
-  currentSS.keys = await bl.sheetrowsCRUD.sheetRowsSaveGetKeys(listData);
+
+  currentSS.keys = await bl.sheetrowsCRUD.sheetRowsSaveGetKeysAll(listData);
 }

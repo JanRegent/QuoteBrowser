@@ -155,26 +155,37 @@ class SheetRowsHelper {
   }
 
   //--------------------------------------------------------------create
-  Future<SheetRows> insertRow(SheetRows sheetrow) async {
+  Future<List<String>> insertRowsCollection(Response response) async {
+    List data = response.data['data'];
+    Map colsSet = response.data['colsSet'];
+    List<String> rownoKeys = [];
     final db = await database;
-    db.insert(
-      "sheetRows",
-      sheetrow.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    return sheetrow;
+    for (var i = 0; i < data.length; i++) {
+      List rowarr = blUti.toListString(data[i]);
+      String rownoKey = rowarr[0];
+      rownoKeys.add(rownoKey);
+      String sheetName = rownoKey.split('__|__')[0];
+      List<String> cols = colsSet[sheetName];
+      SheetRows sheetRow = rowdyn2sheetRows(cols, rowarr);
+      db.insert(
+        "sheetRows",
+        sheetRow.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+
+    return rownoKeys;
   }
 
-  Future insertResponse(Response response) async {
+  Future insertResponseAll(Response response) async {
     List data = response.data['data'];
     List<String> cols = blUti.toListString(data[0]);
     if (!cols.contains('quote')) return;
-    //await sheetrowsHelper.deleteAllRows();
 
     await batchInsert(cols, data);
   }
 
-  Future<List<SheetRows>> batchInsert(List<String> cols, List data) async {
+  SheetRows rowdyn2sheetRows(List<String> cols, List rowdyn) {
     String valueGet(String columnName, List<String> row) {
       int fieldIndex = cols.indexOf(columnName);
       if (fieldIndex == -1) return '';
@@ -186,32 +197,37 @@ class SheetRowsHelper {
       }
     }
 
+    List<String> row = blUti.toListString(rowdyn);
+
+    SheetRows sheetRow = SheetRows();
+    sheetRow.rownoKey = valueGet('rownoKey', row);
+    sheetRow.sheetName = sheetRow.rownoKey.split('__|__')[0];
+    sheetRow.quote = valueGet('quote', row);
+    sheetRow.author = valueGet('author', row);
+    sheetRow.book = valueGet('book', row);
+    sheetRow.parPage = valueGet('rownoKey', row);
+    sheetRow.tags = valueGet('tags', row);
+    sheetRow.yellowParts = valueGet('yellowParts', row);
+    sheetRow.stars = valueGet('stars', row);
+    sheetRow.favorite = valueGet('favorite', row);
+    sheetRow.dateinsert = valueGet('dateinsert', row);
+    sheetRow.sourceUrl = valueGet('sourceUrl', row);
+    sheetRow.fileUrl = valueGet('fileUrl', row);
+    sheetRow.original = valueGet('original', row);
+    sheetRow.vydal = valueGet('vydal', row);
+    sheetRow.folderUrl = valueGet('folderUrl', row);
+    sheetRow.title = valueGet('title', row);
+
+    return sheetRow;
+  }
+
+  Future<List<SheetRows>> batchInsert(List<String> cols, List data) async {
     final db = await database;
     final batch = db.batch();
     List<SheetRows> rowList = [];
 
     for (var i = 1; i < data.length; i++) {
-      List<String> row = blUti.toListString(data[i]);
-
-      SheetRows sheetRow = SheetRows();
-      sheetRow.rownoKey = valueGet('rownoKey', row);
-      sheetRow.sheetName = sheetRow.rownoKey.split('__|__')[0];
-      sheetRow.quote = valueGet('quote', row);
-      sheetRow.author = valueGet('author', row);
-      sheetRow.book = valueGet('book', row);
-      sheetRow.parPage = valueGet('rownoKey', row);
-      sheetRow.tags = valueGet('tags', row);
-      sheetRow.yellowParts = valueGet('yellowParts', row);
-      sheetRow.stars = valueGet('stars', row);
-      sheetRow.favorite = valueGet('favorite', row);
-      sheetRow.dateinsert = valueGet('dateinsert', row);
-      sheetRow.sourceUrl = valueGet('sourceUrl', row);
-      sheetRow.fileUrl = valueGet('fileUrl', row);
-      sheetRow.original = valueGet('original', row);
-      sheetRow.vydal = valueGet('vydal', row);
-      sheetRow.folderUrl = valueGet('folderUrl', row);
-      sheetRow.title = valueGet('title', row);
-
+      SheetRows sheetRow = rowdyn2sheetRows(cols, data[i]);
       rowList.add(sheetRow);
       batch.insert(
         'sheetRows',
