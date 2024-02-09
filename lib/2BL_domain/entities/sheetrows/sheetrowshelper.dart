@@ -165,7 +165,7 @@ class SheetRowsHelper {
       String rownoKey = rowarr[0];
       rownoKeys.add(rownoKey);
       String sheetName = rownoKey.split('__|__')[0];
-      List<String> cols = colsSet[sheetName];
+      List<String> cols = blUti.toListString(colsSet[sheetName]);
       SheetRows sheetRow = rowdyn2sheetRows(cols, rowarr);
       db.insert(
         "sheetRows",
