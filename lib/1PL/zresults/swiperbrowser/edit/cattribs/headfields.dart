@@ -11,7 +11,6 @@ import '../../../../widgets/alib/alicons.dart';
 
 import '../../../../controllers/selectvalue.dart';
 import '../battr/quotepopup.dart';
-import '../../../../pages/6category/catable.dart';
 
 class HeadFields extends StatefulWidget {
   const HeadFields({super.key});
@@ -57,32 +56,6 @@ class _HeadFieldsState extends State<HeadFields> {
           await bl.orm.currentRow
               .setCellBL('favorite', bl.orm.currentRow.fav.value);
         });
-  }
-
-  IconButton catsListShow() {
-    return IconButton(
-      icon: const Icon(Icons.category),
-      onPressed: () async {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const CatablePage()),
-        );
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  Widget categories() {
-    if (!bl.orm.currentRow.cols.contains('categories')) {
-      return const Text('');
-    }
-
-    return ListTile(
-      leading: catsListShow(),
-      title: Text(bl.orm.currentRow.categories.value),
-      //trailing: fieldPopupMenu(bl.orm.currentRow.categories.value, 'cat')
-    );
   }
 
   Future<void> _onOpen(String url) async {
@@ -156,7 +129,6 @@ class _HeadFieldsState extends State<HeadFields> {
         title: Row(
           children: [favButt(), RatingStarsPage(setstateAattribs)],
         )));
-    headCard.add(categories());
 
     return headCard;
   }

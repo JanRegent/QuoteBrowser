@@ -11,7 +11,7 @@ class DailyList {
   List<String> cols = [];
 
   Future getData() async {
-    List data = await dl.httpService.getAllrows('dailyList');
+    List data = await dl.httpService.getPureSheet('dailyList');
     cols = blUti.toListString(data[0]);
     int sheetGroupIx = cols.indexOf('sheetGroup');
     int sheetNameIx = cols.indexOf('sheetName');

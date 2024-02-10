@@ -54,7 +54,6 @@ class SheetRows {
 
   SheetRows fromMap(var maprow) {
     SheetRows row = SheetRows();
-
     row.rownoKey = maprow['rownoKey'] ?? '';
     row.sheetName = maprow['sheetName'] ?? '';
     row.quote = maprow['quote'] ?? '';
@@ -73,6 +72,32 @@ class SheetRows {
     row.folderUrl = maprow['folderUrl'] ?? '';
     row.title = maprow['title'] ?? '';
     return row;
+  }
+
+  void toString_() {
+    debugPrint('''
+      "rownoKey":     $rownoKey
+      "sheetname":  $sheetName
+      "author":     $author
+      "book":       $book
+      "parPage":    $rownoKey
+      "tags":       $tags
+      "yellowParts":$yellowParts
+      "stars":      $stars
+      "favorite":   $favorite
+      "dateinsert": $dateinsert
+      "sourceUrl":  $sourceUrl
+      "fileUrl":    $fileUrl
+      "original":   $original
+      "vydal":      $vydal
+      "folderUrl":  $folderUrl
+      "title":      $title
+            "quote":      $quote
+
+    };
+  }
+
+    ''');
   }
 }
 
@@ -177,12 +202,11 @@ class SheetRowsHelper {
     return rownoKeys;
   }
 
-  Future insertResponseAll(Response response) async {
-    List data = response.data['data'];
+  Future<List<String>> insertResponseAll(List data) async {
     List<String> cols = blUti.toListString(data[0]);
-    if (!cols.contains('quote')) return;
+    if (!cols.contains('quote')) return [];
 
-    await batchInsert(cols, data);
+    return await batchInsert(cols, data);
   }
 
   SheetRows rowdyn2sheetRows(List<String> cols, List rowdyn) {
@@ -221,14 +245,13 @@ class SheetRowsHelper {
     return sheetRow;
   }
 
-  Future<List<SheetRows>> batchInsert(List<String> cols, List data) async {
+  Future<List<String>> batchInsert(List<String> cols, List data) async {
     final db = await database;
     final batch = db.batch();
-    List<SheetRows> rowList = [];
-
+    List<String> rownoKeys = [];
     for (var i = 1; i < data.length; i++) {
       SheetRows sheetRow = rowdyn2sheetRows(cols, data[i]);
-      rowList.add(sheetRow);
+      rownoKeys.add(sheetRow.rownoKey);
       batch.insert(
         'sheetRows',
         sheetRow.toMap(),
@@ -238,7 +261,7 @@ class SheetRowsHelper {
 
     await batch.commit();
 
-    return rowList;
+    return rownoKeys;
   }
 
   //----------------------------------------------------------------read
@@ -256,6 +279,24 @@ class SheetRowsHelper {
     return tagList;
   }
 
+  Future<List<String>> searchWord(String word) async {
+    try {
+      final db = await database;
+      var res = await db
+          .query("tagindex", where: "tag LIKE ?", whereArgs: ['$word%']);
+      List<String> keys = [];
+      for (var i = 0; i < res.length; i++) {
+        SheetRows sheetRow = SheetRows().fromMap(res[i]);
+
+        keys.add(sheetRow.rownoKey);
+      }
+      return keys;
+    } catch (e) {
+      debugPrint('searchWord().readAll()\n$e');
+      return [];
+    }
+  }
+
   Future<List<SheetRows>> getAllRows() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('sheetRows');
@@ -265,19 +306,18 @@ class SheetRowsHelper {
     });
   }
 
-  Future<SheetRows?> getRowByRownoKey(String rownoKey) async {
+  Future<SheetRows> getRowByRownoKey(String rownoKey) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
       'sheetRows',
       where: 'rownoKey = ?',
       whereArgs: [rownoKey],
     );
-
     if (maps.isNotEmpty) {
-      return SheetRows().fromMap(maps);
+      return SheetRows().fromMap(maps[0]);
     }
 
-    return null;
+    return SheetRows();
   }
 
   Future<void> deleteAllRows() async {

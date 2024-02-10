@@ -39,9 +39,6 @@ dependencies:
   get: ^4.6.5 #https://pub.dev/packages/get
 
   ##----db
-  isar: ^4.0.0-dev.14 #https://pub.dev/packages/isar/versions/4.0.0-dev.14
-  isar_flutter_libs: ^4.0.0-dev.14
-
   shared_preferences: ^2.2.2
 
   sqflite: ^2.3.0

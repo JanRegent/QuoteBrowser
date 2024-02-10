@@ -6,6 +6,7 @@ import '../1PL/pages/1bydate/dailylist.dart';
 import '../1PL/zresults/swiperbrowser/viewhigh/highwiew.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
+import 'entities/sheetrows/sheetrowshelper.dart';
 
 void indexChanged(int rowIndex) async {
   bl.orm.currentRow.selectedText.value = '';
@@ -44,24 +45,6 @@ class CurrentSS {
 
 class Orm {
   CurrentRow currentRow = CurrentRow();
-
-  Future<List<String>> map2row(Map rowMap) async {
-    String sheetName = rowMap['sheetName'];
-    List<String>? cols = await bl.sheetcolsCRUD.readColsBySheetName(sheetName);
-
-    List<String> row = [];
-
-    for (var i = 0; i < cols!.length; i++) {
-      try {
-        row.add(rowMap[cols[i]]);
-      } catch (e) {
-        debugPrint(e.toString());
-        row.add('');
-      }
-    }
-
-    return row;
-  }
 
   List<String> mandatoryFields = ['quote', 'author', 'book', 'tags'];
 }
@@ -144,64 +127,60 @@ void pureTags() {
 
 final TextEditingController quoteEditController = TextEditingController();
 
-Future currentRowSet(String sheetRownoKey) async {
-  List<String> rowArr = await bl.sheetrowsCRUD.getRowArr(sheetRownoKey);
-  String sheetName = sheetRownoKey.split('__|__')[0];
-  bl.orm.currentRow.cols =
-      (await bl.sheetcolsCRUD.readColsBySheetName(sheetName))!;
-  String valueGet(String columnName) {
-    int fieldIndex = bl.orm.currentRow.cols.indexOf(columnName);
-    if (fieldIndex == -1) return '';
-    try {
-      String value = rowArr[fieldIndex];
-      return value;
-    } catch (_) {
-      return '';
-    }
-  }
+Future currentRowSet(String rownoKey) async {
+  SheetRows sheetRow = await bl.sheetRowsHelper.getRowByRownoKey(rownoKey);
 
-  bl.orm.currentRow.quote.value = valueGet('quote');
+  String sheetName = sheetRow.sheetName;
+  bl.orm.currentRow.quote.value = sheetRow.quote;
   quoteEditController.text = bl.orm.currentRow.quote.value;
-  bl.orm.currentRow.yellowParts.value = valueGet('yellowParts');
+  bl.orm.currentRow.yellowParts.value = sheetRow.yellowParts;
 
-  bl.orm.currentRow.author.value = valueGet('author');
+  bl.orm.currentRow.author.value = sheetRow.author;
 
-  bl.orm.currentRow.book.value = valueGet('book');
+  bl.orm.currentRow.book.value = sheetRow.book;
 
-  bl.orm.currentRow.parPage.value = valueGet('parPage');
-  bl.orm.currentRow.tags.value = valueGet('tags');
-  bl.orm.currentRow.stars.value = valueGet('stars');
-  bl.orm.currentRow.fav.value = valueGet('favorite');
-  bl.orm.currentRow.categories.value = valueGet('categories');
+  bl.orm.currentRow.parPage.value = sheetRow.parPage;
+  bl.orm.currentRow.tags.value = sheetRow.tags;
+  bl.orm.currentRow.stars.value = sheetRow.stars;
+  bl.orm.currentRow.fav.value = sheetRow.favorite;
+  //bl.orm.currentRow.categories.value = sheetRow.categories;
 
-  bl.orm.currentRow.dateinsert = valueGet('dateinsert');
+  bl.orm.currentRow.dateinsert = sheetRow.dateinsert;
 
-  bl.orm.currentRow.sourceUrl.value = valueGet('sourceUrl');
-  if (bl.orm.currentRow.sourceUrl.value.length > 10) {
-    if (!bl.orm.currentRow.sourceUrl.value.startsWith('http')) {
-      bl.orm.currentRow.sourceUrl.value =
-          'https://${bl.orm.currentRow.sourceUrl.value}';
-    }
-  }
-
-  bl.orm.currentRow.fileUrl.value = valueGet('fileUrl');
-  if (bl.orm.currentRow.fileUrl.value.isNotEmpty) {
-    if (!bl.orm.currentRow.fileUrl.value.startsWith('fb')) {
-      if (!bl.orm.currentRow.fileUrl.value.startsWith('http')) {
-        bl.orm.currentRow.fileUrl.value =
-            'https://docs.google.com/document/d/${bl.orm.currentRow.fileUrl.value}/view';
+  void sourceUrlSet() {
+    bl.orm.currentRow.sourceUrl.value = sheetRow.sourceUrl;
+    if (bl.orm.currentRow.sourceUrl.value.length > 10) {
+      if (!bl.orm.currentRow.sourceUrl.value.startsWith('http')) {
+        bl.orm.currentRow.sourceUrl.value =
+            'https://${bl.orm.currentRow.sourceUrl.value}';
       }
     }
   }
-  if (bl.orm.currentRow.fileUrl.value.isEmpty) {
-    bl.orm.currentRow.fileUrl.value = valueGet('docUrl');
+
+  sourceUrlSet();
+
+  void fileUrlSet() {
+    bl.orm.currentRow.fileUrl.value = sheetRow.fileUrl;
+    if (bl.orm.currentRow.fileUrl.value.isNotEmpty) {
+      if (!bl.orm.currentRow.fileUrl.value.startsWith('fb')) {
+        if (!bl.orm.currentRow.fileUrl.value.startsWith('http')) {
+          bl.orm.currentRow.fileUrl.value =
+              'https://docs.google.com/document/d/${bl.orm.currentRow.fileUrl.value}/view';
+        }
+      }
+    }
+    if (bl.orm.currentRow.fileUrl.value.isEmpty) {
+      //bl.orm.currentRow.fileUrl.value = sheetRow.docUrl;
+    }
   }
 
-  bl.orm.currentRow.original.value = valueGet('original');
+  fileUrlSet();
 
-  bl.orm.currentRow.publisher.value = valueGet('vydal');
+  bl.orm.currentRow.original.value = sheetRow.original;
 
-  bl.orm.currentRow.folder.value = valueGet('folder');
+  bl.orm.currentRow.publisher.value = sheetRow.vydal;
+
+  //bl.orm.currentRow.folder.value = sheetRow.folder;
   if (bl.orm.currentRow.folder.value.isNotEmpty) {
     if (!bl.orm.currentRow.folder.value.startsWith('http')) {
       bl.orm.currentRow.folder.value =
@@ -215,54 +194,39 @@ Future currentRowSet(String sheetRownoKey) async {
   //--------------------------ids
 
   bl.orm.currentRow.sheetName.value = sheetName;
-  bl.orm.currentRow.rowNo.value = sheetRownoKey.split('__|__')[1];
-  bl.orm.currentRow.fileId = valueGet('fileId');
-  bl.orm.currentRow.dateinsert = valueGet('dateinsert');
-  //--------------------------optional user fields
+  bl.orm.currentRow.rowNo.value = sheetRow.rownoKey.split('__|__')[1];
+  //bl.orm.currentRow.fileId = sheetRow.fileId;
 
-  bl.orm.currentRow.optionalvalues = RxList<RxString>();
-  bl.orm.currentRow.optionalColumNames = [];
+  void optionalValuesSet() {
+    //--------------------------optional user fields
 
-  for (var columnName in bl.orm.currentRow.cols) {
-    if (columnName == 'ID') continue;
-    if (columnName == 'RowNo') continue;
-    if (columnName == 'quote') continue;
-    if (columnName == 'author') continue;
-    if (columnName == 'book') continue;
-    if (columnName == 'parPage') continue;
-    if (columnName == 'tags') continue;
-    if (columnName == 'stars') continue;
-    if (columnName == 'favorite') continue;
-    if (columnName == 'categories') continue;
-    if (columnName == 'original') continue;
-    if (columnName == 'sourceUrl') continue;
-    if (columnName == 'dateinsert') continue;
-    if (columnName == 'vydal') continue;
-    if (columnName == 'folder') continue;
+    bl.orm.currentRow.optionalvalues = RxList<RxString>();
+    bl.orm.currentRow.optionalColumNames = [];
 
-    bl.orm.currentRow.optionalColumNames.add(columnName);
-    bl.orm.currentRow.optionalvalues.add(valueGet(columnName).obs);
+    for (var columnName in bl.orm.currentRow.cols) {
+      if (columnName == 'ID') continue;
+      if (columnName == 'RowNo') continue;
+      if (columnName == 'quote') continue;
+      if (columnName == 'author') continue;
+      if (columnName == 'book') continue;
+      if (columnName == 'parPage') continue;
+      if (columnName == 'tags') continue;
+      if (columnName == 'stars') continue;
+      if (columnName == 'favorite') continue;
+      if (columnName == 'categories') continue;
+      if (columnName == 'original') continue;
+      if (columnName == 'sourceUrl') continue;
+      if (columnName == 'dateinsert') continue;
+      if (columnName == 'vydal') continue;
+      if (columnName == 'folder') continue;
+
+      bl.orm.currentRow.optionalColumNames.add(columnName);
+
+      //bl.orm.currentRow.optionalvalues.add(valueGet(columnName).obs);
+      bl.orm.currentRow.optionalvalues.refresh();
+    }
     bl.orm.currentRow.optionalvalues.refresh();
   }
-  bl.orm.currentRow.optionalvalues.refresh();
-  if (bl.orm.currentRow.book.value.isEmpty) quoteContainsBookTrySet();
-}
 
-Future quoteContainsBookTrySet() async {
-  if (bl.userViewMode == true) return;
-  bl.saveHeadColor = Colors.yellow;
-  List<String> quoteContainsList = bl.booksCRUD.quoteContainsList();
-  String quote = bl.orm.currentRow.quote.value.toLowerCase();
-  for (String key in quoteContainsList) {
-    String qcontains = key.trim().toLowerCase();
-    if (qcontains.length == 1) continue;
-    if (quote.toLowerCase().contains(qcontains)) {
-      var bookAuthor = bl.booksCRUD.readBookAuthor(key);
-
-      bl.orm.currentRow.book.value = bookAuthor.$1;
-      bl.orm.currentRow.author.value = bookAuthor.$2;
-
-      return;
-    }
-  }
+  optionalValuesSet();
 }

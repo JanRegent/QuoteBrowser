@@ -16,13 +16,13 @@ Future loadCSV(int index) async {
 
   List<String> cols = blUti.toListString(listData[0]);
   cols.insert(0, 'rownoKey');
-  await bl.sheetcolsCRUD.updateCols(assetFile, cols);
-  listData.removeAt(0);
+  //listData.removeAt(0);
 
   for (var i = 0; i < listData.length; i++) {
-    listData[i].insert(0, '${assetFile}__|__$i');
+    String rownoKey = '${assetFile}__|__$i';
+    listData[i].insert(0, rownoKey);
   }
-  await bl.sheetrowsCRUD.deleteAllDb();
+  await bl.sheetRowsHelper.deleteAllRows();
 
-  currentSS.keys = await bl.sheetrowsCRUD.sheetRowsSaveGetKeysAll(listData);
+  currentSS.keys = await bl.sheetRowsHelper.insertResponseAll(listData);
 }

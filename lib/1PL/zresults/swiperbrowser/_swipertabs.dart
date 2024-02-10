@@ -54,7 +54,7 @@ class _SwiperTabsState extends State<SwiperTabs>
     return IconButton(
         onPressed: () async {
           String searchWord = await al.inputWord();
-          List<String> keys = await bl.sheetrowsCRUD.searchWord(searchWord);
+          List<String> keys = await bl.sheetRowsHelper.searchWord(searchWord);
           if (keys.isEmpty) {
             if (currentSSkeys.isEmpty) {
               // ignore: use_build_context_synchronously

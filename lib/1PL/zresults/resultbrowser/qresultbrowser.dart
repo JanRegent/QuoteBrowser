@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/orm.dart';
-import '../../../2BL_domain/repos/sharedprefs.dart';
 import '../../widgets/alib/alib.dart';
 
 import '../../zresults/swiperbrowser/_swiper.dart';
@@ -63,10 +62,7 @@ class _QResultBrowserState extends State<QResultBrowser> {
               // await bl.prepareKeys.byWord
               //     .sheetGroupSheetName('${blUti.todayStr()}.', '');
             },
-            onLongPress: () async {
-              await bl.sheetrowsCRUD.deleteAllDb();
-              SharedPrefs.clear();
-            },
+            onLongPress: () async {},
           ),
           const Text(''),
           al.linkIconOpenDoc(

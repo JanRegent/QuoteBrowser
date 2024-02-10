@@ -16,7 +16,8 @@ class HttpService {
   final dio = Dio();
 
   //-------------------------------------------------------------------get rows
-  Future<List> getAllrows(String sheetName) async {
+
+  Future<List> getPureSheet(String sheetName) async {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
@@ -26,10 +27,20 @@ class HttpService {
       },
     );
 
-    bl.sheetRowsHelper.insertResponseAll(response);
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-
     return response.data['data'];
+  }
+
+  Future<List<String>> getAllrows(String sheetName) async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {
+        'action': 'getAllrows',
+        'sheetName': sheetName,
+        'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName])
+      },
+    );
+
+    return bl.sheetRowsHelper.insertResponseAll(response.data['data']);
   }
 
   //-------------------------------------------------------------------tags
@@ -52,14 +63,8 @@ class HttpService {
         'tagPrefixes': tagPrefixes
       },
     );
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    bl.sheetrowsCRUD.sheetRowsSaveGetKeysAll(response.data['data']);
-    List rows = response.data['data'];
-    List<String> rownoKeys = [];
-    for (int i = 0; i < rows.length; i++) {
-      rownoKeys.add(rows[i][0]);
-    }
-    return rownoKeys;
+
+    return bl.sheetRowsHelper.insertResponseAll(response.data['data']);
   }
 
   //----------------------------------------------------comments2tagsYellowparts
@@ -72,16 +77,8 @@ class HttpService {
       },
     );
 
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    bl.sheetrowsCRUD.sheetRowsSaveGetKeysAll(response.data['data']);
+    bl.sheetRowsHelper.insertRowsCollection(response);
     return response.data['data'];
-  }
-
-  //---------------------------------------------------------------getBooksMap
-
-  Future getSheetSave(String sheetName) async {
-    List allrows = await getAllrows(sheetName);
-    return await bl.sheetrowsCRUD.sheetRowsSaveGetKeysAll(allrows);
   }
 
   //---------------------------------------------------------------authors,books
@@ -111,10 +108,7 @@ class HttpService {
         'ssId': 'bl.sheetGroups[bl.sheetGroupCurrent][0]'
       },
     );
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    bl.sheetRowsHelper.insertRowsCollection(response);
-    return await bl.sheetrowsCRUD
-        .sheetRowsSaveGetKeysAll(response.data['data']);
+    return bl.sheetRowsHelper.insertRowsCollection(response);
   }
 
   Future<List<String>> fullText5wordsinService(String word1, String word2,
@@ -131,11 +125,7 @@ class HttpService {
       },
     );
 
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    bl.sheetRowsHelper.insertRowsCollection(response);
-
-    return await bl.sheetrowsCRUD
-        .sheetRowsSaveGetKeysAll(response.data['data']);
+    return bl.sheetRowsHelper.insertRowsCollection(response);
   }
 
   Future<List<String>> searchSheetNames(String sheetNamesStr, String word1,
@@ -153,11 +143,7 @@ class HttpService {
       },
     );
 
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    bl.sheetRowsHelper.insertRowsCollection(response);
-
-    return await bl.sheetrowsCRUD
-        .sheetRowsSaveGetKeysAll(response.data['data']);
+    return bl.sheetRowsHelper.insertRowsCollection(response);
   }
 
   Future<List<String>> searchSheetsColumns2(String searchText1,
@@ -173,11 +159,7 @@ class HttpService {
       },
     );
 
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
-    bl.sheetRowsHelper.insertRowsCollection(response);
-
-    return await bl.sheetrowsCRUD
-        .sheetRowsSaveGetKeysAll(response.data['data']);
+    return bl.sheetRowsHelper.insertRowsCollection(response);
   }
 
   //----------------------------------------------------------------------set
@@ -212,41 +194,9 @@ class HttpService {
 
     bl.orm.currentRow.setCellDLOn = true;
 
-    bl.sheetrowsCRUD.updateRow(newRow[0], newRow);
+    bl.sheetRowsHelper.insertRowsCollection(response);
 
-    await bl.sheetcolsCRUD.updateColSet(response.data['colsSet']);
     bl.orm.currentRow.setCellDLOn = false;
     return newRow;
   }
-
-  // Future<int?> postAppendRow(
-  //     String sheetName, String sheetId, List<String> row) async {
-  //   dio.options.headers.addAll({
-  //     "Access-Control-Allow-Origin": "*",
-  //     "content-type": "text/plain",
-  //     "Access-Control-Allow-Methods": "GET,PUT,PATCH,POST,DELETE",
-  //     "Access-Control-Allow-Headers":
-  //         "Origin, X-Requested-With, Content-Type, Accept"
-  //   });
-
-  //   Response response = await dio.post(
-  //     backendUrl,
-  //     data: {
-  //       'action': 'appendRow',
-  //       'sheetName': sheetName,
-  //       'sheetId': sheetId,
-  //       'row': row
-  //     },
-  //     // options: Options(
-  //     //   headers: {
-  //     //     'content-type': 'application/json',
-  //     //     'Access-Control-Allow-Origin': '*',
-  //     //     "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
-  //     //     'Access-Control-Allow-Headers':
-  //     //         'Origin, X-Requested-With, Content-Type, Accept',
-  //     //   },
-  //     // )
-  //   );
-  //   return response.statusCode;
-  // }
 }

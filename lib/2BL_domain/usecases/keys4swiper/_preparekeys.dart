@@ -15,8 +15,7 @@ class PrepareKeys {
     String sheetGroup = dailyListRow.sheetGroup;
     bl.lastCount[sheetGroup] = 'loading';
     String sheetName = dailyListRow.sheetName;
-    await dl.httpService.getSheetSave(sheetName);
-    List<String> keys = await bl.sheetrowsCRUD.readKeysRowNoSorted(sheetName);
+    List<String> keys = await dl.httpService.getAllrows(sheetName);
     if (keys.isEmpty) return;
     currentSS.keys = [];
     currentSS.keys.addAll(keys);
@@ -27,8 +26,8 @@ class PrepareKeys {
   Future getSheetShow(String sheetName, BuildContext context) async {
     bl.homeTitle.value = 'Get sheet \n$sheetName';
 
-    await dl.httpService.getSheetSave(sheetName);
-    currentSS.keys = await dl.httpService.getSheetSave(sheetName);
+    currentSS.keys = await dl.httpService.getAllrows(sheetName);
+
     bl.homeTitle.value = '';
     if (currentSS.keys.isEmpty) return;
     currentSS.swiperIndex.value = 1;

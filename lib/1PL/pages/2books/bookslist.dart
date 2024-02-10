@@ -11,7 +11,7 @@ class BooksList {
   List<String> cols = [];
 
   Future getData() async {
-    List data = await dl.httpService.getAllrows('booksList');
+    List data = await dl.httpService.getPureSheet('booksList');
     cols = blUti.toListString(data[0]);
     int bookNameIx = cols.indexOf('bookName');
     int authorIx = cols.indexOf('author');
