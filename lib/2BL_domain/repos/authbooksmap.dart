@@ -14,7 +14,6 @@ class AuthorBooksMap {
     cols = blUti.toListString(data[0]);
     int authorIx = cols.indexOf('author');
     int bookIx = cols.indexOf('book');
-    //int quoteContainsIx = cols.indexOf('quoteContains');
     // int cleanStringIx = cols.indexOf('cleanString');
     // int pageParseIx = cols.indexOf('pageParse');
     //rows.clear();
@@ -23,6 +22,7 @@ class AuthorBooksMap {
       if (author.isEmpty) continue;
       String book = data[i][bookIx].toString().trim();
       if (book.isEmpty) continue;
+
       if (authBooksMap[author] != null) {
         authBooksMap[author] = authBooksMap[author] + '__|__' + book;
       } else {

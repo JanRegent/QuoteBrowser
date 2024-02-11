@@ -43,10 +43,13 @@ Future<String> authorSelect() async {
 Future<String> bookSelect(BuildContext context) async {
   List<String> books =
       authBooksMap[bl.orm.currentRow.author.value].toString().split('__|__');
-
-  return await Navigator.push(
-    context,
-    MaterialPageRoute(
-        builder: (context) => SearchSelectPage(books, 'Select book')),
-  );
+  try {
+    return await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => SearchSelectPage(books, 'Select book')),
+    );
+  } catch (_) {
+    return '';
+  }
 }
