@@ -1,5 +1,8 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:quotebrowser/2BL_domain/repos/authbooksmap.dart';
 
+import '../../2BL_domain/bl.dart';
 import '../../2BL_domain/bluti.dart';
 import '../widgets/alib/alib.dart';
 import '../widgets/alib/searchvalue/searchselectpage.dart';
@@ -22,8 +25,8 @@ Future<String> dateSelect(BuildContext context) async {
 }
 
 Future<String> authorSelect() async {
-  List<String> authors = [];
-  // bl.booksCRUD.readAuthorsUniq();
+  List<String> authors = blUti.toListString(authBooksMap.keys.sorted());
+
   try {
     // ignore: use_build_context_synchronously
     String? selected = await Navigator.push(
@@ -38,8 +41,9 @@ Future<String> authorSelect() async {
 }
 
 Future<String> bookSelect(BuildContext context) async {
-  List<String> books = []; // await bl.booksCRUD.readAllBooks();
-  // ignore: use_build_context_synchronously
+  List<String> books =
+      authBooksMap[bl.orm.currentRow.author.value].toString().split('__|__');
+
   return await Navigator.push(
     context,
     MaterialPageRoute(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../1PL/pages/1bydate/dailylist.dart';
 import '../../../1PL/zresults/swiperbrowser/_swiper.dart';
 import '../../../3Data/dl.dart';
 import '../../bl.dart';
 import '../../orm.dart';
+import '../../repos/dailylist.dart';
 import 'byword.dart';
 
 class PrepareKeys {

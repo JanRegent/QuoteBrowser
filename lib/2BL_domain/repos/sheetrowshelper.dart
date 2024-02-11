@@ -7,11 +7,12 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import '../../bluti.dart';
+import '../bluti.dart';
 
 class SheetRows {
   String rownoKey = '';
   String sheetName = '';
+  String rowNo = '';
   String quote = '';
   String author = '';
   String book = '';
@@ -34,6 +35,7 @@ class SheetRows {
     return {
       "rownoKey": rownoKey,
       "sheetname": rownoKey.split('__|__')[0],
+      "rowNo": rownoKey.split('__|__')[1],
       "quote": quote,
       "author": author,
       "book": book,
@@ -56,6 +58,7 @@ class SheetRows {
     SheetRows row = SheetRows();
     row.rownoKey = maprow['rownoKey'] ?? '';
     row.sheetName = maprow['sheetName'] ?? '';
+    row.rowNo = maprow['rowNo'] ?? '';
     row.quote = maprow['quote'] ?? '';
     row.author = maprow['author'] ?? '';
     row.book = maprow['book'] ?? '';
@@ -78,6 +81,7 @@ class SheetRows {
     debugPrint('''
       "rownoKey":     $rownoKey
       "sheetname":  $sheetName
+      "rowNo":      $rowNo
       "author":     $author
       "book":       $book
       "parPage":    $parPage
@@ -160,6 +164,7 @@ class SheetRowsHelper {
     await db.execute(""" CREATE TABLE IF NOT EXISTS sheetRows(
             rownoKey TEXT PRIMARY KEY,
             sheetName TEXT,
+            rowNo TEXT,
             quote TEXT,
             author TEXT,
             book TEXT,

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../1PL/pages/2books/bookslist.dart';
-import '../1PL/pages/1bydate/dailylist.dart';
+import 'repos/dailylist.dart';
 import '../1PL/zresults/swiperbrowser/viewhigh/highwiew.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
-import 'entities/sheetrows/sheetrowshelper.dart';
+import 'repos/sheetrowshelper.dart';
 
 void indexChanged(int rowIndex) async {
   bl.orm.currentRow.selectedText.value = '';
@@ -72,6 +72,7 @@ class CurrentRow {
   RxString sourceUrl = ''.obs;
   RxString fileUrl = ''.obs;
   //--------------------------ids
+  RxString rownoKey = ''.obs;
   RxString sheetName = ''.obs;
   RxString rowNo = ''.obs;
   String fileId = '';
@@ -129,8 +130,11 @@ final TextEditingController quoteEditController = TextEditingController();
 
 Future currentRowSet(String rownoKey) async {
   SheetRows sheetRow = await bl.sheetRowsHelper.getRowByRownoKey(rownoKey);
+  //--------------------------ids
+  bl.orm.currentRow.rownoKey.value = sheetRow.rownoKey;
+  bl.orm.currentRow.sheetName.value = sheetRow.sheetName;
+  bl.orm.currentRow.rowNo.value = sheetRow.rowNo;
 
-  String sheetName = sheetRow.sheetName;
   bl.orm.currentRow.quote.value = sheetRow.quote;
   quoteEditController.text = bl.orm.currentRow.quote.value;
   bl.orm.currentRow.yellowParts.value = sheetRow.yellowParts;
@@ -191,10 +195,6 @@ Future currentRowSet(String rownoKey) async {
   pureTags();
   initHighlight();
 
-  //--------------------------ids
-
-  bl.orm.currentRow.sheetName.value = sheetName;
-  bl.orm.currentRow.rowNo.value = sheetRow.rownoKey.split('__|__')[1];
   //bl.orm.currentRow.fileId = sheetRow.fileId;
 
   void optionalValuesSet() {

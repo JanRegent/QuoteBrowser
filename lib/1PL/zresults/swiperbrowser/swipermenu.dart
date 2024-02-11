@@ -71,7 +71,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
         child: PopupMenuItem<String>(
             child: TextButton(
           child: Text(
-              '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}\n${bl.orm.currentRow.dateinsert}'),
+              '${bl.orm.currentRow.rownoKey.value}\n${bl.orm.currentRow.dateinsert}'),
           onPressed: () async {
             String? fileUrl = dl.sheetUrls[bl.orm.currentRow.sheetName.value];
 

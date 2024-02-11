@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../1PL/pages/2books/bookslist.dart';
-import '../1PL/pages/1bydate/dailylist.dart';
+import 'repos/authbooksmap.dart';
+import 'repos/dailylist.dart';
 
 import 'bluti.dart';
 
-import 'entities/sheetrows/sheetrowshelper.dart';
 import 'orm.dart';
+import 'repos/sheetrowshelper.dart';
 import 'usecases/keys4swiper/_preparekeys.dart';
 
 Bl bl = Bl();
@@ -43,10 +44,11 @@ class Bl {
 
   List<String> authors = [];
   Set authorsSet = {};
-
+  AuthorBooksMap authorBooksMap = AuthorBooksMap();
   void updateSlowly() async {
     authors = [];
     authors.addAll(blUti.toListString(authorsSet.toList().sorted()));
+    authorBooksMap.getData();
   }
 
   void devModeSet() {

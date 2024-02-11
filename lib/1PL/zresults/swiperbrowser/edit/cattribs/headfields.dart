@@ -93,9 +93,8 @@ class _HeadFieldsState extends State<HeadFields> {
           onPressed: () async {
             String authorSelected = await authorSelect();
             if (authorSelected.isEmpty) return;
-            String rownoKey =
-                await bl.orm.currentRow.setCellBL('author', authorSelected);
-            currentRowSet(rownoKey);
+            await bl.orm.currentRow.setCellBL('author', authorSelected);
+            currentRowSet(bl.orm.currentRow.rownoKey.value);
           },
         ),
         title: Obx(() => Text(bl.orm.currentRow.author.value)),
@@ -110,9 +109,8 @@ class _HeadFieldsState extends State<HeadFields> {
           onPressed: () async {
             String bookSelected = await bookSelect(context);
             if (bookSelected.isEmpty) return;
-            String rownoKey =
-                await bl.orm.currentRow.setCellBL('book', bookSelected);
-            currentRowSet(rownoKey);
+            await bl.orm.currentRow.setCellBL('book', bookSelected);
+            currentRowSet(bl.orm.currentRow.rownoKey.value);
           },
         ),
         title: Obx(() => Text(bl.orm.currentRow.book.value)),

@@ -1,7 +1,7 @@
 import 'package:quotebrowser/2BL_domain/bluti.dart';
 import 'package:quotebrowser/3Data/dl.dart';
 
-import '../../../2BL_domain/bl.dart';
+import '../bl.dart';
 
 class DailyList {
   List<DailyListRow> rows = [];
@@ -12,6 +12,7 @@ class DailyList {
 
   Future getData() async {
     List data = await dl.httpService.getPureSheet('dailyList');
+
     cols = blUti.toListString(data[0]);
     int sheetGroupIx = cols.indexOf('sheetGroup');
     int sheetNameIx = cols.indexOf('sheetName');
