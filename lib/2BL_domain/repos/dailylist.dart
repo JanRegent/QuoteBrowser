@@ -8,7 +8,15 @@ class DailyList {
   Set sheetGroups = {};
   int swiperIndex = 1;
 
+  List<String> sheetNames = [];
   List<String> cols = [];
+
+  DailyListRow? getBySheetName(String sheetName) {
+    for (DailyListRow row in rows) {
+      if (row.sheetName == sheetName) return row;
+    }
+    return null;
+  }
 
   Future getData() async {
     List data = await dl.httpService.getPureSheet('dailyList');
@@ -29,6 +37,8 @@ class DailyList {
       if (swiperIndex.isEmpty) swiperIndex = '2';
 
       String sheetName = data[i][sheetNameIx];
+      sheetNames.add(sheetName);
+
       bl.authorsSet.add(sheetName);
 
       rows.add(DailyListRow()
