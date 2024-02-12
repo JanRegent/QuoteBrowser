@@ -10,6 +10,7 @@ import '../../widgets/alib/alib.dart';
 
 import '../../controllers/selectvalue.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
+import 'maninput.dart';
 
 class ByDatePage extends StatefulWidget {
   const ByDatePage({super.key});
@@ -115,14 +116,26 @@ class _ByDatePageState extends State<ByDatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Row(
-          children: [
-            const Text('By date'),
-            al.linkIconOpenDoc(
-                '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU', context, ''),
-            lastdaySelection('')
+          title: Row(
+            children: [
+              const Text('By date'),
+              al.linkIconOpenDoc(
+                  '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU', context, ''),
+              lastdaySelection('')
+            ],
+          ),
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ManInputPage()),
+                  );
+                },
+                icon: const Icon(Icons.man_outlined))
           ],
-        )),
+        ),
         body: filtersLv()
 
         //Row(children: [todayNews(false), todayNews(true)])

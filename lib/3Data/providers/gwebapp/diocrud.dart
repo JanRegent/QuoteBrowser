@@ -199,4 +199,25 @@ class HttpService {
     bl.orm.currentRow.setCellDLOn = false;
     return newRow;
   }
+
+  Future appendQuote(
+      String sheetName, String quote, String parPage, String author) async {
+    // The below request is the same as above.
+    try {
+      // ignore: unused_local_variable
+      await dio.get(
+        backendUrl,
+        queryParameters: {
+          'action': 'appendQuote',
+          'sheetName': sheetName,
+          'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName]!),
+          'quote': quote,
+          'parPage': parPage,
+          'author': author
+        },
+      );
+    } catch (_) {
+      return [];
+    }
+  }
 }
