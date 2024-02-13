@@ -215,18 +215,43 @@ class SheetRowsHelper {
   }
 
   SheetRows rowdyn2sheetRows(List<String> cols, List rowdyn) {
+    List<String> row = blUti.toListString(rowdyn);
+
+    String fileUrlSet(String value) {
+      if (value.isEmpty) return value;
+      if (!value.startsWith('fb')) {
+        if (!value.startsWith('http')) {
+          value = 'https://docs.google.com/document/d/$value/view';
+        }
+      }
+      return value;
+    }
+
+    String folderUrlSet(String value) {
+      try {
+        if (value.isEmpty) value = row[cols.indexOf('folderUrl')];
+      } catch (_) {}
+
+      if (value.isEmpty) return value;
+      if (!value.startsWith('http')) {
+        value = 'https://drive.google.com/drive/u/0/folders/$value';
+      }
+      return value;
+    }
+
     String valueGet(String columnName, List<String> row) {
       int fieldIndex = cols.indexOf(columnName);
       if (fieldIndex == -1) return '';
       try {
         String value = row[fieldIndex];
+        if (columnName == 'fileUrl') return fileUrlSet(value);
+        if (columnName == 'docUrl') return fileUrlSet(value);
+        if (columnName == 'folder') return folderUrlSet(value);
         return value;
       } catch (_) {
         return '';
       }
     }
-
-    List<String> row = blUti.toListString(rowdyn);
 
     SheetRows sheetRow = SheetRows();
     sheetRow.rownoKey = valueGet('rownoKey', row);
@@ -241,10 +266,15 @@ class SheetRowsHelper {
     sheetRow.favorite = valueGet('favorite', row);
     sheetRow.dateinsert = valueGet('dateinsert', row);
     sheetRow.sourceUrl = valueGet('sourceUrl', row);
-    sheetRow.fileUrl = valueGet('fileUrl', row);
+
+    if (cols.contains('fileUrl')) {
+      sheetRow.fileUrl = valueGet('fileUrl', row);
+    } else {
+      sheetRow.fileUrl = valueGet('docUrl', row);
+    }
     sheetRow.original = valueGet('original', row);
     sheetRow.vydal = valueGet('vydal', row);
-    sheetRow.folderUrl = valueGet('folderUrl', row);
+    sheetRow.folderUrl = valueGet('folder', row);
     sheetRow.title = valueGet('title', row);
 
     return sheetRow;

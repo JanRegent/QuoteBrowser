@@ -151,40 +151,14 @@ Future currentRowSet(String rownoKey) async {
 
   bl.orm.currentRow.dateinsert = sheetRow.dateinsert;
 
-  void sourceUrlSet() {
-    bl.orm.currentRow.sourceUrl.value = sheetRow.sourceUrl;
-    if (bl.orm.currentRow.sourceUrl.value.length > 10) {
-      if (!bl.orm.currentRow.sourceUrl.value.startsWith('http')) {
-        bl.orm.currentRow.sourceUrl.value =
-            'https://${bl.orm.currentRow.sourceUrl.value}';
-      }
-    }
-  }
-
-  sourceUrlSet();
-
-  void fileUrlSet() {
-    bl.orm.currentRow.fileUrl.value = sheetRow.fileUrl;
-    if (bl.orm.currentRow.fileUrl.value.isNotEmpty) {
-      if (!bl.orm.currentRow.fileUrl.value.startsWith('fb')) {
-        if (!bl.orm.currentRow.fileUrl.value.startsWith('http')) {
-          bl.orm.currentRow.fileUrl.value =
-              'https://docs.google.com/document/d/${bl.orm.currentRow.fileUrl.value}/view';
-        }
-      }
-    }
-    if (bl.orm.currentRow.fileUrl.value.isEmpty) {
-      //bl.orm.currentRow.fileUrl.value = sheetRow.docUrl;
-    }
-  }
-
-  fileUrlSet();
+  bl.orm.currentRow.sourceUrl.value = sheetRow.sourceUrl;
 
   bl.orm.currentRow.original.value = sheetRow.original;
 
   bl.orm.currentRow.publisher.value = sheetRow.vydal;
+  bl.orm.currentRow.fileUrl.value = sheetRow.fileUrl;
 
-  //bl.orm.currentRow.folder.value = sheetRow.folder;
+  bl.orm.currentRow.folder.value = sheetRow.folderUrl;
   if (bl.orm.currentRow.folder.value.isNotEmpty) {
     if (!bl.orm.currentRow.folder.value.startsWith('http')) {
       bl.orm.currentRow.folder.value =
