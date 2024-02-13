@@ -20,32 +20,9 @@ class ManInputPage extends StatefulWidget {
 class _ManInputPageState extends State<ManInputPage> {
   List filterKeys = <String>[].obs;
 
-  TextEditingController quoteContr = TextEditingController(text: '123');
+  TextEditingController quoteContr = TextEditingController(text: '');
 
   TextEditingController parPageContr = TextEditingController(text: '');
-
-  void parPagesParse(int index) {
-    if (currRow.parPageParse.isEmpty) return;
-    List<String> pars = currRow.parPageParse.split('^');
-    if (!quoteContr.text.contains(pars[0].trim())) return;
-    int start = quoteContr.text.indexOf(pars[0].trim());
-    String qtemp = quoteContr.text.substring(start);
-    try {
-      parPageContr.text = qtemp.substring(0, qtemp.indexOf(pars[1].trim()));
-    } catch (_) {
-      parPageContr.text = '';
-    }
-  }
-
-  IconButton saveButt(int index) {
-    return IconButton(
-      icon: const Icon(Icons.save),
-      onPressed: () {
-        dl.httpService.appendQuote(currRow.sheetName, quoteContr.text,
-            parPageContr.text, currRow.author);
-      },
-    );
-  }
 
   String? sheetName;
   DailyListRow currRow = DailyListRow();
@@ -90,11 +67,28 @@ class _ManInputPageState extends State<ManInputPage> {
     );
   }
 
+  Row sheetAuthorRow() {
+    return Row(
+      children: [
+        sheetNameSelect(),
+        Obx(() => Text(author.value)),
+      ],
+    );
+  }
+
+  //-----------------------------------------------------------------quote
   TextField quote() {
     return TextField(
-      minLines: 15,
-      maxLines: 15,
+      minLines: 10,
+      maxLines: 10,
       controller: quoteContr,
+      onChanged: (text) {
+        text = text.replaceAll(currRow.remove1, '').trim();
+        text = text.replaceAll(currRow.remove2, '').trim();
+        quoteContr.text = text;
+
+        parPagesParse();
+      },
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 30),
         hintText: 'quote?',
@@ -104,17 +98,18 @@ class _ManInputPageState extends State<ManInputPage> {
         fillColor: Colors.grey[200],
         filled: true,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(0.0),
           borderSide: const BorderSide(),
         ),
       ),
     );
   }
 
+  //--------------------------------------------------------------parse
   TextField parPageText() {
     return TextField(
-      minLines: 1,
-      maxLines: 1,
+      minLines: 3,
+      maxLines: 3,
       controller: parPageContr,
       decoration: InputDecoration(
         hintText: 'parPage?',
@@ -136,11 +131,41 @@ class _ManInputPageState extends State<ManInputPage> {
     );
   }
 
+  void parPagesParse() {
+    if (currRow.parPageParse.isEmpty) return;
+    List<String> pars = currRow.parPageParse.split('^');
+    if (!quoteContr.text.contains(pars[0].trim())) return;
+    int start = quoteContr.text.indexOf(pars[0].trim());
+    String qtemp = quoteContr.text.substring(start);
+    try {
+      parPageContr.text = qtemp.substring(0, qtemp.indexOf(pars[1].trim()));
+    } catch (_) {
+      parPageContr.text = '';
+    }
+  }
+
+  //-----------------------------------------------------------------save butt
+
+  IconButton saveButt() {
+    return IconButton(
+      icon: const Icon(Icons.save),
+      onPressed: () {
+        dl.httpService.appendQuote(currRow.sheetName, quoteContr.text,
+            parPageContr.text, currRow.author);
+      },
+    );
+  }
+
   Row buttRow() {
     return Row(
       children: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.clear)),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.save))
+        IconButton(
+            onPressed: () {
+              quoteContr.text = '';
+              parPageContr.text = '';
+            },
+            icon: const Icon(Icons.clear)),
+        saveButt(),
       ],
     );
   }
@@ -159,13 +184,7 @@ class _ManInputPageState extends State<ManInputPage> {
         ],
       )),
       body: ListView(
-        children: [
-          sheetNameSelect(),
-          quote(),
-          Obx(() => Text(author.value)),
-          parPageTile(),
-          buttRow()
-        ],
+        children: [sheetAuthorRow(), quote(), parPageTile(), buttRow()],
       ),
     );
     //Row(children: [todayNews(false), todayNews(true)])

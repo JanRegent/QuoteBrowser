@@ -27,6 +27,8 @@ class DailyList {
     int sheetUrlIx = cols.indexOf('sheetUrl');
     int swiperIndexIx = cols.indexOf('swiperIndex');
     int parPageParseIx = cols.indexOf('parPageParse');
+    int remove1Ix = cols.indexOf('remove1');
+    int remove2Ix = cols.indexOf('remove2');
     int authorIx = cols.indexOf('author');
     rows.clear();
     for (var i = 1; i < data.length; i++) {
@@ -48,7 +50,9 @@ class DailyList {
         ..sheetUrl = data[i][sheetUrlIx]
         ..swiperIndex = swiperIndex
         ..author = data[i][authorIx].toString().trim()
-        ..parPageParse = data[i][parPageParseIx].toString().trim());
+        ..parPageParse = data[i][parPageParseIx].toString().trim()
+        ..remove1 = data[i][remove1Ix].toString().trim()
+        ..remove2 = data[i][remove2Ix].toString().trim());
 
       dl.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
     }
@@ -73,5 +77,7 @@ class DailyListRow {
   String swiperIndex = '2';
   String author = '';
   String parPageParse = '';
+  String remove1 = '';
+  String remove2 = '';
   int rowNo = 0;
 }

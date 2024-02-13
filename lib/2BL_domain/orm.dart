@@ -115,9 +115,15 @@ void pureTags() {
   List<String> tagsList = bl.orm.currentRow.tags.value.split('#');
   Set tagsSet = tagsList.toSet();
   List<String> tags = [];
-  for (var tag in tagsSet) {
+  for (String tag in tagsSet) {
     try {
       if (tag.toString().isEmpty) continue;
+      if (tag.endsWith(',')) {
+        tag = tag.substring(0, tag.length - 1).trim as String;
+      }
+      if (tag.endsWith('.')) {
+        tag = tag.substring(0, tag.length - 1).trim as String;
+      }
     } catch (_) {
       continue;
     }
@@ -159,12 +165,6 @@ Future currentRowSet(String rownoKey) async {
   bl.orm.currentRow.fileUrl.value = sheetRow.fileUrl;
 
   bl.orm.currentRow.folder.value = sheetRow.folderUrl;
-  if (bl.orm.currentRow.folder.value.isNotEmpty) {
-    if (!bl.orm.currentRow.folder.value.startsWith('http')) {
-      bl.orm.currentRow.folder.value =
-          'https://drive.google.com/drive/u/0/folders/${bl.orm.currentRow.folder.value}';
-    }
-  }
 
   pureTags();
   initHighlight();
