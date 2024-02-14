@@ -27,6 +27,14 @@ class _ManInputPageState extends State<ManInputPage> {
   String? sheetName;
   DailyListRow currRow = DailyListRow();
 
+  final TextEditingController sheetSearchContr = TextEditingController();
+
+  @override
+  void dispose() {
+    sheetSearchContr.dispose();
+    super.dispose();
+  }
+
   DropdownButton2 sheetNameSelect() {
     return DropdownButton2<String>(
       isExpanded: true,
@@ -52,17 +60,55 @@ class _ManInputPageState extends State<ManInputPage> {
       onChanged: (String? value) {
         sheetName = value;
         currRow = bl.dailyList.getBySheetName(sheetName!)!;
-        author.value = currRow.author;
         parPageExp.value = currRow.parPageParse;
         setState(() {});
       },
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.symmetric(horizontal: 16),
         height: 40,
-        width: 140,
+        width: 400,
       ),
       menuItemStyleData: const MenuItemStyleData(
         height: 40,
+      ),
+      //----------------------------------------search
+      dropdownSearchData: DropdownSearchData(
+        searchController: sheetSearchContr,
+        searchInnerWidgetHeight: 50,
+        searchInnerWidget: Container(
+          height: 50,
+          padding: const EdgeInsets.only(
+            top: 8,
+            bottom: 4,
+            right: 8,
+            left: 8,
+          ),
+          child: TextFormField(
+            expands: true,
+            maxLines: null,
+            controller: sheetSearchContr,
+            decoration: InputDecoration(
+              icon: IconButton(
+                  onPressed: () {
+                    sheetSearchContr.text = '';
+                  },
+                  icon: const Icon(Icons.clear)),
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 8,
+              ),
+              hintText: 'Search for an item...',
+              hintStyle: const TextStyle(fontSize: 12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+          ),
+        ),
+        searchMatchFn: (item, searchValue) {
+          return item.value.toString().toLowerCase().contains(searchValue);
+        },
       ),
     );
   }
@@ -71,7 +117,6 @@ class _ManInputPageState extends State<ManInputPage> {
     return Row(
       children: [
         sheetNameSelect(),
-        Obx(() => Text(author.value)),
       ],
     );
   }
@@ -169,8 +214,6 @@ class _ManInputPageState extends State<ManInputPage> {
       ],
     );
   }
-
-  RxString author = ''.obs;
 
   @override
   Widget build(BuildContext context) {
