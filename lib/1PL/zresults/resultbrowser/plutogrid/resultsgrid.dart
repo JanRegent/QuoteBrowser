@@ -82,7 +82,6 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
     for (String rownoKey in rownos) {
       currentSS.keys.add(rownoKey);
     }
-
     currentSS.swiperIndexIncrement = false;
     // ignore: use_build_context_synchronously
     Navigator.push(

@@ -55,9 +55,16 @@ void initYellowParts() {
 void initHighlight() {
   words = {};
   if (bl.highligthOnOff == false) return;
-
-  initYellowParts();
-  initTags();
+  try {
+    initYellowParts();
+  } catch (e) {
+    debugPrint('initHighlight.initYellowParts err\n$e');
+  }
+  try {
+    initTags();
+  } catch (e) {
+    debugPrint('initHighlight.initTags err\n$e');
+  }
 }
 
 //-------------------------------------------------------------userviewPage
@@ -97,7 +104,7 @@ class _HighViewPageState extends State<HighViewPage> {
           child: ListView(
             children: <Widget>[
               ListTile(
-                  leading: highlight(),
+                  //leading: highlight(),
                   title: Row(
                     children: [
                       Obx(() => Text(bl.orm.currentRow.author.value)),
@@ -112,25 +119,24 @@ class _HighViewPageState extends State<HighViewPage> {
                         );
                       },
                       icon: const Icon(Icons.crop_original))),
-              Card(
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(1),
-                        topRight: Radius.circular(1)),
-                    side: BorderSide(width: 1, color: Colors.green)),
-                child: Obx(() => TextHighlight(
-                      text: bl.orm.currentRow.quote.value,
-                      words: words,
-                      matchCase: false,
-                      textStyle: const TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.left,
-                    )),
-              )
-
-              //const HeadFields()
+              const Text('TextHighlight-frozen')
+              // Card(
+              //   shape: const RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.only(
+              //           bottomRight: Radius.circular(1),
+              //           topRight: Radius.circular(1)),
+              //       side: BorderSide(width: 1, color: Colors.green)),
+              //   child: Obx(() => TextHighlight(
+              //         text: bl.orm.currentRow.quote.value,
+              //         words: words,
+              //         matchCase: false,
+              //         textStyle: const TextStyle(
+              //           fontSize: 20.0,
+              //           color: Colors.black,
+              //         ),
+              //         textAlign: TextAlign.left,
+              //       )),
+              // )
             ],
           ),
         ),

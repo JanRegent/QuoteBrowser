@@ -16,7 +16,6 @@ import 'edit/cattribs/inportcomments.dart';
 import 'edit/cattribs/othersfields.dart';
 import 'swipermenu.dart';
 import 'viewhigh/highwiew.dart';
-import 'viewuser/userview.dart';
 
 // ignore: must_be_immutable
 class SwiperTabs extends StatefulWidget {
@@ -173,7 +172,7 @@ class _SwiperTabsState extends State<SwiperTabs>
       TabController(length: bl.devMode == false ? 1 : 2, vsync: this);
 
   int attribTabIndex = 0;
-  int quoteTabIndex = 0;
+  int quoteTabIndex = 1;
 
   Widget userView() {
     return Scaffold(
@@ -198,46 +197,38 @@ class _SwiperTabsState extends State<SwiperTabs>
             actions: [rowViewMenu({}, widget.setStateSwiper)],
             bottom: TabBar(
               controller: _tabController,
-              tabs: bl.devMode == false
-                  ? <Widget>[
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.format_quote))
-                    ]
-                  : <Widget>[
-                      Tab(
-                          child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                quoteTabIndex = 0;
-                                _tabController.index = 0;
-                                setState(() {});
-                              },
-                              icon: const Icon(Icons.format_quote)),
-                          const Spacer(),
-                          IconButton(
-                              onPressed: () {
-                                quoteTabIndex = 1;
-                                _tabController.index = 0;
-                                setState(() {});
-                              },
-                              icon: const Icon(Icons.edit_attributes_sharp))
-                        ],
-                      )),
-                      Tab(child: Row(children: iconList())),
-                    ],
+              tabs: <Widget>[
+                Tab(
+                    child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          quoteTabIndex = 0;
+                          _tabController.index = 0;
+                          setState(() {});
+                        },
+                        icon: const Icon(Icons.format_quote)),
+                    const Spacer(),
+                    IconButton(
+                        onPressed: () {
+                          quoteTabIndex = 1;
+                          _tabController.index = 0;
+                          setState(() {});
+                        },
+                        icon: const Icon(Icons.edit_attributes_sharp))
+                  ],
+                )),
+                Tab(child: Row(children: iconList())),
+              ],
             ),
           ),
           body: TabBarView(
             physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
-            children: bl.devMode == false
-                ? [UserviewPage(widget.swiperSetstateIndexChanged)]
-                : [
-                    quoteTabs(),
-                    attribTabs(),
-                  ],
+            children: [
+              quoteTabs(),
+              attribTabs(),
+            ],
           ),
         ));
   }
@@ -252,7 +243,7 @@ class _SwiperTabsState extends State<SwiperTabs>
       case 0:
         return const HighViewPage();
       case 1:
-        if (bl.orm.currentRow.quote.value != '__toRead__') {
+        if (!bl.orm.currentRow.quote.value.contains('__toRead__')) {
           return QuoteEdit(widget.setStateSwiper, context);
         } else {
           return toReadListview(context, widget.setStateSwiper);

@@ -117,7 +117,8 @@ class _ManInputPageState extends State<ManInputPage> {
     return Row(
       children: [
         sheetNameSelect(),
-        al.linkIconOpenDoc(currRow.sheetUrl, context, ''),
+        al.linkIconOpenDoc(
+            currRow.sheetUrl, context, ''), //todo &range=A300 remove gid!!
       ],
     );
   }
@@ -198,7 +199,7 @@ class _ManInputPageState extends State<ManInputPage> {
       onPressed: () async {
         String result = await dl.httpService.appendQuote(currRow.sheetName,
             quoteContr.text, parPageContr.text, currRow.author);
-        print(result);
+
         if (result.startsWith('ok')) clearCtrls();
         parPageContr.text = result;
       },

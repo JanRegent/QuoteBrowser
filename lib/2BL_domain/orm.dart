@@ -21,6 +21,7 @@ void indexChanged(int rowIndex) async {
   }
 
   if (currentSS.keys.isEmpty) return;
+
   await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
 
   currentSS.swiperIndexChanged = true;
@@ -124,6 +125,9 @@ void pureTags() {
       if (tag.endsWith('.')) {
         tag = tag.substring(0, tag.length - 1).trim as String;
       }
+      if (tag.endsWith(',')) {
+        tag = tag.substring(0, tag.length - 1).trim as String;
+      }
     } catch (_) {
       continue;
     }
@@ -165,7 +169,6 @@ Future currentRowSet(String rownoKey) async {
   bl.orm.currentRow.fileUrl.value = sheetRow.fileUrl;
 
   bl.orm.currentRow.folder.value = sheetRow.folderUrl;
-
   pureTags();
   initHighlight();
 

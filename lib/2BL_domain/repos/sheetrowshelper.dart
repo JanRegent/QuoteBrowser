@@ -349,7 +349,7 @@ class SheetRowsHelper {
       whereArgs: [rownoKey],
     );
     if (maps.isNotEmpty) {
-      return SheetRows().fromMap(maps[0]);
+      return SheetRows().fromMap(maps.first);
     }
 
     return SheetRows();
