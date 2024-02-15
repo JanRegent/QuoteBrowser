@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../1PL/pages/2books/bookslist.dart';
 import 'repos/dailylist.dart';
-import '../1PL/zresults/swiperbrowser/viewhigh/highwiew.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
 import 'repos/sheetrowshelper.dart';
@@ -170,8 +169,6 @@ Future currentRowSet(String rownoKey) async {
 
   bl.orm.currentRow.folder.value = sheetRow.folderUrl;
   pureTags();
-  initHighlight();
-
   //bl.orm.currentRow.fileId = sheetRow.fileId;
 
   void optionalValuesSet() {

@@ -23,7 +23,8 @@ dependencies:
   pluto_grid: ^7.0.2 #https://pub.dev/packages/pluto_grid
 
   ##----text
-  highlight_text: ^1.7.0 #https://pub.dev/packages/highlight_text
+  ##frozen problem!! highlight_text: ^1.7.0 #https://pub.dev/packages/highlight_text
+  tag_highlight_text: ^1.0.2 #https://pub.dev/packages/tag_highlight_text
   input_dialog: ^0.1.1 #https://pub.dev/packages/input_dialog
   clipboard: ^0.1.3 #https://pub.dev/packages/clipboard
   rich_readmore: ^1.0.6 #https://pub.dev/packages/rich_readmore

@@ -1,71 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:highlight_text/highlight_text.dart';
+import 'package:tag_highlight_text/tag_highlight_text.dart';
 
 import '../../../../2BL_domain/bl.dart';
 import '../edit/battr/originalview.dart';
 
 //-----------------------------------------------------------------highl
-Map<String, HighlightedWord> words = {};
-const TextStyle tagStyle = TextStyle(
-  color: Colors.red,
-  fontWeight: FontWeight.bold,
-  fontSize: 20.0,
-);
-
-const TextStyle yellowStyle = TextStyle(
-  backgroundColor: Colors.yellow,
-  fontSize: 20.0,
-);
-
-void initTags() {
-  List<String> tags = bl.orm.currentRow.tags.value.split('#');
-  for (String tag in tags) {
-    if (tag.isEmpty) continue;
-    words[tag] = HighlightedWord(
-      onTap: () {},
-      textStyle: tagStyle,
-      //decoration: decoration,
-      //padding: padding,
-    );
-  }
-}
-
-void initYellowParts() {
-  void initSubPart(String yellowPart) {
-    List<String> yellowSubparts = yellowPart.split(',');
-    for (String yellowSubPart in yellowSubparts) {
-      if (yellowSubPart.isEmpty) continue;
-      words[yellowSubPart.trim()] = HighlightedWord(
-        onTap: () {},
-        textStyle: yellowStyle,
-        //decoration: decoration,
-        //padding: padding,
-      );
-    }
-  }
-
-  List<String> yParts = bl.orm.currentRow.yellowParts.value.split('__|__');
-  for (String yellowPart in yParts) {
-    if (yellowPart.isEmpty) continue;
-    initSubPart(yellowPart);
-  }
-}
-
-void initHighlight() {
-  words = {};
-  if (bl.highligthOnOff == false) return;
-  try {
-    initYellowParts();
-  } catch (e) {
-    debugPrint('initHighlight.initYellowParts err\n$e');
-  }
-  try {
-    initTags();
-  } catch (e) {
-    debugPrint('initHighlight.initTags err\n$e');
-  }
-}
 
 //-------------------------------------------------------------userviewPage
 class HighViewPage extends StatefulWidget {
@@ -80,19 +20,29 @@ class _HighViewPageState extends State<HighViewPage> {
   @override
   void initState() {
     super.initState();
-    words = {};
     bl.highligthOnOff = true;
-    initHighlight();
   }
 
-  IconButton highlight() {
-    return IconButton(
-        onPressed: () {
-          bl.highligthOnOff = !bl.highligthOnOff;
-          initHighlight();
-          setState(() {});
-        },
-        icon: const Icon(Icons.highlight));
+  String text = bl.orm.currentRow.quote.value;
+
+  void tagsH() {
+    List<String> tags = bl.orm.currentRow.tags.split('#');
+    text = bl.orm.currentRow.quote.value;
+    for (String tag in tags) {
+      text = text.replaceAll(tag, '<highlight><bold>$tag</bold></highlight>');
+    }
+    setState(() {});
+  }
+
+  void yellowH() {
+    List<String> yellowParts = bl.orm.currentRow.yellowParts.split('__|__');
+    text = bl.orm.currentRow.quote.value;
+    for (String yellowPart in yellowParts) {
+      String yp = yellowPart.trim();
+      if (yp.isEmpty) continue;
+      text = text.replaceAll(yp, '<yp><bold>$yp</bold></yp>');
+    }
+    setState(() {});
   }
 
   @override
@@ -108,6 +58,18 @@ class _HighViewPageState extends State<HighViewPage> {
                   title: Row(
                     children: [
                       Obx(() => Text(bl.orm.currentRow.author.value)),
+                      IconButton(
+                          onPressed: () async {
+                            text = bl.orm.currentRow.quote.value;
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.clear)),
+                      IconButton(
+                          onPressed: () => tagsH(),
+                          icon: const Icon(Icons.tag)),
+                      IconButton(
+                          onPressed: () => yellowH(),
+                          icon: const Icon(Icons.circle, color: Colors.yellow)),
                     ],
                   ),
                   trailing: IconButton(
@@ -119,24 +81,55 @@ class _HighViewPageState extends State<HighViewPage> {
                         );
                       },
                       icon: const Icon(Icons.crop_original))),
-              const Text('TextHighlight-frozen')
-              // Card(
-              //   shape: const RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.only(
-              //           bottomRight: Radius.circular(1),
-              //           topRight: Radius.circular(1)),
-              //       side: BorderSide(width: 1, color: Colors.green)),
-              //   child: Obx(() => TextHighlight(
-              //         text: bl.orm.currentRow.quote.value,
-              //         words: words,
-              //         matchCase: false,
-              //         textStyle: const TextStyle(
-              //           fontSize: 20.0,
-              //           color: Colors.black,
-              //         ),
-              //         textAlign: TextAlign.left,
-              //       )),
-              // )
+              Card(
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(1),
+                        topRight: Radius.circular(1)),
+                    side: BorderSide(width: 1, color: Colors.green)),
+                child: TagHighlightText(
+                  text: text,
+                  highlightBuilder: (tagName) {
+                    switch (tagName) {
+                      case 'highlight':
+                        return HighlightData(
+                          style: const TextStyle(
+                            color: Colors.red,
+                          ),
+                        );
+                      case 'bold':
+                        return HighlightData(
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      case 'link':
+                        return HighlightData(
+                          style: const TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
+                          onTap: (text) {
+                            debugPrint('Click $text');
+                          },
+                        );
+                      case 'yp':
+                        return HighlightData(
+                          style: const TextStyle(
+                            backgroundColor: Colors.yellow,
+                            decoration: TextDecoration.underline,
+                          ),
+                          onTap: (text) {},
+                        );
+                    }
+                    return null;
+                  },
+                  textStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                  ),
+                ),
+              )
             ],
           ),
         ),

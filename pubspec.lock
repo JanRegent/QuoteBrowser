@@ -437,14 +437,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
-  highlight_text:
-    dependency: "direct main"
-    description:
-      name: highlight_text
-      sha256: "74806039a02e65e5aef9bb27c2df42b8694700c389ec75b733eb2ac53a84c606"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.7.0"
   holdable_button:
     dependency: "direct main"
     description:
@@ -914,6 +906,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0+1"
+  tag_highlight_text:
+    dependency: "direct main"
+    description:
+      name: tag_highlight_text
+      sha256: "9da9a1e4489acfe039ae3e9b81409c70ced94979661971bfa0066282f2100546"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   term_glyph:
     dependency: transitive
     description:
