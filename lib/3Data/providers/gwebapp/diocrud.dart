@@ -200,12 +200,12 @@ class HttpService {
     return newRow;
   }
 
-  Future appendQuote(
+  Future<String> appendQuote(
       String sheetName, String quote, String parPage, String author) async {
     // The below request is the same as above.
     try {
       // ignore: unused_local_variable
-      await dio.get(
+      Response response = await dio.get(
         backendUrl,
         queryParameters: {
           'action': 'appendQuote',
@@ -216,8 +216,9 @@ class HttpService {
           'author': author
         },
       );
-    } catch (_) {
-      return [];
+      return response.data['data'];
+    } catch (e) {
+      return e.toString();
     }
   }
 }

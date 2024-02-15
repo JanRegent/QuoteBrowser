@@ -117,6 +117,7 @@ class _ManInputPageState extends State<ManInputPage> {
     return Row(
       children: [
         sheetNameSelect(),
+        al.linkIconOpenDoc(currRow.sheetUrl, context, ''),
       ],
     );
   }
@@ -194,24 +195,33 @@ class _ManInputPageState extends State<ManInputPage> {
   IconButton saveButt() {
     return IconButton(
       icon: const Icon(Icons.save),
-      onPressed: () {
-        dl.httpService.appendQuote(currRow.sheetName, quoteContr.text,
-            parPageContr.text, currRow.author);
+      onPressed: () async {
+        String result = await dl.httpService.appendQuote(currRow.sheetName,
+            quoteContr.text, parPageContr.text, currRow.author);
+        print(result);
+        if (result.startsWith('ok')) clearCtrls();
+        parPageContr.text = result;
       },
     );
   }
 
-  Row buttRow() {
-    return Row(
-      children: [
-        IconButton(
-            onPressed: () {
-              quoteContr.text = '';
-              parPageContr.text = '';
-            },
-            icon: const Icon(Icons.clear)),
-        saveButt(),
-      ],
+  void clearCtrls() {
+    quoteContr.text = '';
+    parPageContr.text = '';
+  }
+
+  ListTile buttRow() {
+    return ListTile(
+      title: Row(
+        children: [
+          saveButt(),
+        ],
+      ),
+      trailing: IconButton(
+          onPressed: () {
+            clearCtrls();
+          },
+          icon: const Icon(Icons.clear)),
     );
   }
 

@@ -1,1 +1,1 @@
-String buildDate = ' 2024_02_14__15_51_build_AL---ManInputPage-setBook-setSheet ';  
+String buildDate = ' 2024_02_15__10_11_build_AL---ManInputPage-ok-result ';  
