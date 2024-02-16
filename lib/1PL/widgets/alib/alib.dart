@@ -38,6 +38,24 @@ class AL {
     );
   }
 
+  Widget linkIconOpenUrl(String fileUrl, BuildContext context, String label) {
+    if (!fileUrl.startsWith('http')) return const Text(' ');
+    // ignore: unnecessary_null_comparison
+    if (fileUrl.trim() == null) return const Text(' ');
+    if (fileUrl.trim().isEmpty) return const Text(' ');
+    return ElevatedButton.icon(
+      icon: const Icon(Icons.link),
+      label: Text(label),
+      // color: Colors.black,
+      //tooltip: 'Open sheet in browser',
+      onPressed: () async {
+        if (fileUrl.trim().isEmpty) return;
+
+        await openhUrl(Uri.parse(fileUrl), context);
+      },
+    );
+  }
+
   Future openDoc(String fileid, BuildContext context, String label) async {
     try {
       if (fileid.startsWith('http')) fileid = blUti.url2fileid(fileid);

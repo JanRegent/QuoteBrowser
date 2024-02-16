@@ -9,15 +9,15 @@ import '../../../2BL_domain/repos/dailylist.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
 
-class ManInputPage extends StatefulWidget {
-  const ManInputPage({super.key});
+class QuoteAddPage extends StatefulWidget {
+  const QuoteAddPage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _ManInputPageState createState() => _ManInputPageState();
+  _QuoteAddPageState createState() => _QuoteAddPageState();
 }
 
-class _ManInputPageState extends State<ManInputPage> {
+class _QuoteAddPageState extends State<QuoteAddPage> {
   List filterKeys = <String>[].obs;
 
   TextEditingController quoteContr = TextEditingController(text: '');
@@ -117,8 +117,8 @@ class _ManInputPageState extends State<ManInputPage> {
     return Row(
       children: [
         sheetNameSelect(),
-        al.linkIconOpenDoc(
-            currRow.sheetUrl, context, ''), //todo &range=A300 remove gid!!
+        al.linkIconOpenUrl(
+            '${currRow.sheetUrl.trim()}&range=A300', context, ''),
       ],
     );
   }
@@ -197,11 +197,16 @@ class _ManInputPageState extends State<ManInputPage> {
     return IconButton(
       icon: const Icon(Icons.save),
       onPressed: () async {
+        if (currRow.sheetName.isEmpty) {
+          saving.value = 'sheetNAme!';
+          return;
+        }
+        saving.value = 'saving';
         String result = await dl.httpService.appendQuote(currRow.sheetName,
             quoteContr.text, parPageContr.text, currRow.author);
 
         if (result.startsWith('ok')) clearCtrls();
-        parPageContr.text = result;
+        saving.value = result;
       },
     );
   }
@@ -211,12 +216,11 @@ class _ManInputPageState extends State<ManInputPage> {
     parPageContr.text = '';
   }
 
+  RxString saving = ''.obs;
   ListTile buttRow() {
     return ListTile(
       title: Row(
-        children: [
-          saveButt(),
-        ],
+        children: [saveButt(), Obx(() => Text(saving.value))],
       ),
       trailing: IconButton(
           onPressed: () {
@@ -232,7 +236,7 @@ class _ManInputPageState extends State<ManInputPage> {
       appBar: AppBar(
           title: Row(
         children: [
-          const Text('Manual input'),
+          const Text('Quote add'),
           al.linkIconOpenDoc(
               '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU', context, ''),
         ],

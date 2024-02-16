@@ -10,7 +10,7 @@ import '../../widgets/alib/alib.dart';
 
 import '../../controllers/selectvalue.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
-import 'maninput.dart';
+import 'quoteadd.dart';
 
 class ByDatePage extends StatefulWidget {
   const ByDatePage({super.key});
@@ -130,7 +130,7 @@ class _ByDatePageState extends State<ByDatePage> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ManInputPage()),
+                        builder: (context) => const QuoteAddPage()),
                   );
                 },
                 icon: const Icon(Icons.man_outlined))

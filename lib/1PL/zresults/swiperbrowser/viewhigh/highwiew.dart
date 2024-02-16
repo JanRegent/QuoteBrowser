@@ -117,7 +117,6 @@ class _HighViewPageState extends State<HighViewPage> {
                         return HighlightData(
                           style: const TextStyle(
                             backgroundColor: Colors.yellow,
-                            decoration: TextDecoration.underline,
                           ),
                           onTap: (text) {},
                         );
