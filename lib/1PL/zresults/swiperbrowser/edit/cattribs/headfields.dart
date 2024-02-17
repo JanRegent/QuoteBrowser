@@ -34,9 +34,6 @@ class _HeadFieldsState extends State<HeadFields> {
   }
 
   Widget favButt() {
-    if (!bl.orm.currentRow.cols.contains('favorite')) {
-      return const Text('');
-    }
     Icon favIcon = const Icon(Icons.favorite_outline);
 
     if (bl.orm.currentRow.fav.value == 'f') {

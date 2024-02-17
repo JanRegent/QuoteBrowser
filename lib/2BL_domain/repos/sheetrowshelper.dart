@@ -255,7 +255,10 @@ class SheetRowsHelper {
 
     SheetRows sheetRow = SheetRows();
     sheetRow.rownoKey = valueGet('rownoKey', row);
-    sheetRow.sheetName = sheetRow.rownoKey.split('__|__')[0];
+    try {
+      sheetRow.sheetName = sheetRow.rownoKey.split('__|__')[0];
+      sheetRow.rowNo = sheetRow.rownoKey.split('__|__')[1];
+    } catch (_) {}
     sheetRow.quote = valueGet('quote', row);
     sheetRow.author = valueGet('author', row);
     sheetRow.book = valueGet('book', row);

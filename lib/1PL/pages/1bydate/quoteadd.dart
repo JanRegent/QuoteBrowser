@@ -116,9 +116,9 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
   Row sheetAuthorRow() {
     return Row(
       children: [
-        sheetNameSelect(),
         al.linkIconOpenUrl(
             '${currRow.sheetUrl.trim()}&range=A300', context, ''),
+        sheetNameSelect()
       ],
     );
   }

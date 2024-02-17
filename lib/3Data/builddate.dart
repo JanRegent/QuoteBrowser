@@ -1,1 +1,1 @@
-String buildDate = ' 2024_02_16__13_20_build_AL---QuoteAddPage ';  
+String buildDate = ' 2024_02_17__10_24_build_AL---swip-favorite ';  

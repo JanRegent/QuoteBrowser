@@ -82,7 +82,6 @@ class CurrentRow {
   RxString folder = ''.obs;
   RxString yellowParts = ''.obs;
 
-  List<String> cols = [];
   //Map optionalFields = {};
   //List<RxString> optionalvalues = [];
   List<String> optionalColumNames = [];
@@ -169,7 +168,6 @@ Future currentRowSet(String rownoKey) async {
 
   bl.orm.currentRow.folder.value = sheetRow.folderUrl;
   pureTags();
-  //bl.orm.currentRow.fileId = sheetRow.fileId;
 
   void optionalValuesSet() {
     //--------------------------optional user fields
@@ -177,28 +175,6 @@ Future currentRowSet(String rownoKey) async {
     bl.orm.currentRow.optionalvalues = RxList<RxString>();
     bl.orm.currentRow.optionalColumNames = [];
 
-    for (var columnName in bl.orm.currentRow.cols) {
-      if (columnName == 'ID') continue;
-      if (columnName == 'RowNo') continue;
-      if (columnName == 'quote') continue;
-      if (columnName == 'author') continue;
-      if (columnName == 'book') continue;
-      if (columnName == 'parPage') continue;
-      if (columnName == 'tags') continue;
-      if (columnName == 'stars') continue;
-      if (columnName == 'favorite') continue;
-      if (columnName == 'categories') continue;
-      if (columnName == 'original') continue;
-      if (columnName == 'sourceUrl') continue;
-      if (columnName == 'dateinsert') continue;
-      if (columnName == 'vydal') continue;
-      if (columnName == 'folder') continue;
-
-      bl.orm.currentRow.optionalColumNames.add(columnName);
-
-      //bl.orm.currentRow.optionalvalues.add(valueGet(columnName).obs);
-      bl.orm.currentRow.optionalvalues.refresh();
-    }
     bl.orm.currentRow.optionalvalues.refresh();
   }
 

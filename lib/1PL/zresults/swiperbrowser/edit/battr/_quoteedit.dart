@@ -194,31 +194,6 @@ class _QuoteEditState extends State<QuoteEdit> {
     widget.swiperSetstate();
   }
 
-  Widget favButt() {
-    if (!bl.orm.currentRow.cols.contains('favorite')) {
-      return const Text('');
-    }
-    Icon favIcon = const Icon(Icons.favorite_outline);
-
-    if (bl.orm.currentRow.fav.value == 'f') {
-      favIcon = const Icon(Icons.favorite);
-    } else {
-      favIcon = const Icon(Icons.favorite_outline);
-    }
-    return IconButton(
-        icon: favIcon,
-        onPressed: () async {
-          if (bl.orm.currentRow.fav.value.isEmpty) {
-            bl.orm.currentRow.fav.value = 'f';
-          } else {
-            bl.orm.currentRow.fav.value = '';
-          }
-
-          await bl.orm.currentRow
-              .setCellBL('favorite', bl.orm.currentRow.fav.value);
-        });
-  }
-
   PopupMenuButton personPopup() {
     List<PopupMenuItem> items = [];
     items.add(PopupMenuItem(
