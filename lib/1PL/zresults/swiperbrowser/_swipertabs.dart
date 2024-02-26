@@ -48,35 +48,6 @@ class _SwiperTabsState extends State<SwiperTabs>
   //----------------------------------------------------------------------buts
   //---------------------------------------------------------- int startRow
 
-  List<String> currentSSkeys = [];
-  IconButton searchWord() {
-    return IconButton(
-        onPressed: () async {
-          String searchWord = await al.inputWord();
-          List<String> keys = await bl.sheetRowsHelper.searchWord(searchWord);
-          if (keys.isEmpty) {
-            if (currentSSkeys.isEmpty) {
-              // ignore: use_build_context_synchronously
-              al.messageInfo(context, 'Search', 'Nothing found', 5);
-              return;
-            }
-            // ignore: use_build_context_synchronously
-            al.messageInfo(context, 'Search', 'Restored all', 5);
-            currentSS.keys = [];
-            currentSS.keys.addAll(currentSSkeys);
-            indexChanged(0);
-            setState(() {});
-            return;
-          }
-          currentSSkeys.addAll(currentSS.keys);
-          currentSS.keys = [];
-          currentSS.keys.addAll(keys);
-          indexChanged(0);
-          setState(() {});
-        },
-        icon: const Icon(Icons.search));
-  }
-
   void swiperIndexIncrementInCloud() async {
     if (currentSS.swiperIndexIncrement == false) return;
 
@@ -98,8 +69,6 @@ class _SwiperTabsState extends State<SwiperTabs>
     return Row(children: [
       al.infoButton(context, 'Search by expression',
           'SheetGroup contains \n\n${widget.title}'),
-      const Spacer(),
-      searchWord(),
       ElevatedButton(
         onPressed: () {
           if (bl.orm.currentRow.setCellDLOn) return;
