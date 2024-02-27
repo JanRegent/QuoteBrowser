@@ -23,7 +23,7 @@ Future getBookContentShow(
   //ignore: use_build_context_synchronously
   await Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => CardSwiper(bookName, const {})),
+    MaterialPageRoute(builder: (context) => CardSwiper(bookName, '', const {})),
   );
 }
 

@@ -6,10 +6,11 @@ import '../../../2BL_domain/usecases/keys4swiper/emptyresults.dart';
 import '_swipertabs.dart';
 
 class CardSwiper extends StatefulWidget {
-  final String title;
+  final String title1;
+  final String title2;
   final Map configRow;
 
-  const CardSwiper(this.title, this.configRow, {super.key});
+  const CardSwiper(this.title1, this.title2, this.configRow, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -47,8 +48,8 @@ class _CardSwiperState extends State<CardSwiper> {
             MediaQuery.of(context).size.height)),
         child: Swiper(
           itemBuilder: (BuildContext context, int rowIndex) {
-            return SwiperTabs(
-                swiperSetstate, widget.title, swiperSetstateIndexChanged);
+            return SwiperTabs(swiperSetstate, widget.title1, widget.title2,
+                swiperSetstateIndexChanged);
           },
           itemCount: currentSS.keys.length,
           onIndexChanged: (rowIndex) => indexChanged(rowIndex),

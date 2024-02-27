@@ -88,7 +88,7 @@ class _PrefixSearchPageState extends State<PrefixSearchPage> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CardSwiper(tagPrefixes, const {})),
+          builder: (context) => CardSwiper(tagPrefixes, '', const {})),
     );
   }
 

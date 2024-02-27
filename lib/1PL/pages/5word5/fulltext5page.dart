@@ -128,8 +128,8 @@ class Word5PageState extends State<Word5Page> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-              CardSwiper('word\n$word, author$selectedValueAuthor', const {})),
+          builder: (context) => CardSwiper(
+              'word\n$word, author$selectedValueAuthor', '', const {})),
     );
   }
 

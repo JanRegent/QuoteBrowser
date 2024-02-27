@@ -129,8 +129,8 @@ class Sheetnames5PageState extends State<Sheetnames5Page> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-              CardSwiper('word\n$word, author$selectedValueAuthor', const {})),
+          builder: (context) => CardSwiper(
+              'word\n$word, author$selectedValueAuthor', '', const {})),
     );
   }
 

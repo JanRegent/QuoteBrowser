@@ -35,7 +35,8 @@ class PrepareKeys {
     //ignore: use_build_context_synchronously
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => CardSwiper(sheetName, const {})),
+      MaterialPageRoute(
+          builder: (context) => CardSwiper(sheetName, '', const {})),
     );
   }
 }

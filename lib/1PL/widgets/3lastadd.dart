@@ -21,7 +21,7 @@ class LastRowsAddQuote {
         await Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => const CardSwiper('Add quotes', {})),
+              builder: (context) => const CardSwiper('Add quotes', '', {})),
         );
         currentSS.addQuoteMode = false;
 

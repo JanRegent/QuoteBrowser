@@ -94,7 +94,7 @@ class _QResultBrowserState extends State<QResultBrowser> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CardSwiper('word\n$word1', const {})),
+          builder: (context) => CardSwiper('word\n$word1', '', const {})),
     );
   }
 

@@ -20,9 +20,11 @@ import 'viewhigh/highwiew.dart';
 // ignore: must_be_immutable
 class SwiperTabs extends StatefulWidget {
   VoidCallback setStateSwiper;
-  String title;
+  String title1;
+  String title2;
   VoidCallback swiperSetstateIndexChanged;
-  SwiperTabs(this.setStateSwiper, this.title, this.swiperSetstateIndexChanged,
+  SwiperTabs(this.setStateSwiper, this.title1, this.title2,
+      this.swiperSetstateIndexChanged,
       {Key? key})
       : super(key: key);
 
@@ -67,8 +69,8 @@ class _SwiperTabsState extends State<SwiperTabs>
 
   Row titleArrowsRowOff() {
     return Row(children: [
-      al.infoButton(context, 'Search by expression',
-          'SheetGroup contains \n\n${widget.title}'),
+      al.infoButton(context, widget.title1, '\n${widget.title2}'),
+      const Spacer(),
       ElevatedButton(
         onPressed: () {
           if (bl.orm.currentRow.setCellDLOn) return;

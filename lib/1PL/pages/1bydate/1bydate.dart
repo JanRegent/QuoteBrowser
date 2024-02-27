@@ -82,7 +82,7 @@ class _ByDatePageState extends State<ByDatePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CardSwiper('word\n$word1', const {})),
+          builder: (context) => CardSwiper('word\n$word1', '', const {})),
     );
   }
 

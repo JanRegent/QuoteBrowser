@@ -87,7 +87,7 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const CardSwiper('Grid filter', {})),
+          builder: (context) => const CardSwiper('Grid filter', '', {})),
     );
   }
 
