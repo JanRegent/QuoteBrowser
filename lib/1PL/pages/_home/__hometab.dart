@@ -46,24 +46,32 @@ class _HomeTabState extends State<HomeTab> {
         length: 7,
         child: Scaffold(
           appBar: AppBar(
-              bottom: TabBar(
-                onTap: (index) {
-                  currentSS.currentHomeTabIndex = index;
-                },
-                tabs: [
-                  const Tab(icon: Icon(Icons.timeline)),
-                  const Tab(icon: Icon(Icons.table_rows_outlined)),
-                  Tab(icon: ALicons.attrIcons.bookIcon),
-                  const Tab(icon: Icon(Icons.tag)),
-                  const Tab(child: Text('W')),
-                  const Tab(
-                      icon: Row(
-                    children: [Text('W'), Icon(Icons.view_column)],
-                  )),
-                  const Tab(icon: Icon(Icons.tv)),
-                ],
-              ),
-              title: titleRowHome()),
+            bottom: TabBar(
+              onTap: (index) {
+                currentSS.currentHomeTabIndex = index;
+              },
+              tabs: [
+                const Tab(icon: Icon(Icons.timeline)),
+                const Tab(icon: Icon(Icons.table_rows_outlined)),
+                Tab(icon: ALicons.attrIcons.bookIcon),
+                const Tab(icon: Icon(Icons.tag)),
+                const Tab(child: Text('W')),
+                const Tab(
+                    icon: Row(
+                  children: [Text('W'), Icon(Icons.view_column)],
+                )),
+                const Tab(icon: Icon(Icons.tv)),
+              ],
+            ),
+            title: titleRowHome(),
+            actions: [
+              ElevatedButton(
+                  onPressed: () async {
+                    await bl.supRepo.upsertAll();
+                  },
+                  child: const Icon(Icons.run_circle))
+            ],
+          ),
           drawer: Drawer(
             child: ListView(
               // Important: Remove any padding from the ListView.

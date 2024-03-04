@@ -3,6 +3,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
 
 import '../1PL/pages/2books/bookslist.dart';
 import 'repos/authbooksmap.dart';
@@ -36,9 +37,11 @@ class Bl {
 
   PrepareKeys prepareKeys = PrepareKeys();
 
+  SupabaseRepo supRepo = SupabaseRepo();
+
   Future init() async {
     await sheetRowsHelper.initDB();
-
+    await supRepo.init();
     devModeSet();
   }
 

@@ -43,6 +43,19 @@ class HttpService {
     return bl.sheetRowsHelper.insertResponseAll(response.data['data']);
   }
 
+  Future<List> getAllrows2sup(String sheetName) async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {
+        'action': 'getAllrows',
+        'sheetName': sheetName,
+        'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName])
+      },
+    );
+
+    return bl.sheetRowsHelper.insertResponseAllSup(response.data['data']);
+  }
+
   //-------------------------------------------------------------------tags
   Future<List<String>> getTagsByPrefix(String tagPrefix) async {
     Response response = await dio.get(

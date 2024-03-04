@@ -54,6 +54,29 @@ class SheetRows {
     };
   }
 
+  Map<String, dynamic> toMapSup() {
+    return {
+      "rownokey": rownoKey,
+      "sheetname": rownoKey.split('__|__')[0],
+      "rowno": rownoKey.split('__|__')[1],
+      "quote": quote,
+      "author": author,
+      "book": book,
+      "parpage": parPage,
+      "tags": tags,
+      "yellowparts": yellowParts,
+      "stars": stars,
+      "favorite": favorite,
+      "dateinsert": dateinsert,
+      "sourceurl": sourceUrl,
+      "fileurl": fileUrl,
+      "original": original,
+      "vydal": vydal,
+      "folderurl": folderUrl,
+      "title": title,
+    };
+  }
+
   SheetRows fromMap(var maprow) {
     SheetRows row = SheetRows();
     row.rownoKey = maprow['rownoKey'] ?? '';
@@ -78,7 +101,8 @@ class SheetRows {
   }
 
   void toString_() {
-    debugPrint('''
+    debugPrint(
+        '''
       "rownoKey":     $rownoKey
       "sheetname":  $sheetName
       "rowNo":      $rowNo
@@ -161,7 +185,8 @@ class SheetRowsHelper {
 
   Future<void> onCreate(Database database, int version) async {
     final db = database;
-    await db.execute(""" CREATE TABLE IF NOT EXISTS sheetRows(
+    await db.execute(
+        """ CREATE TABLE IF NOT EXISTS sheetRows(
             rownoKey TEXT PRIMARY KEY,
             sheetName TEXT,
             rowNo TEXT,
@@ -212,6 +237,16 @@ class SheetRowsHelper {
     if (!cols.contains('quote')) return [];
 
     return await batchInsert(cols, data);
+  }
+
+  Future<List> insertResponseAllSup(List data) async {
+    try {
+      List<String> cols = blUti.toListString(data[0]);
+      if (!cols.contains('quote')) return [];
+      return await batchInsertSup(cols, data);
+    } catch (e) {
+      return [];
+    }
   }
 
   SheetRows rowdyn2sheetRows(List<String> cols, List rowdyn) {
@@ -300,6 +335,24 @@ class SheetRowsHelper {
     await batch.commit();
 
     return rownoKeys;
+  }
+
+  Future<List> batchInsertSup(List<String> cols, List data) async {
+    List listmap = [];
+    for (var i = 1; i < data.length; i++) {
+      SheetRows sheetRow = rowdyn2sheetRows(cols, data[i]);
+      listmap.add(sheetRow.toMapSup());
+    }
+
+    return listmap;
+  }
+
+  Future batchCsv(List<String> cols, List data) async {
+    List rows = [];
+    for (var i = 1; i < data.length; i++) {
+      SheetRows sheetRow = rowdyn2sheetRows(cols, data[i]);
+      rows.add(sheetRow.toMap());
+    }
   }
 
   //----------------------------------------------------------------read
