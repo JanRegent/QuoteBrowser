@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:supabase_extensions/supabase_extensions.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../3Data/dl.dart';
@@ -58,8 +59,22 @@ class SupabaseRepo {
     await supabase.from('sheetrows').insert(maprows);
   }
 
-  Future upsertAll() async {
-    debugPrint('-----------------------------------------------------upsert');
+  Future insertTagindex() async {
+    bl.supRepo.log2sheetrows('-----tagindex start');
+    List maprows = await dl.httpService.tagindex2sup();
+    bl.supRepo.log2sheetrows('rowsat input: ${maprows.length}');
+    await supabase.from('tagindex').insert(maprows);
+    bl.supRepo.log2sheetrows('-----tagindex end');
+  }
+
+  void log2sheetrows(String mess) async {
+    await supabase.rpc('log2sheetrows', params: {'mess': mess});
+    debugPrint(mess);
+  }
+
+  Future sheetrowsInsertAll() async {
+    log2sheetrows('-----sup.sheetrowsInsertAll start');
+
     for (var i = 0; i < bl.dailyList.rows.length; i++) {
       String sheetName = bl.dailyList.rows[i].sheetName;
       try {
@@ -80,6 +95,7 @@ class SupabaseRepo {
         debugPrint('$sheetName $e');
       }
     }
+    log2sheetrows('-----sheets2sup end');
   }
 
   //-------------------------------------------------------delete

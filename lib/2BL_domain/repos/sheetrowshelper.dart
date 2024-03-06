@@ -7,6 +7,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+import '../bl.dart';
 import '../bluti.dart';
 
 class SheetRows {
@@ -239,12 +240,39 @@ class SheetRowsHelper {
     return await batchInsert(cols, data);
   }
 
-  Future<List> insertResponseAllSup(List data) async {
+  Future<List> insertResponseAllSup(List data, String sheetName) async {
     try {
       List<String> cols = blUti.toListString(data[0]);
       if (!cols.contains('quote')) return [];
       return await batchInsertSup(cols, data);
     } catch (e) {
+      String mess = '''
+      sheetName: $sheetName
+      err: \n$e
+      ''';
+      bl.supRepo.log2sheetrows(mess);
+      return [];
+    }
+  }
+
+  Future<List> insertResponseTagindexSup(List data, String sheetName) async {
+    List maprows = [];
+    try {
+      for (int rIx = 1; rIx < data.length; rIx++) {
+        maprows.add({
+          "tag": data[rIx][1],
+          "sheetname": data[rIx][2],
+          "rownos": data[rIx][3]
+        });
+      }
+
+      return maprows;
+    } catch (e) {
+      String mess = '''
+      sheetName: $sheetName
+      err: \n$e
+      ''';
+      bl.supRepo.log2sheetrows(mess);
       return [];
     }
   }

@@ -53,7 +53,23 @@ class HttpService {
       },
     );
 
-    return bl.sheetRowsHelper.insertResponseAllSup(response.data['data']);
+    return bl.sheetRowsHelper
+        .insertResponseAllSup(response.data['data'], sheetName);
+  }
+
+  Future<List> tagindex2sup() async {
+    String sheetName = '__tagindex__';
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {
+        'action': 'getAllrows',
+        'sheetName': sheetName,
+        'sheetId': blUti.url2fileid(dl.sheetUrls['dailyList'])
+      },
+    );
+
+    return bl.sheetRowsHelper
+        .insertResponseTagindexSup(response.data['data'], sheetName);
   }
 
   //-------------------------------------------------------------------tags

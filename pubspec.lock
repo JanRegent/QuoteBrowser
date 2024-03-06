@@ -233,14 +233,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  dart_rss:
-    dependency: "direct main"
-    description:
-      name: dart_rss
-      sha256: "9aee5c0713a48ff55e48752db68cfb2b1dfdff9c5c81adb5993492fb604f5e02"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   dart_style:
     dependency: transitive
     description:
@@ -293,18 +285,18 @@ packages:
     dependency: transitive
     description:
       name: drift
-      sha256: "05363b695885c72036ed5c76287125bfc6f1deda20cb3aa044a09fe22792f81b"
+      sha256: b50a8342c6ddf05be53bda1d246404cbad101b64dc73e8d6d1ac1090d119b4e2
       url: "https://pub.dev"
     source: hosted
-    version: "2.14.1"
+    version: "2.15.0"
   drift_dev:
     dependency: "direct dev"
     description:
       name: drift_dev
-      sha256: "50c14b8248d133d36b41c1b08ceed138be869b5b98ccaf3af16c9b88c7adc54e"
+      sha256: c037d9431b6f8dc633652b1469e5f53aaec6e4eb405ed29dd232fa888ef10d88
       url: "https://pub.dev"
     source: hosted
-    version: "2.14.1"
+    version: "2.15.0"
   dropdown_button2:
     dependency: "direct main"
     description:
@@ -478,13 +470,13 @@ packages:
     source: hosted
     version: "0.0.9"
   http:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http
-      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      sha256: a2bbf9d017fcced29139daa8ed2bba4ece450ab222871df93ca9eec6f80c34ba
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.6"
+    version: "1.2.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -950,10 +942,10 @@ packages:
     dependency: transitive
     description:
       name: sqlparser
-      sha256: "877fcefabb725d120e31f54fa669a98c002db0feeaca6cea5354543f03b5e906"
+      sha256: "7b20045d1ccfb7bc1df7e8f9fee5ae58673fce6ff62cefbb0e0fd7214e90e5a0"
       url: "https://pub.dev"
     source: hosted
-    version: "0.33.0"
+    version: "0.34.1"
   stack_trace:
     dependency: transitive
     description:
@@ -1002,6 +994,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.8"
+  supabase_extensions:
+    dependency: "direct main"
+    description:
+      name: supabase_extensions
+      sha256: dd459d50530545a75c14cb3c7fd3568a134b6edc60cd0a4679bdd751bca668d0
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   supabase_flutter:
     dependency: "direct main"
     description:
