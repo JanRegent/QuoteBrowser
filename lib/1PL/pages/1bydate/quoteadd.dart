@@ -1,10 +1,13 @@
 // ignore_for_file: file_names
 
+import 'dart:convert';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
+import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/repos/dailylist.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
@@ -117,7 +120,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
     return Row(
       children: [
         al.linkIconOpenUrl(
-            '${currRow.sheetUrl.trim()}&range=A300', context, ''),
+            '${currRow.sheetUrl.trim()}&range=A$rownoLast', context, ''),
         sheetNameSelect()
       ],
     );
@@ -193,6 +196,31 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
 
   //-----------------------------------------------------------------save butt
 
+  Map<String, dynamic> sheetrowMap() {
+    return {
+      "rownokey": '${currRow.sheetName}__|__$rownoLast',
+      "sheetname": currRow.sheetName,
+      "rowno": rownoLast,
+      "quote": quoteContr.text,
+      "author": currRow.author,
+      "book": '',
+      "parpage": parPageContr.text,
+      "tags": '',
+      "yellowparts": '',
+      "stars": '',
+      "favorite": '',
+      "dateinsert": '${blUti.todayStr()}.',
+      "sourceurl": '',
+      "fileurl": '',
+      "original": quoteContr.text,
+      "vydal": '',
+      "folderurl": '',
+      "title": '',
+    };
+  }
+
+  String rownoLast = '';
+
   IconButton saveButt() {
     return IconButton(
       icon: const Icon(Icons.save),
@@ -201,12 +229,16 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
           saving.value = 'sheetNAme!';
           return;
         }
-        saving.value = 'saving';
-        String result = await dl.httpService.appendQuote(currRow.sheetName,
+        saving.value = 'saving to gdrive';
+        String rowStr = await dl.httpService.appendQuote(currRow.sheetName,
             quoteContr.text, parPageContr.text, currRow.author);
 
-        if (result.startsWith('ok')) clearCtrls();
-        saving.value = result;
+        Map rowMap = jsonDecode(rowStr);
+
+        bl.supRepo.sheetrowInsert(rowMap);
+        rownoLast = rowMap['rowno'].toString();
+        if (rownoLast.isNotEmpty) clearCtrls();
+        saving.value = rownoLast;
       },
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:supabase_extensions/supabase_extensions.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../3Data/dl.dart';
@@ -53,6 +52,13 @@ class SupabaseRepo {
   }
 
   //-------------------------------------------------------update
+
+  Future sheetrowInsert(Map sheetrow) async {
+    log2sheetrows(sheetrow.toString());
+    await supabase.from('sheetrows').insert(sheetrow);
+    log2sheetrows('sheetrowInsert end');
+  }
+
   Future insertSheet(String sheetName) async {
     List maprows = await dl.httpService.getAllrows2sup(sheetName);
 
