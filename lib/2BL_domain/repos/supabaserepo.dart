@@ -53,6 +53,12 @@ class SupabaseRepo {
 
   //-------------------------------------------------------update
 
+  Future updateSup() async {
+    await bl.supRepo.deletesheetrows();
+    await bl.supRepo.sheetrowsInsertAll();
+    await bl.supRepo.insertTagindex();
+  }
+
   Future sheetrowInsert(Map sheetrow) async {
     log2sheetrows(sheetrow.toString());
     await supabase.from('sheetrows').insert(sheetrow);
@@ -86,7 +92,7 @@ class SupabaseRepo {
       try {
         await bl.supRepo.deleteSheet(sheetName);
         await bl.supRepo.insertSheet(sheetName);
-        debugPrint(sheetName);
+        log2sheetrows(sheetName);
       } catch (e) {
         debugPrint('$sheetName $e');
       }
@@ -96,7 +102,7 @@ class SupabaseRepo {
       try {
         await bl.supRepo.deleteSheet(sheetName);
         await bl.supRepo.insertSheet(sheetName);
-        debugPrint(sheetName);
+        log2sheetrows(sheetName);
       } catch (e) {
         debugPrint('$sheetName $e');
       }
@@ -105,6 +111,12 @@ class SupabaseRepo {
   }
 
   //-------------------------------------------------------delete
+
+  Future deletesheetrows() async {
+    await supabase.rpc('deletesheetrows', params: {});
+    log2sheetrows('-----deletesheetrows end');
+  }
+
   Future deleteSheet(String sheetName) async {
     try {
       await supabase.from('sheetrows').delete().match({'sheetname': sheetName});
