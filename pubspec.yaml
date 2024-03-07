@@ -47,7 +47,8 @@ dependencies:
 
   supabase_flutter: ^2.3.4 #https://pub.dev/packages/supabase_flutter
   supabase_extensions: ^1.0.0 #https://pub.dev/packages/supabase_extensions
-
+  flutter_neon: ^0.1.0+5 #https://pub.dev/packages/flutter_neon
+  sql_commander: ^1.1.0 #https://pub.dev/packages/sql_commander
   #============================================================================DL
 
   ##----url

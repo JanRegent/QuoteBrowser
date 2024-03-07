@@ -12,6 +12,7 @@ import 'repos/dailylist.dart';
 import 'bluti.dart';
 
 import 'orm.dart';
+import 'repos/neonrepo.dart';
 import 'repos/sheetrowshelper.dart';
 import 'usecases/keys4swiper/_preparekeys.dart';
 
@@ -38,10 +39,12 @@ class Bl {
   PrepareKeys prepareKeys = PrepareKeys();
 
   SupabaseRepo supRepo = SupabaseRepo();
+  NeonRepo neoRepo = NeonRepo();
 
   Future init() async {
     await sheetRowsHelper.initDB();
     await supRepo.init();
+    await neoRepo.init();
     devModeSet();
   }
 
