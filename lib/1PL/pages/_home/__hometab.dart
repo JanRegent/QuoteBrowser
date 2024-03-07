@@ -67,7 +67,7 @@ class _HomeTabState extends State<HomeTab> {
             actions: [
               ElevatedButton(
                   onPressed: () async {
-                    //await bl.supRepo.updateSup();
+                    await bl.supRepo.updateSup();
                   },
                   child: const Icon(Icons.run_circle))
             ],
