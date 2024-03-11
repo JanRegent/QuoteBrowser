@@ -240,7 +240,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
         bl.fireRepo.rowmapDailySave(rowMap);
 
         rownoLast = rowMap['rowno'].toString();
-        bl.fireRepo.tagsUpdateAdd(rowMap['quote'].toString(), rownoKey);
+        bl.fireRepo.tagsUpdateSet(rowMap['quote'].toString(), rownoKey);
 
         if (rownoLast.isNotEmpty) clearCtrls();
         saving.value = rownoLast;

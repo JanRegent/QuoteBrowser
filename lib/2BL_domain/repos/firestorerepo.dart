@@ -22,30 +22,40 @@ class FirestoreRepo {
         .add(rowMap as Map<String, dynamic>);
   }
 
+  //-------------------------------------------------------------------read
+  Future<String> docIdByRownoKey(String collection, String rownoKey) async {
+    String docId = '';
+    try {
+      await firestoreDb
+          .collection(collection)
+          .where("rownokey", isEqualTo: rownoKey)
+          .limit(1)
+          .get()
+          .then((querySnapshot) {
+        docId = querySnapshot.docs[0].reference.id;
+      });
+    } catch (e) {
+      debugPrint("FirestoreRepo.docByRownoKey $rownoKey Error: $e");
+    }
+    return docId;
+  }
+
   //-------------------------------------------------------------------update
 
-  void tagsUpdateAdd(String tags, rownoKey) async {
-    late DocumentReference rowRef;
-
+  void valueUpdate(
+      String collection, String docId, String keyName, String value) async {
+    final songsCollection = firestoreDb.collection(collection);
     try {
-      firestoreDb.collection("todayRows").get().then(
-        (querySnapshot) {
-          for (var docSnapshot in querySnapshot.docs) {
-            if (docSnapshot.data()['rownokey'] != rownoKey) continue;
-            rowRef = docSnapshot.reference;
-
-            rowRef.update({"tags": tags}).then((value) => () {},
-                onError: (e) => debugPrint(
-                    "FirestoreRepo.tagsUpdateAdd $rownoKey Error updating document $e"));
-
-            break;
-          }
-        },
-        onError: (e) => debugPrint(
-            "FirestoreRepo.tagsUpdateAdd $rownoKey Error completing: $e"),
-      );
+      await songsCollection.doc(docId).update({keyName: value});
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint(
+          "FirestoreRepo.valueUpdate: docId: $docId \n $keyName \n $value \n\n $e");
     }
+  }
+
+  void tagsUpdateSet(String tags, rownoKey) async {
+    String docId = await docIdByRownoKey('todayRows', rownoKey);
+    if (docId.isEmpty) return; //todo
+    valueUpdate('todayRows', docId, 'tags', tags);
   }
 }

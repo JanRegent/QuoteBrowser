@@ -81,7 +81,7 @@ class SupabaseRepo {
 
   void log2sheetrows(String mess) async {
     await supabase.rpc('log2sheetrows', params: {'mess': mess});
-    debugPrint(mess);
+    //debugPrint(mess);
   }
 
   Future sheetrowsInsertAll() async {
