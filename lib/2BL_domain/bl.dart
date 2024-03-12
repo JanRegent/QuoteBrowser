@@ -12,7 +12,8 @@ import 'repos/dailylist.dart';
 import 'bluti.dart';
 
 import 'orm.dart';
-import 'repos/postgrescrud.dart';
+import 'repos/neonrepo.dart';
+import 'repos/koyebrepo.dart';
 import 'repos/sheetrowshelper.dart';
 import 'usecases/keys4swiper/_preparekeys.dart';
 
@@ -39,7 +40,8 @@ class Bl {
   PrepareKeys prepareKeys = PrepareKeys();
 
   SupabaseRepo supRepo = SupabaseRepo();
-  PostgresCRUD postgresCRUD = PostgresCRUD();
+  NeonRepo neonRepo = NeonRepo();
+  KoyebRepo koyebRepo = KoyebRepo();
 
   //FirestoreRepo fireRepo = FirestoreRepo();
 
@@ -48,11 +50,10 @@ class Bl {
     await sheetRowsHelper.initDB();
     debugPrint('supRepo init start');
     await supRepo.init();
-    debugPrint('postgresCRUD init start');
-    await postgresCRUD.init();
-
-    // debugPrint('fireRepo init start');
-    // await fireRepo.init();
+    debugPrint('neonRepo init start');
+    await neonRepo.init();
+    debugPrint('koyebRepo init start');
+    await koyebRepo.init();
 
     devModeSet();
   }

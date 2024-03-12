@@ -51,10 +51,10 @@ dependencies:
 
   postgres: ^3.1.1 #https://pub.dev/packages/postgres
 
-  cloud_firestore: ^4.15.8 #https://pub.dev/packages/cloud_firestore
-  cloud_firestore_api: ^0.0.9
-  firebase_core: ^2.27.0
-  firebase_auth: ^4.17.8
+  #cloud_firestore: ^4.15.8 #https://pub.dev/packages/cloud_firestore
+  #cloud_firestore_api: ^0.0.9
+  # firebase_core: ^2.27.0
+  # firebase_auth: ^4.17.8
   #============================================================================DL
 
   ##----url
