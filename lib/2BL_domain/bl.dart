@@ -12,7 +12,7 @@ import 'repos/dailylist.dart';
 import 'bluti.dart';
 
 import 'orm.dart';
-import 'repos/firestorerepo.dart';
+import 'repos/postgrescrud.dart';
 import 'repos/sheetrowshelper.dart';
 import 'usecases/keys4swiper/_preparekeys.dart';
 
@@ -39,12 +39,21 @@ class Bl {
   PrepareKeys prepareKeys = PrepareKeys();
 
   SupabaseRepo supRepo = SupabaseRepo();
-  FirestoreRepo fireRepo = FirestoreRepo();
+  PostgresCRUD postgresCRUD = PostgresCRUD();
+
+  //FirestoreRepo fireRepo = FirestoreRepo();
 
   Future init() async {
+    debugPrint('sheetRowsHelper init start');
     await sheetRowsHelper.initDB();
+    debugPrint('supRepo init start');
     await supRepo.init();
-    await fireRepo.init();
+    debugPrint('postgresCRUD init start');
+    await postgresCRUD.init();
+
+    // debugPrint('fireRepo init start');
+    // await fireRepo.init();
+
     devModeSet();
   }
 

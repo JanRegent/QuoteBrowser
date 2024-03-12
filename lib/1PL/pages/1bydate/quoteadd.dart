@@ -234,13 +234,13 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
             quoteContr.text, parPageContr.text, currRow.author);
 
         Map rowMap = jsonDecode(rowStr);
-        String rownoKey =
-            rowMap['sheetname'] + '__|__' + rowMap['rowno'].toString();
         bl.supRepo.sheetrowInsert(rowMap);
-        bl.fireRepo.rowmapDailySave(rowMap);
+        //bl.fireRepo.rowmapDailySave(rowMap);
 
         rownoLast = rowMap['rowno'].toString();
-        bl.fireRepo.tagsUpdateSet(rowMap['quote'].toString(), rownoKey);
+        // String rownoKey =
+        //     rowMap['sheetname'] + '__|__' + rowMap['rowno'].toString();
+        //bl.fireRepo.tagsUpdateSet(rowMap['quote'].toString(), rownoKey);
 
         if (rownoLast.isNotEmpty) clearCtrls();
         saving.value = rownoLast;

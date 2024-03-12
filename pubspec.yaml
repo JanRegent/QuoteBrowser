@@ -49,6 +49,8 @@ dependencies:
   supabase_extensions: ^1.0.0 #https://pub.dev/packages/supabase_extensions
   amplify_flutter: ^1.7.0 #https://pub.dev/packages/amplify_flutter
 
+  postgres: ^3.1.1 #https://pub.dev/packages/postgres
+
   cloud_firestore: ^4.15.8 #https://pub.dev/packages/cloud_firestore
   cloud_firestore_api: ^0.0.9
   firebase_core: ^2.27.0
