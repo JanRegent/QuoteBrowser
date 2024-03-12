@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 import 'package:dartx/dartx.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
@@ -50,11 +51,13 @@ class Bl {
     await sheetRowsHelper.initDB();
     debugPrint('supRepo init start');
     await supRepo.init();
-    debugPrint('neonRepo init start');
-    await neonRepo.init();
-    debugPrint('koyebRepo init start');
-    await koyebRepo.init();
 
+    if (!kIsWeb) {
+      debugPrint('neonRepo init start');
+      await neonRepo.init();
+      debugPrint('koyebRepo init start');
+      await koyebRepo.init();
+    }
     devModeSet();
   }
 
