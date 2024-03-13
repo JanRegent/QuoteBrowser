@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 
+import '../../../1PL/widgets/alib/alib.dart';
 import '../../bl.dart';
 
 class RepoAdmin extends StatelessWidget {
   const RepoAdmin({super.key});
 
-  ListTile toSupabase() {
+  ListTile toSupabase(BuildContext context) {
     return ListTile(
         title: ElevatedButton(
             onPressed: () async {
+              al.messageInfo(context, 'watch sheetrowslog', 'supabase.com', 10);
               await bl.supRepo.sheets2supabase();
             },
             child: const Text('sheets --> supabase')));
   }
 
-  ListView bodyLv() {
+  ListView bodyLv(BuildContext context) {
     return ListView(
-      children: [toSupabase()],
+      children: [toSupabase(context)],
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: bodyLv(),
+      body: bodyLv(context),
     );
   }
 }

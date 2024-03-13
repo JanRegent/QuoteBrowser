@@ -57,8 +57,8 @@ class Bl {
     if (!kIsWeb) {
       debugPrint('neonRepo init start');
       await neonRepo.init();
-      debugPrint('koyebRepo init start');
-      await koyebRepo.init();
+      // debugPrint('koyebRepo init start');
+      // await koyebRepo.init();
     }
     devModeSet();
   }

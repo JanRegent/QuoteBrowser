@@ -47,7 +47,6 @@ dependencies:
 
   supabase_flutter: ^2.3.4 #https://pub.dev/packages/supabase_flutter
   supabase_extensions: ^1.0.0 #https://pub.dev/packages/supabase_extensions
-  amplify_flutter: ^1.7.0 #https://pub.dev/packages/amplify_flutter
 
   postgres: ^3.1.1 #https://pub.dev/packages/postgres
 
