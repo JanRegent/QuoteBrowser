@@ -17,33 +17,12 @@ class SupabaseRepo {
     supabase = Supabase.instance.client;
   }
 
-  //-----------------------------------------------------------------create
-  Future createTable() async {
-    '''
-    CREATE TABLE IF NOT EXISTS sheetrows(
-            id serial  PRIMARY KEY, 
-            rownoKey TEXT,
-            sheetName TEXT,
-            rowNo TEXT,
-            quote TEXT,
-            author TEXT,
-            book TEXT,
-            parPage TEXT,
-            tags TEXT,
-            yellowParts TEXT,
-            stars TEXT,
-            favorite TEXT,
-            dateinsert TEXT,
-            sourceUrl TEXT,
-            fileUrl TEXT,
-            docUrl TEXT,
-            original TEXT,
-            vydal TEXT,
-            folderUrl TEXT,
-            title TEXT
-    )
-    ''';
+  void createTable(String mess) async {
+    await supabase.rpc('log2sheetrows', params: {'mess': mess});
+    //debugPrint(mess);
   }
+
+  //-----------------------------------------------------------------create
 
   Future select() async {
     // Select data with filters
@@ -53,7 +32,7 @@ class SupabaseRepo {
 
   //-------------------------------------------------------update
 
-  Future updateSup() async {
+  Future sheets2supabase() async {
     await bl.supRepo.deletesheetrows();
     await bl.supRepo.sheetrowsInsertAll();
     await bl.supRepo.insertTagindex();

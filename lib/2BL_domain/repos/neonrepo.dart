@@ -1,13 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:postgres/postgres.dart';
 
+import 'commonrepos.dart';
 import 'supgitignore.dart';
 
 class NeonRepo {
   late Connection conn;
   Future init() async {
     conn = await initNeon();
-    select1();
+
+    try {
+      final result = await conn.execute(Sql.named(createTable()));
+      debugPrint("Neon sheetrows count $result");
+    } catch (_) {}
   }
 
   Future select1() async {

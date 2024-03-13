@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
 
 import '../1PL/pages/2books/bookslist.dart';
+import 'repos/adminrepo/repoadmin.dart';
 import 'repos/authbooksmap.dart';
 import 'repos/dailylist.dart';
 
@@ -40,6 +41,7 @@ class Bl {
 
   PrepareKeys prepareKeys = PrepareKeys();
 
+  RepoAdmin repoAdmin = const RepoAdmin();
   SupabaseRepo supRepo = SupabaseRepo();
   NeonRepo neonRepo = NeonRepo();
   KoyebRepo koyebRepo = KoyebRepo();

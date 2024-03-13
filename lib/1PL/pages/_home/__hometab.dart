@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/1PL/pages/2bysheetgroups/bysheetgroups.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
+import 'package:quotebrowser/2BL_domain/repos/adminrepo/repoadmin.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../../3Data/builddate.dart';
@@ -67,9 +68,13 @@ class _HomeTabState extends State<HomeTab> {
             actions: [
               ElevatedButton(
                   onPressed: () async {
-                    await bl.supRepo.updateSup();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RepoAdmin()),
+                    );
                   },
-                  child: const Icon(Icons.run_circle))
+                  child: const Icon(Icons.admin_panel_settings))
             ],
           ),
           drawer: Drawer(
