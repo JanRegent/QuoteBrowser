@@ -1,7 +1,7 @@
 String createTable() {
   return '''
     CREATE TABLE IF NOT EXISTS sheetrows(
-            id serial  PRIMARY KEY, 
+            id SERIAL PRIMARY KEY,
             rownokey TEXT,
             sheetname TEXT,
             rowno TEXT,
@@ -24,3 +24,6 @@ String createTable() {
     )
     ''';
 }
+
+String colsSql =
+    'rownokey,sheetname,rowno,quote,author,book,parpage,tags,yellowparts,stars,favorite,dateinsert,sourceurl,fileurl,docurl,original,vydal,folderurl,title';

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:postgres/postgres.dart';
-import 'package:quotebrowser/2BL_domain/bluti.dart';
 
 import 'commonrepos.dart';
 import 'supgitignore.dart';
@@ -46,26 +45,6 @@ class NeonRepo {
     // }
   }
 
-  Future insertIntoSheet(List data) async {
-    String cols1 =
-        "rownokey, sheetname, rowno, quote, author, book, parpage, tags, yellowparts, stars, favorite, dateinsert, sourceurl, fileurl, docurl, original, vydal, folderurl, title";
-    List<String> cols = blUti.toListString(data[0]);
-    List<String> row = blUti.toListString(data[1]);
-    String quote = row[cols.indexOf('quote')];
-    String r0 = quote.replaceAll('"', '""').replaceAll("'", "''");
-
-    //debugPrint(r0);
-
-    final result2 = await conn.execute(
-      Sql.named(
-          "INSERT INTO sheetrows (rownokey, sheetname, rowno, quote) VALUES('rk1','mila1','1', '$r0'); "),
-    );
-    debugPrint('INSERT INTO $result2');
-
-    // for (var maprow in maprows) {
-    //   await insert1(maprow);
-    // }
-  }
   //--------------------------------------------------------------------read
 
   Future select1() async {
@@ -81,5 +60,28 @@ class NeonRepo {
     }
   }
 
+  Future insertRowmapsIntoSheet(List listMap) async {
+    List<String> cols = colsSql.split(',');
+    List<String> vals =
+        List<String>.generate(cols.length, (int index) => '', growable: true);
+    // String quote = listMap[0]['quote'].toString();
+    // String r0 = quote.replaceAll('"', '""').replaceAll("'", "''");
+
+    for (int i = 0; i < vals.length; i++) {
+      try {
+        vals[i] = "'${listMap[0][cols[i]].toString()}'";
+      } catch (_) {
+        vals[i] = "''";
+      }
+
+      if (cols[i] == 'quote') vals[i] = "'qqq'";
+    }
+    String values = vals.join(',').replaceAll('""""', '""');
+
+    final result2 = await conn.execute(
+      Sql.named("INSERT INTO sheetrows ($colsSql) VALUES($values); "),
+    );
+    debugPrint('INSERT INTO $result2');
+  }
   //-------------------------------------------------------------------
 }

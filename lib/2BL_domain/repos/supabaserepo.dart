@@ -46,7 +46,7 @@ class SupabaseRepo {
   }
 
   Future insertSheet(String sheetName) async {
-    List maprows = await dl.httpService.getAllrows2sup(sheetName);
+    //List maprows = await dl.httpService.getAllrows2sup(sheetName);
     //bl.neonRepo.insertMaprows(maprows);
     //await supabase.from('sheetrows').insert(maprows);
   }
