@@ -25,26 +25,6 @@ class NeonRepo {
     debugPrint(result.toString());
   }
 
-  Future insertMaprows(List maprows) async {
-    try {
-      final result = await conn.execute(
-        Sql.named(
-            'create TYPE json_sheet AS (rownokey TEXT, sheetname TEXT, rowno TEXT, quote TEXT, author TEXT, book TEXT, parpage TEXT, tags TEXT, yellowparts TEXT, stars TEXT, favorite TEXT, dateinsert TEXT, sourceurl TEXT, fileurl TEXT, docurl TEXT, original TEXT, vydal TEXT, folderurl TEXT, title TEXT)'),
-      );
-      debugPrint('create TYPE json_sheet $result');
-    } catch (_) {}
-
-    final result2 = await conn.execute(
-      Sql.named(
-          "select * from json_populate_recordset(null::json_sheet,'$maprows')"),
-    );
-    debugPrint('insertMaprows json_populate_recordset $result2');
-
-    // for (var maprow in maprows) {
-    //   await insert1(maprow);
-    // }
-  }
-
   //--------------------------------------------------------------------read
 
   Future select1() async {
@@ -60,28 +40,47 @@ class NeonRepo {
     }
   }
 
-  Future insertRowmapsIntoSheet(List listMap) async {
+  Future insertRowmaps2db(List rowmaps) async {
+    for (var i = 0; i < rowmaps.length; i++) {
+      try {
+        //debugPrint(rowmaps[i]['rownokey']);
+        await insertRowmap2db(rowmaps[i]);
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+  }
+
+  Future insertRowmap2db(rowmap) async {
     List<String> cols = colsSql.split(',');
     List<String> vals =
         List<String>.generate(cols.length, (int index) => '', growable: true);
-    // String quote = listMap[0]['quote'].toString();
-    // String r0 = quote.replaceAll('"', '""').replaceAll("'", "''");
 
     for (int i = 0; i < vals.length; i++) {
       try {
-        vals[i] = "'${listMap[0][cols[i]].toString()}'";
+        vals[i] = rowmap[cols[i]].toString();
+        if ('quote,tags,yellowparts,title,original'.contains(cols[i])) {
+          vals[i] = vals[i].replaceAll('"', '');
+          vals[i] = vals[i].replaceAll("'", "");
+        }
       } catch (_) {
         vals[i] = "''";
       }
-
-      if (cols[i] == 'quote') vals[i] = "'qqq'";
+      vals[i] = "'${vals[i]}'";
     }
-    String values = vals.join(',').replaceAll('""""', '""');
+    String values = vals.join(',');
 
-    final result2 = await conn.execute(
+    await conn.execute(
       Sql.named("INSERT INTO sheetrows ($colsSql) VALUES($values); "),
     );
-    debugPrint('INSERT INTO $result2');
+    //debugPrint('INSERT INTO $result2');
   }
-  //-------------------------------------------------------------------
+
+  //-------------------------------------------------------------------delete
+  Future sheetrowsDelete() async {
+    final result2 = await conn.execute(
+      Sql.named("delete  from sheetrows; "),
+    );
+    debugPrint('delete  from sheetrows $result2');
+  }
 }

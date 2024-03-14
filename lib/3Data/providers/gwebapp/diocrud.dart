@@ -52,7 +52,6 @@ class HttpService {
         'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName])
       },
     );
-    bl.neonRepo.insertRowmapsIntoSheet(response.data['data']);
     return bl.sheetRowsHelper
         .insertResponseAllSup(response.data['data'], sheetName);
   }

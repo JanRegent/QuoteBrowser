@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../1PL/widgets/alib/alib.dart';
-import '../../../3Data/dl.dart';
 import '../../bl.dart';
 
 class RepoAdmin extends StatelessWidget {
@@ -12,10 +11,7 @@ class RepoAdmin extends StatelessWidget {
         title: ElevatedButton(
             onPressed: () async {
               al.messageInfo(context, 'watch sheetrowslog', 'supabase.com', 10);
-              //await bl.supRepo.sheets2supabase();
-
-              List maprows = await dl.httpService.getAllrows2sup('MilaT');
-              await bl.neonRepo.insertRowmapsIntoSheet(maprows);
+              await bl.supRepo.sheets2supabase2neon();
             },
             child: const Text('sheets --> supabase')));
   }

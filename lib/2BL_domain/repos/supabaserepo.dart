@@ -32,8 +32,7 @@ class SupabaseRepo {
 
   //-------------------------------------------------------update
 
-  Future sheets2supabase() async {
-    //await bl.supRepo.deletesheetrows();
+  Future sheets2supabase2neon() async {
     await bl.supRepo.sheetrowsInsertAll();
 
     //await bl.supRepo.insertTagindex();
@@ -46,9 +45,10 @@ class SupabaseRepo {
   }
 
   Future insertSheet(String sheetName) async {
-    //List maprows = await dl.httpService.getAllrows2sup(sheetName);
-    //bl.neonRepo.insertMaprows(maprows);
-    //await supabase.from('sheetrows').insert(maprows);
+    List maprows = await dl.httpService.getAllrows2sup(sheetName);
+    await bl.supRepo.deleteSheet(sheetName);
+    await supabase.from('sheetrows').insert(maprows);
+    bl.neonRepo.insertRowmaps2db(maprows);
   }
 
   Future insertTagindex() async {
@@ -65,14 +65,13 @@ class SupabaseRepo {
   }
 
   Future sheetrowsInsertAll() async {
+    sheetrowslogDelete();
     log2sheetrows('-----sup.sheetrowsInsertAll start');
-
+    await bl.neonRepo.sheetrowsDelete();
     for (var i = 0; i < bl.dailyList.rows.length; i++) {
       String sheetName = bl.dailyList.rows[i].sheetName;
       try {
-        //await bl.supRepo.deleteSheet(sheetName);
         await bl.supRepo.insertSheet(sheetName);
-        return;
         log2sheetrows(sheetName);
       } catch (e) {
         debugPrint('$sheetName $e');
@@ -95,6 +94,16 @@ class SupabaseRepo {
 
   Future deletesheetrows() async {
     await supabase.rpc('deletesheetrows', params: {});
+    log2sheetrows('-----deletesheetrows end');
+  }
+
+  Future sheetrowslogDelete() async {
+    try {
+      await supabase.from('sheetrowslog').delete();
+    } catch (error) {
+      // error occured
+      debugPrint(error.toString());
+    }
     log2sheetrows('-----deletesheetrows end');
   }
 
