@@ -25,6 +25,14 @@ class NeonRepo {
     debugPrint(result.toString());
   }
 
+  Future sqlValuesInsert(String tablename, List<String> sqlValues) async {
+    String sqlValuesStr = sqlValues.join(',\n');
+
+    await conn.execute(
+      Sql.named("INSERT INTO $tablename ($colsSql) VALUES $sqlValuesStr; "),
+    );
+    //debugPrint('sqlValuesInsert $result2');
+  }
   //--------------------------------------------------------------------read
 
   Future select1() async {
@@ -40,28 +48,41 @@ class NeonRepo {
     }
   }
 
-  Future insertRowmaps2db(List rowmaps) async {
+  Future<List<String>> sqlValuesGet(List rowmaps) async {
+    List<String> cols = colsSql.split(',');
+    List<String> sqlValues = [];
     for (var i = 0; i < rowmaps.length; i++) {
       try {
         //debugPrint(rowmaps[i]['rownokey']);
-        await insertRowmap2db(rowmaps[i]);
+        sqlValues.add(await sqlValueGet(rowmaps[i], cols));
       } catch (e) {
         debugPrint(e.toString());
       }
     }
+    return sqlValues;
   }
 
-  Future insertRowmap2db(rowmap) async {
-    List<String> cols = colsSql.split(',');
+  Future sqlValueGet(rowmap, List<String> cols) async {
     List<String> vals =
         List<String>.generate(cols.length, (int index) => '', growable: true);
 
     for (int i = 0; i < vals.length; i++) {
       try {
         vals[i] = rowmap[cols[i]].toString();
+
         if ('quote,tags,yellowparts,title,original'.contains(cols[i])) {
           vals[i] = vals[i].replaceAll('"', '');
           vals[i] = vals[i].replaceAll("'", "");
+          vals[i] = vals[i].replaceAll(":", "");
+          vals[i] = vals[i].replaceAll(";", "");
+
+          ///
+          //flutter: fb:Ramana Severity.error 42601: syntax error at or near "Cherished"
+          // flutter: Nisargadatta_mBlog Severity.error 42601: syntax error at or near "god"
+          // flutter: karmel.cz Severity.error 42601: syntax error at or near "s"
+          // flutter: Vidznana Severity.error 42601: syntax error at or near ";"
+          // flutter:  Severity.error 42601: syntax error at or near ";"
+          ///
         }
       } catch (_) {
         vals[i] = "''";
@@ -69,11 +90,7 @@ class NeonRepo {
       vals[i] = "'${vals[i]}'";
     }
     String values = vals.join(',');
-
-    await conn.execute(
-      Sql.named("INSERT INTO sheetrows ($colsSql) VALUES($values); "),
-    );
-    //debugPrint('INSERT INTO $result2');
+    return '($values)';
   }
 
   //-------------------------------------------------------------------delete

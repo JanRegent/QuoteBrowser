@@ -240,21 +240,6 @@ class SheetRowsHelper {
     return await batchInsert(cols, data);
   }
 
-  Future<List> insertResponseAllSup(List data, String sheetName) async {
-    try {
-      List<String> cols = blUti.toListString(data[0]);
-      if (!cols.contains('quote')) return [];
-      return await batchInsertSup(cols, data);
-    } catch (e) {
-      String mess = '''
-      sheetName: $sheetName
-      err: \n$e
-      ''';
-      bl.supRepo.log2sheetrows(mess);
-      return [];
-    }
-  }
-
   Future<List> insertResponseTagindexSup(List data, String sheetName) async {
     List maprows = [];
     try {
@@ -365,7 +350,7 @@ class SheetRowsHelper {
     return rownoKeys;
   }
 
-  Future<List> batchInsertSup(List<String> cols, List data) async {
+  Future<List> data2rowmaps(List<String> cols, List data) async {
     List listmap = [];
     for (var i = 1; i < data.length; i++) {
       SheetRows sheetRow = rowdyn2sheetRows(cols, data[i]);

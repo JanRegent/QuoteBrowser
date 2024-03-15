@@ -32,23 +32,15 @@ class SupabaseRepo {
 
   //-------------------------------------------------------update
 
-  Future sheets2supabase2neon() async {
-    await bl.supRepo.sheetrowsInsertAll();
-
-    //await bl.supRepo.insertTagindex();
-  }
-
   Future sheetrowInsert(Map sheetrow) async {
     log2sheetrows(sheetrow.toString());
     await supabase.from('sheetrows').insert(sheetrow);
     log2sheetrows('sheetrowInsert end');
   }
 
-  Future insertSheet(String sheetName) async {
-    List maprows = await dl.httpService.getAllrows2sup(sheetName);
+  Future insertSheet(List maprows, String sheetName) async {
     await bl.supRepo.deleteSheet(sheetName);
     await supabase.from('sheetrows').insert(maprows);
-    bl.neonRepo.insertRowmaps2db(maprows);
   }
 
   Future insertTagindex() async {
@@ -64,28 +56,31 @@ class SupabaseRepo {
     //debugPrint(mess);
   }
 
-  Future sheetrowsInsertAll() async {
-    sheetrowslogDelete();
-    log2sheetrows('-----sup.sheetrowsInsertAll start');
+  Future sheets2supabase2neon() async {
+    await sheetrowslogDelete();
+    log2sheetrows('-----sup.sheets2supabase2neon start');
+    await deletesheetrows();
     await bl.neonRepo.sheetrowsDelete();
-    for (var i = 0; i < bl.dailyList.rows.length; i++) {
-      String sheetName = bl.dailyList.rows[i].sheetName;
+
+    Future insertSheet2sqldb_(String sheetName) async {
+      List maprows = await dl.httpService.rowmapsGet(sheetName);
       try {
-        await bl.supRepo.insertSheet(sheetName);
+        List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
+        await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues);
         log2sheetrows(sheetName);
       } catch (e) {
-        debugPrint('$sheetName $e');
+        debugPrint('insertSheet2sqldb_ $sheetName $e');
       }
     }
+
+    for (var i = 0; i < bl.dailyList.rows.length; i++) {
+      String sheetName = bl.dailyList.rows[i].sheetName;
+      await insertSheet2sqldb_(sheetName);
+    }
+
     for (var i = 0; i < bl.bookList.rows.length; i++) {
       String sheetName = bl.bookList.rows[i].sheetName;
-      try {
-        //await bl.supRepo.deleteSheet(sheetName);
-        await bl.supRepo.insertSheet(sheetName);
-        log2sheetrows(sheetName);
-      } catch (e) {
-        debugPrint('$sheetName $e');
-      }
+      await insertSheet2sqldb_(sheetName);
     }
     log2sheetrows('-----sheets2sup end');
   }
@@ -99,7 +94,7 @@ class SupabaseRepo {
 
   Future sheetrowslogDelete() async {
     try {
-      await supabase.from('sheetrowslog').delete();
+      await supabase.from('sheetrowslog').delete().gt('id', 0);
     } catch (error) {
       // error occured
       debugPrint(error.toString());

@@ -43,7 +43,7 @@ class HttpService {
     return bl.sheetRowsHelper.insertResponseAll(response.data['data']);
   }
 
-  Future<List> getAllrows2sup(String sheetName) async {
+  Future<List> rowmapsGet(String sheetName) async {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
@@ -52,8 +52,20 @@ class HttpService {
         'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName])
       },
     );
-    return bl.sheetRowsHelper
-        .insertResponseAllSup(response.data['data'], sheetName);
+
+    try {
+      List data = response.data['data'];
+      List<String> cols = blUti.toListString(data[0]);
+      if (!cols.contains('quote')) return [];
+      return await bl.sheetRowsHelper.data2rowmaps(cols, data);
+    } catch (e) {
+      String mess = '''
+      sheetName: $sheetName
+      err: \n$e
+      ''';
+      bl.supRepo.log2sheetrows(mess);
+      return [];
+    }
   }
 
   Future<List> tagindex2sup() async {
