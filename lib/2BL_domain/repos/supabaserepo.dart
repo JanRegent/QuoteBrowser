@@ -56,7 +56,7 @@ class SupabaseRepo {
     //debugPrint(mess);
   }
 
-  Future sheets2supabase2neon() async {
+  Future sheets2supabase2neon2koyeb() async {
     await sheetrowslogDelete();
     log2sheetrows('-----sup.sheets2supabase2neon start');
     await deletesheetrows();
@@ -66,7 +66,8 @@ class SupabaseRepo {
       List maprows = await dl.httpService.rowmapsGet(sheetName);
       try {
         List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
-        await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues);
+        //await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues);
+        await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues);
         log2sheetrows(sheetName);
       } catch (e) {
         debugPrint('insertSheet2sqldb_ $sheetName $e');

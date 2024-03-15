@@ -11,7 +11,7 @@ class RepoAdmin extends StatelessWidget {
         title: ElevatedButton(
             onPressed: () async {
               al.messageInfo(context, 'watch sheetrowslog', 'supabase.com', 10);
-              await bl.supRepo.sheets2supabase2neon();
+              await bl.supRepo.sheets2supabase2neon2koyeb();
             },
             child: const Text('sheets --> supabase')));
   }

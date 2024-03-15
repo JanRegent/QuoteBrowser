@@ -76,13 +76,19 @@ class NeonRepo {
           vals[i] = vals[i].replaceAll(":", "");
           vals[i] = vals[i].replaceAll(";", "");
 
-          ///
+          ///neon
           //flutter: fb:Ramana Severity.error 42601: syntax error at or near "Cherished"
           // flutter: Nisargadatta_mBlog Severity.error 42601: syntax error at or near "god"
           // flutter: karmel.cz Severity.error 42601: syntax error at or near "s"
           // flutter: Vidznana Severity.error 42601: syntax error at or near ";"
           // flutter:  Severity.error 42601: syntax error at or near ";"
           ///
+          ///koyeb
+          //flutter: insertSheet2sqldb_ fb:Ramana Severity.error 42601: syntax error at or near "Cherished"
+          // flutter: insertSheet2sqldb_ Nisargadatta_mBlog Invalid argument (parameters): This prepared statement has 1 parameters that must be set.: null
+          // flutter: insertSheet2sqldb_ karmel.cz Severity.error 42601: syntax error at or near "s"
+          // flutter: insertSheet2sqldb_ Vidznana Severity.error 42601: syntax error at or near ";"
+          // flutter: insertSheet2sqldb_  Severity.error 42601: syntax error at or near ";"
         }
       } catch (_) {
         vals[i] = "''";
