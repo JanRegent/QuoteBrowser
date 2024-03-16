@@ -66,11 +66,11 @@ class SupabaseRepo {
       List maprows = await dl.httpService.rowmapsGet(sheetName);
       try {
         List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
-        //await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues);
+        await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues);
         await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues);
         log2sheetrows(sheetName);
       } catch (e) {
-        debugPrint('insertSheet2sqldb_ $sheetName $e');
+        log2sheetrows('insertSheet2sqldb_ $sheetName $e');
       }
     }
 
@@ -90,7 +90,7 @@ class SupabaseRepo {
 
   Future deletesheetrows() async {
     await supabase.rpc('deletesheetrows', params: {});
-    log2sheetrows('-----deletesheetrows end');
+    log2sheetrows('supabase---delete sheetrows end');
   }
 
   Future sheetrowslogDelete() async {

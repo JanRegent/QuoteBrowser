@@ -1,29 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:postgres/postgres.dart';
 
-import '../bl.dart';
 import 'commonrepos.dart';
 import 'supgitignore.dart';
 
-class KoyebRepo {
+class PgedgebRepo {
   late Connection conn;
   Future init() async {
-    conn = await initKoyeb();
+    conn = await initPgedge();
 
     //if (conn.isOpen) debugPrint("koyeb PostgresCRUD Database isOpen!");
     try {
       await conn.execute(Sql.named(createTable()));
     } catch (_) {}
     await count();
-    try {
-      //Severity.error 42501: permission denied to create extension "postgres_fdw" hint: Must be superuser to create this extension.
-      //await conn.execute(Sql.named("CREATE EXTENSION postgres_fdw;"));
-      //
-      //CREATE EXTENSION dblink;
-      //ERROR: permission denied to create extension "dblink" (SQLSTATE 42501)
-    } catch (e) {
-      debugPrint("CREATE EXTENSION postgres_fdw; \n$e");
-    }
   }
 
   //---------------------------------------------------------------create/insert
@@ -41,13 +31,5 @@ class KoyebRepo {
       Sql.named("SELECT count(*) FROM sheetrows "),
     );
     debugPrint("koyeb sheetrows count $result");
-  }
-
-  //-----------------------------------------------------------------delete
-  Future sheetrowsDelete() async {
-    final result2 = await conn.execute(
-      Sql.named("delete  from sheetrows; "),
-    );
-    bl.supRepo.log2sheetrows('KoyebRepo:: delete  from sheetrows $result2');
   }
 }

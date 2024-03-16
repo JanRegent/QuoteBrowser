@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:postgres/postgres.dart';
 
+import '../bl.dart';
 import 'commonrepos.dart';
 import 'supgitignore.dart';
 
@@ -69,27 +70,8 @@ class NeonRepo {
     for (int i = 0; i < vals.length; i++) {
       try {
         vals[i] = rowmap[cols[i]].toString();
-
-        if ('quote,tags,yellowparts,title,original'.contains(cols[i])) {
-          vals[i] = vals[i].replaceAll('"', '');
-          vals[i] = vals[i].replaceAll("'", "");
-          vals[i] = vals[i].replaceAll(":", "");
-          vals[i] = vals[i].replaceAll(";", "");
-
-          ///neon
-          //flutter: fb:Ramana Severity.error 42601: syntax error at or near "Cherished"
-          // flutter: Nisargadatta_mBlog Severity.error 42601: syntax error at or near "god"
-          // flutter: karmel.cz Severity.error 42601: syntax error at or near "s"
-          // flutter: Vidznana Severity.error 42601: syntax error at or near ";"
-          // flutter:  Severity.error 42601: syntax error at or near ";"
-          ///
-          ///koyeb
-          //flutter: insertSheet2sqldb_ fb:Ramana Severity.error 42601: syntax error at or near "Cherished"
-          // flutter: insertSheet2sqldb_ Nisargadatta_mBlog Invalid argument (parameters): This prepared statement has 1 parameters that must be set.: null
-          // flutter: insertSheet2sqldb_ karmel.cz Severity.error 42601: syntax error at or near "s"
-          // flutter: insertSheet2sqldb_ Vidznana Severity.error 42601: syntax error at or near ";"
-          // flutter: insertSheet2sqldb_  Severity.error 42601: syntax error at or near ";"
-        }
+        vals[i] = vals[i].replaceAll("'", "''");
+        vals[i] = vals[i].replaceAll('"', '""');
       } catch (_) {
         vals[i] = "''";
       }
@@ -104,6 +86,6 @@ class NeonRepo {
     final result2 = await conn.execute(
       Sql.named("delete  from sheetrows; "),
     );
-    debugPrint('delete  from sheetrows $result2');
+    bl.supRepo.log2sheetrows('neonRepo:: delete  from sheetrows $result2');
   }
 }
