@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../3Data/dl.dart';
@@ -32,10 +33,13 @@ class SupabaseRepo {
 
   //-------------------------------------------------------update
 
-  Future sheetrowInsert(Map sheetrow) async {
+  Future sheetrowInsert1(Map sheetrow) async {
     log2sheetrows(sheetrow.toString());
     await supabase.from('sheetrows').insert(sheetrow);
-    log2sheetrows('sheetrowInsert end');
+    List<String> sqlValues = await bl.neonRepo.sqlValuesGet([sheetrow]);
+    await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2
+    await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues); //3
+    log2sheetrows('sheetrowInsert1 end');
   }
 
   Future insertSheet(List maprows, String sheetName) async {
@@ -58,19 +62,22 @@ class SupabaseRepo {
 
   Future sheets2supabase2neon2koyeb() async {
     await sheetrowslogDelete();
-    log2sheetrows('-----sup.sheets2supabase2neon start');
+    log2sheetrows('***************************sup.sheets2supabase2neon start');
     await deletesheetrows();
     await bl.neonRepo.sheetrowsDelete();
 
     Future insertSheet2sqldb_(String sheetName) async {
-      List maprows = await dl.httpService.rowmapsGet(sheetName);
+      if (sheetName.isEmpty) return;
+      if (dl.sheetUrls[sheetName].toString().isEmpty) return;
+      log2sheetrows('/--- $sheetName ---\\');
       try {
+        List maprows = await dl.httpService.rowmapsGet(sheetName);
+        await insertSheet(maprows, sheetName); //1
         List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
-        await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues);
-        await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues);
-        log2sheetrows(sheetName);
+        await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2
+        await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues); //3
       } catch (e) {
-        log2sheetrows('insertSheet2sqldb_ $sheetName $e');
+        log2sheetrows('insertSheet2sqldb_()  $e');
       }
     }
 
@@ -83,7 +90,7 @@ class SupabaseRepo {
       String sheetName = bl.bookList.rows[i].sheetName;
       await insertSheet2sqldb_(sheetName);
     }
-    log2sheetrows('-----sheets2sup end');
+    log2sheetrows('********************************sheets2sup end');
   }
 
   //-------------------------------------------------------delete

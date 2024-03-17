@@ -232,9 +232,8 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
         saving.value = 'saving to gdrive';
         String rowStr = await dl.httpService.appendQuote(currRow.sheetName,
             quoteContr.text, parPageContr.text, currRow.author);
-
         Map rowMap = jsonDecode(rowStr);
-        bl.supRepo.sheetrowInsert(rowMap);
+        bl.supRepo.sheetrowInsert1(rowMap);
         //bl.fireRepo.rowmapDailySave(rowMap);
 
         rownoLast = rowMap['rowno'].toString();

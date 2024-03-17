@@ -43,6 +43,14 @@ class KoyebRepo {
     debugPrint("koyeb sheetrows count $result");
   }
 
+  //-----------------------------------------------------------------read
+  Future selectByRownokey() async {
+    final result2 = await conn.execute(
+      Sql.named("select * from sheetrows where rownokey = 'MilaT__|__248';"),
+    );
+    bl.supRepo.log2sheetrows('KoyebRepo:: sheetrows \n $result2');
+  }
+
   //-----------------------------------------------------------------delete
   Future sheetrowsDelete() async {
     final result2 = await conn.execute(
