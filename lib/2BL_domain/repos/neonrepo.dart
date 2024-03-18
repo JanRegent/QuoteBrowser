@@ -3,11 +3,15 @@ import 'package:postgres/postgres.dart';
 
 import '../bl.dart';
 import 'commonrepos.dart';
-import 'supgitignore.dart';
+import 'zgitignore.dart';
 
 class NeonRepo {
   late Connection conn;
   Future init() async {
+    try {
+      if (conn.isOpen) return;
+    } catch (_) {}
+    conn = await initKoyeb();
     conn = await initNeon();
 
     try {
@@ -18,6 +22,7 @@ class NeonRepo {
 
   //--------------------------------------------------------------------create
   Future insert1(Map rowmap) async {
+    await init();
     final result = await conn.execute(
       Sql.named(
           'INSERT INTO sheetrows SELECT * FROM json_populate_recordset($rowmap) RETURNING *; '),
@@ -27,6 +32,7 @@ class NeonRepo {
   }
 
   Future sqlValuesInsert(String tablename, List<String> sqlValues) async {
+    await init();
     String sqlValuesStr = sqlValues.join(',\n');
 
     await conn.execute(
@@ -34,9 +40,19 @@ class NeonRepo {
     );
     //debugPrint('sqlValuesInsert $result2');
   }
+
   //--------------------------------------------------------------------read
+  Future<int> count() async {
+    await init();
+    final result = await conn.execute(
+      Sql.named("SELECT count(*) FROM sheetrows "),
+    );
+    int? cnt = int.tryParse(result[0][0].toString());
+    return cnt!;
+  }
 
   Future select1() async {
+    await init();
     // final result = await conn.execute(
     //   Sql.named("select * from pg_tables where schemaname='public';"),
     // );
@@ -50,6 +66,7 @@ class NeonRepo {
   }
 
   Future<List<String>> sqlValuesGet(List rowmaps) async {
+    await init();
     List<String> cols = colsSql.split(',');
     List<String> sqlValues = [];
     for (var i = 0; i < rowmaps.length; i++) {
@@ -64,6 +81,7 @@ class NeonRepo {
   }
 
   Future sqlValueGet(rowmap, List<String> cols) async {
+    await init();
     List<String> vals =
         List<String>.generate(cols.length, (int index) => '', growable: true);
 
@@ -83,6 +101,7 @@ class NeonRepo {
 
   //-------------------------------------------------------------------delete
   Future sheetrowsDelete() async {
+    await init();
     final result2 = await conn.execute(
       Sql.named("delete  from sheetrows; "),
     );

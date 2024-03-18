@@ -47,7 +47,7 @@ class Bl {
   SupabaseRepo supRepo = SupabaseRepo();
   NeonRepo neonRepo = NeonRepo();
   KoyebRepo koyebRepo = KoyebRepo();
-  //PgedgebRepo pgedgebRepo = PgedgebRepo();
+  PgedgebRepo pgedgebRepo = PgedgebRepo();
   ElephantRepo elephantRepo = ElephantRepo();
 
   //FirestoreRepo fireRepo = FirestoreRepo();
@@ -62,11 +62,14 @@ class Bl {
       debugPrint('neonRepo init start');
       await neonRepo.init();
       debugPrint('koyebRepo init start');
-      await koyebRepo.init();
 
-      // debugPrint('elephantRepo init start');
-      // debugPrint(elephantRepo.conn.isOpen.toString());
-      // await elephantRepo.init();
+      try {
+        await koyebRepo.init();
+      } catch (_) {} //Exception: Null check operator
+
+      // debugPrint('PgedgebRepo init start');
+      // debugPrint(pgedgebRepo.conn.isOpen.toString());
+      // await pgedgebRepo.init();
     }
     devModeSet();
   }

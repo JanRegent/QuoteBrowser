@@ -1,10 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../3Data/dl.dart';
 import '../bl.dart';
-import 'supgitignore.dart';
+import 'zgitignore.dart';
 
 class SupabaseRepo {
   // It's handy to then extract the Supabase client in a variable for later uses
@@ -27,11 +26,16 @@ class SupabaseRepo {
 
   Future select() async {
     // Select data with filters
-    final data = await supabase.from('sheetrows').select().eq('id', 4);
+    var data = await supabase.from('sheetrows').select().eq('id', 4);
     return data;
   }
 
-  //-------------------------------------------------------update
+  //-----------------------------------------------------------------read
+  Future<int> count() async {
+    final data = await supabase.rpc('countsheetrows');
+    return data;
+  }
+  //-----------------------------------------------------------------update
 
   Future sheetrowInsert1(Map sheetrow) async {
     log2sheetrows(sheetrow.toString());
@@ -65,6 +69,7 @@ class SupabaseRepo {
     log2sheetrows('***************************sup.sheets2supabase2neon start');
     await deletesheetrows();
     await bl.neonRepo.sheetrowsDelete();
+    await bl.koyebRepo.sheetrowsDelete();
 
     Future insertSheet2sqldb_(String sheetName) async {
       if (sheetName.isEmpty) return;

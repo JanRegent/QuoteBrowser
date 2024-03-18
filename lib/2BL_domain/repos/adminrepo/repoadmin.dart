@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quotebrowser/2BL_domain/repos/koyebrepo.dart';
 
 import '../../../1PL/widgets/alib/alib.dart';
 import '../../bl.dart';
@@ -26,9 +25,40 @@ class RepoAdmin extends StatelessWidget {
             child: const Text('koyeb selectByRownokey')));
   }
 
+  ListTile koyebRepoDeleteAll() {
+    return ListTile(
+        title: ElevatedButton(
+            onPressed: () async {
+              await bl.koyebRepo.sheetrowsDelete();
+              await bl.koyebRepo.count();
+            },
+            child: const Text('koyeb deleteAll')));
+  }
+
+  ListTile countCheck() {
+    return ListTile(
+        title: ElevatedButton(
+            onPressed: () async {
+              int c1 = await bl.supRepo.count();
+              int cNeon = await bl.neonRepo.count();
+              if (c1 == cNeon) debugPrint('ok neon $c1');
+              try {
+                int ckoyeb = await bl.koyebRepo.count();
+
+                if (c1 == ckoyeb) debugPrint('koueb ok $ckoyeb');
+              } catch (_) {}
+            },
+            child: const Text('countCheck')));
+  }
+
   ListView bodyLv(BuildContext context) {
     return ListView(
-      children: [toSupabase(context), koyebRepoByRownokey()],
+      children: [
+        toSupabase(context),
+        koyebRepoByRownokey(),
+        koyebRepoDeleteAll(),
+        countCheck()
+      ],
     );
   }
 

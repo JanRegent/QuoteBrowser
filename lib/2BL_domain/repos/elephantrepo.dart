@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:postgres/postgres.dart';
 
 import 'commonrepos.dart';
-import 'supgitignore.dart';
+import 'zgitignore.dart';
 
 class ElephantRepo {
   late Connection conn;

@@ -2,14 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:postgres/postgres.dart';
 
 import 'commonrepos.dart';
-import 'supgitignore.dart';
+import 'zgitignore.dart';
 
 class PgedgebRepo {
   late Connection conn;
   Future init() async {
     conn = await initPgedge();
 
-    //if (conn.isOpen) debugPrint("koyeb PostgresCRUD Database isOpen!");
+    if (conn.isOpen) debugPrint("koyeb PostgresCRUD Database isOpen!");
     try {
       await conn.execute(Sql.named(createTable()));
     } catch (_) {}

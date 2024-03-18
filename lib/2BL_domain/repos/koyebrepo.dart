@@ -3,11 +3,14 @@ import 'package:postgres/postgres.dart';
 
 import '../bl.dart';
 import 'commonrepos.dart';
-import 'supgitignore.dart';
+import 'zgitignore.dart';
 
 class KoyebRepo {
   late Connection conn;
   Future init() async {
+    try {
+      if (conn.isOpen) return;
+    } catch (_) {}
     conn = await initKoyeb();
 
     //if (conn.isOpen) debugPrint("koyeb PostgresCRUD Database isOpen!");
@@ -28,23 +31,26 @@ class KoyebRepo {
 
   //---------------------------------------------------------------create/insert
   Future sqlValuesInsert(String tablename, List<String> sqlValues) async {
+    await init();
     String sqlValuesStr = sqlValues.join(',\n');
 
     await conn.execute(
       Sql.named("INSERT INTO $tablename ($colsSql) VALUES $sqlValuesStr; "),
     );
-    await count();
   }
 
-  Future count() async {
+  Future<int> count() async {
+    await init();
     final result = await conn.execute(
       Sql.named("SELECT count(*) FROM sheetrows "),
     );
-    debugPrint("koyeb sheetrows count $result");
+    int? cnt = int.tryParse(result.toString());
+    return cnt!;
   }
 
   //-----------------------------------------------------------------read
   Future selectByRownokey() async {
+    await init();
     final result2 = await conn.execute(
       Sql.named("select * from sheetrows where rownokey = 'MilaT__|__248';"),
     );
@@ -53,6 +59,7 @@ class KoyebRepo {
 
   //-----------------------------------------------------------------delete
   Future sheetrowsDelete() async {
+    await init();
     final result2 = await conn.execute(
       Sql.named("delete  from sheetrows; "),
     );
