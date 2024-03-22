@@ -224,6 +224,12 @@ class HttpService {
     } catch (_) {
       return [];
     }
+    String rownokey = '${sheetName}__|__$rowNo';
+    try {
+      bl.supRepo.setCellDL(rownokey, columnName, cellContent);
+    } catch (e) {
+      debugPrint('setCellDL-->supabase $rownokey \n$e');
+    }
     List<String> newRow = [];
     try {
       newRow = blUti.toListString(response.data['data']);

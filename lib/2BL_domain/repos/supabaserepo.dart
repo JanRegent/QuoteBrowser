@@ -24,19 +24,6 @@ class SupabaseRepo {
 
   //-----------------------------------------------------------------create
 
-  Future select() async {
-    // Select data with filters
-    var data = await supabase.from('sheetrows').select().eq('id', 4);
-    return data;
-  }
-
-  //-----------------------------------------------------------------read
-  Future<int> count() async {
-    final data = await supabase.rpc('countsheetrows');
-    return data;
-  }
-  //-----------------------------------------------------------------update
-
   Future sheetrowInsert1(Map sheetrow) async {
     log2sheetrows(sheetrow.toString());
     await supabase.from('sheetrows').insert(sheetrow);
@@ -62,6 +49,33 @@ class SupabaseRepo {
   void log2sheetrows(String mess) async {
     await supabase.rpc('log2sheetrows', params: {'mess': mess});
     //debugPrint(mess);
+  }
+
+  //-----------------------------------------------------------------read
+  Future<int> count() async {
+    final data = await supabase.rpc('countsheetrows');
+    return data;
+  }
+
+  Future select() async {
+    // Select data with filters
+    var data = await supabase.from('sheetrows').select().eq('id', 4);
+    return data;
+  }
+
+  //-----------------------------------------------------------------update
+
+  void setCellDL(
+    String rownokey,
+    String columnName,
+    String cellContent,
+  ) async {
+    try {
+      await supabase
+          .from('sheetrows')
+          .update({columnName.toLowerCase(): cellContent}).match(
+              {'rownokey': rownokey});
+    } catch (_) {}
   }
 
   Future sheets2supabase2neon2koyeb() async {
