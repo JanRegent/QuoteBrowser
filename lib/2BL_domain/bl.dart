@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
 
 import '../1PL/pages/2books/bookslist.dart';
+import 'tagsparts.dart';
 import 'repos/adminrepo/repoadmin.dart';
 import 'repos/authbooksmap.dart';
 import 'repos/dailylist.dart';
@@ -51,6 +52,8 @@ class Bl {
   ElephantRepo elephantRepo = ElephantRepo();
 
   //FirestoreRepo fireRepo = FirestoreRepo();
+
+  TagsParts tagsParts = TagsParts();
 
   Future init() async {
     debugPrint('sheetRowsHelper init start');

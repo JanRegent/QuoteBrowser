@@ -162,7 +162,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         }
         bl.orm.currentRow.tags.value +=
             '#${bl.orm.currentRow.selectedText.value}';
-        pureTags();
+        bl.tagsParts.pureTags();
         await bl.orm.currentRow
             .setCellBL(attribName, bl.orm.currentRow.tags.value);
         bl.orm.currentRow.attribNameLast.value = attribName;

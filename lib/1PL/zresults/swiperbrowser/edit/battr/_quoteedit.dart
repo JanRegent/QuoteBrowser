@@ -162,7 +162,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         }
         bl.orm.currentRow.tags.value +=
             '#${bl.orm.currentRow.selectedText.value}';
-        pureTags();
+        bl.tagsParts.pureTags();
         await bl.orm.currentRow
             .setCellBL(attribName, bl.orm.currentRow.tags.value);
         bl.orm.currentRow.attribNameLast.value = attribName;
@@ -170,8 +170,15 @@ class _QuoteEditState extends State<QuoteEdit> {
       case 'yellowParts':
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
+        if (bl.orm.currentRow.selectedText.value.length <= 20) {
+          warningDialog('yellowPart length <= 20', context);
+          return;
+        }
+
         bl.orm.currentRow.yellowParts.value +=
             '__|__\n${bl.orm.currentRow.selectedText.value}';
+
+        bl.tagsParts.pureYellowparts();
         await bl.orm.currentRow
             .setCellBL(attribName, bl.orm.currentRow.yellowParts.value);
         bl.orm.currentRow.attribNameLast.value = attribName;

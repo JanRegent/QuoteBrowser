@@ -110,30 +110,6 @@ class CurrentRow {
   }
 }
 
-void pureTags() {
-  List<String> tagsList = bl.orm.currentRow.tags.value.split('#');
-  Set tagsSet = tagsList.toSet();
-  List<String> tags = [];
-  for (String tag in tagsSet) {
-    try {
-      if (tag.toString().isEmpty) continue;
-      if (tag.endsWith(',')) {
-        tag = tag.substring(0, tag.length - 1).trim as String;
-      }
-      if (tag.endsWith('.')) {
-        tag = tag.substring(0, tag.length - 1).trim as String;
-      }
-      if (tag.endsWith(',')) {
-        tag = tag.substring(0, tag.length - 1).trim as String;
-      }
-    } catch (_) {
-      continue;
-    }
-    tags.add(tag);
-  }
-  bl.orm.currentRow.tags.value = tags.join('#');
-}
-
 final TextEditingController quoteEditController = TextEditingController();
 
 Future currentRowSet(String rownoKey) async {
@@ -167,7 +143,7 @@ Future currentRowSet(String rownoKey) async {
   bl.orm.currentRow.fileUrl.value = sheetRow.fileUrl;
 
   bl.orm.currentRow.folder.value = sheetRow.folderUrl;
-  pureTags();
+  bl.tagsParts.pureTags();
 
   void optionalValuesSet() {
     //--------------------------optional user fields

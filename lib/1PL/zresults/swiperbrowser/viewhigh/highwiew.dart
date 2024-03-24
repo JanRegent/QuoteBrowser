@@ -57,7 +57,6 @@ class _HighViewPageState extends State<HighViewPage> {
                   //leading: highlight(),
                   title: Row(
                     children: [
-                      Obx(() => Text(bl.orm.currentRow.author.value)),
                       IconButton(
                           onPressed: () async {
                             text = bl.orm.currentRow.quote.value;
@@ -70,6 +69,7 @@ class _HighViewPageState extends State<HighViewPage> {
                       IconButton(
                           onPressed: () => yellowH(),
                           icon: const Icon(Icons.circle, color: Colors.yellow)),
+                      Obx(() => Text(bl.orm.currentRow.author.value))
                     ],
                   ),
                   trailing: IconButton(
