@@ -14,6 +14,8 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
+  late TextEditingController editControler;
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +42,6 @@ class _EditPageState extends State<EditPage> {
         icon: const Icon(Icons.save));
   }
 
-  TextEditingController editControler = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,11 +67,15 @@ class _EditPageState extends State<EditPage> {
                         topRight: Radius.circular(1)),
                     side: BorderSide(width: 1, color: Colors.green)),
                 child: TextField(
-                  decoration: const InputDecoration(labelText: ''),
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  controller: editControler, // <-- SEE HERE
-                ),
+                    decoration: const InputDecoration(labelText: ''),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    controller: editControler,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    textCapitalization: TextCapitalization.none
+                    // editControler, // <-- SEE HERE
+                    ),
               )
 
               //const HeadFields()

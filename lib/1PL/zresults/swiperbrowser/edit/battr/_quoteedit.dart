@@ -1,6 +1,7 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rich_text_controller/rich_text_controller.dart';
 
 import '../../../../../2BL_domain/bl.dart';
 
@@ -96,6 +97,7 @@ class _QuoteEditState extends State<QuoteEdit> {
             builder: (context) => const TagsYellowPage('yellowparts')),
       );
     }
+    editControlerInit();
   }
 
   void selectText() {
@@ -166,12 +168,13 @@ class _QuoteEditState extends State<QuoteEdit> {
         await bl.orm.currentRow
             .setCellBL(attribName, bl.orm.currentRow.tags.value);
         bl.orm.currentRow.attribNameLast.value = attribName;
+        editControlerInit();
         break;
       case 'yellowParts':
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
-        if (bl.orm.currentRow.selectedText.value.length <= 20) {
-          warningDialog('yellowPart length <= 20', context);
+        if (bl.orm.currentRow.selectedText.value.length <= 10) {
+          warningDialog('yellowPart length <= 10', context);
           return;
         }
 
@@ -182,7 +185,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         await bl.orm.currentRow
             .setCellBL(attribName, bl.orm.currentRow.yellowParts.value);
         bl.orm.currentRow.attribNameLast.value = attribName;
-
+        editControlerInit();
         break;
       case 'original':
         await bl.orm.currentRow
@@ -297,6 +300,38 @@ class _QuoteEditState extends State<QuoteEdit> {
           children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
         ),
         onPressed: () => onOpen(bl.orm.currentRow.fileUrl.value));
+  }
+
+  //-----------------------------------------------------------quoteFireld
+  String yellowPartsRegex() {
+    String reg = '';
+    List<String> parts = bl.orm.currentRow.yellowParts.value.split('__|__\n');
+    for (var i = 0; i < parts.length; i++) {
+      reg = reg + parts[i].trim();
+      if (i > 0) reg = '$reg|';
+    }
+    return reg;
+  }
+
+  void editControlerInit() {
+    quoteEditController = RichTextController(
+      text: bl.orm.currentRow.quote.value,
+      patternMatchMap: {
+        RegExp(bl.orm.currentRow.tags.value.replaceAll('#', '|')):
+            const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+        // ignore: unnecessary_string_interpolations
+        RegExp(yellowPartsRegex()):
+            const TextStyle(backgroundColor: Colors.yellow),
+      },
+      onMatch: (List<String> matches) {},
+    );
+  }
+
+  @override
+  void initState() {
+    editControlerInit();
+    super.initState();
+    //editControler.text = bl.orm.currentRow.quote.value;
   }
 
   TextField quoteTextField() {

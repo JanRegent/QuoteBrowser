@@ -110,7 +110,7 @@ class CurrentRow {
   }
 }
 
-final TextEditingController quoteEditController = TextEditingController();
+late TextEditingController quoteEditController;
 
 Future currentRowSet(String rownoKey) async {
   SheetRows sheetRow = await bl.sheetRowsHelper.getRowByRownoKey(rownoKey);

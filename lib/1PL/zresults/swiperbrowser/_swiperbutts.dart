@@ -6,11 +6,11 @@ import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/orm.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
+import 'edit/atext/richquote.dart';
 import 'edit/battr/_quoteedit.dart';
 import 'edit/cattribs/headfields.dart';
 import 'edit/cattribs/othersfields.dart';
 import 'swipermenu.dart';
-import 'viewhigh/highwiew.dart';
 
 // ignore: must_be_immutable
 class SwiperButts extends StatefulWidget {
@@ -132,7 +132,7 @@ class _SwiperButtsState extends State<SwiperButts> {
               Expanded(
                 child: TabBarView(
                   children: <Widget>[
-                    const HighViewPage(),
+                    const RichTextControllerDemo(), // HighViewPage(),
                     QuoteEdit(widget.setStateSwiper, context),
                     const HeadFields(),
                     const OthersFields(),
