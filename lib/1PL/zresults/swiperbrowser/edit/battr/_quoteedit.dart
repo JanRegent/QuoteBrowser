@@ -246,6 +246,25 @@ class _QuoteEditState extends State<QuoteEdit> {
             icon: ALicons.attrIcons.yellowPartIcon,
             label: const Text(''))));
 
+    items.add(PopupMenuItem(
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              highRegpatternMatchMapsNo = 0;
+              editControlerInit();
+              setState(() {});
+            },
+            child: const Text('hihglight #'))));
+    items.add(PopupMenuItem(
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              highRegpatternMatchMapsNo = 1;
+              editControlerInit();
+              setState(() {});
+            },
+            child: const Text('hihglight yellow'))));
+
     return PopupMenuButton(
       child: ALicons.attrIcons.tagIcon,
       onOpened: () {
@@ -313,16 +332,24 @@ class _QuoteEditState extends State<QuoteEdit> {
     return reg;
   }
 
+  int highRegpatternMatchMapsNo = 0;
   void editControlerInit() {
-    quoteEditController = RichTextController(
-      text: bl.orm.currentRow.quote.value,
-      patternMatchMap: {
-        RegExp(bl.orm.currentRow.tags.value.replaceAll('#', '|')):
+    String tagsRegex = bl.orm.currentRow.tags.value.replaceAll('#', '|');
+
+    List<Map<RegExp, TextStyle>> patternMatchMaps = [
+      {
+        RegExp(tagsRegex):
             const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-        // ignore: unnecessary_string_interpolations
+      },
+      {
         RegExp(yellowPartsRegex()):
             const TextStyle(backgroundColor: Colors.yellow),
-      },
+      }
+    ];
+
+    quoteEditController = RichTextController(
+      text: bl.orm.currentRow.quote.value,
+      patternMatchMap: patternMatchMaps[highRegpatternMatchMapsNo],
       onMatch: (List<String> matches) {},
     );
   }
