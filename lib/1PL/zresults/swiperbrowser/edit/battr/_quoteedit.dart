@@ -234,14 +234,24 @@ class _QuoteEditState extends State<QuoteEdit> {
     List<PopupMenuItem> items = [];
     items.add(PopupMenuItem(
       child: ElevatedButton.icon(
-          onPressed: () => setCellAL('tags'),
+          onPressed: () {
+            setCellAL('tags');
+            regpatternMatchMapsIndex = 0;
+            editControlerInit();
+            setState(() {});
+          },
           onLongPress: () => emptySelected('tags'),
           icon: ALicons.attrIcons.tagIcon,
           label: const Text('')),
     ));
     items.add(PopupMenuItem(
         child: ElevatedButton.icon(
-            onPressed: () => setCellAL('yellowParts'),
+            onPressed: () {
+              setCellAL('yellowParts');
+              regpatternMatchMapsIndex = 1;
+              editControlerInit();
+              setState(() {});
+            },
             onLongPress: () => emptySelected('yellowParts'),
             icon: ALicons.attrIcons.yellowPartIcon,
             label: const Text(''))));
@@ -250,7 +260,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         child: ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              highRegpatternMatchMapsNo = 0;
+              regpatternMatchMapsIndex = 0;
               editControlerInit();
               setState(() {});
             },
@@ -259,7 +269,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         child: ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              highRegpatternMatchMapsNo = 1;
+              regpatternMatchMapsIndex = 1;
               editControlerInit();
               setState(() {});
             },
@@ -332,7 +342,7 @@ class _QuoteEditState extends State<QuoteEdit> {
     return reg;
   }
 
-  int highRegpatternMatchMapsNo = 0;
+  int regpatternMatchMapsIndex = 0;
   void editControlerInit() {
     String tagsRegex = bl.orm.currentRow.tags.value.replaceAll('#', '|');
 
@@ -349,7 +359,7 @@ class _QuoteEditState extends State<QuoteEdit> {
 
     quoteEditController = RichTextController(
       text: bl.orm.currentRow.quote.value,
-      patternMatchMap: patternMatchMaps[highRegpatternMatchMapsNo],
+      patternMatchMap: patternMatchMaps[regpatternMatchMapsIndex],
       onMatch: (List<String> matches) {},
     );
   }
