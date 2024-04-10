@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../2BL_domain/bl.dart';
+import '../../../../2BL_domain/bl.dart';
 
-import '../quotepopup.dart';
+import 'quotepopup.dart';
 import 'inportcomments.dart';
 
 class OthersFields extends StatefulWidget {
@@ -139,6 +139,10 @@ class _OthersFieldsState extends State<OthersFields> {
 
   @override
   Widget build(BuildContext context) {
-    return othersListview();
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Other attributes'),
+        ),
+        body: othersListview());
   }
 }

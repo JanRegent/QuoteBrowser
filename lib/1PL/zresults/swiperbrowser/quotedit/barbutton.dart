@@ -6,10 +6,9 @@ import '../../../../2BL_domain/bl.dart';
 import '../../../controllers/selectvalue.dart';
 import '../../../widgets/alib/alib.dart';
 import '../../../widgets/alib/alicons.dart';
-import 'editcontent.dart';
 import 'tagsyellowlist.dart';
 import 'stars.dart';
-import 'qbarpopup.dart';
+import 'barpopup.dart';
 import 'setcell.dart';
 
 void selectText(BuildContext context) {
@@ -165,22 +164,6 @@ Container buttRow(BuildContext context) {
           )),
       child: ListTile(
         leading: personPopup(context),
-        title: Row(
-          children: [
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const EditPage()),
-                );
-              },
-            ),
-            const Spacer(),
-            al.infoButton(
-                context, 'Selected', bl.orm.currentRow.selectedText.value),
-          ],
-        ),
         trailing: PopupMenuButton(
           itemBuilder: (BuildContext context) {
             return buttonRowMenu(context);

@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:quotebrowser/3Data/dl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../../2BL_domain/bl.dart';
-import '../../../../../2BL_domain/orm.dart';
-import '../../../../widgets/alib/alib.dart';
+import '../../../../2BL_domain/bl.dart';
+import '../../../../2BL_domain/orm.dart';
+import '../../../widgets/alib/alib.dart';
 
 Future importComments(BuildContext context) async {
   String rownoKey =

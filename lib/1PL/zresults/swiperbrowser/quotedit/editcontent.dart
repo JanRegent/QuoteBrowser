@@ -5,15 +5,15 @@ import '../../../../2BL_domain/bl.dart';
 import '../../../../2BL_domain/orm.dart';
 import '../../../widgets/alib/alib.dart';
 
-class EditPage extends StatefulWidget {
-  const EditPage({super.key});
+class EditContent extends StatefulWidget {
+  const EditContent({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _EditPageState createState() => _EditPageState();
+  _EditContentState createState() => _EditContentState();
 }
 
-class _EditPageState extends State<EditPage> {
+class _EditContentState extends State<EditContent> {
   late TextEditingController editControler;
 
   @override

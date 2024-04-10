@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../1PL/pages/_home/_homepage.dart';
+import '../3Data/builddate.dart';
 import 'bl.dart';
 
 class LoadingPage extends StatefulWidget {
@@ -34,7 +35,7 @@ class _LoadingPageState extends State<LoadingPage> {
     ));
   }
 
-  RxString loadingLog = '\nloading:\n'.obs;
+  RxString loadingLog = '\nloading:\n $buildDate \n\n'.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
