@@ -25,7 +25,8 @@ Future<String> dateSelect(BuildContext context) async {
 }
 
 Future<String> authorSelect() async {
-  List<String> authors = blUti.toListString(authBooksMap.keys.sorted());
+  List<String> authors =
+      blUti.toListString(authBooksMap.keys.toList().sorted());
 
   try {
     // ignore: use_build_context_synchronously

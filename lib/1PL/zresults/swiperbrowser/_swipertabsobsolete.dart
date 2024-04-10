@@ -9,11 +9,11 @@ import '../../../2BL_domain/orm.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
 
-import 'edit/battr/_quoteedit.dart';
+import 'quotedit/_quoteedit.dart';
 
-import 'edit/cattribs/headfields.dart';
-import 'edit/cattribs/inportcomments.dart';
-import 'edit/cattribs/othersfields.dart';
+import 'quotedit/cattribs/headfields.dart';
+import 'quotedit/cattribs/inportcomments.dart';
+import 'quotedit/cattribs/othersfields.dart';
 import 'swipermenu.dart';
 import 'viewhigh/highwiew.dart';
 

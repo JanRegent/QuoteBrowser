@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get/get.dart';
 
-import 'package:quotebrowser/1PL/zresults/swiperbrowser/edit/battr/stars.dart';
+import 'package:quotebrowser/1PL/zresults/swiperbrowser/quotedit/battr/stars.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
 import 'package:url_launcher/url_launcher.dart';
 
