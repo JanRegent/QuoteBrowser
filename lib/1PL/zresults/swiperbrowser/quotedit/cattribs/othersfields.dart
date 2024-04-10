@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../2BL_domain/bl.dart';
-import '../battr/quotepopup.dart';
+
+import '../quotepopup.dart';
 import 'inportcomments.dart';
 
 class OthersFields extends StatefulWidget {

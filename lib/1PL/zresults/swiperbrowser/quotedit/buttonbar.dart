@@ -6,8 +6,9 @@ import '../../../../2BL_domain/bl.dart';
 import '../../../controllers/selectvalue.dart';
 import '../../../widgets/alib/alib.dart';
 import '../../../widgets/alib/alicons.dart';
-import 'atext/editpage.dart';
-import 'atext/tagsyellowlist.dart';
+import 'editcontent.dart';
+import 'tagsyellowlist.dart';
+import 'stars.dart';
 import 'qbarpopup.dart';
 import 'setcell.dart';
 
@@ -54,8 +55,13 @@ PopupMenuButton personPopup(BuildContext context) {
     leading: IconButton(
         icon: ALicons.attrIcons.bookIcon,
         onPressed: () => setCellAL('book', context)),
-    title: Text(bl.orm.currentRow.book.value),
-    onTap: () {},
+    title: Obx(() => Text(bl.orm.currentRow.book.value)),
+    onTap: () async {
+      String bookSelected = await bookSelect(context);
+      if (bookSelected.isEmpty) return;
+      await bl.orm.currentRow.setCellBL('book', bookSelected);
+      currentRowSet(bl.orm.currentRow.rownoKey.value);
+    },
   )));
 
   items.add(PopupMenuItem(
@@ -77,6 +83,28 @@ PopupMenuButton personPopup(BuildContext context) {
       return items;
     },
   );
+}
+
+Widget favButt() {
+  Icon favIcon = const Icon(Icons.favorite_outline);
+
+  if (bl.orm.currentRow.fav.value == 'f') {
+    favIcon = const Icon(Icons.favorite);
+  } else {
+    favIcon = const Icon(Icons.favorite_outline);
+  }
+  return IconButton(
+      icon: favIcon,
+      onPressed: () async {
+        if (bl.orm.currentRow.fav.value.isEmpty) {
+          bl.orm.currentRow.fav.value = 'f';
+        } else {
+          bl.orm.currentRow.fav.value = '';
+        }
+
+        await bl.orm.currentRow
+            .setCellBL('favorite', bl.orm.currentRow.fav.value);
+      });
 }
 
 PopupMenuButton tagsYellowPopup(
@@ -107,23 +135,11 @@ PopupMenuButton tagsYellowPopup(
           label: const Text(''))));
 
   items.add(PopupMenuItem(
-      child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-            regpatternMatchMapsIndex = 0;
-            editControlerInit();
-            quoteSetstate();
-          },
-          child: const Text('hihglight #'))));
-  items.add(PopupMenuItem(
-      child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-            regpatternMatchMapsIndex = 1;
-            editControlerInit();
-            quoteSetstate();
-          },
-          child: const Text('hihglight yellow'))));
+      child: ListTile(
+          tileColor: Colors.white,
+          title: Row(
+            children: [favButt(), RatingStarsPage(quoteSetstate)],
+          ))));
 
   return PopupMenuButton(
     child: ALicons.attrIcons.tagIcon,

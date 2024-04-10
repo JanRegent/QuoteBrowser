@@ -4,7 +4,7 @@ import '../../../../2BL_domain/bl.dart';
 
 import '../../../../2BL_domain/orm.dart';
 
-import 'qbarbuttons.dart';
+import 'buttonbar.dart';
 import 'setcell.dart';
 
 // ignore: must_be_immutable

@@ -1,9 +1,9 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../2BL_domain/bl.dart';
-import '../../../../../2BL_domain/bluti.dart';
-import '../../../../widgets/alib/alertinfo/alertok.dart';
+import '../../../../2BL_domain/bl.dart';
+import '../../../../2BL_domain/bluti.dart';
+import '../../../widgets/alib/alertinfo/alertok.dart';
 
 PopupMenuItem copyPopupMenuItem(String fieldValue) {
   return PopupMenuItem(

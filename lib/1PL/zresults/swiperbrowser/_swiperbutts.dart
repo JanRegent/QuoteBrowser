@@ -6,9 +6,7 @@ import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/orm.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
-import 'quotedit/atext/richquote.dart';
 import 'quotedit/_quoteedit.dart';
-import 'quotedit/cattribs/headfields.dart';
 import 'quotedit/cattribs/othersfields.dart';
 import 'swipermenu.dart';
 
@@ -104,7 +102,7 @@ class _SwiperButtsState extends State<SwiperButts> {
       ),
       body: SafeArea(
         child: DefaultTabController(
-          length: 4,
+          length: 2,
           child: Column(
             children: <Widget>[
               ButtonsTabBar(
@@ -115,14 +113,9 @@ class _SwiperButtsState extends State<SwiperButts> {
                     color: Colors.white, fontWeight: FontWeight.bold),
                 tabs: const [
                   Tab(
-                    icon: Icon(Icons.format_quote),
-                    text: "quote",
-                  ),
-                  Tab(
                     icon: Icon(Icons.edit_attributes_sharp),
                     text: "edit",
                   ),
-                  Tab(icon: Icon(Icons.view_list), text: 'head'),
                   Tab(
                     icon: Icon(Icons.view_list_outlined),
                     text: 'others',
@@ -132,9 +125,7 @@ class _SwiperButtsState extends State<SwiperButts> {
               Expanded(
                 child: TabBarView(
                   children: <Widget>[
-                    const RichTextControllerDemo(), // HighViewPage(),
                     QuoteEdit(widget.setStateSwiper, context),
-                    const HeadFields(),
                     const OthersFields(),
                   ],
                 ),

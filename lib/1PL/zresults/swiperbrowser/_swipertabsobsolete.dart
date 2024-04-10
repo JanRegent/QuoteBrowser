@@ -11,7 +11,6 @@ import '../../widgets/alib/alib.dart';
 
 import 'quotedit/_quoteedit.dart';
 
-import 'quotedit/cattribs/headfields.dart';
 import 'quotedit/cattribs/inportcomments.dart';
 import 'quotedit/cattribs/othersfields.dart';
 import 'swipermenu.dart';
@@ -226,13 +225,6 @@ class _SwiperTabsState extends State<SwiperTabs>
   }
 
   Widget attribTabs() {
-    switch (attribTabIndex) {
-      case 0:
-        return const HeadFields();
-      case 1:
-        return const OthersFields();
-      default:
-        return const HeadFields();
-    }
+    return const OthersFields();
   }
 }

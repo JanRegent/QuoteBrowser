@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../2BL_domain/bl.dart';
+import '../../../../2BL_domain/bl.dart';
 import 'quotepopup.dart';
 
 // ignore: must_be_immutable

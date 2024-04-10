@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:tag_highlight_text/tag_highlight_text.dart';
 
 import '../../../../2BL_domain/bl.dart';
-import '../quotedit/battr/originalview.dart';
+import '../quotedit/originalview.dart';
 
 //-----------------------------------------------------------------highl
 

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../2BL_domain/bl.dart';
-import 'battr/originalview.dart';
-import 'battr/quotepopup.dart';
+import 'quotepopup.dart';
+import 'originalview.dart';
 
 List<PopupMenuItem> buttonRowMenu(BuildContext context) {
   return [
