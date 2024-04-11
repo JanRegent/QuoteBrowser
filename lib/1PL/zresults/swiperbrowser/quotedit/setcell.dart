@@ -83,6 +83,7 @@ void setCellAL(String attribName, BuildContext context) async {
   bl.orm.currentRow.selectedText.value = '';
   bl.orm.currentRow.setCellDLOn = false;
   selectedTextStartEnd.value = '';
+  editControlerInit();
   // setState(() {
   //   bl.orm.currentRow.setCellDLOn = false;
   // });
