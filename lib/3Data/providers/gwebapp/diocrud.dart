@@ -117,7 +117,7 @@ class HttpService {
       },
     );
 
-    bl.sheetRowsHelper.insertRowsCollection(response);
+    bl.sheetRowsHelper.insertRowsCollFromSheet(response);
     return response.data['data'];
   }
 
@@ -148,7 +148,7 @@ class HttpService {
         'ssId': 'bl.sheetGroups[bl.sheetGroupCurrent][0]'
       },
     );
-    return bl.sheetRowsHelper.insertRowsCollection(response);
+    return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
   }
 
   Future<List<String>> fullText5wordsinService(String word1, String word2,
@@ -165,7 +165,7 @@ class HttpService {
       },
     );
 
-    return bl.sheetRowsHelper.insertRowsCollection(response);
+    return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
   }
 
   Future<List<String>> searchSheetNames(String sheetNamesStr, String word1,
@@ -183,7 +183,7 @@ class HttpService {
       },
     );
 
-    return bl.sheetRowsHelper.insertRowsCollection(response);
+    return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
   }
 
   Future<List<String>> searchSheetsColumns2(String searchText1,
@@ -199,7 +199,7 @@ class HttpService {
       },
     );
 
-    return bl.sheetRowsHelper.insertRowsCollection(response);
+    return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
   }
 
   //----------------------------------------------------------------------set
@@ -240,7 +240,7 @@ class HttpService {
 
     bl.orm.currentRow.setCellDLOn = true;
 
-    bl.sheetRowsHelper.insertRowsCollection(response);
+    bl.sheetRowsHelper.insertRowsCollFromSheet(response);
 
     bl.orm.currentRow.setCellDLOn = false;
     return newRow;

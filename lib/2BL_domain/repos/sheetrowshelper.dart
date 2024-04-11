@@ -55,6 +55,29 @@ class SheetRows {
     };
   }
 
+  Map<String, dynamic> toMapFromSup(Map rowmap) {
+    return {
+      "rownokey": rowmap['rownokey'],
+      "sheetname": rowmap['sheetname'],
+      "rowno": rowmap['rowno'],
+      "quote": rowmap['quote'],
+      "author": rowmap['author'],
+      "book": rowmap['book'],
+      "parpage": rowmap['parpage'],
+      "tags": rowmap['tags'],
+      "yellowparts": rowmap['yellowparts'],
+      "stars": rowmap['stars'],
+      "favorite": rowmap['favorite'],
+      "dateinsert": rowmap['dateinsert'],
+      "sourceurl": rowmap['sourceurl'],
+      "fileurl": rowmap['fileurl'],
+      "original": rowmap['original'],
+      "vydal": rowmap['vydal'],
+      "folderurl": rowmap['folderurl'],
+      "title": rowmap['title'],
+    };
+  }
+
   Map<String, dynamic> toMapSup() {
     return {
       "rownokey": rownoKey,
@@ -211,7 +234,7 @@ class SheetRowsHelper {
   }
 
   //--------------------------------------------------------------create
-  Future<List<String>> insertRowsCollection(Response response) async {
+  Future<List<String>> insertRowsCollFromSheet(Response response) async {
     List data = response.data['data'];
     Map colsSet = response.data['colsSet'];
     List<String> rownoKeys = [];
@@ -226,6 +249,22 @@ class SheetRowsHelper {
       db.insert(
         "sheetRows",
         sheetRow.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+
+    return rownoKeys;
+  }
+
+  Future<List<String>> insertRowsCollSql(List sqldata) async {
+    List<String> rownoKeys = [];
+    final db = await database;
+    for (var i = 0; i < sqldata.length; i++) {
+      String rownoKey = sqldata[i]['rownokey'];
+      rownoKeys.add(rownoKey);
+      db.insert(
+        "sheetRows",
+        SheetRows().toMapFromSup(sqldata[i]),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }

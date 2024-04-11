@@ -63,6 +63,14 @@ class SupabaseRepo {
     return data;
   }
 
+  Future dateinsertSelect(String dateStr) async {
+    // Select data with filters
+    var data =
+        await supabase.from('sheetrows').select().eq('dateinsert', '$dateStr.');
+
+    return bl.sheetRowsHelper.insertRowsCollSql(data);
+  }
+
   //-----------------------------------------------------------------update
 
   void setCellDL(
