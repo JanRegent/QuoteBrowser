@@ -6,7 +6,8 @@ import '../../../../2BL_domain/bl.dart';
 import '../../../widgets/alib/alertinfo/alertok.dart';
 import 'barbutton.dart';
 
-void setCellAL(String attribName, BuildContext context) async {
+void setCellAL(String attribName, BuildContext context,
+    VoidCallback swiperSetstate) async {
   if (bl.orm.currentRow.selectedText.value.isEmpty) return;
   bl.orm.currentRow.attribNameLast.value = '';
 
@@ -88,7 +89,7 @@ void setCellAL(String attribName, BuildContext context) async {
   //   bl.orm.currentRow.setCellDLOn = false;
   // });
   //error might indicate a memory leak if setState() is being called because another object is retaining a reference to this State object after it has been removed from the tree. To avoid memory leaks, consider breaking the reference to this object during dispose().
-  //widget.swiperSetstate();
+  swiperSetstate();
 }
 
 int regpatternMatchMapsIndex = 0;

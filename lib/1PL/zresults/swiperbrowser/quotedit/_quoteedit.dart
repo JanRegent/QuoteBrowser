@@ -56,8 +56,9 @@ class _QuoteEditState extends State<QuoteEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: tagsYellowPopup(context, quoteSetstate),
-          title: buttRow(context),
+          leading:
+              tagsYellowPopup(context, quoteSetstate, widget.swiperSetstate),
+          title: buttRow(context, widget.swiperSetstate),
         ),
         body: SingleChildScrollView(child: quoteTextField()));
   }

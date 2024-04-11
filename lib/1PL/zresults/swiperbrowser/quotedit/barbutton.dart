@@ -46,13 +46,13 @@ void selectText(BuildContext context) {
   }
 }
 
-PopupMenuButton personPopup(BuildContext context) {
+PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
   List<PopupMenuItem> items = [];
   items.add(PopupMenuItem(
       child: ListTile(
     leading: IconButton(
         icon: ALicons.attrIcons.authorIcon,
-        onPressed: () => setCellAL('author', context)),
+        onPressed: () => setCellAL('author', context, swiperSetstate)),
     title: Obx(() => Text(bl.orm.currentRow.author.value)),
     onTap: () async {
       String authorSelected = await authorSelect();
@@ -66,7 +66,7 @@ PopupMenuButton personPopup(BuildContext context) {
       child: ListTile(
     leading: IconButton(
         icon: ALicons.attrIcons.bookIcon,
-        onPressed: () => setCellAL('book', context)),
+        onPressed: () => setCellAL('book', context, swiperSetstate)),
     title: Obx(() => Text(bl.orm.currentRow.book.value)),
     onTap: () async {
       String bookSelected = await bookSelect(context);
@@ -81,7 +81,7 @@ PopupMenuButton personPopup(BuildContext context) {
       child: ListTile(
     leading: IconButton(
         icon: ALicons.attrIcons.parPageIcon,
-        onPressed: () => setCellAL('parPage', context)),
+        onPressed: () => setCellAL('parPage', context, swiperSetstate)),
     title: Text(bl.orm.currentRow.parPage.value),
     onTap: () {},
   )));
@@ -120,14 +120,14 @@ Widget favButt() {
       });
 }
 
-PopupMenuButton tagsYellowPopup(
-    BuildContext context, VoidCallback quoteSetstate) {
+PopupMenuButton tagsYellowPopup(BuildContext context,
+    VoidCallback quoteSetstate, VoidCallback swiperSetstate) {
   List<PopupMenuItem> items = [];
   items.add(PopupMenuItem(
     child: ListTile(
         leading: ElevatedButton.icon(
             onPressed: () {
-              setCellAL('tags', context);
+              setCellAL('tags', context, swiperSetstate);
               regpatternMatchMapsIndex = 0;
               editControlerInit();
               quoteSetstate();
@@ -141,7 +141,7 @@ PopupMenuButton tagsYellowPopup(
       child: ListTile(
     leading: ElevatedButton.icon(
         onPressed: () {
-          setCellAL('yellowParts', context);
+          setCellAL('yellowParts', context, swiperSetstate);
           regpatternMatchMapsIndex = 1;
           editControlerInit();
           quoteSetstate();
@@ -164,7 +164,7 @@ PopupMenuButton tagsYellowPopup(
   );
 }
 
-Container buttRow(BuildContext context) {
+Container buttRow(BuildContext context, VoidCallback swiperSetstate) {
   return Container(
     margin: const EdgeInsets.all(10),
     padding: const EdgeInsets.all(5),
@@ -175,7 +175,7 @@ Container buttRow(BuildContext context) {
           width: 5,
         )),
     child: ListTile(
-      leading: personPopup(context),
+      leading: personPopup(context, swiperSetstate),
       title: Row(children: [
         Obx(() => Text(selectedTextStartEnd.value)),
         IconButton(
