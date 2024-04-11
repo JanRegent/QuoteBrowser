@@ -4,7 +4,6 @@ import 'package:rich_text_controller/rich_text_controller.dart';
 
 import '../../../../2BL_domain/bl.dart';
 import '../../../widgets/alib/alertinfo/alertok.dart';
-import 'barbutton.dart';
 
 void setCellAL(String attribName, BuildContext context,
     VoidCallback swiperSetstate) async {
@@ -52,7 +51,6 @@ void setCellAL(String attribName, BuildContext context,
       await bl.orm.currentRow
           .setCellBL(attribName, bl.orm.currentRow.tags.value);
       bl.orm.currentRow.attribNameLast.value = attribName;
-      editControlerInit();
       break;
     case 'yellowParts':
       // ignore: use_build_context_synchronously
@@ -69,7 +67,6 @@ void setCellAL(String attribName, BuildContext context,
       await bl.orm.currentRow
           .setCellBL(attribName, bl.orm.currentRow.yellowParts.value);
       bl.orm.currentRow.attribNameLast.value = attribName;
-      editControlerInit();
       break;
     case 'original':
       await bl.orm.currentRow
@@ -83,7 +80,6 @@ void setCellAL(String attribName, BuildContext context,
   }
   bl.orm.currentRow.selectedText.value = '';
   bl.orm.currentRow.setCellDLOn = false;
-  selectedTextStartEnd.value = '';
   editControlerInit();
   // setState(() {
   //   bl.orm.currentRow.setCellDLOn = false;

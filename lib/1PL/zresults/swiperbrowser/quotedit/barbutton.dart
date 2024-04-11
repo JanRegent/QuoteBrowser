@@ -11,8 +11,6 @@ import 'stars.dart';
 import 'barpopup.dart';
 import 'setcell.dart';
 
-RxString selectedTextStartEnd = ''.obs;
-
 void selectText(BuildContext context) {
   try {
     bl.orm.currentRow.selectedText.value = quoteEditController.text.substring(
@@ -33,8 +31,6 @@ void selectText(BuildContext context) {
 
   try {
     int len = bl.orm.currentRow.selectedText.value.length;
-    selectedTextStartEnd.value =
-        '${bl.orm.currentRow.selectedText.value.substring(0, 4)}<>${bl.orm.currentRow.selectedText.value.substring(len - 4, len)}';
     al.messageInfo(
         context,
         bl.orm.currentRow.selectedText.value.substring(0, 10),
@@ -176,15 +172,6 @@ Container buttRow(BuildContext context, VoidCallback swiperSetstate) {
         )),
     child: ListTile(
       leading: personPopup(context, swiperSetstate),
-      title: Row(children: [
-        Obx(() => Text(selectedTextStartEnd.value)),
-        IconButton(
-            onPressed: () {
-              bl.orm.currentRow.selectedText.value = '';
-              selectedTextStartEnd.value = '';
-            },
-            icon: const Icon(Icons.cancel))
-      ]),
       trailing: PopupMenuButton(
         itemBuilder: (BuildContext context) {
           return buttonRowMenu(context);
