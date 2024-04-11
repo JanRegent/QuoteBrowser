@@ -49,15 +49,6 @@ class _RatingStarsPageState extends State<RatingStarsPage> {
   Row ratingStars() {
     return Row(
       children: [
-        IconButton(
-          icon: const Icon(Icons.cancel),
-          onPressed: () {
-            setState(() {
-              value = 0;
-              starsValueInsert();
-            });
-          },
-        ),
         RatingStars(
           value: value,
           onValueChanged: (v) {
@@ -89,6 +80,15 @@ class _RatingStarsPageState extends State<RatingStarsPage> {
           valueLabelMargin: const EdgeInsets.only(right: 8),
           starOffColor: const Color(0xffe7e8ea),
           starColor: Colors.yellow,
+        ),
+        IconButton(
+          icon: const Icon(Icons.cancel),
+          onPressed: () {
+            setState(() {
+              value = 0;
+              starsValueInsert();
+            });
+          },
         )
       ],
     );

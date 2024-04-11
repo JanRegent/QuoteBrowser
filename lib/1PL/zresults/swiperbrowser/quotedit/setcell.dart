@@ -4,6 +4,7 @@ import 'package:rich_text_controller/rich_text_controller.dart';
 
 import '../../../../2BL_domain/bl.dart';
 import '../../../widgets/alib/alertinfo/alertok.dart';
+import 'barbutton.dart';
 
 void setCellAL(String attribName, BuildContext context) async {
   if (bl.orm.currentRow.selectedText.value.isEmpty) return;
@@ -79,6 +80,9 @@ void setCellAL(String attribName, BuildContext context) async {
     default:
       break;
   }
+  bl.orm.currentRow.selectedText.value = '';
+  bl.orm.currentRow.setCellDLOn = false;
+  selectedTextStartEnd.value = '';
   // setState(() {
   //   bl.orm.currentRow.setCellDLOn = false;
   // });

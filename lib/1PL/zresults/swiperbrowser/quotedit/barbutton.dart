@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../../2BL_domain/bl.dart';
@@ -11,26 +11,38 @@ import 'stars.dart';
 import 'barpopup.dart';
 import 'setcell.dart';
 
+RxString selectedTextStartEnd = ''.obs;
+
 void selectText(BuildContext context) {
   try {
     bl.orm.currentRow.selectedText.value = quoteEditController.text.substring(
         quoteEditController.selection.baseOffset,
         quoteEditController.selection.extentOffset);
-    bl.orm.currentRow.attribNameLast.value = '?';
 
-    try {
-      int len = bl.orm.currentRow.selectedText.value.length;
-      al.messageInfo(
-          context,
-          bl.orm.currentRow.selectedText.value.substring(0, 10),
-          bl.orm.currentRow.selectedText.value.substring(len - 10, len),
-          3);
-    } catch (_) {
-      al.messageInfo(
-          context, 'Selected', bl.orm.currentRow.selectedText.value, 3);
-    }
-  } catch (_) {
+    if (bl.orm.currentRow.selectedText.value.isEmpty) return;
+    // print(quoteEditController.selection.baseOffset);
+    // print(quoteEditController.selection.extentOffset);
+    // print('----');
+  } catch (e) {
+    debugPrint(bl.orm.currentRow.selectedText.value);
+    debugPrint(e.toString());
+    debugPrint('----');
     return;
+  }
+  //bl.orm.currentRow.attribNameLast.value = '?';
+
+  try {
+    int len = bl.orm.currentRow.selectedText.value.length;
+    selectedTextStartEnd.value =
+        '${bl.orm.currentRow.selectedText.value.substring(0, 4)}<>${bl.orm.currentRow.selectedText.value.substring(len - 4, len)}';
+    al.messageInfo(
+        context,
+        bl.orm.currentRow.selectedText.value.substring(0, 10),
+        bl.orm.currentRow.selectedText.value.substring(len - 10, len),
+        3);
+  } catch (_) {
+    al.messageInfo(
+        context, 'Selected', bl.orm.currentRow.selectedText.value, 3);
   }
 }
 
@@ -47,6 +59,7 @@ PopupMenuButton personPopup(BuildContext context) {
       if (authorSelected.isEmpty) return;
       await bl.orm.currentRow.setCellBL('author', authorSelected);
       currentRowSet(bl.orm.currentRow.rownoKey.value);
+      bl.orm.currentRow.selectedText.value = '';
     },
   )));
   items.add(PopupMenuItem(
@@ -60,6 +73,7 @@ PopupMenuButton personPopup(BuildContext context) {
       if (bookSelected.isEmpty) return;
       await bl.orm.currentRow.setCellBL('book', bookSelected);
       currentRowSet(bl.orm.currentRow.rownoKey.value);
+      bl.orm.currentRow.selectedText.value = '';
     },
   )));
 
@@ -110,35 +124,33 @@ PopupMenuButton tagsYellowPopup(
     BuildContext context, VoidCallback quoteSetstate) {
   List<PopupMenuItem> items = [];
   items.add(PopupMenuItem(
-    child: ElevatedButton.icon(
+    child: ListTile(
+        leading: ElevatedButton.icon(
+            onPressed: () {
+              setCellAL('tags', context);
+              regpatternMatchMapsIndex = 0;
+              editControlerInit();
+              quoteSetstate();
+            },
+            onLongPress: () => emptySelected('tags', context),
+            icon: ALicons.attrIcons.tagIcon,
+            label: const Text('')),
+        title: RatingStarsPage(quoteSetstate)),
+  ));
+  items.add(PopupMenuItem(
+      child: ListTile(
+    leading: ElevatedButton.icon(
         onPressed: () {
-          setCellAL('tags', context);
-          regpatternMatchMapsIndex = 0;
+          setCellAL('yellowParts', context);
+          regpatternMatchMapsIndex = 1;
           editControlerInit();
           quoteSetstate();
         },
-        onLongPress: () => emptySelected('tags', context),
-        icon: ALicons.attrIcons.tagIcon,
+        onLongPress: () => emptySelected('yellowParts', context),
+        icon: ALicons.attrIcons.yellowPartIcon,
         label: const Text('')),
-  ));
-  items.add(PopupMenuItem(
-      child: ElevatedButton.icon(
-          onPressed: () {
-            setCellAL('yellowParts', context);
-            regpatternMatchMapsIndex = 1;
-            editControlerInit();
-            quoteSetstate();
-          },
-          onLongPress: () => emptySelected('yellowParts', context),
-          icon: ALicons.attrIcons.yellowPartIcon,
-          label: const Text(''))));
-
-  items.add(PopupMenuItem(
-      child: ListTile(
-          tileColor: Colors.white,
-          title: Row(
-            children: [favButt(), RatingStarsPage(quoteSetstate)],
-          ))));
+    title: favButt(),
+  )));
 
   return PopupMenuButton(
     child: ALicons.attrIcons.tagIcon,
@@ -154,22 +166,32 @@ PopupMenuButton tagsYellowPopup(
 
 Container buttRow(BuildContext context) {
   return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-          color: Colors.yellow[100],
-          border: Border.all(
-            color: bl.orm.currentRow.setCellDLOn ? Colors.red : Colors.white,
-            width: 5,
-          )),
-      child: ListTile(
-        leading: personPopup(context),
-        trailing: PopupMenuButton(
-          itemBuilder: (BuildContext context) {
-            return buttonRowMenu(context);
-          },
-        ),
-      ));
+    margin: const EdgeInsets.all(10),
+    padding: const EdgeInsets.all(5),
+    decoration: BoxDecoration(
+        color: Colors.yellow[100],
+        border: Border.all(
+          color: bl.orm.currentRow.setCellDLOn ? Colors.red : Colors.white,
+          width: 5,
+        )),
+    child: ListTile(
+      leading: personPopup(context),
+      title: Row(children: [
+        Obx(() => Text(selectedTextStartEnd.value)),
+        IconButton(
+            onPressed: () {
+              bl.orm.currentRow.selectedText.value = '';
+              selectedTextStartEnd.value = '';
+            },
+            icon: const Icon(Icons.cancel))
+      ]),
+      trailing: PopupMenuButton(
+        itemBuilder: (BuildContext context) {
+          return buttonRowMenu(context);
+        },
+      ),
+    ),
+  );
 }
 
 Future emptySelected(String attribName, BuildContext context) async {

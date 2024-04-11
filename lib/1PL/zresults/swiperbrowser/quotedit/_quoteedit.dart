@@ -26,7 +26,13 @@ class _QuoteEditState extends State<QuoteEdit> {
   void initState() {
     editControlerInit();
     super.initState();
-    //editControler.text = bl.orm.currentRow.quote.value;
+    quoteEditController.text = bl.orm.currentRow.quote.value;
+  }
+
+  @override
+  void dispose() {
+    quoteEditController.dispose();
+    super.dispose();
   }
 
   TextField quoteTextField() {
@@ -38,9 +44,7 @@ class _QuoteEditState extends State<QuoteEdit> {
         color: Colors.black,
       ),
       maxLines: 20,
-      onChanged: (value) async {
-        bl.orm.currentRow.quote.value = value;
-      },
+      onChanged: (text) async {},
     );
   }
 
