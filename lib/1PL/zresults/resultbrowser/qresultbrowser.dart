@@ -76,12 +76,12 @@ class _QResultBrowserState extends State<QResultBrowser> {
     );
   }
 
-  Future searchSheetNamesWord5Swip(String groupName, String word1, String word2,
-      String word3, String word4, String word5) async {
-    bl.homeTitle.value = 'Get $word1\n$groupName';
+  Future searchSheetNamesWord5Swip(String filterColumnName, String word1,
+      String word2, String word3, String word4, String word5) async {
+    bl.homeTitle.value = '$word1 $word2 $word3 $word4 $word5 ';
 
-    int rowsCount = await bl.prepareKeys.byWord
-        .searchSheetNames('*', groupName, word1, word2, word3, word4, word5);
+    int rowsCount = await bl.prepareKeys.byWord.filterColumnNameWord5(
+        filterColumnName, word1, word2, word3, word4, word5);
     bl.homeTitle.value = '';
     if (rowsCount == 0) {
       // ignore: use_build_context_synchronously
@@ -90,11 +90,12 @@ class _QResultBrowserState extends State<QResultBrowser> {
     }
 
     currentSS.swiperIndexIncrement = false;
+    String filterName = '$word1 $word2 $word3 $word4 $word5 ';
     // ignore: use_build_context_synchronously
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CardSwiper('word\n$word1', '', const {})),
+          builder: (context) => CardSwiper(filterName, '', const {})),
     );
   }
 

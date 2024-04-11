@@ -82,6 +82,7 @@ class _PrefixSearchPageState extends State<PrefixSearchPage> {
 
   void getQuotesByTagPrefixes(String tagPrefixes) async {
     bl.homeTitle.value = 'Get quotes with tag\n$tagPrefixes';
+    debugPrint(bl.homeTitle.value);
     await tag4swipper(tagPrefixes);
     bl.homeTitle.value = '';
     // ignore: use_build_context_synchronously

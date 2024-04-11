@@ -21,7 +21,7 @@ class ByDatePage extends StatefulWidget {
 }
 
 class _ByDatePageState extends State<ByDatePage> {
-  ElevatedButton lastdaySelection(String sheetGroup) {
+  ElevatedButton lastdaySelection() {
     return ElevatedButton(
       child: const Icon(Icons.date_range),
       onPressed: () async {
@@ -29,8 +29,8 @@ class _ByDatePageState extends State<ByDatePage> {
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
         await searchSheetNamesWord5Swip(
-            'daily', sheetGroup, searchDate, '', '', '', '');
-        filterKeys = SharedPrefs.getKeys('daily');
+            'dateinsert', searchDate, '', '', '', '');
+        filterKeys = SharedPrefs.getKeysAll();
         setState(() {});
       },
     );
@@ -39,18 +39,17 @@ class _ByDatePageState extends State<ByDatePage> {
   @override
   void initState() {
     super.initState();
-    filterKeys = SharedPrefs.getKeys('daily');
+    filterKeys = SharedPrefs.getKeysAll();
   }
 
   localQueriesAdd() {
-    List<String> keys = SharedPrefs.getKeys('daily');
+    List<String> keys = SharedPrefs.getKeysAll();
     for (var key in keys) {
       listTiles.add(ListTile(
         title: Text(key.replaceAll('daily', '')),
         onTap: () async {
           String searchDate = key.replaceAll('daily', '').trim();
-          await searchSheetNamesWord5Swip(
-              'daily', '', searchDate, '', '', '', '');
+          await searchSheetNamesWord5Swip('', searchDate, '', '', '', '');
         },
       ));
     }
@@ -58,18 +57,12 @@ class _ByDatePageState extends State<ByDatePage> {
 
   List<ListTile> listTiles = [];
 
-  Future searchSheetNamesWord5Swip(
-      String filterPrefix,
-      String groupName,
-      String word1,
-      String word2,
-      String word3,
-      String word4,
-      String word5) async {
-    bl.homeTitle.value = 'Get $word1\n$groupName';
-
-    int rowsCount = await bl.prepareKeys.byWord.searchSheetNames(
-        filterPrefix, groupName, word1, word2, word3, word4, word5);
+  Future searchSheetNamesWord5Swip(String filterColumnName, String word1,
+      String word2, String word3, String word4, String word5) async {
+    bl.homeTitle.value = '$word1 $word2 $word3 $word4 $word5 ';
+    String filterName = '$word1 $word2 $word3 $word4 $word5 ';
+    int rowsCount = await bl.prepareKeys.byWord.filterColumnNameWord5(
+        filterColumnName, word1, word2, word3, word4, word5);
     bl.homeTitle.value = '';
     if (rowsCount == 0) {
       // ignore: use_build_context_synchronously
@@ -82,7 +75,7 @@ class _ByDatePageState extends State<ByDatePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CardSwiper('word\n$word1', '', const {})),
+          builder: (context) => CardSwiper(filterName, '', const {})),
     );
   }
 
@@ -104,7 +97,7 @@ class _ByDatePageState extends State<ByDatePage> {
                   String searchDate =
                       filterKeys[index].replaceAll('daily', '').trim();
                   await searchSheetNamesWord5Swip(
-                      'daily', '', searchDate, '', '', '', '');
+                      'dateinsert', searchDate, '', '', '', '');
                 },
               )),
         );
@@ -121,7 +114,7 @@ class _ByDatePageState extends State<ByDatePage> {
               const Text('By date'),
               al.linkIconOpenDoc(
                   '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU', context, ''),
-              lastdaySelection('')
+              lastdaySelection()
             ],
           ),
           actions: [

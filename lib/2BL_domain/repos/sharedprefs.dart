@@ -64,6 +64,16 @@ class SharedPrefs {
   //   return getModel(key, SignUpPojo.fromJson);
   // }
 
+  static List<String> getKeysAll() {
+    List<String> prefixKeys = [];
+    Set keys = _prefs!.getKeys();
+    for (var key in keys) {
+      prefixKeys.add(key);
+    }
+
+    return prefixKeys;
+  }
+
   static List<String> getKeys(String keyPrefix) {
     List<String> prefixKeys = [];
     Set keys = _prefs!.getKeys();

@@ -27,26 +27,20 @@ class ByWord {
 
   String searchMode = 'sql';
 
-  Future searchSheetNames(String filterPrefix, String groupName, String word1,
+  Future filterColumnNameWord5(String filterColumnName, String word1,
       String word2, String word3, String word4, String word5) async {
-    currentSS.keys = SharedPrefs.getStringList(
-        '$filterPrefix $groupName $word1 $word2 $word3 $word4 $word5');
+    currentSS.keys =
+        SharedPrefs.getStringList('$word1 $word2 $word3 $word4 $word5');
     if (currentSS.keys.isNotEmpty) return currentSS.keys.length;
 
-    if (searchMode == 'sql') {
+    if (filterColumnName == 'dateinsert') {
       currentSS.keys = await bl.supRepo.dateinsertSelect(word1);
-    } else {
-      currentSS.keys = await dl.httpService.searchSheetNames(
-          bl.dailyList.sheetNamesStr(groupName),
-          word1,
-          word2,
-          word3,
-          word4,
-          word5);
+    }
+    if (filterColumnName == 'quote') {
+      currentSS.keys = await bl.supRepo.quote1Select(word1);
     }
     SharedPrefs.setStringList(
-        '$filterPrefix $groupName $word1 $word2 $word3 $word4 $word5',
-        currentSS.keys);
+        '$word1 $word2 $word3 $word4 $word5', currentSS.keys);
     return currentSS.keys.length;
   }
 }

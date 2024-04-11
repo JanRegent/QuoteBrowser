@@ -71,6 +71,15 @@ class SupabaseRepo {
     return bl.sheetRowsHelper.insertRowsCollSql(data);
   }
 
+  Future quote1Select(String word1) async {
+    // Select data with filters
+    var data = await supabase
+        .from('sheetrows')
+        .select()
+        .like('quote', '%$word1%')
+        .limit(99);
+    return bl.sheetRowsHelper.insertRowsCollSql(data);
+  }
   //-----------------------------------------------------------------update
 
   void setCellDL(
