@@ -12,10 +12,9 @@ import '../2books/__authors.dart';
 import '../1bydate/1bydate.dart';
 
 import '../../../0app/config/9appsettings.dart';
-import '../3tags/prefixsearch.dart';
+import '../3tags/tagprefixsearch.dart';
 
-import '../4words/sheetnames5page.dart';
-import '../5word5/fulltext5page.dart';
+import '../word5/_wor5tabs.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -43,7 +42,7 @@ class _HomeTabState extends State<HomeTab> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 6,
+        length: 5,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
@@ -54,7 +53,6 @@ class _HomeTabState extends State<HomeTab> {
                 const Tab(icon: Icon(Icons.timeline)),
                 Tab(icon: ALicons.attrIcons.bookIcon),
                 const Tab(icon: Icon(Icons.tag)),
-                const Tab(child: Text('W')),
                 const Tab(
                     icon: Row(
                   children: [Text('W'), Icon(Icons.view_column)],
@@ -117,9 +115,9 @@ class _HomeTabState extends State<HomeTab> {
             children: [
               ByDatePage(),
               BooksAuthors(),
-              PrefixSearchPage(),
-              Sheetnames5Page(),
-              Word5Page(),
+              TagPrefixSearch(),
+              Word5Tabs(),
+              //ColumnWord5Page(),
               QResultBrowser(),
             ],
           ),

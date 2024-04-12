@@ -61,8 +61,8 @@ class _ByDatePageState extends State<ByDatePage> {
       String word2, String word3, String word4, String word5) async {
     bl.homeTitle.value = '$word1 $word2 $word3 $word4 $word5 ';
     String filterName = '$word1 $word2 $word3 $word4 $word5 ';
-    int rowsCount = await bl.prepareKeys.byWord.filterColumnNameWord5(
-        filterColumnName, word1, word2, word3, word4, word5);
+    int rowsCount = await bl.prepareKeys.byWord
+        .columnWord5(filterColumnName, word1, word2, word3, word4, word5);
     bl.homeTitle.value = '';
     if (rowsCount == 0) {
       // ignore: use_build_context_synchronously

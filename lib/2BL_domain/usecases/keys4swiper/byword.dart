@@ -27,8 +27,8 @@ class ByWord {
 
   String searchMode = 'sql';
 
-  Future filterColumnNameWord5(String filterColumnName, String word1,
-      String word2, String word3, String word4, String word5) async {
+  Future columnWord5(String filterColumnName, String word1, String word2,
+      String word3, String word4, String word5) async {
     currentSS.keys =
         SharedPrefs.getStringList('$word1 $word2 $word3 $word4 $word5');
     if (currentSS.keys.isNotEmpty) return currentSS.keys.length;

@@ -20,14 +20,14 @@ Future<String> tag4swipper(String tagPrefixes) async {
   return currentSS.keys.length.toString();
 }
 
-class PrefixSearchPage extends StatefulWidget {
-  const PrefixSearchPage({super.key});
+class TagPrefixSearch extends StatefulWidget {
+  const TagPrefixSearch({super.key});
 
   @override
-  State<PrefixSearchPage> createState() => _PrefixSearchPageState();
+  State<TagPrefixSearch> createState() => _TagPrefixSearchState();
 }
 
-class _PrefixSearchPageState extends State<PrefixSearchPage> {
+class _TagPrefixSearchState extends State<TagPrefixSearch> {
   final tagPrefixController = TextEditingController();
 
   @override

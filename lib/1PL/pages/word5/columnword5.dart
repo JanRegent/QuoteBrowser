@@ -5,18 +5,18 @@ import '../../../2BL_domain/bl.dart';
 import '../../widgets/alib/alib.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
 
-class Sheetnames5Page extends StatefulWidget {
-  const Sheetnames5Page({super.key});
+class ColumnWord5Page extends StatefulWidget {
+  const ColumnWord5Page({super.key});
 
   @override
-  Sheetnames5PageState createState() => Sheetnames5PageState();
+  ColumnWord5PageState createState() => ColumnWord5PageState();
 }
 
-class Sheetnames5PageState extends State<Sheetnames5Page> {
+class ColumnWord5PageState extends State<ColumnWord5Page> {
   bool isSelectionMode = false;
   final int listLength = 3;
 
-  List<TextEditingController> txCont = [
+  List<TextEditingController> textEditingController = [
     TextEditingController(),
     TextEditingController(),
     TextEditingController(),
@@ -40,8 +40,8 @@ class Sheetnames5PageState extends State<Sheetnames5Page> {
 
   void searchClean(wordIndex) {
     {
-      txCont[wordIndex].clear;
-      txCont[wordIndex].text = '';
+      textEditingController[wordIndex].clear;
+      textEditingController[wordIndex].text = '';
       setState(() {});
     }
   }
@@ -91,7 +91,7 @@ class Sheetnames5PageState extends State<Sheetnames5Page> {
 
   TextField tagsTextfield(wordIndex) {
     return TextField(
-      controller: txCont[wordIndex],
+      controller: textEditingController[wordIndex],
       decoration: InputDecoration(
         hintText: 'Enter word $wordIndex',
         prefixIcon: IconButton(
@@ -103,33 +103,33 @@ class Sheetnames5PageState extends State<Sheetnames5Page> {
   }
 
   Future getByWord5() async {
-    String word = txCont[1].text;
+    String word = textEditingController[1].text;
     if (word.isEmpty) {
       al.messageInfo(context, 'Get by word', 'write somme word', 5);
       return;
     }
-    bl.homeTitle.value = 'Get rows with word\n$word, searchSheetNames';
-    int rowsCount = await bl.prepareKeys.byWord.filterColumnNameWord5(
-        'quote',
-        txCont[1].text,
-        txCont[2].text,
-        txCont[3].text,
-        txCont[4].text,
-        txCont[5].text);
+    bl.homeTitle.value =
+        'Get rows with word\n$word, author $selectedValueAuthor';
+
+    int rowsCount = await bl.prepareKeys.byWord.fullText5wordsinService(
+        textEditingController[1].text,
+        textEditingController[2].text,
+        textEditingController[3].text,
+        textEditingController[4].text,
+        textEditingController[5].text);
     bl.homeTitle.value = '';
 
     if (rowsCount == 0) {
-      txCont[0].text += ' !!! ';
+      textEditingController[0].text += ' !!! ';
       return;
     }
-    String filterName =
-        '${txCont[1].text} ${txCont[2].text} ${txCont[3].text} ${txCont[4].text} ${txCont[5].text} $selectedValueAuthor';
 
     // ignore: use_build_context_synchronously
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CardSwiper(filterName, '', const {})),
+          builder: (context) => CardSwiper(
+              'word\n$word, author$selectedValueAuthor', '', const {})),
     );
   }
 
