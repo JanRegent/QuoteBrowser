@@ -15,10 +15,8 @@ import 'repos/dailylist.dart';
 import 'bluti.dart';
 
 import 'orm.dart';
-import 'repos/elephantrepo.dart';
 import 'repos/neonrepo.dart';
 import 'repos/koyebrepo.dart';
-import 'repos/pgedgerepo.dart';
 import 'repos/sheetrowshelper.dart';
 import 'usecases/keys4swiper/_preparekeys.dart';
 
@@ -48,8 +46,6 @@ class Bl {
   SupabaseRepo supRepo = SupabaseRepo();
   NeonRepo neonRepo = NeonRepo();
   KoyebRepo koyebRepo = KoyebRepo();
-  PgedgebRepo pgedgebRepo = PgedgebRepo();
-  ElephantRepo elephantRepo = ElephantRepo();
 
   //FirestoreRepo fireRepo = FirestoreRepo();
 

@@ -199,6 +199,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
   Map<String, dynamic> sheetrowMap() {
     return {
       "rownokey": '${currRow.sheetName}__|__$rownoLast',
+      "rowkey": '',
       "sheetname": currRow.sheetName,
       "rowno": rownoLast,
       "quote": quoteContr.text,
@@ -233,6 +234,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
         String rowStr = await dl.httpService.appendQuote(currRow.sheetName,
             quoteContr.text, parPageContr.text, currRow.author);
         Map rowMap = jsonDecode(rowStr);
+        debugPrint(rowStr);
         bl.supRepo.sheetrowInsert1(rowMap);
         //bl.fireRepo.rowmapDailySave(rowMap);
 

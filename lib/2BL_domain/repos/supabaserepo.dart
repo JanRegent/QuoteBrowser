@@ -1,9 +1,12 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../3Data/dl.dart';
 import '../bl.dart';
 import 'zgitignore.dart';
+
+RxString currentSheet2supabase = ''.obs;
 
 class SupabaseRepo {
   // It's handy to then extract the Supabase client in a variable for later uses
@@ -119,14 +122,17 @@ class SupabaseRepo {
 
     for (var i = 0; i < bl.dailyList.rows.length; i++) {
       String sheetName = bl.dailyList.rows[i].sheetName;
+      currentSheet2supabase.value = sheetName;
       await insertSheet2sqldb_(sheetName);
     }
 
     for (var i = 0; i < bl.bookList.rows.length; i++) {
       String sheetName = bl.bookList.rows[i].sheetName;
+      currentSheet2supabase.value = sheetName;
       await insertSheet2sqldb_(sheetName);
     }
     log2sheetrows('********************************sheets2sup end');
+    currentSheet2supabase.value = 'sheets2sup end';
   }
 
   //-------------------------------------------------------delete

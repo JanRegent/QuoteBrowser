@@ -13,6 +13,7 @@ import '../bluti.dart';
 
 class SheetRows {
   String rownoKey = '';
+  String rowkey = '';
   String sheetName = '';
   String rowNo = '';
   String quote = '';
@@ -36,6 +37,7 @@ class SheetRows {
   Map<String, dynamic> toMap() {
     return {
       "rownoKey": rownoKey,
+      "rowkey": rowkey,
       "sheetname": rownoKey.split('__|__')[0],
       "rowNo": rownoKey.split('__|__')[1],
       "quote": quote,
@@ -59,6 +61,7 @@ class SheetRows {
   Map<String, dynamic> toMapFromSup(Map rowmap) {
     return {
       "rownokey": rowmap['rownokey'],
+      "rowkey": rowmap['rowkey'],
       "sheetname": rowmap['sheetname'],
       "rowno": rowmap['rowno'],
       "quote": rowmap['quote'],
@@ -82,6 +85,7 @@ class SheetRows {
   Map<String, dynamic> toMapSup() {
     return {
       "rownokey": rownoKey,
+      "rowkey": rowkey,
       "sheetname": rownoKey.split('__|__')[0],
       "rowno": rownoKey.split('__|__')[1],
       "quote": quote,
@@ -105,6 +109,8 @@ class SheetRows {
   SheetRows fromMap(var maprow) {
     SheetRows row = SheetRows();
     row.rownoKey = maprow['rownoKey'] ?? '';
+    row.rowkey = maprow['rowkey'] ?? '';
+
     row.sheetName = maprow['sheetName'] ?? '';
     row.rowNo = maprow['rowNo'] ?? '';
     row.quote = maprow['quote'] ?? '';
@@ -126,9 +132,9 @@ class SheetRows {
   }
 
   void toString_() {
-    debugPrint(
-        '''
+    debugPrint('''
       "rownoKey":     $rownoKey
+      "rowkey":     $rowkey
       "sheetname":  $sheetName
       "rowNo":      $rowNo
       "author":     $author
@@ -210,9 +216,9 @@ class SheetRowsHelper {
 
   Future<void> onCreate(Database database, int version) async {
     final db = database;
-    await db.execute(
-        """ CREATE TABLE IF NOT EXISTS sheetRows(
+    await db.execute(""" CREATE TABLE IF NOT EXISTS sheetRows(
             rownoKey TEXT PRIMARY KEY,
+            rowkey TEXT,
             sheetName TEXT,
             rowNo TEXT,
             quote TEXT,
@@ -343,6 +349,7 @@ class SheetRowsHelper {
 
     SheetRows sheetRow = SheetRows();
     sheetRow.rownoKey = valueGet('rownoKey', row);
+    sheetRow.rowkey = valueGet('rowkey', row);
     try {
       sheetRow.sheetName = sheetRow.rownoKey.split('__|__')[0];
       sheetRow.rowNo = sheetRow.rownoKey.split('__|__')[1];
@@ -456,6 +463,20 @@ class SheetRowsHelper {
       'sheetRows',
       where: 'rownoKey = ?',
       whereArgs: [rownoKey],
+    );
+    if (maps.isNotEmpty) {
+      return SheetRows().fromMap(maps.first);
+    }
+
+    return SheetRows();
+  }
+
+  Future<SheetRows> getRowByRowKey(String rowkey) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'sheetRows',
+      where: 'rowkey = ?',
+      whereArgs: [rowkey],
     );
     if (maps.isNotEmpty) {
       return SheetRows().fromMap(maps.first);

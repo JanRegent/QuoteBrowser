@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:get/get.dart';
+import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
+
 import '../../../1PL/widgets/alib/alib.dart';
 import '../../bl.dart';
 
+// ignore: must_be_immutable
 class RepoAdmin extends StatelessWidget {
   const RepoAdmin({super.key});
 
@@ -13,7 +17,8 @@ class RepoAdmin extends StatelessWidget {
               al.messageInfo(context, 'watch sheetrowslog', 'supabase.com', 10);
               await bl.supRepo.sheets2supabase2neon2koyeb();
             },
-            child: const Text('sheets --> supabase > neon > koyeb')));
+            child: const Text('sheets --> supabase > neon > koyeb')),
+        trailing: Obx(() => Text(currentSheet2supabase.value)));
   }
 
   ListTile koyebRepoByRownokey() {
