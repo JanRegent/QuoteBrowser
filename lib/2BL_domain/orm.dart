@@ -73,6 +73,7 @@ class CurrentRow {
   RxString fileUrl = ''.obs;
   //--------------------------ids
   RxString rownoKey = ''.obs;
+  RxString rowkey = ''.obs;
   RxString sheetName = ''.obs;
   RxString rowNo = ''.obs;
   String fileId = '';
@@ -116,6 +117,7 @@ Future currentRowSet(String rownoKey) async {
   SheetRows sheetRow = await bl.sheetRowsHelper.getRowByRownoKey(rownoKey);
   //--------------------------ids
   bl.orm.currentRow.rownoKey.value = sheetRow.rownoKey;
+  bl.orm.currentRow.rowkey.value = sheetRow.rowkey;
   bl.orm.currentRow.sheetName.value = sheetRow.sheetName;
   bl.orm.currentRow.rowNo.value = sheetRow.rowNo;
 
