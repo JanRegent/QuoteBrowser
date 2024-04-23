@@ -59,6 +59,7 @@ class _QuoteEditState extends State<QuoteEdit> {
           leading:
               tagsYellowPopup(context, quoteSetstate, widget.swiperSetstate),
           title: buttRow(context, widget.swiperSetstate),
+          actions: [Icon(Icons.circle, color: setCellColor)],
         ),
         body: SingleChildScrollView(child: quoteTextField()));
   }

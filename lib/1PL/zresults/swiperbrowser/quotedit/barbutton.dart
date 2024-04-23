@@ -11,6 +11,8 @@ import 'stars.dart';
 import 'barpopup.dart';
 import 'setcell.dart';
 
+Color setCellColor = Colors.white;
+
 void selectText(BuildContext context) {
   try {
     bl.orm.currentRow.selectedText.value = quoteEditController.text.substring(
