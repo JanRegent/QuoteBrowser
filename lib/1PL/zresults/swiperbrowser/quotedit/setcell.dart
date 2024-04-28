@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quotebrowser/2BL_domain/orm.dart';
-import 'package:rich_text_controller/rich_text_controller.dart';
+import 'package:get/get.dart';
 
 import '../../../../2BL_domain/bl.dart';
 import '../../../widgets/alib/alertinfo/alertok.dart';
@@ -79,34 +78,44 @@ void setCellAL(String attribName, BuildContext context,
 }
 
 int regpatternMatchMapsIndex = 0;
-void editControlerInit() {
-  String tagsRegex = bl.orm.currentRow.tags.value.replaceAll('#', '|');
+String coloredText = '';
+String editControlerInit() {
+  // List<String> parts = bl.orm.currentRow.yellowParts.value.split('__|__\n');
+  // for (var i = 0; i < parts.length; i++) {
+  //   Map<String, TextStyle> map = {
+  //     parts[i]: const TextStyle(backgroundColor: Colors.yellow)
+  //   };
+  //   matches.add(map);
+  // }
 
-  List<Map<RegExp, TextStyle>> patternMatchMaps = [
-    {
-      RegExp(tagsRegex):
-          const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-    },
-    {
-      RegExp(yellowPartsRegex()):
-          const TextStyle(backgroundColor: Colors.yellow),
-    }
-  ];
+  String tags = bl.orm.currentRow.tags.value.replaceAll('#', '|');
+  for (var i = 0; i < tags.length; i++) {
+    coloredText = coloredText.replaceAll(tags[i], '*_/${tags[i]}*_/');
+  }
 
-  quoteEditController = RichTextController(
-    text: bl.orm.currentRow.quote.value,
-    patternMatchMap: patternMatchMaps[regpatternMatchMapsIndex],
-    onMatch: (List<String> matches) {},
-  );
+  return coloredText;
 }
+
+RxString coloredQuote = ''.obs;
+
+String coloringText() {
+  coloredQuote.value = bl.orm.currentRow.quote.value;
+
+  // List<String> parts = bl.orm.currentRow.yellowParts.value.split('__|__\n');
+  // for (var i = 0; i < parts.length; i++) {
+  //   coloredQuote.value =
+  //       coloredQuote.value.replaceAll(parts[i], '_${parts[i]}_');
+  // }
+
+  List<String> tags = bl.orm.currentRow.tags.value.split('#');
+  for (var i = 0; i < tags.length; i++) {
+    coloredQuote.value =
+        coloredQuote.value.replaceAll(tags[i], '*{color:red}${tags[i]}*');
+  }
+
+  return coloredQuote.value;
+}
+
 
 //-----------------------------------------------------------quoteFireld
-String yellowPartsRegex() {
-  String reg = '';
-  List<String> parts = bl.orm.currentRow.yellowParts.value.split('__|__\n');
-  for (var i = 0; i < parts.length; i++) {
-    reg = reg + parts[i].trim();
-    if (i > 0) reg = '$reg|';
-  }
-  return reg;
-}
+

@@ -821,14 +821,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
-  rich_text_controller:
-    dependency: "direct main"
-    description:
-      name: rich_text_controller
-      sha256: "2697b0313c03429ac4d924e14f16e07d16e31a234d31c46bcce9f8f8e713f05f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.2"
   rxdart:
     dependency: transitive
     description:
@@ -933,6 +925,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  simple_rich_text:
+    dependency: "direct main"
+    description:
+      name: simple_rich_text
+      sha256: ba678f8075336995604ccc1e8bf407dc6455e0d6dee17c2aabadba38a9dbd23f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.49"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_rich_text/simple_rich_text.dart';
 
 import '../../../../2BL_domain/bl.dart';
 
@@ -24,9 +25,7 @@ class _QuoteEditState extends State<QuoteEdit> {
 
   @override
   void initState() {
-    editControlerInit();
     super.initState();
-    quoteEditController.text = bl.orm.currentRow.quote.value;
   }
 
   @override
@@ -46,6 +45,16 @@ class _QuoteEditState extends State<QuoteEdit> {
       maxLines: 20,
       onChanged: (text) async {},
     );
+  }
+
+  SimpleRichText simpleColoredText() {
+    return SimpleRichText(coloringText(),
+        logIt: false,
+        maxLines: 20,
+        style: const TextStyle(color: Colors.black),
+        textAlign: TextAlign.left,
+        textOverflow: TextOverflow.ellipsis,
+        textScaleFactor: 1.5);
   }
 
   void quoteSetstate() {
