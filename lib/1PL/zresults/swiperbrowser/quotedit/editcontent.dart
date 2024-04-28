@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../../2BL_domain/bl.dart';
-import '../../../../2BL_domain/orm.dart';
-import '../../../widgets/alib/alib.dart';
 
 class EditContent extends StatefulWidget {
   const EditContent({super.key});
@@ -23,24 +20,6 @@ class _EditContentState extends State<EditContent> {
   }
 
   bool isSaving = false;
-  IconButton saveQuote() {
-    return IconButton(
-        onPressed: () async {
-          setState(() {
-            isSaving = true;
-          });
-          bl.orm.currentRow.quote.value = editControler.text;
-          String rownoKey = await bl.orm.currentRow
-              .setCellBL('quote', bl.orm.currentRow.quote.value);
-          currentRowSet(rownoKey);
-          setState(() {
-            isSaving = false;
-          });
-          // ignore: use_build_context_synchronously
-          Navigator.pop(context);
-        },
-        icon: const Icon(Icons.save));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +29,6 @@ class _EditContentState extends State<EditContent> {
         child: SafeArea(
           child: ListView(
             children: <Widget>[
-              ListTile(
-                  leading: al.iconBack(context),
-                  title: Row(
-                    children: [
-                      isSaving
-                          ? const CircularProgressIndicator()
-                          : saveQuote(),
-                      Obx(() => Text(bl.orm.currentRow.author.value))
-                    ],
-                  )),
               Card(
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(

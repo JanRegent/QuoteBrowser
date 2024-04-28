@@ -15,25 +15,23 @@ void setCellAL(String attribName, BuildContext context,
   switch (attribName) {
     case 'author':
       bl.orm.currentRow.author.value = bl.orm.currentRow.selectedText.value;
-      await bl.orm.currentRow
-          .setCellBL('author', bl.orm.currentRow.author.value);
+      bl.orm.currentRow.setCellBL('author', bl.orm.currentRow.author.value);
       bl.orm.currentRow.attribNameLast.value = attribName;
       break;
     case 'book':
       bl.orm.currentRow.book.value = bl.orm.currentRow.selectedText.value;
-      await bl.orm.currentRow.setCellBL('book', bl.orm.currentRow.book.value);
+      bl.orm.currentRow.setCellBL('book', bl.orm.currentRow.book.value);
       bl.orm.currentRow.attribNameLast.value = attribName;
       break;
     case 'parPage':
       bl.orm.currentRow.parPage.value;
       bl.orm.currentRow.parPage.value +=
           ' ${bl.orm.currentRow.selectedText.value}';
-      await bl.orm.currentRow
-          .setCellBL(attribName, bl.orm.currentRow.parPage.value);
+      bl.orm.currentRow.setCellBL(attribName, bl.orm.currentRow.parPage.value);
       bl.orm.currentRow.attribNameLast.value = attribName;
       break;
     case 'vydal':
-      await bl.orm.currentRow
+      bl.orm.currentRow
           .setCellBL(attribName, bl.orm.currentRow.selectedText.value);
       break;
     case 'tags':
@@ -46,8 +44,7 @@ void setCellAL(String attribName, BuildContext context,
       bl.orm.currentRow.tags.value +=
           '#${bl.orm.currentRow.selectedText.value}';
       bl.tagsParts.pureTags();
-      await bl.orm.currentRow
-          .setCellBL(attribName, bl.orm.currentRow.tags.value);
+      bl.orm.currentRow.setCellBL(attribName, bl.orm.currentRow.tags.value);
       bl.orm.currentRow.attribNameLast.value = attribName;
       break;
     case 'yellowParts':
@@ -62,13 +59,12 @@ void setCellAL(String attribName, BuildContext context,
           '__|__\n${bl.orm.currentRow.selectedText.value}';
 
       bl.tagsParts.pureYellowparts();
-      await bl.orm.currentRow
+      bl.orm.currentRow
           .setCellBL(attribName, bl.orm.currentRow.yellowParts.value);
       bl.orm.currentRow.attribNameLast.value = attribName;
       break;
     case 'original':
-      await bl.orm.currentRow
-          .setCellBL(attribName, bl.orm.currentRow.original.value);
+      bl.orm.currentRow.setCellBL(attribName, bl.orm.currentRow.original.value);
       break;
     case '__othersFields__':
       break;

@@ -30,11 +30,10 @@ class _TagsYellowPageState extends State<TagsYellowPage> {
           Navigator.pop(context);
           if (widget.tagsYellow == 'tags') {
             bl.orm.currentRow.tags.value = items.join('#');
-            await bl.orm.currentRow
-                .setCellBL('tags', bl.orm.currentRow.tags.value);
+            bl.orm.currentRow.setCellBL('tags', bl.orm.currentRow.tags.value);
           } else {
             bl.orm.currentRow.yellowParts.value = items.join('__|__\n');
-            await bl.orm.currentRow
+            bl.orm.currentRow
                 .setCellBL('yellowParts', bl.orm.currentRow.yellowParts.value);
           }
         },

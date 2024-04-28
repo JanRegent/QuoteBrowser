@@ -204,8 +204,8 @@ class GService23 {
 
   //----------------------------------------------------------------------set
 
-  Future<List> setCellDL(String sheetName, String columnName,
-      String cellContent, String rowNo) async {
+  void setCellDL(String sheetName, String columnName, String cellContent,
+      String rowNo) async {
     String rownokey = '${sheetName}__|__$rowNo';
     //---------------------------------------------------------------to supabase
     try {
@@ -230,16 +230,9 @@ class GService23 {
           'rowNo': rowNo
         },
       );
-    } catch (_) {
-      return [];
-    }
-
-    List<String> newRow = [];
-    try {
-      newRow = blUti.toListString(response.data['data']);
-    } catch (_) {
-      debugPrint(response.data['error']);
-      return [];
+    } catch (e) {
+      debugPrint(
+          'setCellDL(String $sheetName, String $columnName, String $cellContent, String $rowNo \n$e');
     }
 
     bl.orm.currentRow.setCellColor = Colors.red;
@@ -247,7 +240,6 @@ class GService23 {
     bl.sheetRowsHelper.insertRowsCollFromSheet(response);
 
     bl.orm.currentRow.setCellColor = Colors.white;
-    return newRow;
   }
 
   Future<String> appendQuote(

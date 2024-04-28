@@ -92,21 +92,16 @@ class CurrentRow {
   RxString selectedText = ''.obs;
   RxString attribNameLast = '?'.obs;
 
-  Future setCellBL(String columnName, String cellContent) async {
+  void setCellBL(String columnName, String cellContent) async {
     if (columnName.isEmpty) return;
     if (bl.orm.currentRow.sheetName.value.isEmpty) return;
     try {
-      List newRow = await dl.gservice23.setCellDL(
-          bl.orm.currentRow.sheetName.value,
-          columnName,
-          cellContent,
-          bl.orm.currentRow.rowNo.value);
+      dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, columnName,
+          cellContent, bl.orm.currentRow.rowNo.value);
 
       bl.orm.currentRow.selectedText.value = '';
-      return newRow[0]; //rownoKey
     } catch (e) {
       debugPrint('setCellBL($columnName) \n$e');
-      return ''; //rownoKey
     }
   }
 }

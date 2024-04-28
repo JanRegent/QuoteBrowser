@@ -53,7 +53,7 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
     onTap: () async {
       String authorSelected = await authorSelect();
       if (authorSelected.isEmpty) return;
-      await bl.orm.currentRow.setCellBL('author', authorSelected);
+      bl.orm.currentRow.setCellBL('author', authorSelected);
       currentRowSet(bl.orm.currentRow.rownoKey.value);
       bl.orm.currentRow.selectedText.value = '';
     },
@@ -67,7 +67,7 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
     onTap: () async {
       String bookSelected = await bookSelect(context);
       if (bookSelected.isEmpty) return;
-      await bl.orm.currentRow.setCellBL('book', bookSelected);
+      bl.orm.currentRow.setCellBL('book', bookSelected);
       currentRowSet(bl.orm.currentRow.rownoKey.value);
       bl.orm.currentRow.selectedText.value = '';
     },
@@ -111,8 +111,7 @@ Widget favButt() {
           bl.orm.currentRow.fav.value = '';
         }
 
-        await bl.orm.currentRow
-            .setCellBL('favorite', bl.orm.currentRow.fav.value);
+        bl.orm.currentRow.setCellBL('favorite', bl.orm.currentRow.fav.value);
       });
 }
 

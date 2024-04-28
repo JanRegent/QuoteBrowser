@@ -46,7 +46,7 @@ List<PopupMenuItem> buttonRowMenu(BuildContext context) {
       child: const Text("quote from clipboard Replace"),
       onTap: () async {
         FlutterClipboard.paste().then((value) async {
-          await bl.orm.currentRow.setCellBL('quote', value);
+          bl.orm.currentRow.setCellBL('quote', value);
         });
       },
     ),
@@ -55,7 +55,7 @@ List<PopupMenuItem> buttonRowMenu(BuildContext context) {
       child: const Text("quote from clipboard Append"),
       onTap: () async {
         FlutterClipboard.paste().then((value) async {
-          await bl.orm.currentRow
+          bl.orm.currentRow
               .setCellBL('quote', bl.orm.currentRow.quote + '\n\n' + value);
         });
       },
@@ -75,7 +75,7 @@ List<PopupMenuItem> buttonRowMenu(BuildContext context) {
       child: const Text("__toRead__ remove"),
       onTap: () async {
         try {
-          await bl.orm.currentRow.setCellBL(
+          bl.orm.currentRow.setCellBL(
               'dateinsert',
               bl.orm.currentRow.dateinsert
                   .toString()

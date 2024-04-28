@@ -35,7 +35,7 @@ PopupMenuItem pastePopupMenuItem(String columnName) {
           if (['fileUrl', 'sourceUrl', 'folder'].contains(columnName)) {
             value = blUti.pureHttpGDriveLink(value);
           }
-          await bl.orm.currentRow.setCellBL(columnName, value);
+          bl.orm.currentRow.setCellBL(columnName, value);
         });
       },
     ),
@@ -82,29 +82,26 @@ void clearField(String attribName) async {
   switch (attribName) {
     case 'author':
       bl.orm.currentRow.author.value = '';
-      await bl.orm.currentRow
-          .setCellBL('author', bl.orm.currentRow.author.value);
+      bl.orm.currentRow.setCellBL('author', bl.orm.currentRow.author.value);
       break;
     case 'book':
       bl.orm.currentRow.book.value = '';
-      await bl.orm.currentRow.setCellBL('book', bl.orm.currentRow.book.value);
+      bl.orm.currentRow.setCellBL('book', bl.orm.currentRow.book.value);
       break;
     case 'parPage':
       bl.orm.currentRow.parPage.value = '';
-      await bl.orm.currentRow
-          .setCellBL('parPage', bl.orm.currentRow.parPage.value);
+      bl.orm.currentRow.setCellBL('parPage', bl.orm.currentRow.parPage.value);
       break;
     case 'vydal':
-      await bl.orm.currentRow.setCellBL('vydal', '');
+      bl.orm.currentRow.setCellBL('vydal', '');
       break;
     case 'tags':
       bl.orm.currentRow.tags.value = '';
-      await bl.orm.currentRow.setCellBL('tags', bl.orm.currentRow.tags.value);
+      bl.orm.currentRow.setCellBL('tags', bl.orm.currentRow.tags.value);
       break;
     case 'original':
       bl.orm.currentRow.original.value = '';
-      await bl.orm.currentRow
-          .setCellBL('original', bl.orm.currentRow.original.value);
+      bl.orm.currentRow.setCellBL('original', bl.orm.currentRow.original.value);
       return;
     case '__othersFields__':
       return;
