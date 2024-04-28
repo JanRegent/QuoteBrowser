@@ -50,14 +50,6 @@ class _QuoteEditState extends State<QuoteEdit> {
     setState(() {});
   }
 
-  Widget previewTags() {
-    return PreviewPage('tags');
-  }
-
-  Widget previewParts() {
-    return PreviewPage('parts');
-  }
-
   ElevatedButton previewButt() {
     return ElevatedButton.icon(
       icon: const Icon(Icons.preview),
@@ -65,13 +57,13 @@ class _QuoteEditState extends State<QuoteEdit> {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PreviewPage('tags')),
+          MaterialPageRoute(builder: (context) => const PreviewPage('tags')),
         );
       },
       onLongPress: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PreviewPage('parts')),
+          MaterialPageRoute(builder: (context) => const PreviewPage('parts')),
         );
       },
     );
