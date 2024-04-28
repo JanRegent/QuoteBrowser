@@ -231,7 +231,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
           return;
         }
         saving.value = 'saving to gdrive';
-        String rowStr = await dl.httpService.appendQuote(currRow.sheetName,
+        String rowStr = await dl.gservice23.appendQuote(currRow.sheetName,
             quoteContr.text, parPageContr.text, currRow.author);
         Map rowMap = jsonDecode(rowStr);
         debugPrint(rowStr);

@@ -12,7 +12,7 @@ import 'backendurl.dart';
 ///CORS permission only for GET method.
 ///https://stackoverflow.com/questions/53433938/how-do-i-allow-a-cors-requests-in-my-google-script
 ///
-class HttpService {
+class GService23 {
   final dio = Dio();
 
   //-------------------------------------------------------------------get rows

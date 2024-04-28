@@ -111,7 +111,7 @@ class TagIndexHelper {
     final db = await database;
     final batch = db.batch();
     List<TagIndex> tagList = [];
-    List tagIndex = await dl.httpService.getAllrows('__tagSheets__');
+    List tagIndex = await dl.gservice23.getAllrows('__tagSheets__');
 
     List<String> cols = blUti.toListString(tagIndex[0]);
 

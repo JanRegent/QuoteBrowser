@@ -71,7 +71,7 @@ create table
 
   Future insertTagindex() async {
     bl.supRepo.log2sheetrows('-----tagindex start');
-    List maprows = await dl.httpService.tagindex2sup();
+    List maprows = await dl.gservice23.tagindex2sup();
     bl.supRepo.log2sheetrows('rowsat input: ${maprows.length}');
     await supabase.from('tagindex').insert(maprows);
     bl.supRepo.log2sheetrows('-----tagindex end');
@@ -138,7 +138,7 @@ create table
       if (dl.sheetUrls[sheetName].toString().isEmpty) return;
       log2sheetrows('/--- $sheetName ---\\');
       try {
-        List maprows = await dl.httpService.rowmapsGet(sheetName);
+        List maprows = await dl.gservice23.rowmapsGet(sheetName);
         await insertSheet(maprows, sheetName); //1
         List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
         await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2

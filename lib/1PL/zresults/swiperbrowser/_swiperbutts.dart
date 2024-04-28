@@ -31,11 +31,11 @@ class _SwiperButtsState extends State<SwiperButts> {
 
     if (currentSS.currentHomeTabIndex == 1) {
       bl.booksCount[bl.orm.currentRow.sheetName] = currentSS.swiperIndex;
-      dl.httpService.setCellDL('booksList', 'swiperIndex',
+      dl.gservice23.setCellDL('booksList', 'swiperIndex',
           currentSS.swiperIndex.toString(), currentSS.bookListRow.rowNo);
     }
     if (currentSS.currentHomeTabIndex == 0) {
-      dl.httpService.setCellDL(
+      dl.gservice23.setCellDL(
           'dailyList',
           'swiperIndex',
           currentSS.swiperIndex.toString(),

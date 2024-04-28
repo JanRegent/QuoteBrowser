@@ -19,7 +19,7 @@ class DailyList {
   }
 
   Future getData() async {
-    List data = await dl.httpService.getPureSheet('dailyList');
+    List data = await dl.gservice23.getPureSheet('dailyList');
 
     cols = blUti.toListString(data[0]);
     int sheetGroupIx = cols.indexOf('sheetGroup');

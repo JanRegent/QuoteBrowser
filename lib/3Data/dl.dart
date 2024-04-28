@@ -1,11 +1,11 @@
-import 'providers/gwebapp/diocrud.dart';
+import 'providers/gwebapp/gservice23.dart';
 
 Dl dl = Dl();
 
 String rootSheetId = '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU';
 
 class Dl {
-  HttpService httpService = HttpService();
+  GService23 gservice23 = GService23();
 
   Map sheetUrls = {
     'rootSheetId': rootSheetId,

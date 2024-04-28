@@ -10,7 +10,7 @@ class AuthorBooksMap {
 
   Future getData() async {
     dl.sheetUrls['__books__'] = dl.sheetUrls['rootSheetId'];
-    List data = await dl.httpService.getPureSheet('__books__');
+    List data = await dl.gservice23.getPureSheet('__books__');
     cols = blUti.toListString(data[0]);
     int authorIx = cols.indexOf('author');
     int bookIx = cols.indexOf('book');

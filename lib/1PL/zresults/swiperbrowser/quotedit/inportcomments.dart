@@ -13,7 +13,7 @@ Future importComments(BuildContext context) async {
       '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}';
   al.showTopSnackBar(context, 'Importing comments at \n\n$rownoKey', 15);
 
-  await dl.httpService.comments2tagsYellowparts(rownoKey);
+  await dl.gservice23.comments2tagsYellowparts(rownoKey);
 
   await currentRowSet(rownoKey);
   // ignore: use_build_context_synchronously

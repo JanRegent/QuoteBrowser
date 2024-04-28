@@ -6,7 +6,7 @@ import '../../repos/sharedprefs.dart';
 class ByWord {
   Future searchSheetsColumns2(
       String word1, String columnName1, word2, String columnName2) async {
-    currentSS.keys = await dl.httpService
+    currentSS.keys = await dl.gservice23
         .searchSheetsColumns2(word1, columnName1, word2, columnName2);
 
     return currentSS.keys.length;
@@ -19,7 +19,7 @@ class ByWord {
     String word4,
     String word5,
   ) async {
-    currentSS.keys = await dl.httpService
+    currentSS.keys = await dl.gservice23
         .fullText5wordsinService(word1, word2, word3, word4, word5);
 
     return currentSS.keys.length;

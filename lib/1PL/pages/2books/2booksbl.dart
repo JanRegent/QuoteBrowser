@@ -30,7 +30,7 @@ Future getBookContentShow(
 Future<String> book4swipper(String sheetName, BuildContext context) async {
   // ignore: use_build_context_synchronously
   al.messageInfo(context, 'Loading', sheetName, 3);
-  currentSS.keys = await dl.httpService.getAllrows(sheetName);
+  currentSS.keys = await dl.gservice23.getAllrows(sheetName);
 
   if (currentSS.keys.isEmpty) {
     return '0';

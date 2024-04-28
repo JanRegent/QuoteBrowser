@@ -96,7 +96,7 @@ class CurrentRow {
     if (columnName.isEmpty) return;
     if (bl.orm.currentRow.sheetName.value.isEmpty) return;
     try {
-      List newRow = await dl.httpService.setCellDL(
+      List newRow = await dl.gservice23.setCellDL(
           bl.orm.currentRow.sheetName.value,
           columnName,
           cellContent,

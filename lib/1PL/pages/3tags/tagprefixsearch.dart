@@ -10,7 +10,7 @@ import '../../widgets/alib/alib.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
 
 Future<String> tag4swipper(String tagPrefixes) async {
-  currentSS.keys = await dl.httpService.getrowsByTagPrefixes(tagPrefixes);
+  currentSS.keys = await dl.gservice23.getrowsByTagPrefixes(tagPrefixes);
 
   if (currentSS.keys.isEmpty) {
     return '0';
@@ -75,7 +75,7 @@ class _TagPrefixSearchState extends State<TagPrefixSearch> {
       return;
     }
     bl.homeTitle.value = 'Get tags with prefix\n$tagPrefix';
-    incList = await dl.httpService.getTagsByPrefix(tagPrefixController.text);
+    incList = await dl.gservice23.getTagsByPrefix(tagPrefixController.text);
     bl.homeTitle.value = '';
     setState(() {});
   }
