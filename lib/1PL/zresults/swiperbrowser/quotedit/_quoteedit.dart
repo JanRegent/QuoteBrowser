@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:simple_rich_text/simple_rich_text.dart';
 
 import '../../../../2BL_domain/bl.dart';
 
 import '../../../../2BL_domain/orm.dart';
 
+import '../previewpage.dart';
 import 'barbutton.dart';
-import 'setcell.dart';
 
 // ignore: must_be_immutable
 class QuoteEdit extends StatefulWidget {
@@ -47,18 +46,35 @@ class _QuoteEditState extends State<QuoteEdit> {
     );
   }
 
-  SimpleRichText simpleColoredText() {
-    return SimpleRichText(coloringText(),
-        logIt: false,
-        maxLines: 20,
-        style: const TextStyle(color: Colors.black),
-        textAlign: TextAlign.left,
-        textOverflow: TextOverflow.ellipsis,
-        textScaleFactor: 1.5);
-  }
-
   void quoteSetstate() {
     setState(() {});
+  }
+
+  Widget previewTags() {
+    return PreviewPage('tags');
+  }
+
+  Widget previewParts() {
+    return PreviewPage('parts');
+  }
+
+  ElevatedButton previewButt() {
+    return ElevatedButton.icon(
+      icon: const Icon(Icons.preview),
+      label: const Text(''),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PreviewPage('tags')),
+        );
+      },
+      onLongPress: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PreviewPage('parts')),
+        );
+      },
+    );
   }
 
   @override //printSelectedText()
@@ -69,6 +85,7 @@ class _QuoteEditState extends State<QuoteEdit> {
           leading:
               tagsYellowPopup(context, quoteSetstate, widget.swiperSetstate),
           title: buttRow(context, widget.swiperSetstate),
+          actions: [previewButt()],
         ),
         body: SingleChildScrollView(child: quoteTextField()));
   }

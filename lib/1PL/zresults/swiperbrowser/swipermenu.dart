@@ -82,15 +82,6 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
         )),
       ),
       PopupMenuItem(
-          child: InkWell(
-        child: const Icon(Icons.preview),
-        onTap: () async {
-          bl.userViewMode = !bl.userViewMode;
-          Navigator.of(context).pop();
-          swiperSetstate();
-        },
-      )),
-      PopupMenuItem(
         child: PopupMenuButton(
           child: const Text('File'),
           onSelected: (String result) {

@@ -2,7 +2,6 @@
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
 
@@ -24,10 +23,6 @@ Bl bl = Bl();
 
 class Bl {
   bool devMode = false;
-  bool userViewMode = true;
-  bool highligthOnOff = false;
-
-  Color saveHeadColor = Colors.lightBlue;
 
   DailyList dailyList = DailyList();
   BooksList bookList = BooksList();
