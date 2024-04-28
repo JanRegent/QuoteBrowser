@@ -9,7 +9,6 @@ import 'repos/sheetrowshelper.dart';
 
 void indexChanged(int rowIndex) async {
   bl.orm.currentRow.selectedText.value = '';
-  bl.orm.currentRow.attribNameLast.value = '';
 
   currentSS.swiperIndex.value = rowIndex;
   if (currentSS.swiperIndex > currentSS.keys.length - 1) {
@@ -90,11 +89,11 @@ class CurrentRow {
 
   //-------------------------------------------------------
   RxString selectedText = ''.obs;
-  RxString attribNameLast = '?'.obs;
 
   void setCellBL(String columnName, String cellContent) async {
     if (columnName.isEmpty) return;
     if (bl.orm.currentRow.sheetName.value.isEmpty) return;
+    bl.orm.currentRow.setCellColor = Colors.red;
     try {
       dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, columnName,
           cellContent, bl.orm.currentRow.rowNo.value);
@@ -103,6 +102,7 @@ class CurrentRow {
     } catch (e) {
       debugPrint('setCellBL($columnName) \n$e');
     }
+    bl.orm.currentRow.setCellColor = Colors.white;
   }
 }
 

@@ -7,7 +7,6 @@ import '../../../widgets/alib/alertinfo/alertok.dart';
 void setCellAL(String attribName, BuildContext context,
     VoidCallback swiperSetstate) async {
   if (bl.orm.currentRow.selectedText.value.isEmpty) return;
-  bl.orm.currentRow.attribNameLast.value = '';
 
   bl.orm.currentRow.setCellColor = Colors.red;
 
@@ -15,19 +14,16 @@ void setCellAL(String attribName, BuildContext context,
     case 'author':
       bl.orm.currentRow.author.value = bl.orm.currentRow.selectedText.value;
       bl.orm.currentRow.setCellBL('author', bl.orm.currentRow.author.value);
-      bl.orm.currentRow.attribNameLast.value = attribName;
       break;
     case 'book':
       bl.orm.currentRow.book.value = bl.orm.currentRow.selectedText.value;
       bl.orm.currentRow.setCellBL('book', bl.orm.currentRow.book.value);
-      bl.orm.currentRow.attribNameLast.value = attribName;
       break;
     case 'parPage':
       bl.orm.currentRow.parPage.value;
       bl.orm.currentRow.parPage.value +=
           ' ${bl.orm.currentRow.selectedText.value}';
       bl.orm.currentRow.setCellBL(attribName, bl.orm.currentRow.parPage.value);
-      bl.orm.currentRow.attribNameLast.value = attribName;
       break;
     case 'vydal':
       bl.orm.currentRow
@@ -38,20 +34,19 @@ void setCellAL(String attribName, BuildContext context,
       Navigator.pop(context);
       if (bl.orm.currentRow.selectedText.value.length > 20) {
         warningDialog('Tag length > 20', context);
-        return;
+        break;
       }
       bl.orm.currentRow.tags.value +=
           '#${bl.orm.currentRow.selectedText.value}';
       bl.tagsParts.pureTags();
       bl.orm.currentRow.setCellBL(attribName, bl.orm.currentRow.tags.value);
-      bl.orm.currentRow.attribNameLast.value = attribName;
       break;
     case 'yellowParts':
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
       if (bl.orm.currentRow.selectedText.value.length <= 10) {
         warningDialog('yellowPart length <= 10', context);
-        return;
+        break;
       }
 
       bl.orm.currentRow.yellowParts.value +=
@@ -60,7 +55,6 @@ void setCellAL(String attribName, BuildContext context,
       bl.tagsParts.pureYellowparts();
       bl.orm.currentRow
           .setCellBL(attribName, bl.orm.currentRow.yellowParts.value);
-      bl.orm.currentRow.attribNameLast.value = attribName;
       break;
     case 'original':
       bl.orm.currentRow.setCellBL(attribName, bl.orm.currentRow.original.value);
@@ -72,7 +66,6 @@ void setCellAL(String attribName, BuildContext context,
       break;
   }
   bl.orm.currentRow.selectedText.value = '';
-  bl.orm.currentRow.setCellColor == Colors.white;
   editControlerInit();
   swiperSetstate();
 }

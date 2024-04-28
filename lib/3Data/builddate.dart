@@ -1,1 +1,1 @@
-String buildDate = ' 2024_04_28__13_15_build_AL-quotedit--simpleColoredText--- ';  
+String buildDate = ' 2024_04_28__15_52_build_AL-quotedit--noAwait--- ';  
