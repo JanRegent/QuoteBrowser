@@ -56,7 +56,7 @@ class _QuoteEditState extends State<QuoteEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: setCellColor,
+          backgroundColor: bl.orm.currentRow.setCellColor,
           leading:
               tagsYellowPopup(context, quoteSetstate, widget.swiperSetstate),
           title: buttRow(context, widget.swiperSetstate),

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
@@ -206,6 +206,15 @@ class GService23 {
 
   Future<List> setCellDL(String sheetName, String columnName,
       String cellContent, String rowNo) async {
+    String rownokey = '${sheetName}__|__$rowNo';
+    //---------------------------------------------------------------to supabase
+    try {
+      bl.supRepo.setCellDL(rownokey, columnName, cellContent);
+    } catch (e) {
+      debugPrint('setCellDL-->supabase $rownokey \n$e');
+    }
+
+    //---------------------------------------------------------------to sheet
     // The below request is the same as above.
     late Response response;
     try {
@@ -224,12 +233,7 @@ class GService23 {
     } catch (_) {
       return [];
     }
-    String rownokey = '${sheetName}__|__$rowNo';
-    try {
-      bl.supRepo.setCellDL(rownokey, columnName, cellContent);
-    } catch (e) {
-      debugPrint('setCellDL-->supabase $rownokey \n$e');
-    }
+
     List<String> newRow = [];
     try {
       newRow = blUti.toListString(response.data['data']);
@@ -238,11 +242,11 @@ class GService23 {
       return [];
     }
 
-    bl.orm.currentRow.setCellDLOn = true;
+    bl.orm.currentRow.setCellColor = Colors.red;
 
     bl.sheetRowsHelper.insertRowsCollFromSheet(response);
 
-    bl.orm.currentRow.setCellDLOn = false;
+    bl.orm.currentRow.setCellColor = Colors.white;
     return newRow;
   }
 

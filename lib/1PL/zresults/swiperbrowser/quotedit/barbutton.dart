@@ -11,8 +11,6 @@ import 'stars.dart';
 import 'barpopup.dart';
 import 'setcell.dart';
 
-Color setCellColor = Colors.white;
-
 void selectText(BuildContext context) {
   try {
     bl.orm.currentRow.selectedText.value = quoteEditController.text.substring(
@@ -166,12 +164,6 @@ Container buttRow(BuildContext context, VoidCallback swiperSetstate) {
   return Container(
     margin: const EdgeInsets.all(10),
     padding: const EdgeInsets.all(5),
-    decoration: BoxDecoration(
-        color: Colors.yellow[100],
-        border: Border.all(
-          color: bl.orm.currentRow.setCellDLOn ? Colors.red : Colors.white,
-          width: 5,
-        )),
     child: ListTile(
       leading: personPopup(context, swiperSetstate),
       trailing: PopupMenuButton(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quotebrowser/1PL/zresults/swiperbrowser/quotedit/barbutton.dart';
 import 'package:quotebrowser/2BL_domain/orm.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
 
@@ -11,7 +10,7 @@ void setCellAL(String attribName, BuildContext context,
   if (bl.orm.currentRow.selectedText.value.isEmpty) return;
   bl.orm.currentRow.attribNameLast.value = '';
 
-  setCellColor = Colors.red;
+  bl.orm.currentRow.setCellColor = Colors.red;
 
   switch (attribName) {
     case 'author':
@@ -78,9 +77,8 @@ void setCellAL(String attribName, BuildContext context,
       break;
   }
   bl.orm.currentRow.selectedText.value = '';
-  bl.orm.currentRow.setCellDLOn = false;
+  bl.orm.currentRow.setCellColor == Colors.white;
   editControlerInit();
-  setCellColor = Colors.white;
   swiperSetstate();
 }
 

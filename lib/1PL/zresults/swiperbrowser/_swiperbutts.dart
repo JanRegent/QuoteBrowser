@@ -49,7 +49,7 @@ class _SwiperButtsState extends State<SwiperButts> {
       const Spacer(),
       ElevatedButton(
         onPressed: () {
-          if (bl.orm.currentRow.setCellDLOn) return;
+          if (bl.orm.currentRow.setCellColor == Colors.red) return;
           currentSS.swiperIndex -= 1;
           indexChanged(currentSS.swiperIndex.value);
           widget.setStateSwiper();
@@ -65,7 +65,7 @@ class _SwiperButtsState extends State<SwiperButts> {
       //
       TextButton(
           onPressed: () {
-            if (bl.orm.currentRow.setCellDLOn) return;
+            if (bl.orm.currentRow.setCellColor == Colors.red) return;
             showGotoPopupMenu(context, widget.setStateSwiper);
           },
           child: Obx(() => Text(
@@ -74,7 +74,7 @@ class _SwiperButtsState extends State<SwiperButts> {
       ElevatedButton(
         //----------------------------------------forward --next
         onPressed: () {
-          if (bl.orm.currentRow.setCellDLOn) return;
+          if (bl.orm.currentRow.setCellColor == Colors.red) return;
           currentSS.swiperIndex += 1;
           indexChanged(currentSS.swiperIndex.value);
           widget.setStateSwiper();

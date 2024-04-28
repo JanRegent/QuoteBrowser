@@ -57,7 +57,7 @@ void currentRowNew() {
 }
 
 class CurrentRow {
-  bool setCellDLOn = false;
+  Color setCellColor = Colors.white;
   RxString quote = ''.obs;
   RxString original = ''.obs;
   //-----------------------attribs
