@@ -94,6 +94,7 @@ class CurrentRow {
     if (columnName.isEmpty) return;
     if (bl.orm.currentRow.sheetName.value.isEmpty) return;
     bl.orm.currentRow.setCellColor = Colors.red;
+
     try {
       dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, columnName,
           cellContent, bl.orm.currentRow.rowNo.value);

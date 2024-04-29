@@ -29,7 +29,7 @@ class _QuoteEditState extends State<QuoteEdit> {
 
   @override
   void dispose() {
-    quoteEditController.dispose();
+    //quoteEditController.dispose();
     super.dispose();
   }
 
@@ -57,13 +57,7 @@ class _QuoteEditState extends State<QuoteEdit> {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const PreviewPage('tags')),
-        );
-      },
-      onLongPress: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const PreviewPage('parts')),
+          MaterialPageRoute(builder: (context) => const PreviewPage()),
         );
       },
     );
