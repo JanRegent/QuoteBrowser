@@ -27,7 +27,7 @@ class PreviewPage extends StatelessWidget {
             color: Colors.black,
           ),
           textAlign: TextAlign
-              .justify, // You can use any attribute of the RichText widget
+              .left, // You can use any attribute of the RichText widget
         ));
   }
 }
