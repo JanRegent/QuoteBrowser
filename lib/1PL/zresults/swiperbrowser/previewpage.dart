@@ -65,8 +65,9 @@ Map<String, HighlightedWord> highParts() {
 
   for (var i = 0; i < parts.length; i++) {
     if (parts[i].isEmpty) continue;
-    List<String> partwords = parts[i].split(' ');
+    List<String> partwords = parts[i].replaceAll(',', '').trim().split(' ');
     for (var wix = 0; wix < partwords.length; wix++) {
+      if (partwords[wix].length <= 2) continue;
       words.addAll({
         partwords[wix]: HighlightedWord(
           onTap: () {
