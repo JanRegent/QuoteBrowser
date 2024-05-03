@@ -14,7 +14,7 @@ Future importComments(BuildContext context) async {
   al.showTopSnackBar(context, 'Importing comments at \n\n$rownoKey', 15);
 
   await dl.gservice23.comments2tagsYellowparts(rownoKey);
-
+  //iporttSupUpsert
   await currentRowSet(rownoKey);
   // ignore: use_build_context_synchronously
   al.showTopSnackBar(context, 'Import done at \n\n$rownoKey', 3);

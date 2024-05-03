@@ -19,7 +19,7 @@ List<PopupMenuItem> buttonRowMenu(BuildContext context) {
     PopupMenuItem(
       value: '/OthersFields',
       child: IconButton(
-        icon: const Icon(Icons.attribution),
+        icon: const Icon(Icons.details),
         onPressed: () async {
           await Navigator.push(
             context,
