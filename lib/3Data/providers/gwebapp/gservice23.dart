@@ -116,8 +116,21 @@ class GService23 {
         'rownoKey': rownoKey
       },
     );
+    //bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    List data = response.data['data'];
+    String tags = data[0].toString().replaceAll('##', '#');
+    dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, 'tags', tags,
+        bl.orm.currentRow.rowNo.value);
+    bl.supRepo.setCellDL(bl.orm.currentRow.rownoKey.value, 'tags', tags);
 
-    bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, 'yellowParts',
+        data[1], bl.orm.currentRow.rowNo.value);
+    bl.supRepo
+        .setCellDL(bl.orm.currentRow.rownoKey.value, 'yellowParts', data[1]);
+
+    dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, 'quote', data[2],
+        bl.orm.currentRow.rowNo.value);
+    bl.supRepo.setCellDL(bl.orm.currentRow.rownoKey.value, 'quote', data[2]);
     return response.data['data'];
   }
 

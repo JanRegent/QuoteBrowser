@@ -74,10 +74,8 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
               '${bl.orm.currentRow.rowkey.value}\n${bl.orm.currentRow.dateinsert} \n${bl.orm.currentRow.rownoKey}'),
           onPressed: () async {
             String? fileUrl = dl.sheetUrls[bl.orm.currentRow.sheetName.value];
-            String rownoInrowkey = bl.orm.currentRow.rowkey.value
-                .replaceAll(RegExp("[a-zA-Z:s]"), "");
-            await al.jump2sheetRow(
-                fileUrl!, rownoInrowkey, context, 'Jump to row');
+            await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowNo.value,
+                context, 'Jump to row');
           },
         )),
       ),
