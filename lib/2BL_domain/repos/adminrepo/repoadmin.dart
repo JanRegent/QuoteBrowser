@@ -40,6 +40,15 @@ class RepoAdmin extends StatelessWidget {
             child: const Text('koyeb deleteAll')));
   }
 
+  ListTile sheet2sup() {
+    return ListTile(
+        title: ElevatedButton(
+            onPressed: () async {
+              await bl.supRepo.insertSheet2sqldb('ramtalk');
+            },
+            child: const Text('sheet2sup ramtalk')));
+  }
+
   ListTile countCheck() {
     return ListTile(
         title: ElevatedButton(
@@ -62,7 +71,8 @@ class RepoAdmin extends StatelessWidget {
         toSupabase(context),
         koyebRepoByRownokey(),
         koyebRepoDeleteAll(),
-        countCheck()
+        countCheck(),
+        sheet2sup()
       ],
     );
   }

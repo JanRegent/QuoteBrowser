@@ -64,11 +64,6 @@ create table
     log2sheetrows('sheetrowInsert1 end');
   }
 
-  Future insertSheet(List maprows, String sheetName) async {
-    await bl.supRepo.deleteSheet(sheetName);
-    await supabase.from('sheetrows').insert(maprows);
-  }
-
   Future insertTagindex() async {
     bl.supRepo.log2sheetrows('-----tagindex start');
     List maprows = await dl.gservice23.tagindex2sup();
@@ -131,36 +126,39 @@ create table
     await bl.neonRepo.sheetrowsDelete();
     await bl.koyebRepo.sheetrowsDelete();
 
-    Future insertSheet2sqldb_(String sheetName) async {
-      if (sheetName.isEmpty) return;
-      if (dl.sheetUrls[sheetName].toString().isEmpty) return;
-      log2sheetrows('/--- $sheetName ---\\');
-      try {
-        List maprows = await dl.gservice23.rowmapsGet(sheetName);
-        await insertSheet(maprows, sheetName); //1
-        List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
-        await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2
-        await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues); //3
-      } catch (e) {
-        log2sheetrows('insertSheet2sqldb_()  $e');
-      }
-    }
-
     for (var i = 0; i < bl.dailyList.rows.length; i++) {
-      String sheetName = bl.dailyList.rows[i].sheetName;
-      currentSheet2supabase.value = sheetName;
-      await insertSheet2sqldb_(sheetName);
+      await insertSheet2sqldb(bl.dailyList.rows[i].sheetName);
     }
 
     for (var i = 0; i < bl.bookList.rows.length; i++) {
-      String sheetName = bl.bookList.rows[i].sheetName;
-      currentSheet2supabase.value = sheetName;
-      await insertSheet2sqldb_(sheetName);
+      await insertSheet2sqldb(bl.bookList.rows[i].sheetName);
     }
     log2sheetrows('********************************sheets2sup end');
     currentSheet2supabase.value = 'sheets2sup end';
   }
 
+  Future insertSheet2sqldb(String sheetName) async {
+    currentSheet2supabase.value = sheetName;
+    if (sheetName.isEmpty) return;
+    if (dl.sheetUrls[sheetName].toString().isEmpty) return;
+    log2sheetrows('/--- $sheetName ---\\');
+    try {
+      List maprows = await dl.gservice23.rowmapsGet(sheetName);
+      log2sheetrows('maprows at input: ${maprows.length.toString()} ');
+      await bl.supRepo.deleteSheet(sheetName);
+      log2sheetrows('supabase..');
+      await supabase.from('sheetrows').insert(maprows); //1
+      List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
+      log2sheetrows('neon..');
+      await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2
+      log2sheetrows('koyeb..');
+      await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues); //3
+      currentSheet2supabase.value = '';
+    } catch (e) {
+      log2sheetrows('insertSheet2sqldb_()  $e');
+      currentSheet2supabase.value = 'err!!';
+    }
+  }
   //-------------------------------------------------------delete
 
   Future deletesheetrows() async {
