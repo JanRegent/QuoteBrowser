@@ -114,15 +114,13 @@ create table
   //-----------------------------------------------------------------update
 
   void setCellDL(
-    String rownokey,
+    String rowkey,
     String columnName,
     String cellContent,
   ) async {
     try {
-      await supabase
-          .from('sheetrows')
-          .update({columnName.toLowerCase(): cellContent}).match(
-              {'rownokey': rownokey});
+      await supabase.from('sheetrows').update(
+          {columnName.toLowerCase(): cellContent}).match({'rowkey': rowkey});
     } catch (_) {}
   }
 

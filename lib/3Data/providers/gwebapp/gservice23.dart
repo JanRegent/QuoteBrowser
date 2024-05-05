@@ -120,17 +120,17 @@ class GService23 {
     List data = response.data['data'];
     String tags = data[0].toString().replaceAll('##', '#');
     dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, 'tags', tags,
-        bl.orm.currentRow.rowNo.value);
-    bl.supRepo.setCellDL(bl.orm.currentRow.rownoKey.value, 'tags', tags);
+        bl.orm.currentRow.rowkey.value);
+    bl.supRepo.setCellDL(bl.orm.currentRow.rowkey.value, 'tags', tags);
 
     dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, 'yellowParts',
-        data[1], bl.orm.currentRow.rowNo.value);
+        data[1], bl.orm.currentRow.rowkey.value);
     bl.supRepo
-        .setCellDL(bl.orm.currentRow.rownoKey.value, 'yellowParts', data[1]);
+        .setCellDL(bl.orm.currentRow.rowkey.value, 'yellowParts', data[1]);
 
     dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, 'quote', data[2],
-        bl.orm.currentRow.rowNo.value);
-    bl.supRepo.setCellDL(bl.orm.currentRow.rownoKey.value, 'quote', data[2]);
+        bl.orm.currentRow.rowkey.value);
+    bl.supRepo.setCellDL(bl.orm.currentRow.rowkey.value, 'quote', data[2]);
     return response.data['data'];
   }
 
@@ -218,13 +218,12 @@ class GService23 {
   //----------------------------------------------------------------------set
 
   void setCellDL(String sheetName, String columnName, String cellContent,
-      String rowNo) async {
-    String rownokey = '${sheetName}__|__$rowNo';
+      String rowkey) async {
     //---------------------------------------------------------------to supabase
     try {
-      bl.supRepo.setCellDL(rownokey, columnName, cellContent);
+      bl.supRepo.setCellDL(rowkey, columnName, cellContent);
     } catch (e) {
-      debugPrint('setCellDL-->supabase $rownokey \n$e');
+      debugPrint('setCellDL-->supabase $rowkey \n$e');
     }
 
     //---------------------------------------------------------------to sheet
@@ -240,12 +239,12 @@ class GService23 {
           'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName]!),
           'columnName': columnName,
           'cellContent': cellContent,
-          'rowNo': rowNo
+          'rowkey': rowkey
         },
       );
     } catch (e) {
       debugPrint(
-          'setCellDL(String $sheetName, String $columnName, String $cellContent, String $rowNo \n$e');
+          'setCellDL(String $sheetName, String $columnName, String $cellContent, String $rowkey \n$e');
     }
 
     bl.orm.currentRow.setCellColor = Colors.red;

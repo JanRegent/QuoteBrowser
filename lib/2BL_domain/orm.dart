@@ -97,7 +97,7 @@ class CurrentRow {
 
     try {
       dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, columnName,
-          cellContent, bl.orm.currentRow.rowNo.value);
+          cellContent, bl.orm.currentRow.rowkey.value);
 
       bl.orm.currentRow.selectedText.value = '';
     } catch (e) {

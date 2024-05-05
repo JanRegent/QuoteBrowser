@@ -30,6 +30,7 @@ class DailyList {
     int remove1Ix = cols.indexOf('remove1');
     int remove2Ix = cols.indexOf('remove2');
     int authorIx = cols.indexOf('author');
+    int rowkeyIx = cols.indexOf('rowkey');
     rows.clear();
     for (var i = 1; i < data.length; i++) {
       String sheetGroup = data[i][sheetGroupIx].toString().trim();
@@ -44,7 +45,7 @@ class DailyList {
       bl.authorsSet.add(sheetName);
 
       rows.add(DailyListRow()
-        ..rowNo = i + 1
+        ..rowkey = data[i][rowkeyIx]
         ..sheetGroup = sheetGroup
         ..sheetName = sheetName
         ..sheetUrl = data[i][sheetUrlIx]
@@ -79,5 +80,5 @@ class DailyListRow {
   String parPageParse = '';
   String remove1 = '';
   String remove2 = '';
-  int rowNo = 0;
+  String rowkey = '';
 }

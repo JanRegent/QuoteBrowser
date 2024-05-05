@@ -18,6 +18,7 @@ class BooksList {
     int sheetNameIx = cols.indexOf('sheetName');
     int sheetUrlIx = cols.indexOf('sheetUrl');
     int swiperIndexIx = cols.indexOf('swiperIndex');
+    int rowkeyIx = cols.indexOf('rowkey');
     rows.clear();
     for (var i = 1; i < data.length; i++) {
       String bookName = data[i][bookNameIx].toString().trim();
@@ -29,7 +30,7 @@ class BooksList {
         ..author = author
         ..sheetName = data[i][sheetNameIx]
         ..sheetUrl = data[i][sheetUrlIx]
-        ..rowNo = (i + 1).toString());
+        ..rowkey = data[i][rowkeyIx]);
       try {
         rows.last.swiperIndex = data[i][swiperIndexIx]!;
       } catch (e) {
@@ -58,5 +59,5 @@ class BookListRow {
   String sheetName = '';
   String sheetUrl = '';
   int swiperIndex = 0;
-  String rowNo = '';
+  String rowkey = '';
 }
