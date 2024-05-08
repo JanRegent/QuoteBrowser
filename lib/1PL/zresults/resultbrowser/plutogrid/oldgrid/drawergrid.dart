@@ -14,7 +14,7 @@
 
 // //ViewHelper viewHelper = ViewHelper();
 
-// RxString currentRowNoOnDetail = '2'.obs;
+
 // RxInt rowsCount = 0.obs;
 
 // Drawer drawerGrid(BuildContext context, Function setStateFunc, String fileUrl,

@@ -71,10 +71,8 @@ class CurrentRow {
   RxString sourceUrl = ''.obs;
   RxString fileUrl = ''.obs;
   //--------------------------ids
-  RxString rownoKey = ''.obs;
   RxString rowkey = ''.obs;
   RxString sheetName = ''.obs;
-  RxString rowNo = ''.obs;
   String fileId = '';
   String dateinsert = '';
   //--------------------------optional user fields

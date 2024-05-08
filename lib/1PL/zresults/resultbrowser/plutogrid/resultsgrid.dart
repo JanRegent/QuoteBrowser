@@ -19,12 +19,6 @@ class ResultsGridPage extends StatefulWidget {
 class _ResultsGridPageState extends State<ResultsGridPage> {
   final List<PlutoColumn> columns = <PlutoColumn>[
     PlutoColumn(
-      title: 'rownoKey',
-      field: 'rownoKey',
-      type: PlutoColumnType.text(),
-      width: 200,
-    ),
-    PlutoColumn(
       title: 'quote',
       field: 'quote',
       type: PlutoColumnType.text(),
@@ -67,10 +61,10 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
 
   void getRownos(int swiperIndex) {
     var rownosDyn =
-        stateManager.refRows.map((e) => e.cells['rownoKey']!.value.toString());
+        stateManager.refRows.map((e) => e.cells['rowkey']!.value.toString());
     rownos.value = [];
-    for (String rownoKey in rownosDyn) {
-      rownos.add(rownoKey);
+    for (String rowkey in rownosDyn) {
+      rownos.add(rowkey);
     }
     if (rownos.isEmpty) {
       // ignore: use_build_context_synchronously
@@ -79,8 +73,8 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
     }
     currentSS.keys = [];
     currentSS.swiperIndex.value = swiperIndex;
-    for (String rownoKey in rownos) {
-      currentSS.keys.add(rownoKey);
+    for (String rowkey in rownos) {
+      currentSS.keys.add(rowkey);
     }
     currentSS.swiperIndexIncrement = false;
     // ignore: use_build_context_synchronously

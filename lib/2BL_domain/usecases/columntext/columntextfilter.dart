@@ -11,13 +11,13 @@
 //   String columnName = '';
 //   String columnValue = '';
 //   String searchText = '';
-//   List<String> sheetRownoKeys = [];
+//   List<String> sheetRowkeys = [];
 
 //   @override
 //   toString() {
 //     return '''
 //     ------------------------------DateFilter--$columnTextKey
-//     $sheetRownoKeys
+//     $sheetRowkeys
 //   ''';
 //   }
 // }
@@ -45,7 +45,7 @@
 //       List<String>? keys = isar.columnTextFilters
 //           .where()
 //           .columnTextKeyEqualTo(filterKey)
-//           .sheetRownoKeysProperty()
+//           .sheetRowkeysProperty()
 //           .findFirst();
 
 //       return keys!;
@@ -60,7 +60,7 @@
 //       String keys = isar.columnTextFilters
 //           .where()
 //           .columnTextKeyEqualTo(filterKey)
-//           .sheetRownoKeysProperty()
+//           .sheetRowkeysProperty()
 //           .findFirst()![swiperIndex];
 //       return keys;
 //     } catch (_) {
@@ -70,15 +70,15 @@
 
 //   //------------------------------------------------------------------update
 //   Future updateFilter(String columnName, String columnValue, String word,
-//       List<String> sheetRownoKeys) async {
+//       List<String> sheetRowkeys) async {
 //     if (columnValue.isEmpty) return;
 //     if (word.isEmpty) return;
-//     if (sheetRownoKeys.isEmpty) return;
+//     if (sheetRowkeys.isEmpty) return;
 //     isar.write((isar) async {
 //       ColumnTextFilter sFilter = ColumnTextFilter();
 //       sFilter.columnTextKey = '$columnValue __|__$word';
 //       sFilter.columnName = columnName;
-//       sFilter.sheetRownoKeys = sheetRownoKeys;
+//       sFilter.sheetRowkeys = sheetRowkeys;
 
 //       isar.columnTextFilters.put(sFilter);
 //     });

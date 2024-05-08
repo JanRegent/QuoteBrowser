@@ -24,19 +24,19 @@
 //   }
 
 //   //-------------------------------------------------------------------read
-//   Future<String> docIdByRownoKey(String collection, String rownoKey) async {
+//   Future<String> docIdByRowKey(String collection, String rowkey) async {
 //     String docId = '';
 //     try {
 //       await firestoreDb
 //           .collection(collection)
-//           .where("rownokey", isEqualTo: rownoKey)
+//           .where("rowkey", isEqualTo: rowkey)
 //           .limit(1)
 //           .get()
 //           .then((querySnapshot) {
 //         docId = querySnapshot.docs[0].reference.id;
 //       });
 //     } catch (e) {
-//       debugPrint("FirestoreRepo.docByRownoKey $rownoKey Error: $e");
+//       debugPrint("FirestoreRepo.docByRowkey $rowkey Error: $e");
 //     }
 //     return docId;
 //   }
@@ -54,8 +54,8 @@
 //     }
 //   }
 
-//   void tagsUpdateSet(String tags, rownoKey) async {
-//     String docId = await docIdByRownoKey('todayRows', rownoKey);
+//   void tagsUpdateSet(String tags, rowkey) async {
+//     String docId = await docIdByRowkey('todayRows', rowkey);
 //     if (docId.isEmpty) return; //todo
 //     valueUpdate('todayRows', docId, 'tags', tags);
 //   }

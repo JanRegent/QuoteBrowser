@@ -82,7 +82,6 @@ class _OthersFieldsState extends State<OthersFields> {
       if (columnName == 'vydal') continue;
       if (columnName == 'folder') continue;
       if (columnName == 'yellowParts') continue;
-      if (columnName == 'rownoKey') continue;
 
       if (columnName == 'docUrl' || columnName == 'fileUrl') {
         othersFieldsWidgets.add(ListTile(

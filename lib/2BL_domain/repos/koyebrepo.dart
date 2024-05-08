@@ -15,7 +15,7 @@ class KoyebRepo {
 
     //if (conn.isOpen) debugPrint("koyeb PostgresCRUD Database isOpen!");
     try {
-      await conn.execute(Sql.named(createTable()));
+      await conn.execute(Sql.named(sheetRowsCreateTable()));
     } catch (_) {}
     await count();
     try {
@@ -49,10 +49,10 @@ class KoyebRepo {
   }
 
   //-----------------------------------------------------------------read
-  Future selectByRownokey() async {
+  Future selectByRowkey() async {
     await init();
     final result2 = await conn.execute(
-      Sql.named("select * from sheetrows where rownokey = 'MilaT__|__248';"),
+      Sql.named("select * from sheetrows where rowkey = 'MilaT248';"),
     );
     bl.supRepo.log2sheetrows('KoyebRepo:: sheetrows \n $result2');
   }

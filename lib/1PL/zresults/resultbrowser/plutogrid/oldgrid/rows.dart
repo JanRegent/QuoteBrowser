@@ -18,7 +18,6 @@ Future<List<PlutoRow>> gridRowsMap(
           value = '';
         } else {
           value = row[cols[colIx]];
-          if (cols[colIx] == 'rownoKey') value = sheets[rowIx][0].toString();
         }
       } catch (_) {
         value = '';

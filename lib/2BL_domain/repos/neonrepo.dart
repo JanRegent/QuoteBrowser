@@ -15,7 +15,7 @@ class NeonRepo {
     conn = await initNeon();
 
     try {
-      await conn.execute(Sql.named(createTable()));
+      await conn.execute(Sql.named(sheetRowsCreateTable()));
     } catch (_) {}
     debugPrint("Neon connection ${conn.isOpen}");
   }
@@ -27,7 +27,6 @@ class NeonRepo {
       Sql.named(
           'INSERT INTO sheetrows SELECT * FROM json_populate_recordset($rowmap) RETURNING *; '),
     );
-// AS (rownokey TEXT, sheetname TEXT, rowno TEXT, quote TEXT, author TEXT, book TEXT, parpage TEXT, tags TEXT, yellowparts TEXT, stars TEXT, favorite TEXT, dateinsert TEXT, sourceurl TEXT, fileurl TEXT, docurl TEXT, original TEXT, vydal TEXT, folderurl TEXT, title TEXT)
     debugPrint(result.toString());
   }
 
@@ -71,7 +70,6 @@ class NeonRepo {
     List<String> sqlValues = [];
     for (var i = 0; i < rowmaps.length; i++) {
       try {
-        //debugPrint(rowmaps[i]['rownokey']);
         sqlValues.add(await sqlValueGet(rowmaps[i], cols));
       } catch (e) {
         debugPrint(e.toString());

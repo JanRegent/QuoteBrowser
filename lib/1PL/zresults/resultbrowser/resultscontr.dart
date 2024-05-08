@@ -4,5 +4,5 @@ RxList results = <Resultrow>[].obs;
 
 class Resultrow {
   String filterName = '';
-  List<String> rownoKeys = [];
+  List<String> rowkeys = [];
 }

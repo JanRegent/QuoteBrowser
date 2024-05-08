@@ -10,6 +10,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import '../bl.dart';
 import '../bluti.dart';
+import 'commonrepos.dart';
 
 class SheetRows {
   String rowkey = '';
@@ -56,10 +57,8 @@ class SheetRows {
 
   Map<String, dynamic> toMapFromSup(Map rowmap) {
     return {
-      "rownokey": rowmap['rownokey'],
       "rowkey": rowmap['rowkey'],
       "sheetname": rowmap['sheetname'],
-      "rowno": rowmap['rowno'],
       "quote": rowmap['quote'],
       "author": rowmap['author'],
       "book": rowmap['book'],
@@ -207,29 +206,7 @@ class SheetRowsHelper {
 
   Future<void> onCreate(Database database, int version) async {
     final db = database;
-    await db.execute(
-        """ CREATE TABLE IF NOT EXISTS sheetRows(
-            rownoKey TEXT PRIMARY KEY,
-            rowkey TEXT,
-            sheetName TEXT,
-            rowNo TEXT,
-            quote TEXT,
-            author TEXT,
-            book TEXT,
-            parPage TEXT,
-            tags TEXT,
-            yellowParts TEXT,
-            stars TEXT,
-            favorite TEXT,
-            dateinsert TEXT,
-            sourceUrl TEXT,
-            fileUrl TEXT,
-            original TEXT,
-            vydal TEXT,
-            folderUrl TEXT,
-            title
-          )
- """);
+    await db.execute(sheetRowsCreateTable());
   }
 
   //--------------------------------------------------------------create
@@ -238,13 +215,15 @@ class SheetRowsHelper {
 
     Map colsSet = response.data['colsSet'];
     String sheetName = response.data['sheetName'];
-    List<String> rownoKeys = [];
+    List<String> rowkeys = [];
+
     final db = await database;
     for (var i = 0; i < data.length; i++) {
       List rowarr = blUti.toListString(data[i]);
-      String rownoKey = rowarr[0];
-      rownoKeys.add(rownoKey);
       List<String> cols = blUti.toListString(colsSet[sheetName]);
+      String rowkey = rowarr[cols.indexOf('rowkey')];
+      rowkeys.add(rowkey);
+
       SheetRows sheetRow = rowdyn2sheetRows(sheetName, cols, rowarr);
       //iporttSupUpsert
       db.insert(
@@ -254,15 +233,15 @@ class SheetRowsHelper {
       );
     }
 
-    return rownoKeys;
+    return rowkeys;
   }
 
   Future<List<String>> insertRowsCollSql(List sqldata) async {
-    List<String> rownoKeys = [];
+    List<String> rowkeys = [];
     final db = await database;
     for (var i = 0; i < sqldata.length; i++) {
-      String rownoKey = sqldata[i]['rownokey'];
-      rownoKeys.add(rownoKey);
+      String rowkey = sqldata[i]['rowkey'];
+      rowkeys.add(rowkey);
       db.insert(
         "sheetRows",
         SheetRows().toMapFromSup(sqldata[i]),
@@ -270,7 +249,7 @@ class SheetRowsHelper {
       );
     }
 
-    return rownoKeys.sorted();
+    return rowkeys.sorted();
   }
 
   Future<List<String>> insertResponseAll(String sheetName, List data) async {
@@ -374,10 +353,10 @@ class SheetRowsHelper {
       String sheetName, List<String> cols, List data) async {
     final db = await database;
     final batch = db.batch();
-    List<String> rownoKeys = [];
+    List<String> rowkeys = [];
     for (var i = 1; i < data.length; i++) {
       SheetRows sheetRow = rowdyn2sheetRows(sheetName, cols, data[i]);
-      rownoKeys.add(sheetRow.rowkey);
+      rowkeys.add(sheetRow.rowkey);
       batch.insert(
         'sheetRows',
         sheetRow.toMap(sheetName),
@@ -387,7 +366,7 @@ class SheetRowsHelper {
 
     await batch.commit();
 
-    return rownoKeys;
+    return rowkeys;
   }
 
   Future<List> data2rowmaps(
@@ -449,20 +428,6 @@ class SheetRowsHelper {
     return List.generate(maps.length, (index) {
       return SheetRows().fromMap(maps[index]);
     });
-  }
-
-  Future<SheetRows> getRowByRownoKey(String rownoKey) async {
-    final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query(
-      'sheetRows',
-      where: 'rownoKey = ?',
-      whereArgs: [rownoKey],
-    );
-    if (maps.isNotEmpty) {
-      return SheetRows().fromMap(maps.first);
-    }
-
-    return SheetRows();
   }
 
   Future<SheetRows> getRowByRowKey(String rowkey) async {

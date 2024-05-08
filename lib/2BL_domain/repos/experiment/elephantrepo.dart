@@ -11,7 +11,7 @@ class ElephantRepo {
 
     //if (conn.isOpen) debugPrint("koyeb PostgresCRUD Database isOpen!");
     try {
-      await conn.execute(Sql.named(createTable()));
+      await conn.execute(Sql.named(sheetRowsCreateTable()));
     } catch (_) {}
     await count();
   }

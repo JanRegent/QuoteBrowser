@@ -198,7 +198,6 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
 
   Map<String, dynamic> sheetrowMap() {
     return {
-      "rownokey": '${currRow.sheetName}__|__$rownoLast',
       "rowkey": '',
       "sheetname": currRow.sheetName,
       "rowno": rownoLast,
@@ -239,9 +238,9 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
         //bl.fireRepo.rowmapDailySave(rowMap);
 
         rownoLast = rowMap['rowno'].toString();
-        // String rownoKey =
+        // String rowkey =
         //     rowMap['sheetname'] + '__|__' + rowMap['rowno'].toString();
-        //bl.fireRepo.tagsUpdateSet(rowMap['quote'].toString(), rownoKey);
+        //bl.fireRepo.tagsUpdateSet(rowMap['quote'].toString(), rowkey);
 
         if (rownoLast.isNotEmpty) clearCtrls();
         saving.value = rownoLast;

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:quotebrowser/2BL_domain/repos/sharedprefs.dart';
 import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
 
 import '../../../1PL/widgets/alib/alib.dart';
 import '../../bl.dart';
+import '../sheetrowshelper.dart';
 
 // ignore: must_be_immutable
 class RepoAdmin extends StatelessWidget {
@@ -21,13 +23,13 @@ class RepoAdmin extends StatelessWidget {
         trailing: Obx(() => Text(currentSheet2supabase.value)));
   }
 
-  ListTile koyebRepoByRownokey() {
+  ListTile koyebRepoByRowkey() {
     return ListTile(
         title: ElevatedButton(
             onPressed: () async {
-              await bl.koyebRepo.selectByRownokey();
+              await bl.koyebRepo.selectByRowkey();
             },
-            child: const Text('koyeb selectByRownokey')));
+            child: const Text('koyeb selectByRowkey')));
   }
 
   ListTile koyebRepoDeleteAll() {
@@ -65,14 +67,26 @@ class RepoAdmin extends StatelessWidget {
             child: const Text('countCheck')));
   }
 
+  ListTile sqliteClear() {
+    return ListTile(
+        leading: const Text('sqlite del'),
+        title: IconButton(
+            onPressed: () async {
+              await sheetrowsHelper.deleteAllRows();
+              SharedPrefs.clear();
+            },
+            icon: const Icon(Icons.delete)));
+  }
+
   ListView bodyLv(BuildContext context) {
     return ListView(
       children: [
         toSupabase(context),
-        koyebRepoByRownokey(),
+        koyebRepoByRowkey(),
         koyebRepoDeleteAll(),
         countCheck(),
-        sheet2sup()
+        sheet2sup(),
+        sqliteClear()
       ],
     );
   }
