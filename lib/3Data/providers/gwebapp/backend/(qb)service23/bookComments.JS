@@ -74,19 +74,18 @@ function setYellowBack_(par, yellow) {
 
 
 
-// ?action=comments2tagsYellowparts&rownoKey=avadhuta.com__|__115
-function comments2tagsYellowparts(rownoKey) {
+// ?action=comments2tagsYellowparts&rownoKey=avadhuta.com__|__120
+function comments2tagsYellowparts(sheetName, rowkey) {
 
   logi('-------------------------------------------comments2tagsYellowparts')
   sheetnamesUrlsMapBuild();
-  var sheetRowKey = rownoKey.split('__|__');
-  var sheetName = sheetRowKey[0];
   var sheetUrl = sheetnamesUrlsMap.get(sheetName)
 
 
   var sheet = SpreadsheetApp.openByUrl(sheetUrl).getSheetByName(sheetName);
   var cols = sheet.getDataRange().getValues()[0]
-  var rowNo = sheetRowKey[1];
+  var ssId = SpreadsheetApp.openByUrl(sheetUrl).getId();
+  var rowNo = rownoGet(rowkey, ssId, sheetName);
 
 
   var docUrl = sheet.getDataRange().getValues()[rowNo - 1][cols.indexOf('docUrl')]
@@ -112,38 +111,14 @@ function comments2tagsYellowparts(rownoKey) {
     quote += row['tags'] + '\n' + row['yellowPart'] + '\n\n'
   }
 
-  //-----------------------------------------------------------set, save
-  try {
-    var letter = columnToLetter(cols.indexOf('quote') + 1)
-    sheet.getRange(letter + rowNo).setValue(quote);
-  } catch (_) { }
-
-
-  try {
-    var letter = columnToLetter(cols.indexOf('yellowParts') + 1)
-    sheet.getRange(letter + rowNo).setValue(yellowParts);
-  } catch (_) { }
-
-  var tagsSet = new Set(tags.split('#'));
-  var tagsPure = Array.from(tagsSet).join('#')
-  try {
-    var letter = columnToLetter(cols.indexOf('tags') + 1)
-    sheet.getRange(letter + rowNo).setValue(tagsPure);
-  } catch (_) { }
-
-  try {
-    var letter = columnToLetter(cols.indexOf('tagsYellowMap') + 1)
-    sheet.getRange(letter + rowNo).setValue(tagsYellowMap);
-  } catch (_) { }
-
 
   //---------------------------------------------------------return row
   try {
-    cols.unshift('rownoKey');
-    colsSet[sheetName] = cols;
+
     var data = []
-    data.push(sheet.getDataRange().getValues()[rowNo - 1])
-    data[0].unshift(rownoKey)
+    data.push(tags)
+    data.push(yellowParts)
+    data.push(quote)
     return buildResponse(data, '');
   } catch (e) {
     log(e)
@@ -154,7 +129,7 @@ function comments2tagsYellowparts(rownoKey) {
 
 function comments2tagsYellowparts___test() {
   logclear()
-  comments2tagsYellowparts('advaita.cz__|__175')
+  comments2tagsYellowparts('adavadhuta.com__|__120')
 }
 
 
