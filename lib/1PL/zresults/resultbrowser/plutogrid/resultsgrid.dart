@@ -97,7 +97,7 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
     for (SheetRows row in sheetRows) {
       rows.add(PlutoRow(
         cells: {
-          'rownoKey': PlutoCell(value: row.rownoKey),
+          'rowkey': PlutoCell(value: row.rowkey),
           'quote': PlutoCell(value: row.quote),
           'author': PlutoCell(value: row.author),
           'book': PlutoCell(value: row.book),

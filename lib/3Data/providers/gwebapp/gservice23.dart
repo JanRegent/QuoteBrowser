@@ -40,7 +40,8 @@ class GService23 {
       },
     );
 
-    return bl.sheetRowsHelper.insertResponseAll(response.data['data']);
+    return bl.sheetRowsHelper
+        .insertResponseAll(sheetName, response.data['data']);
   }
 
   Future<List> rowmapsGet(String sheetName) async {
@@ -57,7 +58,7 @@ class GService23 {
       List data = response.data['data'];
       List<String> cols = blUti.toListString(data[0]);
       if (!cols.contains('quote')) return [];
-      return await bl.sheetRowsHelper.data2rowmaps(cols, data);
+      return await bl.sheetRowsHelper.data2rowmaps(sheetName, cols, data);
     } catch (e) {
       String mess = '''
       sheetName: $sheetName
@@ -104,33 +105,30 @@ class GService23 {
       },
     );
 
-    return bl.sheetRowsHelper.insertResponseAll(response.data['data']);
+    return bl.sheetRowsHelper.insertResponseAll('', response.data['data']);
   }
 
   //----------------------------------------------------comments2tagsYellowparts
-  Future<List> comments2tagsYellowparts(String rownoKey) async {
+  Future<List> comments2tagsYellowparts(String sheetName, String rowkey) async {
     Response response = await dio.get(
       backendUrl,
       queryParameters: {
         'action': 'comments2tagsYellowparts',
-        'rownoKey': rownoKey
+        'sheetName': sheetName,
+        'rowkey': rowkey
       },
     );
     //bl.sheetRowsHelper.insertRowsCollFromSheet(response);
     List data = response.data['data'];
     String tags = data[0].toString().replaceAll('##', '#');
-    dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, 'tags', tags,
-        bl.orm.currentRow.rowkey.value);
-    bl.supRepo.setCellDL(bl.orm.currentRow.rowkey.value, 'tags', tags);
+    dl.gservice23.setCellDL(sheetName, 'tags', tags, rowkey);
+    bl.supRepo.setCellDL(rowkey, 'tags', tags);
 
-    dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, 'yellowParts',
-        data[1], bl.orm.currentRow.rowkey.value);
-    bl.supRepo
-        .setCellDL(bl.orm.currentRow.rowkey.value, 'yellowParts', data[1]);
+    dl.gservice23.setCellDL(sheetName, 'yellowParts', data[1], rowkey);
+    bl.supRepo.setCellDL(rowkey, 'yellowParts', data[1]);
 
-    dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, 'quote', data[2],
-        bl.orm.currentRow.rowkey.value);
-    bl.supRepo.setCellDL(bl.orm.currentRow.rowkey.value, 'quote', data[2]);
+    dl.gservice23.setCellDL(sheetName, 'quote', data[2], rowkey);
+    bl.supRepo.setCellDL(rowkey, 'quote', data[2]);
     return response.data['data'];
   }
 

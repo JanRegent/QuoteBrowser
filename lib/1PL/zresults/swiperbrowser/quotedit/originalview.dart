@@ -36,7 +36,7 @@ class _OriginalViewState extends State<OriginalView> {
         ListTile(
           tileColor: const Color.fromARGB(255, 232, 216, 142),
           leading: Text(bl.orm.currentRow.dateinsert),
-          title: Obx(() => Text('${bl.orm.currentRow.rownoKey}')),
+          title: Obx(() => Text('${bl.orm.currentRow.rowkey}')),
           trailing: copyPasteClearPopupMenuButton(
               bl.orm.currentRow.original.value, 'original'),
         ),

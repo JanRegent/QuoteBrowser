@@ -54,7 +54,7 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
       String authorSelected = await authorSelect();
       if (authorSelected.isEmpty) return;
       bl.orm.currentRow.setCellBL('author', authorSelected);
-      currentRowSet(bl.orm.currentRow.rownoKey.value);
+      currentRowSet(bl.orm.currentRow.rowkey.value);
       bl.orm.currentRow.selectedText.value = '';
     },
   )));
@@ -68,7 +68,7 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
       String bookSelected = await bookSelect(context);
       if (bookSelected.isEmpty) return;
       bl.orm.currentRow.setCellBL('book', bookSelected);
-      currentRowSet(bl.orm.currentRow.rownoKey.value);
+      currentRowSet(bl.orm.currentRow.rowkey.value);
       bl.orm.currentRow.selectedText.value = '';
     },
   )));

@@ -71,10 +71,10 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
         child: PopupMenuItem<String>(
             child: TextButton(
           child: Text(
-              '${bl.orm.currentRow.rowkey.value}\n${bl.orm.currentRow.dateinsert} \n${bl.orm.currentRow.rownoKey}'),
+              '${bl.orm.currentRow.rowkey.value}\n${bl.orm.currentRow.dateinsert}}'),
           onPressed: () async {
             String? fileUrl = dl.sheetUrls[bl.orm.currentRow.sheetName.value];
-            await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowNo.value,
+            await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowkey.value,
                 context, 'Jump to row');
           },
         )),
@@ -94,7 +94,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
                     dl.sheetUrls[bl.orm.currentRow.sheetName.value];
 
                 // ignore: use_build_context_synchronously //Icons.open_in_browser
-                await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowNo.value,
+                await al.jump2sheetRow(fileUrl!, bl.orm.currentRow.rowkey.value,
                     context, 'Jump to row');
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();

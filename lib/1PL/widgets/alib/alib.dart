@@ -69,12 +69,13 @@ class AL {
     } catch (_) {}
   }
 
-  Future jump2sheetRow(
-      String sheetUrl, String rowNo, BuildContext context, String label) async {
+  Future jump2sheetRow(String sheetUrl, String rowkey, BuildContext context,
+      String label) async {
     try {
       // ignore: unnecessary_null_comparison
       if (sheetUrl.trim() == null) return;
       if (sheetUrl.trim().isEmpty) return;
+      String rowNo = rowkey.replaceAll(RegExp(r"\D"), "");
       await openhUrl(Uri.parse('$sheetUrl;range=A$rowNo'), context);
     } catch (_) {}
   }

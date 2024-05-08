@@ -9,15 +9,15 @@ import '../../../../2BL_domain/orm.dart';
 import '../../../widgets/alib/alib.dart';
 
 Future importComments(BuildContext context) async {
-  String rownoKey =
-      '${bl.orm.currentRow.sheetName.value}__|__${bl.orm.currentRow.rowNo}';
-  al.showTopSnackBar(context, 'Importing comments at \n\n$rownoKey', 15);
+  String rowkey = bl.orm.currentRow.rowkey.value;
+  al.showTopSnackBar(context, 'Importing comments at \n\n$rowkey', 15);
 
-  await dl.gservice23.comments2tagsYellowparts(rownoKey);
+  await dl.gservice23
+      .comments2tagsYellowparts(bl.orm.currentRow.sheetName.value, rowkey);
   //iporttSupUpsert
-  await currentRowSet(rownoKey);
+  await currentRowSet(rowkey);
   // ignore: use_build_context_synchronously
-  al.showTopSnackBar(context, 'Import done at \n\n$rownoKey', 3);
+  al.showTopSnackBar(context, 'Import done at \n\n$rowkey', 3);
 }
 
 Future<void> onOpen(String url) async {

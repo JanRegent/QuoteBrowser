@@ -12,10 +12,8 @@ import '../bl.dart';
 import '../bluti.dart';
 
 class SheetRows {
-  String rownoKey = '';
   String rowkey = '';
   String sheetName = '';
-  String rowNo = '';
   String quote = '';
   String author = '';
   String book = '';
@@ -34,12 +32,10 @@ class SheetRows {
 
   SheetRows();
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap(String sheetName) {
     return {
-      "rownoKey": rownoKey,
       "rowkey": rowkey,
-      "sheetname": rownoKey.split('__|__')[0],
-      "rowNo": rownoKey.split('__|__')[1],
+      "sheetname": sheetName,
       "quote": quote,
       "author": author,
       "book": book,
@@ -82,12 +78,10 @@ class SheetRows {
     };
   }
 
-  Map<String, dynamic> toMapSup() {
+  Map<String, dynamic> toMapSup(String sheetName) {
     return {
-      "rownokey": rownoKey,
       "rowkey": rowkey,
-      "sheetname": rownoKey.split('__|__')[0],
-      "rowno": rownoKey.split('__|__')[1],
+      "sheetname": sheetName,
       "quote": quote,
       "author": author,
       "book": book,
@@ -108,11 +102,9 @@ class SheetRows {
 
   SheetRows fromMap(var maprow) {
     SheetRows row = SheetRows();
-    row.rownoKey = maprow['rownoKey'] ?? '';
     row.rowkey = maprow['rowkey'] ?? '';
 
     row.sheetName = maprow['sheetName'] ?? '';
-    row.rowNo = maprow['rowNo'] ?? '';
     row.quote = maprow['quote'] ?? '';
     row.author = maprow['author'] ?? '';
     row.book = maprow['book'] ?? '';
@@ -132,11 +124,10 @@ class SheetRows {
   }
 
   void toString_() {
-    debugPrint('''
-      "rownoKey":     $rownoKey
+    debugPrint(
+        '''
       "rowkey":     $rowkey
       "sheetname":  $sheetName
-      "rowNo":      $rowNo
       "author":     $author
       "book":       $book
       "parPage":    $parPage
@@ -216,7 +207,8 @@ class SheetRowsHelper {
 
   Future<void> onCreate(Database database, int version) async {
     final db = database;
-    await db.execute(""" CREATE TABLE IF NOT EXISTS sheetRows(
+    await db.execute(
+        """ CREATE TABLE IF NOT EXISTS sheetRows(
             rownoKey TEXT PRIMARY KEY,
             rowkey TEXT,
             sheetName TEXT,
@@ -245,19 +237,19 @@ class SheetRowsHelper {
     List data = response.data['data'];
 
     Map colsSet = response.data['colsSet'];
+    String sheetName = response.data['sheetName'];
     List<String> rownoKeys = [];
     final db = await database;
     for (var i = 0; i < data.length; i++) {
       List rowarr = blUti.toListString(data[i]);
       String rownoKey = rowarr[0];
       rownoKeys.add(rownoKey);
-      String sheetName = rownoKey.split('__|__')[0];
       List<String> cols = blUti.toListString(colsSet[sheetName]);
-      SheetRows sheetRow = rowdyn2sheetRows(cols, rowarr);
+      SheetRows sheetRow = rowdyn2sheetRows(sheetName, cols, rowarr);
       //iporttSupUpsert
       db.insert(
         "sheetRows",
-        sheetRow.toMap(),
+        sheetRow.toMap(sheetName),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
@@ -281,11 +273,11 @@ class SheetRowsHelper {
     return rownoKeys.sorted();
   }
 
-  Future<List<String>> insertResponseAll(List data) async {
+  Future<List<String>> insertResponseAll(String sheetName, List data) async {
     List<String> cols = blUti.toListString(data[0]);
     if (!cols.contains('quote')) return [];
 
-    return await batchInsert(cols, data);
+    return await batchInsert(sheetName, cols, data);
   }
 
   Future<List> insertResponseTagindexSup(List data, String sheetName) async {
@@ -310,7 +302,7 @@ class SheetRowsHelper {
     }
   }
 
-  SheetRows rowdyn2sheetRows(List<String> cols, List rowdyn) {
+  SheetRows rowdyn2sheetRows(String sheetName, List<String> cols, List rowdyn) {
     List<String> row = blUti.toListString(rowdyn);
 
     String fileUrlSet(String value) {
@@ -350,11 +342,9 @@ class SheetRowsHelper {
     }
 
     SheetRows sheetRow = SheetRows();
-    sheetRow.rownoKey = valueGet('rownoKey', row);
     sheetRow.rowkey = valueGet('rowkey', row);
     try {
-      sheetRow.sheetName = sheetRow.rownoKey.split('__|__')[0];
-      sheetRow.rowNo = sheetRow.rownoKey.split('__|__')[1];
+      sheetRow.sheetName = sheetName;
     } catch (_) {}
     sheetRow.quote = valueGet('quote', row);
     sheetRow.author = valueGet('author', row);
@@ -380,16 +370,17 @@ class SheetRowsHelper {
     return sheetRow;
   }
 
-  Future<List<String>> batchInsert(List<String> cols, List data) async {
+  Future<List<String>> batchInsert(
+      String sheetName, List<String> cols, List data) async {
     final db = await database;
     final batch = db.batch();
     List<String> rownoKeys = [];
     for (var i = 1; i < data.length; i++) {
-      SheetRows sheetRow = rowdyn2sheetRows(cols, data[i]);
-      rownoKeys.add(sheetRow.rownoKey);
+      SheetRows sheetRow = rowdyn2sheetRows(sheetName, cols, data[i]);
+      rownoKeys.add(sheetRow.rowkey);
       batch.insert(
         'sheetRows',
-        sheetRow.toMap(),
+        sheetRow.toMap(sheetName),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
@@ -399,21 +390,22 @@ class SheetRowsHelper {
     return rownoKeys;
   }
 
-  Future<List> data2rowmaps(List<String> cols, List data) async {
+  Future<List> data2rowmaps(
+      String sheetName, List<String> cols, List data) async {
     List listmap = [];
     for (var i = 1; i < data.length; i++) {
-      SheetRows sheetRow = rowdyn2sheetRows(cols, data[i]);
-      listmap.add(sheetRow.toMapSup());
+      SheetRows sheetRow = rowdyn2sheetRows(sheetName, cols, data[i]);
+      listmap.add(sheetRow.toMapSup(sheetName));
     }
 
     return listmap;
   }
 
-  Future batchCsv(List<String> cols, List data) async {
+  Future batchCsv(String sheetName, List<String> cols, List data) async {
     List rows = [];
     for (var i = 1; i < data.length; i++) {
-      SheetRows sheetRow = rowdyn2sheetRows(cols, data[i]);
-      rows.add(sheetRow.toMap());
+      SheetRows sheetRow = rowdyn2sheetRows(sheetName, cols, data[i]);
+      rows.add(sheetRow.toMap(sheetName));
     }
   }
 
@@ -441,7 +433,7 @@ class SheetRowsHelper {
       for (var i = 0; i < res.length; i++) {
         SheetRows sheetRow = SheetRows().fromMap(res[i]);
 
-        keys.add(sheetRow.rownoKey);
+        keys.add(sheetRow.rowkey);
       }
       return keys;
     } catch (e) {

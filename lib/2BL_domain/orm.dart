@@ -109,16 +109,12 @@ class CurrentRow {
 
 TextEditingController quoteEditController = TextEditingController();
 
-Future currentRowSet(String rownoKey) async {
-  SheetRows sheetRow = await bl.sheetRowsHelper.getRowByRownoKey(rownoKey);
+Future currentRowSet(String rowkey) async {
+  SheetRows sheetRow = await bl.sheetRowsHelper.getRowByRowKey(rowkey);
   //--------------------------ids
-  String rownoInrowkey = sheetRow.rowkey.replaceAll(RegExp("[a-zA-Z:s]"), "");
   bl.orm.currentRow.rowkey.value = sheetRow.rowkey;
 
   bl.orm.currentRow.sheetName.value = sheetRow.sheetName;
-  bl.orm.currentRow.rowNo.value = rownoInrowkey;
-
-  bl.orm.currentRow.rownoKey.value = '${sheetRow.sheetName}__|__$rownoInrowkey';
 
   bl.orm.currentRow.quote.value = sheetRow.quote;
   quoteEditController.text = bl.orm.currentRow.quote.value;

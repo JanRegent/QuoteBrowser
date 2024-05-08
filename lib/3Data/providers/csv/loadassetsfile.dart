@@ -8,7 +8,7 @@ import '../../../2BL_domain/orm.dart';
 
 List assetsFiles = ['Robert', 'karmel', 'Eckhart'];
 String assetFile = assetsFiles[0];
-Future loadCSV(int index) async {
+Future loadCSV(String sheetName, int index) async {
   assetFile = assetsFiles[index];
   debugPrint('$assetFile.csv load');
   final rawData = await rootBundle.loadString("assets/data/$assetFile.csv");
@@ -24,5 +24,6 @@ Future loadCSV(int index) async {
   }
   await bl.sheetRowsHelper.deleteAllRows();
 
-  currentSS.keys = await bl.sheetRowsHelper.insertResponseAll(listData);
+  currentSS.keys =
+      await bl.sheetRowsHelper.insertResponseAll(sheetName, listData);
 }
