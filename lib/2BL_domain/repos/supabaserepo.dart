@@ -83,7 +83,9 @@ class SupabaseRepo {
     try {
       await supabase.from('sheetrows').update(
           {columnName.toLowerCase(): cellContent}).match({'rowkey': rowkey});
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('setCellDL-sup rowkey $rowkey $columnName \n $e');
+    }
   }
 
   Future sheets2supabase2neon2koyeb() async {

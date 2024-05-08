@@ -90,9 +90,7 @@ class CurrentRow {
 
   void setCellBL(String columnName, String cellContent) async {
     if (columnName.isEmpty) return;
-    if (bl.orm.currentRow.sheetName.value.isEmpty) return;
     bl.orm.currentRow.setCellColor = Colors.red;
-
     try {
       dl.gservice23.setCellDL(bl.orm.currentRow.sheetName.value, columnName,
           cellContent, bl.orm.currentRow.rowkey.value);

@@ -7,7 +7,6 @@ import '../../../widgets/alib/alertinfo/alertok.dart';
 void setCellAL(String attribName, BuildContext context,
     VoidCallback swiperSetstate) async {
   if (bl.orm.currentRow.selectedText.value.isEmpty) return;
-
   bl.orm.currentRow.setCellColor = Colors.red;
 
   switch (attribName) {

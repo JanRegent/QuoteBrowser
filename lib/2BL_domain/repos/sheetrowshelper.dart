@@ -281,6 +281,13 @@ class SheetRowsHelper {
     }
   }
 
+  void setCellDLUpdate(
+      String columnName, String cellContent, String rowkey) async {
+    final db = await database;
+    db.update("sheetRows", {columnName: cellContent},
+        where: 'rowkey = ?', whereArgs: [rowkey]);
+  }
+
   SheetRows rowdyn2sheetRows(String sheetName, List<String> cols, List rowdyn) {
     List<String> row = blUti.toListString(rowdyn);
 

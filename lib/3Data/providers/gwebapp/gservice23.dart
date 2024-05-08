@@ -226,15 +226,13 @@ class GService23 {
 
     //---------------------------------------------------------------to sheet
     // The below request is the same as above.
-    late Response response;
+
     try {
       // ignore: unused_local_variable
-      response = await dio.get(
+      Response response = await dio.get(
         backendUrl,
         queryParameters: {
           'action': 'setCell',
-          'sheetName': sheetName,
-          'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName]!),
           'columnName': columnName,
           'cellContent': cellContent,
           'rowkey': rowkey
@@ -247,7 +245,8 @@ class GService23 {
 
     bl.orm.currentRow.setCellColor = Colors.red;
 
-    bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    //bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    bl.sheetRowsHelper.setCellDLUpdate(columnName, cellContent, rowkey);
 
     bl.orm.currentRow.setCellColor = Colors.white;
   }
