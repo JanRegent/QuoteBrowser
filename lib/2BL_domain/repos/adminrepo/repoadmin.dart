@@ -23,24 +23,24 @@ class RepoAdmin extends StatelessWidget {
         trailing: Obx(() => Text(currentSheet2supabase.value)));
   }
 
-  ListTile koyebRepoByRowkey() {
-    return ListTile(
-        title: ElevatedButton(
-            onPressed: () async {
-              await bl.koyebRepo.selectByRowkey();
-            },
-            child: const Text('koyeb selectByRowkey')));
-  }
+  // ListTile koyebRepoByRowkey() {
+  //   return ListTile(
+  //       title: ElevatedButton(
+  //           onPressed: () async {
+  //             await bl.koyebRepo.selectByRowkey();
+  //           },
+  //           child: const Text('koyeb selectByRowkey')));
+  // }
 
-  ListTile koyebRepoDeleteAll() {
-    return ListTile(
-        title: ElevatedButton(
-            onPressed: () async {
-              await bl.koyebRepo.sheetrowsDelete();
-              await bl.koyebRepo.count();
-            },
-            child: const Text('koyeb deleteAll')));
-  }
+  // ListTile koyebRepoDeleteAll() {
+  //   return ListTile(
+  //       title: ElevatedButton(
+  //           onPressed: () async {
+  //             await bl.koyebRepo.sheetrowsDelete();
+  //             await bl.koyebRepo.count();
+  //           },
+  //           child: const Text('koyeb deleteAll')));
+  // }
 
   ListTile sheet2sup() {
     return ListTile(
@@ -58,11 +58,11 @@ class RepoAdmin extends StatelessWidget {
               int c1 = await bl.supRepo.count();
               int cNeon = await bl.neonRepo.count();
               if (c1 == cNeon) debugPrint('ok neon $c1');
-              try {
-                int ckoyeb = await bl.koyebRepo.count();
+              // try {
+              //   int ckoyeb = await bl.koyebRepo.count();
 
-                if (c1 == ckoyeb) debugPrint('koueb ok $ckoyeb');
-              } catch (_) {}
+              //   if (c1 == ckoyeb) debugPrint('koueb ok $ckoyeb');
+              // } catch (_) {}
             },
             child: const Text('countCheck')));
   }
@@ -82,8 +82,8 @@ class RepoAdmin extends StatelessWidget {
     return ListView(
       children: [
         toSupabase(context),
-        koyebRepoByRowkey(),
-        koyebRepoDeleteAll(),
+        // koyebRepoByRowkey(),
+        // koyebRepoDeleteAll(),
         countCheck(),
         sheet2sup(),
         sqliteClear()

@@ -27,7 +27,7 @@ class SupabaseRepo {
     await supabase.from('sheetrows').insert(sheetrow);
     List<String> sqlValues = await bl.neonRepo.sqlValuesGet([sheetrow]);
     await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2
-    await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues); //3
+    //await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues); //3
     log2sheetrows('sheetrowInsert1 end');
   }
 
@@ -93,7 +93,7 @@ class SupabaseRepo {
     log2sheetrows('***************************sup.sheets2supabase2neon start');
     await deletesheetrows();
     await bl.neonRepo.sheetrowsDelete();
-    await bl.koyebRepo.sheetrowsDelete();
+    //await bl.koyebRepo.sheetrowsDelete();
 
     for (var i = 0; i < bl.dailyList.rows.length; i++) {
       await insertSheet2sqldb(bl.dailyList.rows[i].sheetName);
@@ -121,7 +121,7 @@ class SupabaseRepo {
       log2sheetrows('neon..');
       await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2
       log2sheetrows('koyeb..');
-      await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues); //3
+      //await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues); //3
       currentSheet2supabase.value = '';
     } catch (e) {
       log2sheetrows('insertSheet2sqldb_()  $e');

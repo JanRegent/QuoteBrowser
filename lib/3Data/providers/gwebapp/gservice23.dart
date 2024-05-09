@@ -26,7 +26,11 @@ class GService23 {
         'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName])
       },
     );
-
+    debugPrint(response.statusMessage);
+    debugPrint(response.statusCode.toString());
+    debugPrint('---------------------------------1');
+    debugPrint(response.data['colsSet'].toString());
+    debugPrint('---------------------------------2');
     return response.data['data'];
   }
 
@@ -275,6 +279,7 @@ class GService23 {
           'author': author
         },
       );
+      debugPrint(response.data['data'].toString());
       return response.data['data'];
     } catch (e) {
       return e.toString();
