@@ -30,6 +30,14 @@ class GService23 {
     return response.data['data'];
   }
 
+  Future<String> getRowno(String rowkey) async {
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {'action': 'getRowno', 'rowkey': rowkey},
+    );
+    return response.data['data'].toString();
+  }
+
   Future<List<String>> getAllrows(String sheetName) async {
     Response response = await dio.get(
       backendUrl,

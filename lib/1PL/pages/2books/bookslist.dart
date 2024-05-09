@@ -37,6 +37,7 @@ class BooksList {
         rows.last.swiperIndex = 0;
       }
       dl.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
+      dl.rowkeySheetNameMap[rows.last.rowkey] = rows.last.sheetName;
     }
 
     authorsUniqBuild();

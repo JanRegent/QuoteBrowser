@@ -1,6 +1,6 @@
 import 'package:quotebrowser/2BL_domain/bluti.dart';
 
-import 'bl.dart';
+import '../../../2BL_domain/bl.dart';
 
 class TagsParts {
   void pureTags() {

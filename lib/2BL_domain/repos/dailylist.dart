@@ -56,6 +56,7 @@ class DailyList {
         ..remove2 = data[i][remove2Ix].toString().trim());
 
       dl.sheetUrls[rows.last.sheetName] = rows.last.sheetUrl;
+      dl.rowkeySheetNameMap[rows.last.rowkey] = rows.last.sheetName;
     }
     dl.sheetUrls['dailyList'] = dl.sheetUrls['rootSheetId'];
   }

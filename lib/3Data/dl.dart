@@ -12,7 +12,19 @@ class Dl {
     'dailyList': rootSheetId,
     'booksList': rootSheetId
   };
+
+  Map rowkeySheetNameMap = {};
+
   Future init() async {}
+
+  String sheetNameByRowkey(String rowkey) {
+    for (var rowkeyPrefix in rowkeySheetNameMap.keys) {
+      if (rowkey.startsWith(rowkeyPrefix)) {
+        return rowkeySheetNameMap[rowkeyPrefix];
+      }
+    }
+    return '';
+  }
 }
 
 class SucessResponse {

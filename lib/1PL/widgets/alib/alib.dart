@@ -6,6 +6,7 @@ import 'package:input_dialog/input_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../2BL_domain/bluti.dart';
+import '../../../3Data/dl.dart';
 
 AL al = AL();
 
@@ -69,13 +70,19 @@ class AL {
     } catch (_) {}
   }
 
-  Future jump2sheetRow(String sheetUrl, String rowkey, BuildContext context,
-      String label) async {
+  Future jump2sheetRow(
+      String rowkey, BuildContext context, String label) async {
+    String sheetName = dl.sheetNameByRowkey(rowkey);
+    String sheetUrl = dl.sheetUrls[sheetName];
     try {
       // ignore: unnecessary_null_comparison
       if (sheetUrl.trim() == null) return;
       if (sheetUrl.trim().isEmpty) return;
-      String rowNo = rowkey.replaceAll(RegExp(r"\D"), "");
+
+      if (rowkey.trim().isEmpty) return;
+
+      String rowNo = await dl.gservice23.getRowno(rowkey);
+      // ignore: use_build_context_synchronously
       await openhUrl(Uri.parse('$sheetUrl;range=A$rowNo'), context);
     } catch (_) {}
   }
