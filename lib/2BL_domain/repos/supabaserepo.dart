@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -31,13 +32,13 @@ class SupabaseRepo {
     log2sheetrows('sheetrowInsert1 end');
   }
 
-  Future insertTagindex() async {
-    bl.supRepo.log2sheetrows('-----tagindex start');
-    List maprows = await dl.gservice23.tagindex2sup();
-    bl.supRepo.log2sheetrows('rowsat input: ${maprows.length}');
-    await supabase.from('tagindex').insert(maprows);
-    bl.supRepo.log2sheetrows('-----tagindex end');
-  }
+  // Future insertTagindex() async {
+  //   bl.supRepo.log2sheetrows('-----tagindex start');
+  //   List maprows = await dl.gservice23.tagindex2sup();
+  //   bl.supRepo.log2sheetrows('rowsat input: ${maprows.length}');
+  //   await supabase.from('tagindex').insert(maprows);
+  //   bl.supRepo.log2sheetrows('-----tagindex end');
+  // }
 
   void log2sheetrows(String mess) async {
     await supabase.rpc('log2sheetrows', params: {'mess': mess});
@@ -50,10 +51,26 @@ class SupabaseRepo {
     return data;
   }
 
+  Future<List<String>> rowkeysList(List sqldata) async {
+    List<String> rowkeys = [];
+    for (var i = 0; i < sqldata.length; i++) {
+      String rowkey = sqldata[i]['rowkey'];
+      rowkeys.add(rowkey);
+    }
+
+    return rowkeys.sorted();
+  }
+
   Future select() async {
     // Select data with filters
     var data = await supabase.from('sheetrows').select().eq('id', 4);
     return data;
+  }
+
+  Future<Map> rowkeySelect(String rowkey) async {
+    // Select data with filters
+    var data = await supabase.from('sheetrows').select().eq('rowkey', rowkey);
+    return data.first;
   }
 
   Future dateinsertSelect(String dateStr) async {
@@ -61,17 +78,25 @@ class SupabaseRepo {
     var data =
         await supabase.from('sheetrows').select().eq('dateinsert', '$dateStr.');
 
-    return bl.sheetRowsHelper.insertRowsCollSql(data);
+    return rowkeysList(data);
+  }
+
+  Future getBook(String sheetname) async {
+    // Select data with filters
+    var data =
+        await supabase.from('sheetrows').select().eq('sheetname', sheetname);
+
+    return rowkeysList(data);
   }
 
   Future quote1Select(String word1) async {
     // Select data with filters
-    var data = await supabase
-        .from('sheetrows')
-        .select()
-        .like('quote', '%$word1%')
-        .limit(99);
-    return bl.sheetRowsHelper.insertRowsCollSql(data);
+    // var data = await supabase
+    //     .from('sheetrows')
+    //     .select()
+    //     .like('quote', '%$word1%')
+    //     .limit(99);
+    //return bl.sheetRowsHelper.insertRowsCollSql(data);
   }
   //-----------------------------------------------------------------update
 

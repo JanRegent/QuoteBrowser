@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/orm.dart';
-import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
 
@@ -30,8 +29,7 @@ Future getBookContentShow(
 Future<String> book4swipper(String sheetName, BuildContext context) async {
   // ignore: use_build_context_synchronously
   al.messageInfo(context, 'Loading', sheetName, 3);
-  currentSS.keys = await dl.gservice23.getAllrows(sheetName);
-
+  currentSS.keys = await bl.supRepo.getBook(sheetName);
   if (currentSS.keys.isEmpty) {
     return '0';
   }

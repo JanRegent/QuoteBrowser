@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-import '../../../../2BL_domain/bl.dart';
 import '../../../../2BL_domain/orm.dart';
 import '../../../../2BL_domain/repos/sharedprefs.dart';
 import '../../../../2BL_domain/repos/sheetrowshelper.dart';
@@ -87,7 +86,8 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
 
   Future<String> getData() async {
     rows = [];
-    List<SheetRows> sheetRows = await bl.sheetRowsHelper.getAllRows();
+    List<SheetRows> sheetRows = [];
+    // await bl.sheetRowsHelper.getAllRows();
     for (SheetRows row in sheetRows) {
       rows.add(PlutoRow(
         cells: {
@@ -119,7 +119,7 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
         actions: [
           IconButton(
               onPressed: () async {
-                await sheetrowsHelper.deleteAllRows();
+                //await sheetrowsHelper.deleteAllRows();
                 SharedPrefs.clear();
 
                 await getData();

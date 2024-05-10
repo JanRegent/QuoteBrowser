@@ -16,7 +16,6 @@ import 'bluti.dart';
 import 'orm.dart';
 import 'repos/neonrepo.dart';
 
-import 'repos/sheetrowshelper.dart';
 import 'usecases/keys4swiper/_preparekeys.dart';
 
 Bl bl = Bl();
@@ -33,7 +32,6 @@ class Bl {
   RxString homeTitle = ''.obs;
 
   Orm orm = Orm();
-  SheetRowsHelper sheetRowsHelper = SheetRowsHelper();
 
   PrepareKeys prepareKeys = PrepareKeys();
 
@@ -48,7 +46,7 @@ class Bl {
 
   Future init() async {
     debugPrint('sheetRowsHelper init start');
-    await sheetRowsHelper.initDB();
+    //await sheetRowsHelper.initDB(); sqlite
     debugPrint('supRepo init start');
     await supRepo.init();
 

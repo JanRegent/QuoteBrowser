@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 
+import '../../../2BL_domain/repos/sheetrowshelper.dart';
 import '../../dl.dart';
 import 'backendurl.dart';
 
@@ -43,17 +44,18 @@ class GService23 {
   }
 
   Future<List<String>> getAllrows(String sheetName) async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {
-        'action': 'getAllrows',
-        'sheetName': sheetName,
-        'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName])
-      },
-    );
+    // Response response = await dio.get(
+    //   backendUrl,
+    //   queryParameters: {
+    //     'action': 'getAllrows',
+    //     'sheetName': sheetName,
+    //     'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName])
+    //   },
+    // );
 
-    return bl.sheetRowsHelper
-        .insertResponseAll(sheetName, response.data['data']);
+    // return bl.sheetRowsHelper
+    //     .insertResponseAll(sheetName, response.data['data']);
+    return [];
   }
 
   Future<List> rowmapsGet(String sheetName) async {
@@ -70,7 +72,7 @@ class GService23 {
       List data = response.data['data'];
       List<String> cols = blUti.toListString(data[0]);
       if (!cols.contains('quote')) return [];
-      return await bl.sheetRowsHelper.data2rowmaps(sheetName, cols, data);
+      return await data2rowmaps(sheetName, cols, data);
     } catch (e) {
       String mess = '''
       sheetName: $sheetName
@@ -81,20 +83,98 @@ class GService23 {
     }
   }
 
-  Future<List> tagindex2sup() async {
-    String sheetName = '__tagindex__';
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {
-        'action': 'getAllrows',
-        'sheetName': sheetName,
-        'sheetId': blUti.url2fileid(dl.sheetUrls['dailyList'])
-      },
-    );
+  Future<List> data2rowmaps(
+      String sheetName, List<String> cols, List data) async {
+    List listmap = [];
+    for (var i = 1; i < data.length; i++) {
+      SheetRows sheetRow = rowdyn2sheetRows(sheetName, cols, data[i]);
+      listmap.add(sheetRow.toMapSup(sheetName));
+    }
 
-    return bl.sheetRowsHelper
-        .insertResponseTagindexSup(response.data['data'], sheetName);
+    return listmap;
   }
+
+  SheetRows rowdyn2sheetRows(String sheetName, List<String> cols, List rowdyn) {
+    List<String> row = blUti.toListString(rowdyn);
+
+    String fileUrlSet(String value) {
+      if (value.isEmpty) return value;
+      if (!value.startsWith('fb')) {
+        if (!value.startsWith('http')) {
+          value = 'https://docs.google.com/document/d/$value/view';
+        }
+      }
+      return value;
+    }
+
+    String folderUrlSet(String value) {
+      try {
+        if (value.isEmpty) value = row[cols.indexOf('folderUrl')];
+      } catch (_) {}
+
+      if (value.isEmpty) return value;
+      if (!value.startsWith('http')) {
+        value = 'https://drive.google.com/drive/u/0/folders/$value';
+      }
+      return value;
+    }
+
+    String valueGet(String columnName, List<String> row) {
+      int fieldIndex = cols.indexOf(columnName);
+      if (fieldIndex == -1) return '';
+      try {
+        String value = row[fieldIndex];
+        if (columnName == 'fileUrl') return fileUrlSet(value);
+        if (columnName == 'docUrl') return fileUrlSet(value);
+        if (columnName == 'folder') return folderUrlSet(value);
+        return value;
+      } catch (_) {
+        return '';
+      }
+    }
+
+    SheetRows sheetRow = SheetRows();
+    sheetRow.rowkey = valueGet('rowkey', row);
+    try {
+      sheetRow.sheetName = sheetName;
+    } catch (_) {}
+    sheetRow.quote = valueGet('quote', row);
+    sheetRow.author = valueGet('author', row);
+    sheetRow.book = valueGet('book', row);
+    sheetRow.parPage = valueGet('parPage', row);
+    sheetRow.tags = valueGet('tags', row);
+    sheetRow.yellowParts = valueGet('yellowParts', row);
+    sheetRow.stars = valueGet('stars', row);
+    sheetRow.favorite = valueGet('favorite', row);
+    sheetRow.dateinsert = valueGet('dateinsert', row);
+    sheetRow.sourceUrl = valueGet('sourceUrl', row);
+
+    if (cols.contains('fileUrl')) {
+      sheetRow.fileUrl = valueGet('fileUrl', row);
+    } else {
+      sheetRow.fileUrl = valueGet('docUrl', row);
+    }
+    sheetRow.original = valueGet('original', row);
+    sheetRow.vydal = valueGet('vydal', row);
+    sheetRow.folderUrl = valueGet('folder', row);
+    sheetRow.title = valueGet('title', row);
+
+    return sheetRow;
+  }
+  // Future<List> tagindex2sup() async {
+  //   String sheetName = '__tagindex__';
+  //   Response response = await dio.get(
+  //     backendUrl,
+  //     queryParameters: {
+  //       'action': 'getAllrows',
+  //       'sheetName': sheetName,
+  //       'sheetId': blUti.url2fileid(dl.sheetUrls['dailyList'])
+  //     },
+  //   );
+
+  //   return bl.sheetRowsHelper
+  //       .insertResponseTagindexSup(response.data['data'], sheetName);
+  // }
 
   //-------------------------------------------------------------------tags
   Future<List<String>> getTagsByPrefix(String tagPrefix) async {
@@ -109,15 +189,16 @@ class GService23 {
 
   Future<List<String>> getrowsByTagPrefixes(String tagPrefixes) async {
     if (tagPrefixes.isEmpty) return [];
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {
-        'action': 'getrowsByTagPrefixes',
-        'tagPrefixes': tagPrefixes
-      },
-    );
+    // Response response = await dio.get(
+    //   backendUrl,
+    //   queryParameters: {
+    //     'action': 'getrowsByTagPrefixes',
+    //     'tagPrefixes': tagPrefixes
+    //   },
+    // );
 
-    return bl.sheetRowsHelper.insertResponseAll('', response.data['data']);
+    return [];
+    // bl.sheetRowsHelper.insertResponseAll('', response.data['data']);
   }
 
   //----------------------------------------------------comments2tagsYellowparts
@@ -163,66 +244,71 @@ class GService23 {
 
   //-------------------------------------------------------------------search
   Future<List<String>> searchSS(String searchText) async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {
-        'action': 'searchSS',
-        'searchText': searchText,
-        'ssId': 'bl.sheetGroups[bl.sheetGroupCurrent][0]'
-      },
-    );
-    return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    // Response response = await dio.get(
+    //   backendUrl,
+    //   queryParameters: {
+    //     'action': 'searchSS',
+    //     'searchText': searchText,
+    //     'ssId': 'bl.sheetGroups[bl.sheetGroupCurrent][0]'
+    //   },
+    // );
+    // return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    return [];
   }
 
   Future<List<String>> fullText5wordsinService(String word1, String word2,
       String word3, String word4, String word5) async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {
-        'action': 'fullText5wordsinService',
-        'word1': word1,
-        'word2': word2,
-        'word3': word3,
-        'word4': word4,
-        'word5': word5,
-      },
-    );
+    // Response response = await dio.get(
+    //   backendUrl,
+    //   queryParameters: {
+    //     'action': 'fullText5wordsinService',
+    //     'word1': word1,
+    //     'word2': word2,
+    //     'word3': word3,
+    //     'word4': word4,
+    //     'word5': word5,
+    //   },
+    // );
 
-    return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    // return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    return [];
   }
 
   Future<List<String>> searchSheetNames(String sheetNamesStr, String word1,
       String word2, String word3, String word4, String word5) async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {
-        'action': 'searchSheetNames',
-        'sheetNames': sheetNamesStr,
-        'word1': word1,
-        'word2': word2,
-        'word3': word3,
-        'word4': word4,
-        'word5': word5,
-      },
-    );
+    // Response response = await dio.get(
+    //   backendUrl,
+    //   queryParameters: {
+    //     'action': 'searchSheetNames',
+    //     'sheetNames': sheetNamesStr,
+    //     'word1': word1,
+    //     'word2': word2,
+    //     'word3': word3,
+    //     'word4': word4,
+    //     'word5': word5,
+    //   },
+    // );
 
-    return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    // return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    return [];
   }
 
   Future<List<String>> searchSheetsColumns2(String searchText1,
       String columnName1, searchText2, String columnName2) async {
-    Response response = await dio.get(
-      backendUrl,
-      queryParameters: {
-        'action': 'searchSheetsColumns2',
-        'searchText1': searchText1,
-        'columnName1': columnName1,
-        'searchText2': searchText2,
-        'columnName2': columnName2,
-      },
-    );
+    // Response response = await dio.get(
+    //   backendUrl,
+    //   queryParameters: {
+    //     'action': 'searchSheetsColumns2',
+    //     'searchText1': searchText1,
+    //     'columnName1': columnName1,
+    //     'searchText2': searchText2,
+    //     'columnName2': columnName2,
+    //   },
+    // );
 
-    return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+    // return bl.sheetRowsHelper.insertRowsCollFromSheet(response);
+
+    return [];
   }
 
   //----------------------------------------------------------------------set
@@ -258,7 +344,7 @@ class GService23 {
     bl.orm.currentRow.setCellColor = Colors.red;
 
     //bl.sheetRowsHelper.insertRowsCollFromSheet(response);
-    bl.sheetRowsHelper.setCellDLUpdate(columnName, cellContent, rowkey);
+    //bl.sheetRowsHelper.setCellDLUpdate(columnName, cellContent, rowkey);
 
     bl.orm.currentRow.setCellColor = Colors.white;
   }

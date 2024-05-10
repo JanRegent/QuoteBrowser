@@ -29,11 +29,11 @@ class _SwiperButtsState extends State<SwiperButts> {
   void swiperIndexIncrementInCloud() async {
     if (currentSS.swiperIndexIncrement == false) return;
 
-    if (currentSS.currentHomeTabIndex == 1) {
-      bl.booksCount[bl.orm.currentRow.sheetName] = currentSS.swiperIndex;
-      dl.gservice23.setCellDL('booksList', 'swiperIndex',
-          currentSS.swiperIndex.toString(), currentSS.bookListRow.rowkey);
-    }
+    // if (currentSS.currentHomeTabIndex == 1) {
+    //   bl.booksCount[bl.orm.currentRow.sheetName] = currentSS.swiperIndex;
+    //   dl.gservice23.setCellDL('booksList', 'swiperIndex',
+    //       currentSS.swiperIndex.toString(), currentSS.bookListRow.rowkey);
+    // }
     if (currentSS.currentHomeTabIndex == 0) {
       dl.gservice23.setCellDL('dailyList', 'swiperIndex',
           currentSS.swiperIndex.toString(), currentSS.dailyListRow.rowkey);

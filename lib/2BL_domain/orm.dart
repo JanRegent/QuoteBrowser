@@ -19,7 +19,6 @@ void indexChanged(int rowIndex) async {
   }
 
   if (currentSS.keys.isEmpty) return;
-
   await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
 
   currentSS.swiperIndexChanged = true;
@@ -106,7 +105,8 @@ class CurrentRow {
 TextEditingController quoteEditController = TextEditingController();
 
 Future currentRowSet(String rowkey) async {
-  SheetRows sheetRow = await bl.sheetRowsHelper.getRowByRowKey(rowkey);
+  SheetRows sheetRow =
+      SheetRows().fromMap(await bl.supRepo.rowkeySelect(rowkey));
   //--------------------------ids
   bl.orm.currentRow.rowkey.value = sheetRow.rowkey;
 
