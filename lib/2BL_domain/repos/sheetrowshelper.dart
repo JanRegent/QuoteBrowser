@@ -103,21 +103,21 @@ class SheetRows {
     SheetRows row = SheetRows();
     row.rowkey = maprow['rowkey'] ?? '';
 
-    row.sheetName = maprow['sheetName'] ?? '';
+    row.sheetName = maprow['sheetname'] ?? '';
     row.quote = maprow['quote'] ?? '';
     row.author = maprow['author'] ?? '';
     row.book = maprow['book'] ?? '';
-    row.parPage = maprow['parPage'] ?? '';
+    row.parPage = maprow['parpage'] ?? '';
     row.tags = maprow['tags'] ?? '';
-    row.yellowParts = maprow['yellowParts'] ?? '';
+    row.yellowParts = maprow['yellowparts'] ?? '';
     row.stars = maprow['stars'] ?? '';
     row.favorite = maprow['favorite'] ?? '';
     row.dateinsert = maprow['dateinsert'] ?? '';
     row.sourceUrl = maprow['sourceUrl'] ?? '';
-    row.fileUrl = maprow['fileUrl'] ?? '';
+    row.fileUrl = maprow['fileurl'] ?? '';
     row.original = maprow['original'] ?? '';
     row.vydal = maprow['vydal'] ?? '';
-    row.folderUrl = maprow['folderUrl'] ?? '';
+    row.folderUrl = maprow['folderurl'] ?? '';
     row.title = maprow['title'] ?? '';
     return row;
   }
