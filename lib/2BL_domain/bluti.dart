@@ -81,6 +81,10 @@ class BLuti {
     return str.replaceAll(RegExp(r'[^\x20-\x7E]'), '');
   }
 
+  String removeNonumeric(String str) {
+    return str.replaceAll(RegExp("[^0-9]"), '');
+  }
+
   String removeHTMLtags(String html) {
     RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
 

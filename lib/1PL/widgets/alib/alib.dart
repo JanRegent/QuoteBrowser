@@ -72,16 +72,21 @@ class AL {
 
   Future jump2sheetRow(
       String rowkey, BuildContext context, String label) async {
+    if (rowkey.trim().isEmpty) return;
+
+    String endNo = rowkey.substring(rowkey.length - 1);
+
+    String rowNo = '';
+    if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].contains(endNo)) {
+      rowNo = blUti.removeNonumeric(rowkey);
+    } else {
+      rowNo = await dl.gservice23.getRowno(rowkey);
+    }
     String sheetName = dl.sheetNameByRowkey(rowkey);
     String sheetUrl = dl.sheetUrls[sheetName];
+    if (sheetUrl.trim().isEmpty) return;
+
     try {
-      // ignore: unnecessary_null_comparison
-      if (sheetUrl.trim() == null) return;
-      if (sheetUrl.trim().isEmpty) return;
-
-      if (rowkey.trim().isEmpty) return;
-
-      String rowNo = await dl.gservice23.getRowno(rowkey);
       // ignore: use_build_context_synchronously
       await openhUrl(Uri.parse('$sheetUrl;range=A$rowNo'), context);
     } catch (_) {}
