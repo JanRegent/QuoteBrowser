@@ -45,6 +45,7 @@ class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
     return Row(children: [
       al.infoButton(context, widget.title1, '\n${widget.title2}'),
       const Spacer(),
+
       ElevatedButton(
           onPressed: () {
             if (bl.orm.currentRow.setCellColor == Colors.red) return;
@@ -55,6 +56,9 @@ class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
           child: Container(
             margin: const EdgeInsets.all(20),
             padding: const EdgeInsets.all(10),
+            foregroundDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(width: 2, color: Colors.blue)),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 border: Border.all(width: 2, color: Colors.blue)),
@@ -73,8 +77,11 @@ class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
           child: Obx(() => Text(
               ' ${(currentSS.swiperIndex.value + 1)}/${currentSS.keys.length}',
               style: const TextStyle(color: Colors.black, fontSize: 20)))),
-      ElevatedButton(
-          //----------------------------------------forward --next
+      CircleAvatar(
+        radius: 30,
+        backgroundColor: const Color(0xff94d500),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_forward_rounded, color: Colors.red),
           onPressed: () {
             if (bl.orm.currentRow.setCellColor == Colors.red) return;
             currentSS.swiperIndex.value += 1;
@@ -82,14 +89,8 @@ class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
             widget.setStateSwiper();
             swiperIndexIncrementInCloud();
           },
-          child: Container(
-            margin: const EdgeInsets.all(20),
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(width: 2, color: Colors.red)),
-            child: const Icon(Icons.arrow_forward_rounded, color: Colors.red),
-          )),
+        ),
+      ),
     ]);
   }
 
