@@ -158,9 +158,10 @@ PopupMenuButton tagsYellowPopup(BuildContext context,
 
 Container buttRow(BuildContext context, VoidCallback swiperSetstate) {
   return Container(
-    color: Colors.lightBlue,
-    margin: const EdgeInsets.all(10),
-    padding: const EdgeInsets.all(5),
+    margin: const EdgeInsets.all(15.0),
+    padding: const EdgeInsets.all(3.0),
+    decoration: BoxDecoration(
+        border: Border.all(color: const Color.fromARGB(255, 143, 203, 246))),
     child: ListTile(
       leading: personPopup(context, swiperSetstate),
       trailing: PopupMenuButton(
