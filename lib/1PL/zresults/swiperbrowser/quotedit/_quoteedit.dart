@@ -4,7 +4,6 @@ import '../../../../2BL_domain/bl.dart';
 
 import '../../../../2BL_domain/orm.dart';
 
-import '../previewpage.dart';
 import 'barbutton.dart';
 
 // ignore: must_be_immutable
@@ -50,19 +49,6 @@ class _QuoteEditState extends State<QuoteEdit> {
     setState(() {});
   }
 
-  ElevatedButton previewButt() {
-    return ElevatedButton.icon(
-      icon: const Icon(Icons.preview),
-      label: const Text(''),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const PreviewPage()),
-        );
-      },
-    );
-  }
-
   @override //printSelectedText()
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +57,6 @@ class _QuoteEditState extends State<QuoteEdit> {
           leading:
               tagsYellowPopup(context, quoteSetstate, widget.swiperSetstate),
           title: buttRow(context, widget.swiperSetstate),
-          actions: [previewButt()],
         ),
         body: SingleChildScrollView(child: quoteTextField()));
   }

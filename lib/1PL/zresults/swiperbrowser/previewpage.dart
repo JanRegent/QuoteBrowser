@@ -5,17 +5,19 @@ import 'package:highlight_text/highlight_text.dart';
 
 import '../../../2BL_domain/bl.dart';
 
+bool previewPageOn = false;
+
 class PreviewPage extends StatelessWidget {
   const PreviewPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     Map<String, HighlightedWord> words = {};
-
+    previewPageOn = false;
     words = highParts();
 
     return Scaffold(
-        appBar: AppBar(title: const Text('preview')),
+        appBar: AppBar(leading: const Text(' '), title: const Text('preview')),
         body: TextHighlight(
           text: bl.orm.currentRow.quote
               .value, // You need to pass the string you want the highlights

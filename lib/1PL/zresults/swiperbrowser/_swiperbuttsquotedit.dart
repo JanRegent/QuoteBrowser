@@ -5,27 +5,28 @@ import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/orm.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
+import 'previewpage.dart';
 import 'quotedit/_quoteedit.dart';
 import 'swipermenu.dart';
 
 // ignore: must_be_immutable
-class SwiperButts extends StatefulWidget {
+class SwiperButtsQuotedit extends StatefulWidget {
   VoidCallback setStateSwiper;
   String title1;
   String title2;
   VoidCallback swiperSetstateIndexChanged;
 
-  SwiperButts(this.setStateSwiper, this.title1, this.title2,
+  SwiperButtsQuotedit(this.setStateSwiper, this.title1, this.title2,
       this.swiperSetstateIndexChanged,
       {Key? key})
       : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _SwiperButtsState createState() => _SwiperButtsState();
+  _SwiperButtsQuoteditState createState() => _SwiperButtsQuoteditState();
 }
 
-class _SwiperButtsState extends State<SwiperButts> {
+class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
   void swiperIndexIncrementInCloud() async {
     if (currentSS.swiperIndexIncrement == false) return;
 
@@ -61,6 +62,10 @@ class _SwiperButtsState extends State<SwiperButts> {
       ),
       //
       TextButton(
+          onLongPress: () {
+            previewPageOn = !previewPageOn;
+            widget.setStateSwiper();
+          },
           onPressed: () {
             if (bl.orm.currentRow.setCellColor == Colors.red) return;
             showGotoPopupMenu(context, widget.setStateSwiper);
@@ -95,6 +100,9 @@ class _SwiperButtsState extends State<SwiperButts> {
           title: titleArrowsRowOff(),
           actions: [rowViewMenu({}, widget.setStateSwiper)],
         ),
-        body: SafeArea(child: QuoteEdit(widget.setStateSwiper, context)));
+        body: SafeArea(
+            child: previewPageOn
+                ? const PreviewPage()
+                : QuoteEdit(widget.setStateSwiper, context)));
   }
 }
