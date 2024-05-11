@@ -46,20 +46,20 @@ class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
       al.infoButton(context, widget.title1, '\n${widget.title2}'),
       const Spacer(),
       ElevatedButton(
-        onPressed: () {
-          if (bl.orm.currentRow.setCellColor == Colors.red) return;
-          currentSS.swiperIndex -= 1;
-          indexChanged(currentSS.swiperIndex.value);
-          widget.setStateSwiper();
-        },
-        style: ElevatedButton.styleFrom(
-          shape: const CircleBorder(),
-          padding: const EdgeInsets.all(20),
-          backgroundColor: Colors.blue, // <-- Button color
-          foregroundColor: Colors.red, // <-- Splash color
-        ),
-        child: const Icon(Icons.arrow_back_rounded, color: Colors.white),
-      ),
+          onPressed: () {
+            if (bl.orm.currentRow.setCellColor == Colors.red) return;
+            currentSS.swiperIndex -= 1;
+            indexChanged(currentSS.swiperIndex.value);
+            widget.setStateSwiper();
+          },
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(width: 2, color: Colors.blue)),
+            child: const Icon(Icons.arrow_back, color: Colors.red),
+          )),
       //
       TextButton(
           onLongPress: () {
@@ -74,22 +74,22 @@ class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
               ' ${(currentSS.swiperIndex.value + 1)}/${currentSS.keys.length}',
               style: const TextStyle(color: Colors.black, fontSize: 20)))),
       ElevatedButton(
-        //----------------------------------------forward --next
-        onPressed: () {
-          if (bl.orm.currentRow.setCellColor == Colors.red) return;
-          currentSS.swiperIndex += 1;
-          indexChanged(currentSS.swiperIndex.value);
-          widget.setStateSwiper();
-          swiperIndexIncrementInCloud();
-        },
-        style: ElevatedButton.styleFrom(
-          shape: const CircleBorder(),
-          padding: const EdgeInsets.all(20),
-          backgroundColor: Colors.blue, // <-- Button color
-          foregroundColor: Colors.red, // <-- Splash color
-        ),
-        child: const Icon(Icons.arrow_forward_rounded, color: Colors.white),
-      ),
+          //----------------------------------------forward --next
+          onPressed: () {
+            if (bl.orm.currentRow.setCellColor == Colors.red) return;
+            currentSS.swiperIndex.value += 1;
+            indexChanged(currentSS.swiperIndex.value);
+            widget.setStateSwiper();
+            swiperIndexIncrementInCloud();
+          },
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(width: 2, color: Colors.red)),
+            child: const Icon(Icons.arrow_forward_rounded, color: Colors.red),
+          )),
     ]);
   }
 
