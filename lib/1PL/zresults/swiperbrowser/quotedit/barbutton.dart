@@ -22,9 +22,6 @@ void selectText(BuildContext context) {
     // print(quoteEditController.selection.extentOffset);
     // print('----');
   } catch (e) {
-    debugPrint(bl.orm.currentRow.selectedText.value);
-    debugPrint(e.toString());
-    debugPrint('----');
     return;
   }
   //bl.orm.currentRow.attribNameLast.value = '?';
@@ -161,6 +158,7 @@ PopupMenuButton tagsYellowPopup(BuildContext context,
 
 Container buttRow(BuildContext context, VoidCallback swiperSetstate) {
   return Container(
+    color: Colors.lightBlue,
     margin: const EdgeInsets.all(10),
     padding: const EdgeInsets.all(5),
     child: ListTile(
