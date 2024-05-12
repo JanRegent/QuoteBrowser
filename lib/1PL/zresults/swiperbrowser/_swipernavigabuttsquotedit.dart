@@ -91,7 +91,7 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
         ),
         body: SafeArea(
             child: previewPageOn
-                ? const PreviewPage()
+                ? PreviewPage(widget.setStateSwiper)
                 : QuoteEdit(widget.setStateSwiper, context)));
   }
 }

@@ -8,12 +8,12 @@ import '../../../2BL_domain/bl.dart';
 bool previewPageOn = false;
 
 class PreviewPage extends StatelessWidget {
-  const PreviewPage({super.key});
+  VoidCallback swiperSetstate;
+  PreviewPage(this.swiperSetstate, {super.key});
 
   @override
   Widget build(BuildContext context) {
     Map<String, HighlightedWord> words = {};
-    previewPageOn = false;
     words = highParts();
 
     Row titleRow() {
@@ -21,13 +21,30 @@ class PreviewPage extends StatelessWidget {
         children: [
           Text(bl.orm.currentRow.author.value),
           const Text(' / '),
-          Text(bl.orm.currentRow.book.value)
+          Text(
+              '${bl.orm.currentRow.book.value}\n${bl.orm.currentRow.parPage.value}')
         ],
       );
     }
 
+    IconButton previewPageReset() {
+      return IconButton(
+          onPressed: () {
+            previewPageOn = false;
+            swiperSetstate();
+          },
+          icon: const Icon(Icons.edit));
+    }
+
     return Scaffold(
-        appBar: AppBar(leading: const Text(' '), title: titleRow()),
+        appBar: AppBar(
+          shape:
+              const Border(bottom: BorderSide(color: Colors.orange, width: 4)),
+          elevation: 4,
+          leading: const Text(' '),
+          title: titleRow(),
+          actions: [previewPageReset()],
+        ),
         body: SingleChildScrollView(
             child: TextHighlight(
           text: bl.orm.currentRow.quote

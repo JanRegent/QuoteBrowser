@@ -53,7 +53,7 @@ class _QuoteEditState extends State<QuoteEdit> {
   IconButton previewPageSet() {
     return IconButton(
         onPressed: () {
-          previewPageOn = !previewPageOn;
+          previewPageOn = true;
           widget.swiperSetstate();
         },
         icon: const Icon(Icons.remove_red_eye));

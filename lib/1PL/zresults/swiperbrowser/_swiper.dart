@@ -38,7 +38,6 @@ class _CardSwiperState extends State<CardSwiper> {
   }
 
   void swiperSetstateIndexChanged() {
-    previewPageOn = false;
     setState(() {});
     indexChanged(0);
   }
