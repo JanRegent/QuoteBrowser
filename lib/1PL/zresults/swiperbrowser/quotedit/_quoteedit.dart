@@ -4,7 +4,8 @@ import '../../../../2BL_domain/bl.dart';
 
 import '../../../../2BL_domain/orm.dart';
 
-import 'barbutton.dart';
+import '../previewpage.dart';
+import 'barbuttontagsparts.dart';
 
 // ignore: must_be_immutable
 class QuoteEdit extends StatefulWidget {
@@ -49,6 +50,15 @@ class _QuoteEditState extends State<QuoteEdit> {
     setState(() {});
   }
 
+  IconButton previewPageSet() {
+    return IconButton(
+        onPressed: () {
+          previewPageOn = !previewPageOn;
+          widget.swiperSetstate();
+        },
+        icon: const Icon(Icons.remove_red_eye));
+  }
+
   @override //printSelectedText()
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +66,8 @@ class _QuoteEditState extends State<QuoteEdit> {
           backgroundColor: bl.orm.currentRow.setCellColor,
           leading:
               tagsYellowPopup(context, quoteSetstate, widget.swiperSetstate),
-          title: buttRow(context, widget.swiperSetstate),
+          title: tagsPartsButtRow(context, widget.swiperSetstate),
+          actions: [previewPageSet()],
         ),
         body: SingleChildScrollView(child: quoteTextField()));
   }

@@ -10,23 +10,24 @@ import 'quotedit/_quoteedit.dart';
 import 'swipermenu.dart';
 
 // ignore: must_be_immutable
-class SwiperButtsQuotedit extends StatefulWidget {
+class SwiperNavigButtsQuotedit extends StatefulWidget {
   VoidCallback setStateSwiper;
   String title1;
   String title2;
   VoidCallback swiperSetstateIndexChanged;
 
-  SwiperButtsQuotedit(this.setStateSwiper, this.title1, this.title2,
+  SwiperNavigButtsQuotedit(this.setStateSwiper, this.title1, this.title2,
       this.swiperSetstateIndexChanged,
       {Key? key})
       : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _SwiperButtsQuoteditState createState() => _SwiperButtsQuoteditState();
+  _SwiperNavigButtsQuoteditState createState() =>
+      _SwiperNavigButtsQuoteditState();
 }
 
-class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
+class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
   void swiperIndexIncrementInCloud() async {
     if (currentSS.swiperIndexIncrement == false) return;
 
@@ -44,7 +45,7 @@ class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
   Row titleArrowsRowOff() {
     return Row(children: [
       al.infoButton(context, widget.title1, '\n${widget.title2}'),
-
+      const Spacer(),
       ElevatedButton(
           onPressed: () {
             if (bl.orm.currentRow.setCellColor == Colors.red) return;
@@ -52,13 +53,12 @@ class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
             indexChanged(currentSS.swiperIndex.value);
             widget.setStateSwiper();
           },
-          child: const Icon(Icons.arrow_back, color: Colors.red)),
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(width: 2.0, color: Colors.blue),
+          ),
+          child: const Icon(Icons.arrow_back, color: Colors.blue)),
       //
       TextButton(
-          onLongPress: () {
-            previewPageOn = !previewPageOn;
-            widget.setStateSwiper();
-          },
           onPressed: () {
             if (bl.orm.currentRow.setCellColor == Colors.red) return;
             showGotoPopupMenu(context, widget.setStateSwiper);
@@ -75,7 +75,10 @@ class _SwiperButtsQuoteditState extends State<SwiperButtsQuotedit> {
             widget.setStateSwiper();
             swiperIndexIncrementInCloud();
           },
-          child: const Icon(Icons.arrow_forward_rounded, color: Colors.red)),
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(width: 2.0, color: Colors.blue),
+          ),
+          child: const Icon(Icons.arrow_forward_rounded, color: Colors.blue)),
     ]);
   }
 

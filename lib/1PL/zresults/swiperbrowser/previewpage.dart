@@ -16,9 +16,20 @@ class PreviewPage extends StatelessWidget {
     previewPageOn = false;
     words = highParts();
 
+    Row titleRow() {
+      return Row(
+        children: [
+          Text(bl.orm.currentRow.author.value),
+          const Text(' / '),
+          Text(bl.orm.currentRow.book.value)
+        ],
+      );
+    }
+
     return Scaffold(
-        appBar: AppBar(leading: const Text(' '), title: const Text('preview')),
-        body: TextHighlight(
+        appBar: AppBar(leading: const Text(' '), title: titleRow()),
+        body: SingleChildScrollView(
+            child: TextHighlight(
           text: bl.orm.currentRow.quote
               .value, // You need to pass the string you want the highlights
           words: words,
@@ -30,7 +41,7 @@ class PreviewPage extends StatelessWidget {
           ),
           textAlign: TextAlign
               .left, // You can use any attribute of the RichText widget
-        ));
+        )));
   }
 }
 

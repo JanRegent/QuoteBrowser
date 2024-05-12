@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../2BL_domain/orm.dart';
 
 import '../../../2BL_domain/usecases/keys4swiper/emptyresults.dart';
-import '_swiperbuttsquotedit.dart';
+import '_swipernavigabuttsquotedit.dart';
 import 'previewpage.dart';
 
 class CardSwiper extends StatefulWidget {
@@ -50,7 +50,7 @@ class _CardSwiperState extends State<CardSwiper> {
             MediaQuery.of(context).size.height)),
         child: Swiper(
           itemBuilder: (BuildContext context, int rowIndex) {
-            return SwiperButtsQuotedit(swiperSetstate, widget.title1,
+            return SwiperNavigButtsQuotedit(swiperSetstate, widget.title1,
                 widget.title2, swiperSetstateIndexChanged);
           },
           itemCount: currentSS.keys.length,
