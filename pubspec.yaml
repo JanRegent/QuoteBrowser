@@ -30,7 +30,7 @@ dependencies:
   rich_readmore: ^1.0.6 #https://pub.dev/packages/rich_readmore
 
   highlight_text: ^1.7.0 #https://pub.dev/packages/highlight_text
-
+  wx_text: ^3.0.0 #https://pub.dev/packages/wx_text
   ##----elements
   dropdown_button2: ^2.3.9 #https://pub.dev/packages/dropdown_button2
   flutter_rating_stars: ^1.0.3+4 #https://pub.dev/packages/flutter_rating_stars

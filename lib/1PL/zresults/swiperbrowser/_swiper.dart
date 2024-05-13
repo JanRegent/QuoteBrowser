@@ -4,7 +4,6 @@ import '../../../2BL_domain/orm.dart';
 
 import '../../../2BL_domain/usecases/keys4swiper/emptyresults.dart';
 import '_swipernavigabuttsquotedit.dart';
-import 'previewpage.dart';
 
 class CardSwiper extends StatefulWidget {
   final String title1;

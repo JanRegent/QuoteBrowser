@@ -5,7 +5,7 @@ import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/orm.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
-import 'previewpage.dart';
+import 'prewiew/previewpage2.dart';
 import 'quotedit/_quoteedit.dart';
 import 'swipermenu.dart';
 
@@ -51,6 +51,8 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
             if (bl.orm.currentRow.setCellColor == Colors.red) return;
             currentSS.swiperIndex -= 1;
             indexChanged(currentSS.swiperIndex.value);
+            previewPageOn = false;
+            widget.setStateSwiper();
           },
           style: OutlinedButton.styleFrom(
             side: const BorderSide(width: 2.0, color: Colors.blue),
@@ -72,6 +74,8 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
             currentSS.swiperIndex.value += 1;
             indexChanged(currentSS.swiperIndex.value);
             swiperIndexIncrementInCloud();
+            previewPageOn = false;
+            widget.setStateSwiper();
           },
           style: OutlinedButton.styleFrom(
             side: const BorderSide(width: 2.0, color: Colors.blue),
@@ -89,7 +93,7 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
         ),
         body: SafeArea(
             child: previewPageOn
-                ? PreviewPage(widget.setStateSwiper)
+                ? PreviewPage2(widget.setStateSwiper)
                 : QuoteEdit(widget.setStateSwiper, context)));
   }
 }
