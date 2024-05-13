@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:highlight_text/highlight_text.dart';
 
 import '../../../2BL_domain/bl.dart';
@@ -19,10 +20,10 @@ class PreviewPage extends StatelessWidget {
     Row titleRow() {
       return Row(
         children: [
-          Text(bl.orm.currentRow.author.value),
+          Obx(() => Text(bl.orm.currentRow.author.value)),
           const Text(' / '),
-          Text(
-              '${bl.orm.currentRow.book.value}\n${bl.orm.currentRow.parPage.value}')
+          Obx(() => Text(
+              '${bl.orm.currentRow.book.value}\n${bl.orm.currentRow.parPage.value}'))
         ],
       );
     }
@@ -46,22 +47,17 @@ class PreviewPage extends StatelessWidget {
           actions: [previewPageReset()],
         ),
         body: SingleChildScrollView(
-            child: TextHighlight(
-          text: bl.orm.currentRow.quote
-              .value, // You need to pass the string you want the highlights
-          words: words,
-          matchCase: false, //// Your dictionary words
-          textStyle: const TextStyle(
-            // You can set the general style, like a Text()
-            fontSize: 20.0,
-            color: Colors.black,
-          ),
-          textAlign: TextAlign
-              .left, // You can use any attribute of the RichText widget
-        )));
+            child: Obx(() => TextHighlight(
+                text: bl.orm.currentRow.quote
+                    .value, // You need to pass the string you want the highlights
+                words: words,
+                matchCase: false, //// Your dictionary words
+                textStyle: const TextStyle(fontSize: 20.0, color: Colors.black),
+                textAlign: TextAlign.left))));
   }
 }
 
+//----------------------------------------------------------------------
 Map<String, HighlightedWord> highTags() {
   Map<String, HighlightedWord> words = {};
 

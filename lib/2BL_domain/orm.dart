@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../1PL/pages/2books/bookslist.dart';
+import '../1PL/zresults/swiperbrowser/previewpage.dart';
 import 'repos/dailylist.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';

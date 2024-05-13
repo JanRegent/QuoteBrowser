@@ -51,7 +51,6 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
             if (bl.orm.currentRow.setCellColor == Colors.red) return;
             currentSS.swiperIndex -= 1;
             indexChanged(currentSS.swiperIndex.value);
-            widget.setStateSwiper();
           },
           style: OutlinedButton.styleFrom(
             side: const BorderSide(width: 2.0, color: Colors.blue),
@@ -72,7 +71,6 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
             if (bl.orm.currentRow.setCellColor == Colors.red) return;
             currentSS.swiperIndex.value += 1;
             indexChanged(currentSS.swiperIndex.value);
-            widget.setStateSwiper();
             swiperIndexIncrementInCloud();
           },
           style: OutlinedButton.styleFrom(
