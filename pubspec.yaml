@@ -23,14 +23,10 @@ dependencies:
   pluto_grid: ^7.0.2 #https://pub.dev/packages/pluto_grid
 
   ##----text
-  ##frozen problem!! highlight_text: ^1.7.0 #https://pub.dev/packages/highlight_text
-  tag_highlight_text: ^1.0.2 #https://pub.dev/packages/tag_highlight_text
   input_dialog: ^0.1.1 #https://pub.dev/packages/input_dialog
   clipboard: ^0.1.3 #https://pub.dev/packages/clipboard
-  rich_readmore: ^1.0.6 #https://pub.dev/packages/rich_readmore
-
   highlight_text: ^1.7.0 #https://pub.dev/packages/highlight_text
-  wx_text: ^3.0.0 #https://pub.dev/packages/wx_text
+
   ##----elements
   dropdown_button2: ^2.3.9 #https://pub.dev/packages/dropdown_button2
   flutter_rating_stars: ^1.0.3+4 #https://pub.dev/packages/flutter_rating_stars

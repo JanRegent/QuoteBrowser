@@ -5,7 +5,7 @@ import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/orm.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
-import 'prewiew/previewpage2.dart';
+import 'prewiew/previewpage.dart';
 import 'quotedit/_quoteedit.dart';
 import 'swipermenu.dart';
 
@@ -93,7 +93,7 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
         ),
         body: SafeArea(
             child: previewPageOn
-                ? PreviewPage2(widget.setStateSwiper)
+                ? PreviewPage(widget.setStateSwiper)
                 : QuoteEdit(widget.setStateSwiper, context)));
   }
 }

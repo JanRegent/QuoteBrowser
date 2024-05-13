@@ -4,7 +4,7 @@ import '../../../../2BL_domain/bl.dart';
 
 import '../../../../2BL_domain/orm.dart';
 
-import '../prewiew/previewpage2.dart';
+import '../prewiew/previewpage.dart';
 import 'barbuttontagsparts.dart';
 
 // ignore: must_be_immutable
