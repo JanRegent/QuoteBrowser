@@ -25,7 +25,6 @@ dependencies:
   ##----text
   input_dialog: ^0.1.1 #https://pub.dev/packages/input_dialog
   clipboard: ^0.1.3 #https://pub.dev/packages/clipboard
-  highlight_text: ^1.7.0 #https://pub.dev/packages/highlight_text
 
   ##----elements
   dropdown_button2: ^2.3.9 #https://pub.dev/packages/dropdown_button2
