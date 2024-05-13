@@ -1,13 +1,10 @@
 // ignore_for_file: file_names
 
-import 'dart:convert';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/repos/dailylist.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
@@ -120,7 +117,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
     return Row(
       children: [
         al.linkIconOpenUrl(
-            '${currRow.sheetUrl.trim()}&range=A$rownoLast', context, ''),
+            '${currRow.sheetUrl.trim()}&range=A${saving.value}', context, ''),
         sheetNameSelect()
       ],
     );
@@ -196,29 +193,6 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
 
   //-----------------------------------------------------------------save butt
 
-  Map<String, dynamic> sheetrowMap() {
-    return {
-      "rowkey": '',
-      "sheetname": currRow.sheetName,
-      "rowno": rownoLast,
-      "quote": quoteContr.text,
-      "author": currRow.author,
-      "book": '',
-      "parpage": parPageContr.text,
-      "tags": '',
-      "yellowparts": '',
-      "stars": '',
-      "favorite": '',
-      "dateinsert": '${blUti.todayStr()}.',
-      "sourceurl": '',
-      "fileurl": '',
-      "original": quoteContr.text,
-      "vydal": '',
-      "folderurl": '',
-      "title": '',
-    };
-  }
-
   String rownoLast = '';
 
   IconButton saveButt() {
@@ -226,24 +200,14 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
       icon: const Icon(Icons.save),
       onPressed: () async {
         if (currRow.sheetName.isEmpty) {
-          saving.value = 'sheetNAme!';
+          saving.value = 'sheetName!';
           return;
         }
         saving.value = 'saving to gdrive';
-        String rowStr = await dl.gservice23.appendQuote(currRow.sheetName,
+        saving.value = await dl.gservice23.appendQuote(currRow.sheetName,
             quoteContr.text, parPageContr.text, currRow.author);
-        Map rowMap = jsonDecode(rowStr);
-        debugPrint(rowStr);
-        bl.supRepo.sheetrowInsert1(rowMap);
-        //bl.fireRepo.rowmapDailySave(rowMap);
 
-        rownoLast = rowMap['rowno'].toString();
-        // String rowkey =
-        //     rowMap['sheetname'] + '__|__' + rowMap['rowno'].toString();
-        //bl.fireRepo.tagsUpdateSet(rowMap['quote'].toString(), rowkey);
-
-        if (rownoLast.isNotEmpty) clearCtrls();
-        saving.value = rownoLast;
+        if (saving.value.length < 5) clearCtrls();
       },
     );
   }
