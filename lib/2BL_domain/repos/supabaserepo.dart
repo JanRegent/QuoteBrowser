@@ -16,7 +16,8 @@ class SupabaseRepo {
   Future init() async {
     await Supabase.initialize(
       url: supUrl,
-      anonKey: anonKey,
+      anonKey:
+          serviceRoleKey, //Enable Row Level Security (RLS) via serviceRoleKey   NO anonKey,
     );
     supabase = Supabase.instance.client;
   }

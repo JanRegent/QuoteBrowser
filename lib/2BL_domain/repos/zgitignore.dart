@@ -7,6 +7,9 @@ const supUrl = "https://gbwcwebsyirnjdmmipup.supabase.co";
 const anonKey =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdid2N3ZWJzeWlybmpkbW1pcHVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDkyODU0ODAsImV4cCI6MjAyNDg2MTQ4MH0.7SGQQZKGHnIScFhYkvxfZaWfGsUtfl8uqTal0vcl2ko";
 
+const serviceRoleKey =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdid2N3ZWJzeWlybmpkbW1pcHVwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwOTI4NTQ4MCwiZXhwIjoyMDI0ODYxNDgwfQ.i4xVw4RNDfqa8gOYuKdZ662Ph4CzaUsI9-LR1lE5t-E";
+
 Future<Connection> initNeon() async {
   //Neon postgresql://jan.regent:TUSOC4bsFYP6@ep-fragrant-sea-a2zurdgp.eu-central-1.aws.neon.tech/neondb?sslmode=require
   return await Connection.open(Endpoint(
