@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:highlight_text/highlight_text.dart';
+import 'package:quotebrowser/1PL/widgets/alib/alicons.dart';
 
 import '../../../../2BL_domain/bl.dart';
 import 'text_with_highlight.dart';
@@ -44,14 +46,14 @@ class _PreviewPageState extends State<PreviewPage> {
         borderRadius: BorderRadius.circular(10),
         selectedBorderColor: Colors.pink,
 // add widgets for which the users need to toggle
-        children: const [
-          Padding(
+        children: [
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
-            child: Text('Tags', style: TextStyle(fontSize: 18)),
+            child: Text('#', style: TextStyle(fontSize: 18)),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: Text('Parts', style: TextStyle(fontSize: 18)),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ALicons.attrIcons.yellowPartIcon,
           ),
         ],
         // to select or deselect when pressed
@@ -98,9 +100,16 @@ class _PreviewPageState extends State<PreviewPage> {
   }
 
   List<String> highlightedTexts = [];
+  Map<String, HighlightedWord> tagWords = {};
 
   void highStrings() {
     highlightedTexts = [];
+    tagWords = {};
+    TextStyle tagStyle = const TextStyle(
+        // You can set the general style, like a Text()
+        fontSize: 20.0,
+        color: Colors.red,
+        fontWeight: FontWeight.bold);
 
     if (tagAllPartsIndex == 1) {
       List<String> parts = bl.orm.currentRow.yellowParts.value.split('__|__');
@@ -113,6 +122,17 @@ class _PreviewPageState extends State<PreviewPage> {
     if (tagAllPartsIndex == 0) {
       List<String> tags = bl.orm.currentRow.tags.value.split('#');
       highlightedTexts.addAll(tags);
+      for (var i = 0; i < tags.length; i++) {
+        if (tags[i].isEmpty) continue;
+        tagWords.addAll({
+          tags[i]: HighlightedWord(
+            onTap: () {
+              debugPrint(tags[i]);
+            },
+            textStyle: tagStyle,
+          )
+        });
+      }
     }
   }
 
@@ -130,30 +150,20 @@ class _PreviewPageState extends State<PreviewPage> {
           actions: [previewPageReset()],
         ),
         body: SingleChildScrollView(
-            child: Obx(
-          () => TextWithHighlight(
-            text: bl.orm.currentRow.quote.value,
-            textStyle: const TextStyle(
-              fontWeight: FontWeight.normal,
-              fontSize: 20,
-              color: Colors.black,
-            ),
-            highlightedTexts: highlightedTexts,
-            highlightedTextStyle: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.red,
-            ),
-          ),
-
-          // TextHighlight(
-          //     text: bl.orm.currentRow.quote
-          //         .value, // You need to pass the string you want the highlights
-          //     words: words,
-          //     splitOnLongWord: true,
-          //     matchCase: false, //// Your dictionary words
-          //     textStyle: const TextStyle(fontSize: 20.0, color: Colors.black),
-          //     textAlign: TextAlign.left)
-        )));
+            child: tagAllPartsIndex != 0
+                ? Obx(
+                    () => TextWithHighlight(
+                      text: bl.orm.currentRow.quote.value,
+                      highlightedTexts: highlightedTexts,
+                    ),
+                  )
+                : TextHighlight(
+                    text: bl.orm.currentRow.quote.value,
+                    words: tagWords,
+                    splitOnLongWord: true,
+                    matchCase: false,
+                    textStyle:
+                        const TextStyle(fontSize: 20.0, color: Colors.black),
+                    textAlign: TextAlign.left)));
   }
 }
