@@ -5,11 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
 
-import '../1PL/pages/2books/bookslist.dart';
 import '../3Data/providers/gwebapp/tagsparts.dart';
+import 'currow.dart';
 import 'repos/adminrepo/repoadmin.dart';
 import 'repos/authbooksmap.dart';
-import 'repos/dailylist.dart';
 
 import 'bluti.dart';
 
@@ -23,15 +22,14 @@ Bl bl = Bl();
 class Bl {
   bool devMode = false;
 
-  DailyList dailyList = DailyList();
-  BooksList bookList = BooksList();
-
   //RxString filteredSheetName = ''.obs;
   RxMap lastCount = {}.obs;
   RxMap booksCount = {}.obs;
   RxString homeTitle = ''.obs;
 
+  CurrentSS currentSS = CurrentSS();
   Orm orm = Orm();
+  CurRow curRow = CurRow();
 
   PrepareKeys prepareKeys = PrepareKeys();
 

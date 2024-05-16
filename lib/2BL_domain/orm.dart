@@ -31,13 +31,15 @@ RxString loadingTitle = ''.obs;
 class CurrentSS {
   List<String> keys = [];
   List<String> sheetNames = [];
-  bool addQuoteMode = false;
+
   RxInt swiperIndex = 0.obs;
   bool swiperIndexChanged = false;
   bool swiperIndexIncrement = false;
 
   int currentHomeTabIndex = 0;
+  DailyList dailyList = DailyList();
   DailyListRow dailyListRow = DailyListRow();
+  BooksList bookList = BooksList();
   BookListRow bookListRow = BookListRow();
 }
 
@@ -45,13 +47,6 @@ class Orm {
   CurrentRow currentRow = CurrentRow();
 
   List<String> mandatoryFields = ['quote', 'author', 'book', 'tags'];
-}
-
-void currentRowNew() {
-  bl.orm.currentRow = CurrentRow()
-    ..fileId = ''
-    ..quote.value = ''
-    ..tags.value = '';
 }
 
 class CurrentRow {

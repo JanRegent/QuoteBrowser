@@ -24,25 +24,26 @@ class _AuthorBooksState extends State<AuthorBooks> {
     super.initState();
     listTiles = [];
     listTiles.add(buttTile());
-    for (var bix = 0; bix < bl.bookList.rows.length; bix++) {
-      if (bl.bookList.rows[bix].author != widget.author) continue;
-      String sheetName = bl.bookList.rows[bix].sheetName;
-      if (bl.bookList.rows[bix].bookName.isEmpty) continue;
+    for (var bix = 0; bix < bl.currentSS.bookList.rows.length; bix++) {
+      if (bl.currentSS.bookList.rows[bix].author != widget.author) continue;
+      String sheetName = bl.currentSS.bookList.rows[bix].sheetName;
+      if (bl.currentSS.bookList.rows[bix].bookName.isEmpty) continue;
 
       bl.booksCount[sheetName] = '';
       listTiles.add(ListTile(
-        leading: Text(bl.bookList.rows[bix].swiperIndex.toString()),
+        leading: Text(bl.currentSS.bookList.rows[bix].swiperIndex.toString()),
         title: Row(
           children: [
             Text(
-              bl.bookList.rows[bix].bookName,
+              bl.currentSS.bookList.rows[bix].bookName,
               style: const TextStyle(fontSize: 15),
             )
           ],
         ),
         onTap: () async {
-          currentSS.bookListRow = bl.bookList.rows[bix];
-          currentSS.swiperIndex.value = bl.bookList.rows[bix].swiperIndex;
+          currentSS.bookListRow = bl.currentSS.bookList.rows[bix];
+          currentSS.swiperIndex.value =
+              bl.currentSS.bookList.rows[bix].swiperIndex;
           currentSS.swiperIndexIncrement = true;
           await getBookContentShow(sheetName, sheetName, context);
         },

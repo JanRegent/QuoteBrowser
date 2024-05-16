@@ -22,9 +22,9 @@ class _LoadingPageState extends State<LoadingPage> {
 
   Future<void> _fetchFromAPI() async {
     loadingLog.value += '\n dailyList';
-    await bl.dailyList.getData();
+    await bl.currentSS.dailyList.getData();
     loadingLog.value += '\n bookList';
-    await bl.bookList.getData();
+    await bl.currentSS.bookList.getData();
 
     loadingLog.value += '\n others';
     bl.updateSlowly();

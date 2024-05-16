@@ -121,12 +121,12 @@ class SupabaseRepo {
     await bl.neonRepo.sheetrowsDelete();
     //await bl.koyebRepo.sheetrowsDelete();
 
-    for (var i = 0; i < bl.dailyList.rows.length; i++) {
-      await insertSheet2sqldb(bl.dailyList.rows[i].sheetName);
+    for (var i = 0; i < bl.currentSS.dailyList.rows.length; i++) {
+      await insertSheet2sqldb(bl.currentSS.dailyList.rows[i].sheetName);
     }
 
-    for (var i = 0; i < bl.bookList.rows.length; i++) {
-      await insertSheet2sqldb(bl.bookList.rows[i].sheetName);
+    for (var i = 0; i < bl.currentSS.bookList.rows.length; i++) {
+      await insertSheet2sqldb(bl.currentSS.bookList.rows[i].sheetName);
     }
     log2sheetrows('********************************sheets2sup end');
     currentSheet2supabase.value = 'sheets2sup end';

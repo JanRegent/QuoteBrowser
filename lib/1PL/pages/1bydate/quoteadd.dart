@@ -45,7 +45,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
           color: Theme.of(context).hintColor,
         ),
       ),
-      items: bl.dailyList.sheetNames
+      items: bl.currentSS.dailyList.sheetNames
           .map((String item) => DropdownMenuItem<String>(
                 value: item,
                 child: Text(
@@ -59,7 +59,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
       value: sheetName,
       onChanged: (String? value) {
         sheetName = value;
-        currRow = bl.dailyList.getBySheetName(sheetName!)!;
+        currRow = bl.currentSS.dailyList.getBySheetName(sheetName!)!;
         parPageExp.value = currRow.parPageParse;
         setState(() {});
       },

@@ -1,10 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/bluti.dart';
 import '../../../2BL_domain/orm.dart';
 import '../../widgets/alib/alib.dart';
 
@@ -24,29 +22,6 @@ class _QResultBrowserState extends State<QResultBrowser> {
   void initState() {
     super.initState();
     listTiles.add(buttTile());
-
-    for (var sheetGroup in bl.dailyList.sheetGroups) {
-      bl.lastCount[sheetGroup] = '';
-      listTiles.add(ListTile(
-          leading: Obx(() => bl.lastCount[sheetGroup] != 'loading'
-              ? Text(bl.lastCount[sheetGroup])
-              : const CircularProgressIndicator()),
-          title: Row(
-            children: [
-              Text(
-                sheetGroup,
-                style: const TextStyle(fontSize: 15),
-              )
-            ],
-          ),
-          onTap: () async {
-            String searchDate = '${blUti.todayStr()}.';
-            bl.lastCount[sheetGroup] = 'loading';
-            await searchSheetNamesWord5Swip(
-                sheetGroup, searchDate, '', '', '', '');
-            bl.lastCount[sheetGroup] = '';
-          }));
-    }
   }
 
   List<ListTile> listTiles = [];

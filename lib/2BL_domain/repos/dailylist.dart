@@ -5,7 +5,7 @@ import '../bl.dart';
 
 class DailyList {
   List<DailyListRow> rows = [];
-  Set sheetGroups = {};
+
   int swiperIndex = 1;
 
   List<String> sheetNames = [];
@@ -22,7 +22,6 @@ class DailyList {
     List data = await dl.gservice23.getPureSheet('dailyList');
 
     cols = blUti.toListString(data[0]);
-    int sheetGroupIx = cols.indexOf('sheetGroup');
     int sheetNameIx = cols.indexOf('sheetName');
     int sheetUrlIx = cols.indexOf('sheetUrl');
     int swiperIndexIx = cols.indexOf('swiperIndex');
@@ -33,20 +32,17 @@ class DailyList {
     int rowkeyIx = cols.indexOf('rowkey');
     rows.clear();
     for (var i = 1; i < data.length; i++) {
-      String sheetGroup = data[i][sheetGroupIx].toString().trim();
-      if (sheetGroup.isEmpty) continue;
-      sheetGroups.add(data[i][sheetGroupIx]);
+      String sheetName = data[i][sheetNameIx];
+      if (sheetName.isEmpty) continue;
+      sheetNames.add(sheetName);
+
       String swiperIndex = data[i][swiperIndexIx].toString();
       if (swiperIndex.isEmpty) swiperIndex = '2';
-
-      String sheetName = data[i][sheetNameIx];
-      sheetNames.add(sheetName);
 
       bl.authorsSet.add(sheetName);
 
       rows.add(DailyListRow()
         ..rowkey = data[i][rowkeyIx]
-        ..sheetGroup = sheetGroup
         ..sheetName = sheetName
         ..sheetUrl = data[i][sheetUrlIx]
         ..swiperIndex = swiperIndex
@@ -60,20 +56,9 @@ class DailyList {
     }
     dl.sheetUrls['dailyList'] = dl.sheetUrls['rootSheetId'];
   }
-
-  String sheetNamesStr(String groupName) {
-    List<String> list = [];
-    for (var i = 0; i < bl.dailyList.rows.length; i++) {
-      if (bl.dailyList.rows[i].sheetGroup == groupName) {
-        list.add(bl.dailyList.rows[i].sheetName);
-      }
-    }
-    return list.join('__|__');
-  }
 }
 
 class DailyListRow {
-  String sheetGroup = '';
   String sheetName = '';
   String sheetUrl = '';
   String swiperIndex = '2';

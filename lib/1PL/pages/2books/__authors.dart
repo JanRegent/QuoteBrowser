@@ -18,8 +18,8 @@ class _BooksAuthorsState extends State<BooksAuthors> {
     super.initState();
     authorTiles = [];
 
-    for (int bix = 0; bix < bl.bookList.authorsUniq.length; bix++) {
-      String author = bl.bookList.authorsUniq[bix];
+    for (int bix = 0; bix < bl.currentSS.bookList.authorsUniq.length; bix++) {
+      String author = bl.currentSS.bookList.authorsUniq[bix];
       authorTiles.add(const Divider(
         color: Color.fromARGB(255, 135, 198, 137),
       ));

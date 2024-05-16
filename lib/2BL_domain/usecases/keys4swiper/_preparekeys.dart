@@ -12,14 +12,11 @@ class PrepareKeys {
 
   Future sheetAllKeys() async {
     DailyListRow dailyListRow = currentSS.dailyListRow;
-    String sheetGroup = dailyListRow.sheetGroup;
-    bl.lastCount[sheetGroup] = 'loading';
     String sheetName = dailyListRow.sheetName;
     List<String> keys = await dl.gservice23.getAllrows(sheetName);
     if (keys.isEmpty) return;
     currentSS.keys = [];
     currentSS.keys.addAll(keys);
-    bl.lastCount[sheetGroup] = '';
     currentSS.swiperIndex.value = int.tryParse(dailyListRow.swiperIndex)!;
   }
 
