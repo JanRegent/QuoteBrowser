@@ -11,7 +11,6 @@ class NeonRepo {
     try {
       if (conn.isOpen) return;
     } catch (_) {}
-    conn = await initKoyeb();
     conn = await initNeon();
 
     try {
