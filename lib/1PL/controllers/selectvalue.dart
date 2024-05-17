@@ -43,7 +43,7 @@ Future<String> authorSelect() async {
 
 Future<String> bookSelect(BuildContext context) async {
   List<String> books =
-      authBooksMap[bl.orm.currentRow.author.value].toString().split('__|__');
+      authBooksMap[bl.curRow.author.value].toString().split('__|__');
   try {
     return await Navigator.push(
       context,

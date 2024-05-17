@@ -33,14 +33,6 @@ class SupabaseRepo {
     log2sheetrows('sheetrowInsert1 end');
   }
 
-  // Future insertTagindex() async {
-  //   bl.supRepo.log2sheetrows('-----tagindex start');
-  //   List maprows = await dl.gservice23.tagindex2sup();
-  //   bl.supRepo.log2sheetrows('rowsat input: ${maprows.length}');
-  //   await supabase.from('tagindex').insert(maprows);
-  //   bl.supRepo.log2sheetrows('-----tagindex end');
-  // }
-
   void log2sheetrows(String mess) async {
     await supabase.rpc('log2sheetrows', params: {'mess': mess});
     //debugPrint(mess);
@@ -118,10 +110,12 @@ class SupabaseRepo {
     await sheetrowslogDelete();
     log2sheetrows('***************************sup.sheets2supabase2neon start');
     await deletesheetrows();
-    await bl.neonRepo.sheetrowsDelete();
+    log2sheetrows('neon del');
+    //await bl.neonRepo.sheetrowsDelete();
     //await bl.koyebRepo.sheetrowsDelete();
-
+    log2sheetrows('dailyList loop start');
     for (var i = 0; i < bl.currentSS.dailyList.rows.length; i++) {
+      log2sheetrows('dailuList $i');
       await insertSheet2sqldb(bl.currentSS.dailyList.rows[i].sheetName);
     }
 
@@ -143,10 +137,10 @@ class SupabaseRepo {
       await bl.supRepo.deleteSheet(sheetName);
       log2sheetrows('supabase..');
       await supabase.from('sheetrows').insert(maprows); //1
-      List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
-      log2sheetrows('neon..');
-      await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2
-      log2sheetrows('koyeb..');
+      // List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
+      // log2sheetrows('neon..');
+      // await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2
+      // log2sheetrows('koyeb..');
       //await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues); //3
       currentSheet2supabase.value = '';
     } catch (e) {

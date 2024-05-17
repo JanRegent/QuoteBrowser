@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/orm.dart';
 import '../../../2BL_domain/repos/sharedprefs.dart';
 import '../../widgets/alib/alib.dart';
 
@@ -70,7 +69,7 @@ class _ByDatePageState extends State<ByDatePage> {
       return;
     }
 
-    currentSS.swiperIndexIncrement = false;
+    bl.currentSS.swiperIndexIncrement = false;
     // ignore: use_build_context_synchronously
     Navigator.push(
       context,

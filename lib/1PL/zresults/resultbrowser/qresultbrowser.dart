@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/orm.dart';
 import '../../widgets/alib/alib.dart';
 
 import '../../zresults/swiperbrowser/_swiper.dart';
@@ -64,7 +63,7 @@ class _QResultBrowserState extends State<QResultBrowser> {
       return;
     }
 
-    currentSS.swiperIndexIncrement = false;
+    bl.currentSS.swiperIndexIncrement = false;
     String filterName = '$word1 $word2 $word3 $word4 $word5 ';
     // ignore: use_build_context_synchronously
     Navigator.push(

@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import '../../../2BL_domain/orm.dart';
+import '../../../2BL_domain/bl.dart';
+import '../../../2BL_domain/currow.dart';
 
 import '../../../2BL_domain/usecases/keys4swiper/emptyresults.dart';
 import '_swipernavigabuttsquotedit.dart';
@@ -23,7 +24,7 @@ class _CardSwiperState extends State<CardSwiper> {
   @override
   void initState() {
     super.initState();
-    indexChanged(currentSS.swiperIndex.value);
+    indexChanged(bl.currentSS.swiperIndex.value);
   }
 
   @override
@@ -51,16 +52,16 @@ class _CardSwiperState extends State<CardSwiper> {
             return SwiperNavigButtsQuotedit(swiperSetstate, widget.title1,
                 widget.title2, swiperSetstateIndexChanged);
           },
-          itemCount: currentSS.keys.length,
+          itemCount: bl.currentSS.keys.length,
           onIndexChanged: (rowIndex) => indexChanged(rowIndex),
-          index: currentSS.swiperIndex.value,
+          index: bl.currentSS.swiperIndex.value,
           controller: controller,
         ));
   }
 
   @override
   Widget build(BuildContext context) {
-    if (currentSS.keys.isNotEmpty) {
+    if (bl.currentSS.keys.isNotEmpty) {
       return bodySwiper();
     } else {
       return emptyResultListview('Filter is empty', context);

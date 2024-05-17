@@ -4,7 +4,7 @@ import '../../../2BL_domain/bl.dart';
 
 class TagsParts {
   void pureTags() {
-    List<String> tagsList = bl.orm.currentRow.tags.value.split('#');
+    List<String> tagsList = bl.curRow.tags.value.split('#');
     Set tagsSet = tagsList.toSet();
     List<String> tags = [];
     for (String tag in tagsSet) {
@@ -30,14 +30,14 @@ class TagsParts {
       }
       tags.add(tag);
     }
-    bl.orm.currentRow.tags.value = tags.join('#');
+    bl.curRow.tags.value = tags.join('#');
   }
 
   void pureYellowparts() {
-    List<String> ypList = bl.orm.currentRow.yellowParts.value.split('__|__');
+    List<String> ypList = bl.curRow.yellowParts.value.split('__|__');
     Set set = ypList.toSet();
     List<String> parts = blUti.toListString(set.toList());
 
-    bl.orm.currentRow.yellowParts.value = parts.join('__|__');
+    bl.curRow.yellowParts.value = parts.join('__|__');
   }
 }

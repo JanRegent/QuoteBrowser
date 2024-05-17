@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/orm.dart';
+import '../../../2BL_domain/currow.dart';
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
 import 'prewiew/previewpage.dart';
@@ -29,16 +29,19 @@ class SwiperNavigButtsQuotedit extends StatefulWidget {
 
 class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
   void swiperIndexIncrementInCloud() async {
-    if (currentSS.swiperIndexIncrement == false) return;
+    if (bl.currentSS.swiperIndexIncrement == false) return;
 
-    // if (currentSS.currentHomeTabIndex == 1) {
-    //   bl.booksCount[bl.orm.currentRow.sheetName] = currentSS.swiperIndex;
+    // if (bl.currentSS.currentHomeTabIndex == 1) {
+    //   bl.booksCount[bl.curRow.sheetName] = bl.currentSS.swiperIndex;
     //   dl.gservice23.setCellDL('booksList', 'swiperIndex',
-    //       currentSS.swiperIndex.toString(), currentSS.bookListRow.rowkey);
+    //       bl.currentSS.swiperIndex.toString(), bl.currentSS.bookListRow.rowkey);
     // }
-    if (currentSS.currentHomeTabIndex == 0) {
-      dl.gservice23.setCellDL('dailyList', 'swiperIndex',
-          currentSS.swiperIndex.toString(), currentSS.dailyListRow.rowkey);
+    if (bl.currentSS.currentHomeTabIndex == 0) {
+      dl.gservice23.setCellDL(
+          'dailyList',
+          'swiperIndex',
+          bl.currentSS.swiperIndex.toString(),
+          bl.currentSS.dailyListRow.rowkey);
     }
   }
 
@@ -48,9 +51,9 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
       const Spacer(),
       ElevatedButton(
           onPressed: () {
-            if (bl.orm.currentRow.setCellColor == Colors.red) return;
-            currentSS.swiperIndex -= 1;
-            indexChanged(currentSS.swiperIndex.value);
+            if (bl.curRow.setCellColor == Colors.red) return;
+            bl.currentSS.swiperIndex -= 1;
+            indexChanged(bl.currentSS.swiperIndex.value);
             previewPageOn = false;
             widget.setStateSwiper();
           },
@@ -61,18 +64,18 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
       //
       TextButton(
           onPressed: () {
-            if (bl.orm.currentRow.setCellColor == Colors.red) return;
+            if (bl.curRow.setCellColor == Colors.red) return;
             showGotoPopupMenu(context, widget.setStateSwiper);
           },
           child: Obx(() => Text(
-              ' ${(currentSS.swiperIndex.value + 1)}/${currentSS.keys.length}',
+              ' ${(bl.currentSS.swiperIndex.value + 1)}/${bl.currentSS.keys.length}',
               style: const TextStyle(color: Colors.black, fontSize: 20)))),
       ElevatedButton(
           //----------------------------------------forward --next
           onPressed: () {
-            if (bl.orm.currentRow.setCellColor == Colors.red) return;
-            currentSS.swiperIndex.value += 1;
-            indexChanged(currentSS.swiperIndex.value);
+            if (bl.curRow.setCellColor == Colors.red) return;
+            bl.currentSS.swiperIndex.value += 1;
+            indexChanged(bl.currentSS.swiperIndex.value);
             swiperIndexIncrementInCloud();
             previewPageOn = false;
             widget.setStateSwiper();

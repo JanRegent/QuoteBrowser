@@ -12,7 +12,6 @@ import 'repos/authbooksmap.dart';
 
 import 'bluti.dart';
 
-import 'orm.dart';
 import 'repos/neonrepo.dart';
 
 import 'usecases/keys4swiper/_preparekeys.dart';
@@ -28,7 +27,6 @@ class Bl {
   RxString homeTitle = ''.obs;
 
   CurrentSS currentSS = CurrentSS();
-  Orm orm = Orm();
   CurRow curRow = CurRow();
 
   PrepareKeys prepareKeys = PrepareKeys();

@@ -35,7 +35,7 @@ PopupMenuItem pastePopupMenuItem(String columnName) {
           if (['fileUrl', 'sourceUrl', 'folder'].contains(columnName)) {
             value = blUti.pureHttpGDriveLink(value);
           }
-          bl.orm.currentRow.setCellBL(columnName, value);
+          bl.curRow.setCellBL(columnName, value);
         });
       },
     ),
@@ -81,27 +81,27 @@ List<PopupMenuItem> copyPasteClearPopumMenuItem(
 void clearField(String attribName) async {
   switch (attribName) {
     case 'author':
-      bl.orm.currentRow.author.value = '';
-      bl.orm.currentRow.setCellBL('author', bl.orm.currentRow.author.value);
+      bl.curRow.author.value = '';
+      bl.curRow.setCellBL('author', bl.curRow.author.value);
       break;
     case 'book':
-      bl.orm.currentRow.book.value = '';
-      bl.orm.currentRow.setCellBL('book', bl.orm.currentRow.book.value);
+      bl.curRow.book.value = '';
+      bl.curRow.setCellBL('book', bl.curRow.book.value);
       break;
     case 'parPage':
-      bl.orm.currentRow.parPage.value = '';
-      bl.orm.currentRow.setCellBL('parPage', bl.orm.currentRow.parPage.value);
+      bl.curRow.parPage.value = '';
+      bl.curRow.setCellBL('parPage', bl.curRow.parPage.value);
       break;
     case 'vydal':
-      bl.orm.currentRow.setCellBL('vydal', '');
+      bl.curRow.setCellBL('vydal', '');
       break;
     case 'tags':
-      bl.orm.currentRow.tags.value = '';
-      bl.orm.currentRow.setCellBL('tags', bl.orm.currentRow.tags.value);
+      bl.curRow.tags.value = '';
+      bl.curRow.setCellBL('tags', bl.curRow.tags.value);
       break;
     case 'original':
-      bl.orm.currentRow.original.value = '';
-      bl.orm.currentRow.setCellBL('original', bl.orm.currentRow.original.value);
+      bl.curRow.original.value = '';
+      bl.curRow.setCellBL('original', bl.curRow.original.value);
       return;
     case '__othersFields__':
       return;

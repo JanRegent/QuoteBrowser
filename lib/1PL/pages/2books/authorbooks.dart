@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:quotebrowser/2BL_domain/orm.dart';
-
 import '../../../2BL_domain/bl.dart';
 import '../../widgets/alib/alib.dart';
 
@@ -41,10 +39,10 @@ class _AuthorBooksState extends State<AuthorBooks> {
           ],
         ),
         onTap: () async {
-          currentSS.bookListRow = bl.currentSS.bookList.rows[bix];
-          currentSS.swiperIndex.value =
+          bl.currentSS.bookListRow = bl.currentSS.bookList.rows[bix];
+          bl.currentSS.swiperIndex.value =
               bl.currentSS.bookList.rows[bix].swiperIndex;
-          currentSS.swiperIndexIncrement = true;
+          bl.currentSS.swiperIndexIncrement = true;
           await getBookContentShow(sheetName, sheetName, context);
         },
       ));

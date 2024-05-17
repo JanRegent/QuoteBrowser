@@ -6,57 +6,52 @@ import '../../../widgets/alib/alertinfo/alertok.dart';
 
 void setCellAL(String attribName, BuildContext context,
     VoidCallback swiperSetstate) async {
-  if (bl.orm.currentRow.selectedText.value.isEmpty) return;
-  bl.orm.currentRow.setCellColor = Colors.red;
+  if (bl.curRow.selectedText.value.isEmpty) return;
+  bl.curRow.setCellColor = Colors.red;
 
   switch (attribName) {
     case 'author':
-      bl.orm.currentRow.author.value = bl.orm.currentRow.selectedText.value;
-      bl.orm.currentRow.setCellBL('author', bl.orm.currentRow.author.value);
+      bl.curRow.author.value = bl.curRow.selectedText.value;
+      bl.curRow.setCellBL('author', bl.curRow.author.value);
       break;
     case 'book':
-      bl.orm.currentRow.book.value = bl.orm.currentRow.selectedText.value;
-      bl.orm.currentRow.setCellBL('book', bl.orm.currentRow.book.value);
+      bl.curRow.book.value = bl.curRow.selectedText.value;
+      bl.curRow.setCellBL('book', bl.curRow.book.value);
       break;
     case 'parPage':
-      bl.orm.currentRow.parPage.value;
-      bl.orm.currentRow.parPage.value +=
-          ' ${bl.orm.currentRow.selectedText.value}';
-      bl.orm.currentRow.setCellBL(attribName, bl.orm.currentRow.parPage.value);
+      bl.curRow.parPage.value;
+      bl.curRow.parPage.value += ' ${bl.curRow.selectedText.value}';
+      bl.curRow.setCellBL(attribName, bl.curRow.parPage.value);
       break;
     case 'vydal':
-      bl.orm.currentRow
-          .setCellBL(attribName, bl.orm.currentRow.selectedText.value);
+      bl.curRow.setCellBL(attribName, bl.curRow.selectedText.value);
       break;
     case 'tags':
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
-      if (bl.orm.currentRow.selectedText.value.length > 20) {
+      if (bl.curRow.selectedText.value.length > 20) {
         warningDialog('Tag length > 20', context);
         break;
       }
-      bl.orm.currentRow.tags.value +=
-          '#${bl.orm.currentRow.selectedText.value}';
+      bl.curRow.tags.value += '#${bl.curRow.selectedText.value}';
       bl.tagsParts.pureTags();
-      bl.orm.currentRow.setCellBL(attribName, bl.orm.currentRow.tags.value);
+      bl.curRow.setCellBL(attribName, bl.curRow.tags.value);
       break;
     case 'yellowParts':
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
-      if (bl.orm.currentRow.selectedText.value.length <= 10) {
+      if (bl.curRow.selectedText.value.length <= 10) {
         warningDialog('yellowPart length <= 10', context);
         break;
       }
 
-      bl.orm.currentRow.yellowParts.value +=
-          '__|__\n${bl.orm.currentRow.selectedText.value}';
+      bl.curRow.yellowParts.value += '__|__\n${bl.curRow.selectedText.value}';
 
       bl.tagsParts.pureYellowparts();
-      bl.orm.currentRow
-          .setCellBL(attribName, bl.orm.currentRow.yellowParts.value);
+      bl.curRow.setCellBL(attribName, bl.curRow.yellowParts.value);
       break;
     case 'original':
-      bl.orm.currentRow.setCellBL(attribName, bl.orm.currentRow.original.value);
+      bl.curRow.setCellBL(attribName, bl.curRow.original.value);
       break;
     case '__othersFields__':
       break;
@@ -64,7 +59,7 @@ void setCellAL(String attribName, BuildContext context,
     default:
       break;
   }
-  bl.orm.currentRow.selectedText.value = '';
+  bl.curRow.selectedText.value = '';
   editControlerInit();
   swiperSetstate();
 }
@@ -72,7 +67,7 @@ void setCellAL(String attribName, BuildContext context,
 int regpatternMatchMapsIndex = 0;
 String coloredText = '';
 String editControlerInit() {
-  // List<String> parts = bl.orm.currentRow.yellowParts.value.split('__|__\n');
+  // List<String> parts = bl.curRow.yellowParts.value.split('__|__\n');
   // for (var i = 0; i < parts.length; i++) {
   //   Map<String, TextStyle> map = {
   //     parts[i]: const TextStyle(backgroundColor: Colors.yellow)
@@ -80,7 +75,7 @@ String editControlerInit() {
   //   matches.add(map);
   // }
 
-  String tags = bl.orm.currentRow.tags.value.replaceAll('#', '|');
+  String tags = bl.curRow.tags.value.replaceAll('#', '|');
   for (var i = 0; i < tags.length; i++) {
     coloredText = coloredText.replaceAll(tags[i], '*_/${tags[i]}*_/');
   }
@@ -91,15 +86,15 @@ String editControlerInit() {
 RxString coloredQuote = ''.obs;
 
 String coloringText() {
-  coloredQuote.value = bl.orm.currentRow.quote.value;
+  coloredQuote.value = bl.curRow.quote.value;
 
-  // List<String> parts = bl.orm.currentRow.yellowParts.value.split('__|__\n');
+  // List<String> parts = bl.curRow.yellowParts.value.split('__|__\n');
   // for (var i = 0; i < parts.length; i++) {
   //   coloredQuote.value =
   //       coloredQuote.value.replaceAll(parts[i], '_${parts[i]}_');
   // }
 
-  List<String> tags = bl.orm.currentRow.tags.value.split('#');
+  List<String> tags = bl.curRow.tags.value.split('#');
   for (var i = 0; i < tags.length; i++) {
     coloredQuote.value =
         coloredQuote.value.replaceAll(tags[i], '*{color:red}${tags[i]}*');

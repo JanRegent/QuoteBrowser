@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/2BL_domain/orm.dart';
-import 'package:quotebrowser/2BL_domain/repos/adminrepo/repoadmin.dart';
 
 import '../../../2BL_domain/bl.dart';
+import '../../../2BL_domain/repos/adminrepo/repoadmin.dart';
 import '../../../3Data/builddate.dart';
 import '../../widgets/alib/alicons.dart';
 
@@ -47,7 +46,7 @@ class _HomeTabState extends State<HomeTab> {
           appBar: AppBar(
             bottom: TabBar(
               onTap: (index) {
-                currentSS.currentHomeTabIndex = index;
+                bl.currentSS.currentHomeTabIndex = index;
               },
               tabs: [
                 const Tab(icon: Icon(Icons.timeline)),

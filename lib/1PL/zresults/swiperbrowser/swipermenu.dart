@@ -5,7 +5,6 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/orm.dart';
 import '../../widgets/alib/alib.dart';
 
 //----------------------------------------------------------------goto
@@ -27,19 +26,19 @@ void showGotoPopupMenu(
 }
 
 void setstateGoto(VoidCallback swiperSetstate) async {
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
+  await bl.curRow.getRow(bl.currentSS.keys[bl.currentSS.swiperIndex.value]);
   swiperSetstate();
 }
 
 List<PopupMenuItem<String>> gotoItems = [];
 void gotoItemsBuild(VoidCallback swiperSetstate) {
-  int localIdsLength = currentSS.keys.length - 1;
+  int localIdsLength = bl.currentSS.keys.length - 1;
   gotoItems = [];
   //todo widget.configRow['localIds.length'];
   gotoItems.add(PopupMenuItem(
     child: Text('$localIdsLength >|'),
     onTap: () async {
-      currentSS.swiperIndex.value = localIdsLength - 1;
+      bl.currentSS.swiperIndex.value = localIdsLength - 1;
       setstateGoto(swiperSetstate);
     },
   ));
@@ -47,7 +46,7 @@ void gotoItemsBuild(VoidCallback swiperSetstate) {
     gotoItems.add(PopupMenuItem(
       child: i > 0 ? Text((i + 1).toString()) : const Text('1  |<'),
       onTap: () async {
-        currentSS.swiperIndex.value = i;
+        bl.currentSS.swiperIndex.value = i;
         setstateGoto(swiperSetstate);
       },
     ));
@@ -55,7 +54,7 @@ void gotoItemsBuild(VoidCallback swiperSetstate) {
   gotoItems.add(PopupMenuItem(
     child: Text('$localIdsLength >|'),
     onTap: () async {
-      currentSS.swiperIndex.value = localIdsLength - 1;
+      bl.currentSS.swiperIndex.value = localIdsLength - 1;
       setstateGoto(swiperSetstate);
     },
   ));
@@ -69,11 +68,10 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
       PopupMenuItem(
         child: PopupMenuItem<String>(
             child: TextButton(
-          child: Text(
-              '${bl.orm.currentRow.rowkey.value}\n${bl.orm.currentRow.dateinsert}}'),
+          child: Text('${bl.curRow.rowkey.value}\n${bl.curRow.dateinsert}}'),
           onPressed: () async {
             await al.jump2sheetRow(
-                bl.orm.currentRow.rowkey.value, context, 'Jump to row');
+                bl.curRow.rowkey.value, context, 'Jump to row');
           },
         )),
       ),
@@ -90,7 +88,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
               onTap: () async {
                 // ignore: use_build_context_synchronously //Icons.open_in_browser
                 await al.jump2sheetRow(
-                    bl.orm.currentRow.rowkey.value, context, 'Jump to row');
+                    bl.curRow.rowkey.value, context, 'Jump to row');
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
               },
@@ -125,7 +123,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
                   [',b', 3.1, 42],
                   ['n\n']
                 ]);
-                List<String> row = [bl.orm.currentRow.sheetName.value];
+                List<String> row = [bl.curRow.sheetName.value];
                 // for (var element in rowmap.entries) {
                 //   if (element.key == 'ID') continue;
                 //   row.add('${element.value}');
@@ -143,7 +141,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
                 child: InkWell(
               child: const Text('Copy current quote'),
               onTap: () async {
-                FlutterClipboard.copy(bl.orm.currentRow.quote.value)
+                FlutterClipboard.copy(bl.curRow.quote.value)
                     .then((value) => {});
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();

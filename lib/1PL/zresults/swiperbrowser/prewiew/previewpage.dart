@@ -80,10 +80,9 @@ class _PreviewPageState extends State<PreviewPage> {
   Row titleRow() {
     return Row(
       children: [
-        Obx(() => Text(bl.orm.currentRow.author.value)),
+        Obx(() => Text(bl.curRow.author.value)),
         const Text(' / '),
-        Obx(() => Text(
-            '${bl.orm.currentRow.book.value}\n${bl.orm.currentRow.parPage.value}')),
+        Obx(() => Text('${bl.curRow.book.value}\n${bl.curRow.parPage.value}')),
         const Spacer(),
         tagPartsSwitch()
       ],
@@ -112,7 +111,7 @@ class _PreviewPageState extends State<PreviewPage> {
         fontWeight: FontWeight.bold);
 
     if (tagAllPartsIndex == 1) {
-      List<String> parts = bl.orm.currentRow.yellowParts.value.split('__|__');
+      List<String> parts = bl.curRow.yellowParts.value.split('__|__');
 
       for (var i = 0; i < parts.length; i++) {
         if (parts[i].isEmpty) continue;
@@ -120,7 +119,7 @@ class _PreviewPageState extends State<PreviewPage> {
       }
     }
     if (tagAllPartsIndex == 0) {
-      List<String> tags = bl.orm.currentRow.tags.value.split('#');
+      List<String> tags = bl.curRow.tags.value.split('#');
       highlightedTexts.addAll(tags);
       for (var i = 0; i < tags.length; i++) {
         if (tags[i].isEmpty) continue;
@@ -153,12 +152,12 @@ class _PreviewPageState extends State<PreviewPage> {
             child: tagAllPartsIndex != 0
                 ? Obx(
                     () => TextWithHighlight(
-                      text: bl.orm.currentRow.quote.value,
+                      text: bl.curRow.quote.value,
                       highlightedTexts: highlightedTexts,
                     ),
                   )
                 : TextHighlight(
-                    text: bl.orm.currentRow.quote.value,
+                    text: bl.curRow.quote.value,
                     words: tagWords,
                     splitOnLongWord: true,
                     matchCase: false,

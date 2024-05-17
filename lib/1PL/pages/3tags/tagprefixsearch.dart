@@ -4,20 +4,20 @@ import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/orm.dart';
+
 import '../../../3Data/dl.dart';
 import '../../widgets/alib/alib.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
 
 Future<String> tag4swipper(String tagPrefixes) async {
-  currentSS.keys = await dl.gservice23.getrowsByTagPrefixes(tagPrefixes);
+  bl.currentSS.keys = await dl.gservice23.getrowsByTagPrefixes(tagPrefixes);
 
-  if (currentSS.keys.isEmpty) {
+  if (bl.currentSS.keys.isEmpty) {
     return '0';
   }
-  currentSS.swiperIndex.value = 0;
-  await currentRowSet(currentSS.keys[currentSS.swiperIndex.value]);
-  return currentSS.keys.length.toString();
+  bl.currentSS.swiperIndex.value = 0;
+  await bl.curRow.getRow(bl.currentSS.keys[bl.currentSS.swiperIndex.value]);
+  return bl.currentSS.keys.length.toString();
 }
 
 class TagPrefixSearch extends StatefulWidget {

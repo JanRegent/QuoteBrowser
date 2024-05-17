@@ -161,20 +161,6 @@ class GService23 {
 
     return sheetRow;
   }
-  // Future<List> tagindex2sup() async {
-  //   String sheetName = '__tagindex__';
-  //   Response response = await dio.get(
-  //     backendUrl,
-  //     queryParameters: {
-  //       'action': 'getAllrows',
-  //       'sheetName': sheetName,
-  //       'sheetId': blUti.url2fileid(dl.sheetUrls['dailyList'])
-  //     },
-  //   );
-
-  //   return bl.sheetRowsHelper
-  //       .insertResponseTagindexSup(response.data['data'], sheetName);
-  // }
 
   //-------------------------------------------------------------------tags
   Future<List<String>> getTagsByPrefix(String tagPrefix) async {
@@ -341,12 +327,12 @@ class GService23 {
           'setCellDL(String $sheetName, String $columnName, String $cellContent, String $rowkey \n$e');
     }
 
-    bl.orm.currentRow.setCellColor = Colors.red;
+    bl.curRow.setCellColor = Colors.red;
 
     //bl.sheetRowsHelper.insertRowsCollFromSheet(response);
     //bl.sheetRowsHelper.setCellDLUpdate(columnName, cellContent, rowkey);
 
-    bl.orm.currentRow.setCellColor = Colors.white;
+    bl.curRow.setCellColor = Colors.white;
   }
 
   Future<String> appendQuote(

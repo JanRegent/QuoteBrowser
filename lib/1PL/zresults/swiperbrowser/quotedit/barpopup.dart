@@ -13,8 +13,7 @@ List<PopupMenuItem> buttonRowMenu(BuildContext context) {
   return [
     PopupMenuItem(
       value: '/selectedText',
-      child: al.infoButton(
-          context, 'Selected', bl.orm.currentRow.selectedText.value),
+      child: al.infoButton(context, 'Selected', bl.curRow.selectedText.value),
     ),
     PopupMenuItem(
       value: '/OthersFields',
@@ -40,13 +39,13 @@ List<PopupMenuItem> buttonRowMenu(BuildContext context) {
         },
       ),
     ),
-    copyPopupMenuItem(bl.orm.currentRow.quote.value),
+    copyPopupMenuItem(bl.curRow.quote.value),
     PopupMenuItem(
       value: '/quoteIReplace',
       child: const Text("quote from clipboard Replace"),
       onTap: () async {
         FlutterClipboard.paste().then((value) async {
-          bl.orm.currentRow.setCellBL('quote', value);
+          bl.curRow.setCellBL('quote', value);
         });
       },
     ),
@@ -55,8 +54,7 @@ List<PopupMenuItem> buttonRowMenu(BuildContext context) {
       child: const Text("quote from clipboard Append"),
       onTap: () async {
         FlutterClipboard.paste().then((value) async {
-          bl.orm.currentRow
-              .setCellBL('quote', bl.orm.currentRow.quote + '\n\n' + value);
+          bl.curRow.setCellBL('quote', bl.curRow.quote + '\n\n' + value);
         });
       },
     ),
@@ -75,11 +73,8 @@ List<PopupMenuItem> buttonRowMenu(BuildContext context) {
       child: const Text("__toRead__ remove"),
       onTap: () async {
         try {
-          bl.orm.currentRow.setCellBL(
-              'dateinsert',
-              bl.orm.currentRow.dateinsert
-                  .toString()
-                  .replaceAll('__toRead__', ''));
+          bl.curRow.setCellBL('dateinsert',
+              bl.curRow.dateinsert.toString().replaceAll('__toRead__', ''));
         } catch (_) {}
       },
     )

@@ -35,10 +35,10 @@ class _OriginalViewState extends State<OriginalView> {
       child: ListView(children: [
         ListTile(
           tileColor: const Color.fromARGB(255, 232, 216, 142),
-          leading: Text(bl.orm.currentRow.dateinsert),
-          title: Obx(() => Text('${bl.orm.currentRow.rowkey}')),
+          leading: Text(bl.curRow.dateinsert),
+          title: Obx(() => Text('${bl.curRow.rowkey}')),
           trailing: copyPasteClearPopupMenuButton(
-              bl.orm.currentRow.original.value, 'original'),
+              bl.curRow.original.value, 'original'),
         ),
       ]),
     );

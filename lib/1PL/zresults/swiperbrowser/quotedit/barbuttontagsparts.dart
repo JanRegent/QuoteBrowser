@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/2BL_domain/orm.dart';
 
 import '../../../../2BL_domain/bl.dart';
+import '../../../../2BL_domain/currow.dart';
 import '../../../controllers/selectvalue.dart';
 import '../../../widgets/alib/alib.dart';
 import '../../../widgets/alib/alicons.dart';
@@ -13,29 +13,25 @@ import 'setcell.dart';
 
 void selectText(BuildContext context) {
   try {
-    bl.orm.currentRow.selectedText.value = quoteEditController.text.substring(
+    bl.curRow.selectedText.value = quoteEditController.text.substring(
         quoteEditController.selection.baseOffset,
         quoteEditController.selection.extentOffset);
 
-    if (bl.orm.currentRow.selectedText.value.isEmpty) return;
+    if (bl.curRow.selectedText.value.isEmpty) return;
     // print(quoteEditController.selection.baseOffset);
     // print(quoteEditController.selection.extentOffset);
     // print('----');
   } catch (e) {
     return;
   }
-  //bl.orm.currentRow.attribNameLast.value = '?';
+  //bl.curRow.attribNameLast.value = '?';
 
   try {
-    int len = bl.orm.currentRow.selectedText.value.length;
-    al.messageInfo(
-        context,
-        bl.orm.currentRow.selectedText.value.substring(0, 10),
-        bl.orm.currentRow.selectedText.value.substring(len - 10, len),
-        3);
+    int len = bl.curRow.selectedText.value.length;
+    al.messageInfo(context, bl.curRow.selectedText.value.substring(0, 10),
+        bl.curRow.selectedText.value.substring(len - 10, len), 3);
   } catch (_) {
-    al.messageInfo(
-        context, 'Selected', bl.orm.currentRow.selectedText.value, 3);
+    al.messageInfo(context, 'Selected', bl.curRow.selectedText.value, 3);
   }
 }
 
@@ -46,13 +42,13 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
     leading: IconButton(
         icon: ALicons.attrIcons.authorIcon,
         onPressed: () => setCellAL('author', context, swiperSetstate)),
-    title: Obx(() => Text(bl.orm.currentRow.author.value)),
+    title: Obx(() => Text(bl.curRow.author.value)),
     onTap: () async {
       String authorSelected = await authorSelect();
       if (authorSelected.isEmpty) return;
-      bl.orm.currentRow.setCellBL('author', authorSelected);
-      currentRowSet(bl.orm.currentRow.rowkey.value);
-      bl.orm.currentRow.selectedText.value = '';
+      bl.curRow.setCellBL('author', authorSelected);
+      bl.curRow.getRow(bl.curRow.rowkey.value);
+      bl.curRow.selectedText.value = '';
     },
   )));
   items.add(PopupMenuItem(
@@ -60,13 +56,13 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
     leading: IconButton(
         icon: ALicons.attrIcons.bookIcon,
         onPressed: () => setCellAL('book', context, swiperSetstate)),
-    title: Obx(() => Text(bl.orm.currentRow.book.value)),
+    title: Obx(() => Text(bl.curRow.book.value)),
     onTap: () async {
       String bookSelected = await bookSelect(context);
       if (bookSelected.isEmpty) return;
-      bl.orm.currentRow.setCellBL('book', bookSelected);
-      currentRowSet(bl.orm.currentRow.rowkey.value);
-      bl.orm.currentRow.selectedText.value = '';
+      bl.curRow.setCellBL('book', bookSelected);
+      bl.curRow.getRow(bl.curRow.rowkey.value);
+      bl.curRow.selectedText.value = '';
     },
   )));
 
@@ -75,7 +71,7 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
     leading: IconButton(
         icon: ALicons.attrIcons.parPageIcon,
         onPressed: () => setCellAL('parPage', context, swiperSetstate)),
-    title: Text(bl.orm.currentRow.parPage.value),
+    title: Text(bl.curRow.parPage.value),
     onTap: () {},
   )));
 
@@ -83,7 +79,7 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
     child: ALicons.attrIcons.authorIcon,
     onOpened: () {
       selectText(context);
-      if (bl.orm.currentRow.selectedText.value.isEmpty) return;
+      if (bl.curRow.selectedText.value.isEmpty) return;
     },
     itemBuilder: (context) {
       return items;
@@ -94,7 +90,7 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
 Widget favButt() {
   Icon favIcon = const Icon(Icons.favorite_outline);
 
-  if (bl.orm.currentRow.fav.value == 'f') {
+  if (bl.curRow.fav.value == 'f') {
     favIcon = const Icon(Icons.favorite);
   } else {
     favIcon = const Icon(Icons.favorite_outline);
@@ -102,13 +98,13 @@ Widget favButt() {
   return IconButton(
       icon: favIcon,
       onPressed: () async {
-        if (bl.orm.currentRow.fav.value.isEmpty) {
-          bl.orm.currentRow.fav.value = 'f';
+        if (bl.curRow.fav.value.isEmpty) {
+          bl.curRow.fav.value = 'f';
         } else {
-          bl.orm.currentRow.fav.value = '';
+          bl.curRow.fav.value = '';
         }
 
-        bl.orm.currentRow.setCellBL('favorite', bl.orm.currentRow.fav.value);
+        bl.curRow.setCellBL('favorite', bl.curRow.fav.value);
       });
 }
 
@@ -148,7 +144,7 @@ PopupMenuButton tagsYellowPopup(BuildContext context,
     child: ALicons.attrIcons.tagIcon,
     onOpened: () {
       selectText(context);
-      if (bl.orm.currentRow.selectedText.value.isEmpty) return;
+      if (bl.curRow.selectedText.value.isEmpty) return;
     },
     itemBuilder: (context) {
       return items;

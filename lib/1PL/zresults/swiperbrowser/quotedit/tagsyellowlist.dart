@@ -29,12 +29,11 @@ class _TagsYellowPageState extends State<TagsYellowPage> {
           // ignore: use_build_context_synchronously
           Navigator.pop(context);
           if (widget.tagsYellow == 'tags') {
-            bl.orm.currentRow.tags.value = items.join('#');
-            bl.orm.currentRow.setCellBL('tags', bl.orm.currentRow.tags.value);
+            bl.curRow.tags.value = items.join('#');
+            bl.curRow.setCellBL('tags', bl.curRow.tags.value);
           } else {
-            bl.orm.currentRow.yellowParts.value = items.join('__|__\n');
-            bl.orm.currentRow
-                .setCellBL('yellowParts', bl.orm.currentRow.yellowParts.value);
+            bl.curRow.yellowParts.value = items.join('__|__\n');
+            bl.curRow.setCellBL('yellowParts', bl.curRow.yellowParts.value);
           }
         },
         icon: const Icon(Icons.delete));
@@ -44,9 +43,9 @@ class _TagsYellowPageState extends State<TagsYellowPage> {
     expandedCardTags = [];
     List<String> items = [];
     if (widget.tagsYellow == 'tags') {
-      items = bl.orm.currentRow.tags.value.split('#');
+      items = bl.curRow.tags.value.split('#');
     } else {
-      items = bl.orm.currentRow.yellowParts.value.split('__|__\n');
+      items = bl.curRow.yellowParts.value.split('__|__\n');
     }
 
     for (int index = 0; index < items.length; index++) {

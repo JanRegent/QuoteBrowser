@@ -16,7 +16,7 @@ class _EditContentState extends State<EditContent> {
   @override
   void initState() {
     super.initState();
-    editControler.text = bl.orm.currentRow.quote.value;
+    editControler.text = bl.curRow.quote.value;
   }
 
   bool isSaving = false;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../2BL_domain/bl.dart';
 
-import '../../../../2BL_domain/orm.dart';
+import '../../../../2BL_domain/currow.dart';
 
 import '../prewiew/previewpage.dart';
 import 'barbuttontagsparts.dart';
@@ -63,7 +63,7 @@ class _QuoteEditState extends State<QuoteEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: bl.orm.currentRow.setCellColor,
+          backgroundColor: bl.curRow.setCellColor,
           leading:
               tagsYellowPopup(context, quoteSetstate, widget.swiperSetstate),
           title: tagsPartsButtRow(context, widget.swiperSetstate),

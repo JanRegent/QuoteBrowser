@@ -5,17 +5,16 @@ import 'package:quotebrowser/3Data/dl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../2BL_domain/bl.dart';
-import '../../../../2BL_domain/orm.dart';
 import '../../../widgets/alib/alib.dart';
 
 Future importComments(BuildContext context) async {
-  String rowkey = bl.orm.currentRow.rowkey.value;
+  String rowkey = bl.curRow.rowkey.value;
   al.showTopSnackBar(context, 'Importing comments at \n\n$rowkey', 15);
 
   await dl.gservice23
-      .comments2tagsYellowparts(bl.orm.currentRow.sheetName.value, rowkey);
+      .comments2tagsYellowparts(bl.curRow.sheetName.value, rowkey);
   //iporttSupUpsert
-  await currentRowSet(rowkey);
+  await bl.curRow.getRow(rowkey);
   // ignore: use_build_context_synchronously
   al.showTopSnackBar(context, 'Import done at \n\n$rowkey', 3);
 }
@@ -33,9 +32,9 @@ ListView toReadListview(BuildContext context, VoidCallback setStateSwiper) {
       const Text('__toRead__'),
       TextButton(
           child: Row(
-            children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
+            children: [Obx(() => Text(bl.curRow.fileUrl.value))],
           ),
-          onPressed: () => onOpen(bl.orm.currentRow.fileUrl.value)),
+          onPressed: () => onOpen(bl.curRow.fileUrl.value)),
       TextButton(
           onPressed: () {
             importComments(context);

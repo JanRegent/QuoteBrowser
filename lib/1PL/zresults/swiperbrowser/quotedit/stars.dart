@@ -13,11 +13,11 @@ class RatingStarsPage extends StatefulWidget {
 }
 
 double starsValueGet() {
-  if (bl.orm.currentRow.stars.value.contains('*****')) return 5;
-  if (bl.orm.currentRow.stars.value.contains('****')) return 4;
-  if (bl.orm.currentRow.stars.value.contains('***')) return 3;
-  if (bl.orm.currentRow.stars.value.contains('**')) return 2;
-  if (bl.orm.currentRow.stars.value.contains('*')) return 1;
+  if (bl.curRow.stars.value.contains('*****')) return 5;
+  if (bl.curRow.stars.value.contains('****')) return 4;
+  if (bl.curRow.stars.value.contains('***')) return 3;
+  if (bl.curRow.stars.value.contains('**')) return 2;
+  if (bl.curRow.stars.value.contains('*')) return 1;
   return 0;
 }
 
@@ -25,24 +25,23 @@ class _RatingStarsPageState extends State<RatingStarsPage> {
   double value = starsValueGet();
 
   void starsValueInsert() async {
-    bl.orm.currentRow.stars.value =
-        bl.orm.currentRow.stars.value.replaceAll('*', '');
+    bl.curRow.stars.value = bl.curRow.stars.value.replaceAll('*', '');
     if (value == 5) {
-      bl.orm.currentRow.stars.value = '*****';
+      bl.curRow.stars.value = '*****';
     }
     if (value == 4) {
-      bl.orm.currentRow.stars.value = '****';
+      bl.curRow.stars.value = '****';
     }
     if (value == 3) {
-      bl.orm.currentRow.stars.value = '***';
+      bl.curRow.stars.value = '***';
     }
     if (value == 2) {
-      bl.orm.currentRow.stars.value = '**';
+      bl.curRow.stars.value = '**';
     }
     if (value == 1) {
-      bl.orm.currentRow.stars.value = '*';
+      bl.curRow.stars.value = '*';
     }
-    bl.orm.currentRow.setCellBL('stars', bl.orm.currentRow.stars.value);
+    bl.curRow.setCellBL('stars', bl.curRow.stars.value);
     widget.setstateAattribs();
   }
 

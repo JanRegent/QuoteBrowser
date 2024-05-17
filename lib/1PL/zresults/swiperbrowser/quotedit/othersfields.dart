@@ -36,45 +36,45 @@ class _OthersFieldsState extends State<OthersFields> {
               child: const Text('fileUrl')),
           title: TextButton(
               child: Row(
-                children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
+                children: [Obx(() => Text(bl.curRow.fileUrl.value))],
               ),
-              onPressed: () => onOpen(bl.orm.currentRow.fileUrl.value)),
+              onPressed: () => onOpen(bl.curRow.fileUrl.value)),
           trailing: copyPasteClearPopupMenuButton(
-              bl.orm.currentRow.fileUrl.value, 'fileUrl')),
+              bl.curRow.fileUrl.value, 'fileUrl')),
       ListTile(
           tileColor: Colors.white,
           leading: const Text('sourceUrl'),
           title: TextButton(
               child: Row(
-                children: [Obx(() => Text(bl.orm.currentRow.sourceUrl.value))],
+                children: [Obx(() => Text(bl.curRow.sourceUrl.value))],
               ),
-              onPressed: () => onOpen(bl.orm.currentRow.sourceUrl.value)),
+              onPressed: () => onOpen(bl.curRow.sourceUrl.value)),
           trailing: copyPasteClearPopupMenuButton(
-              bl.orm.currentRow.sourceUrl.value, 'sourceUrl')),
+              bl.curRow.sourceUrl.value, 'sourceUrl')),
       ListTile(
           tileColor: Colors.white,
           leading: const Text('vydal'),
           title: TextButton(
               child: Row(
-                children: [Obx(() => Text(bl.orm.currentRow.publisher.value))],
+                children: [Obx(() => Text(bl.curRow.publisher.value))],
               ),
-              onPressed: () => onOpen(bl.orm.currentRow.publisher.value)),
+              onPressed: () => onOpen(bl.curRow.publisher.value)),
           trailing: copyPasteClearPopupMenuButton(
-              bl.orm.currentRow.publisher.value, 'vydal')),
+              bl.curRow.publisher.value, 'vydal')),
       ListTile(
           tileColor: Colors.white,
           leading: const Text('folder'),
           title: TextButton(
               child: Row(
-                children: [Obx(() => Text(bl.orm.currentRow.folder.value))],
+                children: [Obx(() => Text(bl.curRow.folder.value))],
               ),
-              onPressed: () => onOpen(bl.orm.currentRow.folder.value)),
+              onPressed: () => onOpen(bl.curRow.folder.value)),
           trailing: copyPasteClearPopupMenuButton(
-              bl.orm.currentRow.sourceUrl.value, 'folder')),
+              bl.curRow.sourceUrl.value, 'folder')),
     ];
 
-    for (var i = 0; i < bl.orm.currentRow.optionalColumNames.length; i++) {
-      String columnName = bl.orm.currentRow.optionalColumNames[i];
+    for (var i = 0; i < bl.curRow.optionalColumNames.length; i++) {
+      String columnName = bl.curRow.optionalColumNames[i];
       if (columnName.toString().isEmpty) continue;
       if (columnName == 'fileUrl') continue;
       if (columnName == 'sourceUrl') continue;
@@ -94,11 +94,11 @@ class _OthersFieldsState extends State<OthersFields> {
                 child: Text(columnName)),
             title: TextButton(
                 child: Row(
-                  children: [Obx(() => Text(bl.orm.currentRow.fileUrl.value))],
+                  children: [Obx(() => Text(bl.curRow.fileUrl.value))],
                 ),
-                onPressed: () => onOpen(bl.orm.currentRow.fileUrl.value)),
+                onPressed: () => onOpen(bl.curRow.fileUrl.value)),
             trailing: copyPasteClearPopupMenuButton(
-                bl.orm.currentRow.sourceUrl.value, 'docUrl')));
+                bl.curRow.sourceUrl.value, 'docUrl')));
       } else {
         othersFieldsWidgets.add(
           ListTile(
@@ -106,13 +106,11 @@ class _OthersFieldsState extends State<OthersFields> {
               leading: Text(columnName),
               title: Row(children: [
                 TextButton(
-                    child: Obx(
-                        () => Text(bl.orm.currentRow.optionalvalues[i].value)),
-                    onPressed: () =>
-                        onOpen(bl.orm.currentRow.optionalvalues[i].value))
+                    child: Obx(() => Text(bl.curRow.optionalvalues[i].value)),
+                    onPressed: () => onOpen(bl.curRow.optionalvalues[i].value))
               ]),
               trailing: copyPasteClearPopupMenuButton(
-                bl.orm.currentRow.optionalvalues[i].value,
+                bl.curRow.optionalvalues[i].value,
                 columnName,
               )),
         );

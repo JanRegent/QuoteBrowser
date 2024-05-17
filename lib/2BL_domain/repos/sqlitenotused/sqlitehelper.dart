@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
-import '../../bl.dart';
 import '../../bluti.dart';
 import '../commonrepos.dart';
 import '../sheetrowshelper.dart';
@@ -16,7 +15,6 @@ SheetRowsHelper sheetrowsHelper = SheetRowsHelper();
 void sheetrowsPrepare() async {
   await sheetrowsHelper.initDB();
   await sheetrowsHelper.deleteAllRows();
-  //await tagIndexHelper.batchInsert();
 }
 
 class SheetRowsHelper {
@@ -118,28 +116,6 @@ class SheetRowsHelper {
     if (!cols.contains('quote')) return [];
 
     return await batchInsert(sheetName, cols, data);
-  }
-
-  Future<List> insertResponseTagindexSup(List data, String sheetName) async {
-    List maprows = [];
-    try {
-      for (int rIx = 1; rIx < data.length; rIx++) {
-        maprows.add({
-          "tag": data[rIx][1],
-          "sheetname": data[rIx][2],
-          "rownos": data[rIx][3]
-        });
-      }
-
-      return maprows;
-    } catch (e) {
-      String mess = '''
-      sheetName: $sheetName
-      err: \n$e
-      ''';
-      bl.supRepo.log2sheetrows(mess);
-      return [];
-    }
   }
 
   void setCellDLUpdate(
@@ -257,37 +233,6 @@ class SheetRowsHelper {
   }
 
   //----------------------------------------------------------------read
-  Future<List<String>> getTagsStarts(String tagPrefix) async {
-    if (tagPrefix.trim().length < 2) return [];
-    final db = await database;
-    var res = await db
-        .query("tagindex", where: "tag LIKE ?", whereArgs: ['$tagPrefix%']);
-
-    List<String> tagList = [];
-    for (var element in res) {
-      tagList.add(element['tag'].toString());
-    }
-
-    return tagList;
-  }
-
-  Future<List<String>> searchWord(String word) async {
-    try {
-      final db = await database;
-      var res = await db
-          .query("tagindex", where: "tag LIKE ?", whereArgs: ['$word%']);
-      List<String> keys = [];
-      for (var i = 0; i < res.length; i++) {
-        SheetRows sheetRow = SheetRows().fromMap(res[i]);
-
-        keys.add(sheetRow.rowkey);
-      }
-      return keys;
-    } catch (e) {
-      debugPrint('searchWord().readAll()\n$e');
-      return [];
-    }
-  }
 
   Future<List<SheetRows>> getAllRows() async {
     final db = await database;

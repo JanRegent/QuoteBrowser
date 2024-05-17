@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-import '../../../../2BL_domain/orm.dart';
+import '../../../../2BL_domain/bl.dart';
 import '../../../../2BL_domain/repos/sharedprefs.dart';
 import '../../../../2BL_domain/repos/sheetrowshelper.dart';
 import '../../../widgets/alib/alib.dart';
@@ -70,12 +70,12 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
       al.messageInfo(context, 'Nothing filtered', '', 8);
       return;
     }
-    currentSS.keys = [];
-    currentSS.swiperIndex.value = swiperIndex;
+    bl.currentSS.keys = [];
+    bl.currentSS.swiperIndex.value = swiperIndex;
     for (String rowkey in rownos) {
-      currentSS.keys.add(rowkey);
+      bl.currentSS.keys.add(rowkey);
     }
-    currentSS.swiperIndexIncrement = false;
+    bl.currentSS.swiperIndexIncrement = false;
     // ignore: use_build_context_synchronously
     Navigator.push(
       context,
