@@ -5,9 +5,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../3Data/dl.dart';
 import '../bl.dart';
+import '../bluti.dart';
 import 'zgitignore.dart';
 
 RxString currentSheet2supabase = ''.obs;
+RxString currentSup2neon = ''.obs;
 
 class SupabaseRepo {
   // It's handy to then extract the Supabase client in a variable for later uses
@@ -35,7 +37,7 @@ class SupabaseRepo {
 
   void log2sheetrows(String mess) async {
     await supabase.rpc('log2sheetrows', params: {'mess': mess});
-    //debugPrint(mess);
+    debugPrint(mess);
   }
 
   //-----------------------------------------------------------------read
@@ -106,7 +108,7 @@ class SupabaseRepo {
     }
   }
 
-  Future sheets2supabase2neon2koyeb() async {
+  Future sheets2supabase2() async {
     await sheetrowslogDelete();
     log2sheetrows('***************************sup.sheets2supabase2neon start');
     await deletesheetrows();
@@ -115,7 +117,6 @@ class SupabaseRepo {
     //await bl.koyebRepo.sheetrowsDelete();
     log2sheetrows('dailyList loop start');
     for (var i = 0; i < bl.currentSS.dailyList.rows.length; i++) {
-      log2sheetrows('dailuList $i');
       await insertSheet2sqldb(bl.currentSS.dailyList.rows[i].sheetName);
     }
 
@@ -124,6 +125,59 @@ class SupabaseRepo {
     }
     log2sheetrows('********************************sheets2sup end');
     currentSheet2supabase.value = 'sheets2sup end';
+
+    rowkeysToday();
+  }
+
+  void rowkeysToday() async {
+    var rowkeysTodays = await supabase
+        .from('sheetrows')
+        .select('rowkey')
+        .eq('dateinsert', '${blUti.todayStr()}.');
+
+    debugPrint('--------------------------------rowkeysToday');
+    for (var i = 0; i < rowkeysTodays.length; i++) {
+      debugPrint(rowkeysTodays[i].toString());
+    }
+  }
+
+  Future sheets2neon2(String dbName) async {
+    debugPrint('***************************sheets2$dbName  start');
+    await bl.neonRepo.sheetrowsDelete();
+    //await bl.neonRepo.sheetrowsDelete();
+    for (var i = 0; i < bl.currentSS.dailyList.rows.length; i++) {
+      await insertSheet2neonKoeb(
+          bl.currentSS.dailyList.rows[i].sheetName, dbName);
+    }
+
+    for (var i = 0; i < bl.currentSS.bookList.rows.length; i++) {
+      await insertSheet2neonKoeb(
+          bl.currentSS.bookList.rows[i].sheetName, dbName);
+    }
+    currentSup2neon.value = '********************************sheets2sup end';
+    currentSheet2supabase.value = 'sheets2sup end';
+  }
+
+  Future insertSheet2neonKoeb(String sheetName, String dbName) async {
+    currentSup2neon.value = sheetName;
+    if (sheetName.isEmpty) return;
+    if (dl.sheetUrls[sheetName].toString().isEmpty) return;
+    debugPrint('/--- $sheetName ---\\');
+    try {
+      List maprows = await dl.gservice23.rowmapsGet(sheetName);
+      debugPrint('${maprows.length.toString()} rows');
+      List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
+
+      if (dbName == 'neon') {
+        await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2
+      } else {
+        await bl.koyebRepo.sqlValuesInsert('sheetrows', sqlValues); //3
+      }
+      currentSup2neon.value = '';
+    } catch (e) {
+      debugPrint('insertSheet2neonKoeb()  $e');
+      currentSup2neon.value = 'err!!';
+    }
   }
 
   Future insertSheet2sqldb(String sheetName) async {
@@ -133,9 +187,9 @@ class SupabaseRepo {
     log2sheetrows('/--- $sheetName ---\\');
     try {
       List maprows = await dl.gservice23.rowmapsGet(sheetName);
-      log2sheetrows('maprows at input: ${maprows.length.toString()} ');
+      log2sheetrows('${maprows.length.toString()} rows ');
+
       await bl.supRepo.deleteSheet(sheetName);
-      log2sheetrows('supabase..');
       await supabase.from('sheetrows').insert(maprows); //1
       // List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
       // log2sheetrows('neon..');

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:postgres/postgres.dart';
 
-import '../bl.dart';
 import 'commonrepos.dart';
 import 'zgitignore.dart';
 
@@ -102,6 +101,6 @@ class NeonRepo {
     final result2 = await conn.execute(
       Sql.named("delete  from sheetrows; "),
     );
-    bl.supRepo.log2sheetrows('neonRepo:: delete  from sheetrows $result2');
+    debugPrint('neonRepo:: delete  from sheetrows $result2');
   }
 }

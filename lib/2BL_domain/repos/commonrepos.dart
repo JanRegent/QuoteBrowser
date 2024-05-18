@@ -1,8 +1,8 @@
 String sheetRowsCreateTable() {
   return '''
     CREATE TABLE IF NOT EXISTS sheetrows(
-            id SERIAL ,
-            rowkey TEXT PRIMARY KEY,
+            id SERIAL PRIMARY KEY,
+            rowkey TEXT ,
             sheetname TEXT,
             quote TEXT,
             author TEXT,

@@ -6,9 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
-import '../../bluti.dart';
-import '../commonrepos.dart';
-import '../sheetrowshelper.dart';
+import '../../../bluti.dart';
+import '../../commonrepos.dart';
+import '../../sheetrowshelper.dart';
 
 SheetRowsHelper sheetrowsHelper = SheetRowsHelper();
 

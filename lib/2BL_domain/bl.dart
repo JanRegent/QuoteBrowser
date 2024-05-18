@@ -12,6 +12,7 @@ import 'repos/authbooksmap.dart';
 
 import 'bluti.dart';
 
+import 'repos/koyebrepo.dart';
 import 'repos/neonrepo.dart';
 
 import 'usecases/keys4swiper/_preparekeys.dart';
@@ -34,7 +35,7 @@ class Bl {
   RepoAdmin repoAdmin = const RepoAdmin();
   SupabaseRepo supRepo = SupabaseRepo();
   NeonRepo neonRepo = NeonRepo();
-  //KoyebRepo koyebRepo = KoyebRepo();
+  KoyebRepo koyebRepo = KoyebRepo();
 
   //FirestoreRepo fireRepo = FirestoreRepo();
 
@@ -49,11 +50,11 @@ class Bl {
     if (!kIsWeb) {
       debugPrint('neonRepo init start');
       await neonRepo.init();
-      //debugPrint('koyebRepo init start');
 
-      // try {
-      //   await koyebRepo.init();
-      // } catch (_) {} //Exception: Null check operator
+      debugPrint('koyebRepo init start');
+      try {
+        await koyebRepo.init();
+      } catch (_) {} //Exception: Null check operator
 
       // debugPrint('PgedgebRepo init start');
       // debugPrint(pgedgebRepo.conn.isOpen.toString());

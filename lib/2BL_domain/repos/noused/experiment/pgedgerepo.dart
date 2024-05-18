@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:postgres/postgres.dart';
 
-import '../commonrepos.dart';
-import '../zgitignore.dart';
+import '../../commonrepos.dart';
+import '../../zgitignore.dart';
 
-class ElephantRepo {
+class PgedgebRepo {
   late Connection conn;
   Future init() async {
-    conn = await initElephant();
+    conn = await initPgedge();
 
-    //if (conn.isOpen) debugPrint("koyeb PostgresCRUD Database isOpen!");
+    if (conn.isOpen) debugPrint("koyeb PostgresCRUD Database isOpen!");
     try {
       await conn.execute(Sql.named(sheetRowsCreateTable()));
     } catch (_) {}

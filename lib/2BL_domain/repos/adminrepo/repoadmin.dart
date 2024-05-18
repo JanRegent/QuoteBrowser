@@ -10,17 +10,38 @@ import '../../bl.dart';
 class RepoAdmin extends StatelessWidget {
   const RepoAdmin({super.key});
 
-  ListTile toSupabase(BuildContext context) {
+  ListTile sheets2Supabase(BuildContext context) {
     return ListTile(
         title: ElevatedButton(
             onPressed: () async {
               al.messageInfo(context, 'watch sheetrowslog', 'supabase.com', 10);
-              await bl.supRepo.sheets2supabase2neon2koyeb();
+              await bl.supRepo.sheets2supabase2();
             },
-            child: const Text('sheets --> supabase > neon > koyeb')),
+            child: const Text('sheets --> supabase')),
         trailing: Obx(() => Text(currentSheet2supabase.value)));
   }
 
+  ListTile rowkeysToday(BuildContext context) {
+    return ListTile(
+        title: ElevatedButton(
+            onPressed: () async {
+              al.messageInfo(context, 'watch sheetrowslog', 'supabase.com', 10);
+              bl.supRepo.rowkeysToday();
+            },
+            child: const Text('supabase rowkeysToday')),
+        trailing: Obx(() => Text(currentSheet2supabase.value)));
+  }
+
+  ListTile supabase2neon(BuildContext context) {
+    return ListTile(
+        title: ElevatedButton(
+            onPressed: () async {
+              al.messageInfo(context, 'watch console', '', 10);
+              await bl.supRepo.sheets2neon2('neon');
+            },
+            child: const Text('sheets >> neon')),
+        trailing: Obx(() => Text(currentSup2neon.value)));
+  }
   // ListTile koyebRepoByRowkey() {
   //   return ListTile(
   //       title: ElevatedButton(
@@ -68,7 +89,9 @@ class RepoAdmin extends StatelessWidget {
   ListView bodyLv(BuildContext context) {
     return ListView(
       children: [
-        toSupabase(context),
+        sheets2Supabase(context),
+        rowkeysToday(context),
+        supabase2neon(context),
         // koyebRepoByRowkey(),
         // koyebRepoDeleteAll(),
         countCheck(),
