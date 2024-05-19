@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
 
-import '../../../1PL/widgets/alib/alib.dart';
-import '../../bl.dart';
+import '../../controllers/selectvalue.dart';
+import '../../widgets/alib/alib.dart';
+import '../../../2BL_domain/bl.dart';
+import 'debugprint/debugprintpage.dart';
 
 // ignore: must_be_immutable
 class RepoAdmin extends StatelessWidget {
@@ -29,6 +31,23 @@ class RepoAdmin extends StatelessWidget {
               bl.supRepo.rowkeysToday();
             },
             child: const Text('supabase rowkeysToday')),
+        trailing: Obx(() => Text(currentSheet2supabase.value)));
+  }
+
+  ListTile sheetnameLast10keys(BuildContext context) {
+    return ListTile(
+        title: ElevatedButton(
+            onPressed: () async {
+              String sheetName = await sheetNameSelect(context);
+              if (sheetName.isEmpty) return;
+              String result = await bl.supRepo.last10rows(sheetName);
+              // ignore: use_build_context_synchronously
+              await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DebugPrintPage(result)),
+              );
+            },
+            child: const Text('Last 10 supabase.com')),
         trailing: Obx(() => Text(currentSheet2supabase.value)));
   }
 
@@ -92,6 +111,7 @@ class RepoAdmin extends StatelessWidget {
         sheets2Supabase(context),
         rowkeysToday(context),
         supabase2neon(context),
+        sheetnameLast10keys(context),
         // koyebRepoByRowkey(),
         // koyebRepoDeleteAll(),
         countCheck(),

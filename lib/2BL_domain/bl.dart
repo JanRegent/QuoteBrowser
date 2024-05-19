@@ -7,7 +7,7 @@ import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
 
 import '../3Data/providers/gwebapp/tagsparts.dart';
 import 'currow.dart';
-import 'repos/adminrepo/repoadmin.dart';
+import '../1PL/zresults/repoadmin/repoadmin.dart';
 import 'repos/authbooksmap.dart';
 
 import 'bluti.dart';

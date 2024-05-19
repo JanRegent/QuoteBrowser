@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/repos/adminrepo/repoadmin.dart';
+import '../../zresults/repoadmin/repoadmin.dart';
 import '../../../3Data/builddate.dart';
 import '../../widgets/alib/alicons.dart';
 

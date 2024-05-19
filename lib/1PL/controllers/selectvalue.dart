@@ -4,6 +4,7 @@ import 'package:quotebrowser/2BL_domain/repos/authbooksmap.dart';
 
 import '../../2BL_domain/bl.dart';
 import '../../2BL_domain/bluti.dart';
+import '../../3Data/dl.dart';
 import '../widgets/alib/alib.dart';
 import '../widgets/alib/searchvalue/searchselectpage.dart';
 
@@ -16,6 +17,27 @@ Future<String> dateSelect(BuildContext context) async {
       context,
       MaterialPageRoute(
           builder: (context) => SearchSelectPage(dateinserts, 'Select date')),
+    );
+  } catch (_) {
+    searchDate = '';
+  }
+
+  return searchDate;
+}
+
+Future<String> sheetNameSelect(BuildContext context) async {
+  List<String> sheetNames = [];
+  for (var sheetName in dl.sheetUrls.keys) {
+    sheetNames.add(sheetName);
+  }
+  String searchDate = '';
+  try {
+    // ignore: use_build_context_synchronously
+    searchDate = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              SearchSelectPage(sheetNames, 'Select sheetName')),
     );
   } catch (_) {
     searchDate = '';

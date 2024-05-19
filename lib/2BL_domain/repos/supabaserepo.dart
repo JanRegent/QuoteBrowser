@@ -141,6 +141,24 @@ class SupabaseRepo {
     }
   }
 
+  Future<String> last10rows(String sheetName) async {
+    var last10rows = await supabase
+        .from('sheetrows')
+        .select('rowkey')
+        .eq('sheetname', sheetName)
+        .order('id', ascending: true);
+    String result = '\n\nlast10rows $sheetName\n';
+    try {
+      for (var i = last10rows.length - 10; i < last10rows.length; i++) {
+        result += '${last10rows[i]}\n';
+      }
+    } catch (_) {}
+
+    result += '\n ${dl.sheetUrls[sheetName]}';
+
+    return result;
+  }
+
   Future sheets2neon2(String dbName) async {
     debugPrint('***************************sheets2$dbName  start');
     await bl.neonRepo.sheetrowsDelete();
