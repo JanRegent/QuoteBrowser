@@ -3,7 +3,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
+import 'package:quotebrowser/2BL_domain/repos/suprepo.dart';
 
 import '../3Data/providers/gwebapp/tagsparts.dart';
 import 'currow.dart';

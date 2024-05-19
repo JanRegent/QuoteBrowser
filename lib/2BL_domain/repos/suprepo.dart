@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../3Data/dl.dart';
 import '../bl.dart';
-import '../bluti.dart';
+import 'supread.dart';
 import 'zgitignore.dart';
 
 RxString currentSheet2supabase = ''.obs;
@@ -14,7 +14,7 @@ RxString currentSup2neon = ''.obs;
 class SupabaseRepo {
   // It's handy to then extract the Supabase client in a variable for later uses
   late SupabaseClient supabase;
-
+  late ReadSup readSup = ReadSup();
   Future init() async {
     await Supabase.initialize(
       url: supUrl,
@@ -22,6 +22,7 @@ class SupabaseRepo {
           serviceRoleKey, //Enable Row Level Security (RLS) via serviceRoleKey   NO anonKey,
     );
     supabase = Supabase.instance.client;
+    readSup.supabase = supabase;
   }
 
   //-----------------------------------------------------------------create
@@ -126,37 +127,7 @@ class SupabaseRepo {
     log2sheetrows('********************************sheets2sup end');
     currentSheet2supabase.value = 'sheets2sup end';
 
-    rowkeysToday();
-  }
-
-  void rowkeysToday() async {
-    var rowkeysTodays = await supabase
-        .from('sheetrows')
-        .select('rowkey')
-        .eq('dateinsert', '${blUti.todayStr()}.');
-
-    debugPrint('--------------------------------rowkeysToday');
-    for (var i = 0; i < rowkeysTodays.length; i++) {
-      debugPrint(rowkeysTodays[i].toString());
-    }
-  }
-
-  Future<String> last10rows(String sheetName) async {
-    var last10rows = await supabase
-        .from('sheetrows')
-        .select('rowkey')
-        .eq('sheetname', sheetName)
-        .order('id', ascending: true);
-    String result = '\n\nlast10rows $sheetName\n';
-    try {
-      for (var i = last10rows.length - 10; i < last10rows.length; i++) {
-        result += '${last10rows[i]}\n';
-      }
-    } catch (_) {}
-
-    result += '\n ${dl.sheetUrls[sheetName]}';
-
-    return result;
+    readSup.rowkeysToday();
   }
 
   Future sheets2neon2(String dbName) async {

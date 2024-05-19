@@ -6,6 +6,7 @@ import '../../zresults/repoadmin/repoadmin.dart';
 import '../../../3Data/builddate.dart';
 import '../../widgets/alib/alicons.dart';
 
+import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 import '../../zresults/resultbrowser/qresultbrowser.dart';
 import '../2books/__authors.dart';
 import '../1bydate/1bydate.dart';
@@ -69,7 +70,16 @@ class _HomeTabState extends State<HomeTab> {
                           builder: (context) => const RepoAdmin()),
                     );
                   },
-                  child: const Icon(Icons.admin_panel_settings))
+                  child: const Icon(Icons.admin_panel_settings)),
+              ElevatedButton(
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const QResultBuilder()),
+                    );
+                  },
+                  child: const Icon(Icons.tv))
             ],
           ),
           drawer: Drawer(

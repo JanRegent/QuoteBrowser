@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:quotebrowser/2BL_domain/repos/supabaserepo.dart';
+import 'package:quotebrowser/2BL_domain/repos/suprepo.dart';
 
 import '../../controllers/selectvalue.dart';
 import '../../widgets/alib/alib.dart';
@@ -28,7 +28,7 @@ class RepoAdmin extends StatelessWidget {
         title: ElevatedButton(
             onPressed: () async {
               al.messageInfo(context, 'watch sheetrowslog', 'supabase.com', 10);
-              bl.supRepo.rowkeysToday();
+              bl.supRepo.readSup.rowkeysToday();
             },
             child: const Text('supabase rowkeysToday')),
         trailing: Obx(() => Text(currentSheet2supabase.value)));
@@ -40,7 +40,7 @@ class RepoAdmin extends StatelessWidget {
             onPressed: () async {
               String sheetName = await sheetNameSelect(context);
               if (sheetName.isEmpty) return;
-              String result = await bl.supRepo.last10rows(sheetName);
+              String result = await bl.supRepo.readSup.last10rows(sheetName);
               // ignore: use_build_context_synchronously
               await Navigator.push(
                 context,
