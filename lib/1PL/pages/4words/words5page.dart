@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../widgets/alib/alib.dart';
+import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
 
 class Words5Page extends StatefulWidget {
@@ -102,41 +103,71 @@ class Words5PageState extends State<Words5Page> {
     );
   }
 
-  Future getByWord5() async {
+  Future w5querySwipper() async {
     String word = txCont[1].text;
     if (word.isEmpty) {
       al.messageInfo(context, 'Get by word', 'write somme word', 5);
       return;
     }
-    bl.homeTitle.value = 'Get rows with word\n$word, searchSheetNames';
-    int rowsCount = await bl.prepareKeys.byWord.columnWord5(
-        'quote',
-        txCont[1].text,
-        txCont[2].text,
-        txCont[3].text,
-        txCont[4].text,
-        txCont[5].text);
+    bl.homeTitle.value = 'Search w5 ';
+
+    Map filterMap = {
+      'qtype': 'w5',
+      'w1': txCont[1].text,
+      'w2': txCont[2].text,
+      'w3': txCont[3].text,
+      'w4': txCont[4].text,
+      'w5': txCont[5].text
+    };
+    bl.currentSS.keys =
+        await bl.supRepo.readSup.readW5.w5queryTextSearch(filterMap, true);
+    String info = filterMap.toString();
     bl.homeTitle.value = '';
-
-    if (rowsCount == 0) {
-      txCont[0].text += ' !!! ';
-      return;
-    }
-    String filterName =
-        '${txCont[1].text} ${txCont[2].text} ${txCont[3].text} ${txCont[4].text} ${txCont[5].text} $selectedValueAuthor';
-
     // ignore: use_build_context_synchronously
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => CardSwiper(filterName, '', const {})),
+      MaterialPageRoute(builder: (context) => CardSwiper(info, '', const {})),
     );
   }
 
-  IconButton search5() {
+  Future w5queryGrid() async {
+    String word = txCont[1].text;
+    if (word.isEmpty) {
+      al.messageInfo(context, 'Get by word', 'write somme word', 5);
+      return;
+    }
+    bl.homeTitle.value = 'Search w5 ';
+
+    Map filterMap = {
+      'qtype': 'w5',
+      'w1': txCont[1].text,
+      'w2': txCont[2].text,
+      'w3': txCont[3].text,
+      'w4': txCont[4].text,
+      'w5': txCont[5].text
+    };
+    List rows = await bl.supRepo.readSup.readW5.w5queryLike(filterMap, false);
+    bl.homeTitle.value = '';
+    await showInGrid(rows);
+  }
+
+  Future showInGrid(List rows) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QResultBuilder(rows)),
+    );
+  }
+
+  IconButton search52swip() {
     return IconButton(
-        onPressed: () async => await getByWord5(),
+        onPressed: () async => await w5querySwipper(),
         icon: const Icon(Icons.search));
+  }
+
+  IconButton search52grid() {
+    return IconButton(
+        onPressed: () async => await w5queryGrid(),
+        icon: const Icon(Icons.grid_4x4));
   }
 
   ListView bodyListview() {
@@ -148,7 +179,7 @@ class Words5PageState extends State<Words5Page> {
         tagsTextfield(3),
         tagsTextfield(4),
         tagsTextfield(5),
-        search5()
+        Row(children: [search52swip(), search52grid()])
       ],
     );
   }

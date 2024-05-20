@@ -3,9 +3,16 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../3Data/dl.dart';
 import '../bluti.dart';
+import 'supreadw5.dart';
 
 class ReadSup {
   late SupabaseClient supabase;
+
+  SupReadW5 readW5 = SupReadW5();
+
+  void init() {
+    readW5.supabase = supabase;
+  }
 
   Future<List<String>> columnsGet() async {
     var rows = await supabase

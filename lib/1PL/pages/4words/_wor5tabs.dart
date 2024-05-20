@@ -1,7 +1,7 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 
-import '../4words/words5page.dart';
+import 'words5page.dart';
 
 class Word5Tabs extends StatefulWidget {
   const Word5Tabs({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class _Word5TabsState extends State<Word5Tabs> {
     return Scaffold(
       body: SafeArea(
         child: DefaultTabController(
-          length: 6,
+          length: 3,
           child: Column(
             children: <Widget>[
               ButtonsTabBar(
@@ -35,36 +35,17 @@ class _Word5TabsState extends State<Word5Tabs> {
                 unselectedBorderColor: Colors.blue,
                 radius: 100,
                 tabs: const [
-                  Tab(text: "Words5"),
-                  Tab(
-                    icon: Icon(Icons.directions_transit),
-                    text: "transit",
-                  ),
-                  Tab(icon: Icon(Icons.directions_bike)),
-                  Tab(icon: Icon(Icons.directions_car)),
-                  Tab(icon: Icon(Icons.directions_transit)),
-                  Tab(icon: Icon(Icons.directions_bike)),
+                  Tab(text: "W5"),
+                  Tab(icon: Icon(Icons.person), text: "w5"),
+                  Tab(icon: Icon(Icons.book), text: "w5"),
                 ],
               ),
               const Expanded(
                 child: TabBarView(
                   children: <Widget>[
                     Words5Page(),
-                    Center(
-                      child: Icon(Icons.directions_transit),
-                    ),
-                    Center(
-                      child: Icon(Icons.directions_bike),
-                    ),
-                    Center(
-                      child: Icon(Icons.directions_car),
-                    ),
-                    Center(
-                      child: Icon(Icons.directions_transit),
-                    ),
-                    Center(
-                      child: Icon(Icons.directions_bike),
-                    ),
+                    Center(child: Icon(Icons.person)),
+                    Center(child: Icon(Icons.book)),
                   ],
                 ),
               ),

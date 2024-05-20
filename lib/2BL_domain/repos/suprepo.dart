@@ -23,6 +23,7 @@ class SupabaseRepo {
     );
     supabase = Supabase.instance.client;
     readSup.supabase = supabase;
+    readSup.init();
   }
 
   //-----------------------------------------------------------------create
