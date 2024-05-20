@@ -146,7 +146,8 @@ class Words5PageState extends State<Words5Page> {
       'w4': txCont[4].text,
       'w5': txCont[5].text
     };
-    List rows = await bl.supRepo.readSup.readW5.w5queryLike(filterMap, false);
+    List rows =
+        await bl.supRepo.readSup.readW5.w5queryTextSearch(filterMap, false);
     bl.homeTitle.value = '';
     await showInGrid(rows);
   }
