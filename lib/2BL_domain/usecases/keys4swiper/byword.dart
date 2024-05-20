@@ -33,7 +33,7 @@ class ByWord {
     if (bl.currentSS.keys.isNotEmpty) return bl.currentSS.keys.length;
 
     if (filterColumnName == 'dateinsert') {
-      bl.currentSS.keys = await bl.supRepo.dateinsertSelect(word1);
+      bl.currentSS.keys = await bl.supRepo.dateinsertKeys(word1);
     }
     if (filterColumnName == 'quote') {
       bl.currentSS.keys = await bl.supRepo.quote1Select(word1);

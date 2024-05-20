@@ -4,13 +4,13 @@ import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../../../2BL_domain/bl.dart';
 import '../../../../../2BL_domain/repos/sharedprefs.dart';
-import '../../../../../2BL_domain/repos/sheetrowshelper.dart';
 import '../../../../widgets/alib/alib.dart';
 import '../../../swiperbrowser/_swiper.dart';
 
 class ResultsGridPage extends StatefulWidget {
   final List<String> cols;
-  const ResultsGridPage(this.cols, {Key? key}) : super(key: key);
+  final List rows;
+  const ResultsGridPage(this.cols, this.rows, {Key? key}) : super(key: key);
 
   @override
   State<ResultsGridPage> createState() => _ResultsGridPageState();
@@ -29,7 +29,20 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
     return columns;
   }
 
-  List<PlutoRow> rows = [];
+  List<PlutoRow> plutoRows = [];
+
+  Future<String> getDataPlutoRows() async {
+    plutoRows = [];
+
+    for (Map row in widget.rows) {
+      Map<String, PlutoCell> cells = {};
+      for (var col in widget.cols) {
+        cells[col] = PlutoCell(value: row[col]);
+      }
+      plutoRows.add(PlutoRow(cells: cells));
+    }
+    return 'ok';
+  }
 
   /// [PlutoGridStateManager] has many methods and properties to dynamically manipulate the grid.
   /// You can manipulate the grid dynamically at runtime by passing this through the [onLoaded] callback.
@@ -61,31 +74,6 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
     );
   }
 
-  Future<String> getData() async {
-    rows = [];
-    SheetRows sheetRow = SheetRows();
-    sheetRow.rowkey = 'x1';
-    sheetRow.quote = 'quote';
-    sheetRow.author = 'author';
-    List<SheetRows> sheetRows = [];
-    //sheetRows.add(sheetRow);
-    // await bl.sheetRowsHelper.getAllRows();
-    for (SheetRows row in sheetRows) {
-      rows.add(PlutoRow(
-        cells: {
-          'rowkey': PlutoCell(value: row.rowkey),
-          'quote': PlutoCell(value: row.quote),
-          'author': PlutoCell(value: row.author),
-          'book': PlutoCell(value: row.book),
-          'stars': PlutoCell(value: row.stars),
-          'favorite': PlutoCell(value: row.favorite),
-          'dateinsert': PlutoCell(value: row.dateinsert),
-        },
-      ));
-    }
-    return 'ok';
-  }
-
   RxList rownos = [].obs;
 
   Widget scaffoldPage() {
@@ -104,7 +92,7 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
                 //await sheetrowsHelper.deleteAllRows();
                 SharedPrefs.clear();
 
-                await getData();
+                await getDataPlutoRows();
                 setState(() {});
               },
               icon: const Icon(Icons.delete))
@@ -114,7 +102,7 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
         padding: const EdgeInsets.all(15),
         child: PlutoGrid(
           columns: columnsGet(),
-          rows: rows,
+          rows: plutoRows,
           onLoaded: (PlutoGridOnLoadedEvent event) {
             stateManager = event.stateManager;
             stateManager.setShowColumnFilter(true);
@@ -149,7 +137,8 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
       style: Theme.of(context).textTheme.displayMedium!,
       textAlign: TextAlign.center,
       child: FutureBuilder<String>(
-        future: getData(), // a previously-obtained Future<String> or null
+        future:
+            getDataPlutoRows(), // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {

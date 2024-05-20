@@ -69,12 +69,20 @@ class SupabaseRepo {
     return data.first;
   }
 
-  Future dateinsertSelect(String dateStr) async {
+  Future dateinsertKeys(String dateStr) async {
     // Select data with filters
     var data =
         await supabase.from('sheetrows').select().eq('dateinsert', '$dateStr.');
 
     return rowkeysList(data);
+  }
+
+  Future dateinsertRows(String dateStr) async {
+    // Select data with filters
+    var data =
+        await supabase.from('sheetrows').select().eq('dateinsert', '$dateStr.');
+
+    return data;
   }
 
   Future getBook(String sheetname) async {

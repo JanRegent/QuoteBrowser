@@ -42,7 +42,7 @@ class _HomeTabState extends State<HomeTab> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 5,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
@@ -55,9 +55,8 @@ class _HomeTabState extends State<HomeTab> {
                 const Tab(icon: Icon(Icons.tag)),
                 const Tab(
                     icon: Row(
-                  children: [Text('W'), Icon(Icons.view_column)],
+                  children: [Icon(Icons.wordpress), Icon(Icons.view_column)],
                 )),
-                const Tab(icon: Icon(Icons.tv)),
               ],
             ),
             title: titleRowHome(),
@@ -76,7 +75,7 @@ class _HomeTabState extends State<HomeTab> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const QResultBuilder()),
+                          builder: (context) => const QResultBuilder([])),
                     );
                   },
                   child: const Icon(Icons.tv))
@@ -127,7 +126,6 @@ class _HomeTabState extends State<HomeTab> {
               TagPrefixSearch(),
               Word5Tabs(),
               //ColumnWord5Page(),
-              QResultBrowser(),
             ],
           ),
         ),

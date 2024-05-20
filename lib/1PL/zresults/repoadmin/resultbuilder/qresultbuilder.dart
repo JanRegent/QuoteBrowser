@@ -9,7 +9,8 @@ import '../../swiperbrowser/_swiper.dart';
 import 'plutogrid/resultsgrid.dart';
 
 class QResultBuilder extends StatefulWidget {
-  const QResultBuilder({super.key});
+  final List rows;
+  const QResultBuilder(this.rows, {super.key});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -24,8 +25,10 @@ class _QResultBuilderState extends State<QResultBuilder> {
   }
 
   List<String> columns = [];
+
   Future<String> getData() async {
     columns = await bl.supRepo.readSup.columnsGet();
+
     return 'ok';
   }
 
@@ -87,7 +90,7 @@ class _QResultBuilderState extends State<QResultBuilder> {
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         List<Widget> children;
         if (snapshot.hasData) {
-          return ResultsGridPage(columns);
+          return ResultsGridPage(columns, widget.rows);
         } else if (snapshot.hasError) {
           children = <Widget>[
             const Icon(

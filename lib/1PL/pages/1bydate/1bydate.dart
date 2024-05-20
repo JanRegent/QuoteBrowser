@@ -8,6 +8,7 @@ import '../../../2BL_domain/repos/sharedprefs.dart';
 import '../../widgets/alib/alib.dart';
 
 import '../../controllers/selectvalue.dart';
+import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
 import 'quoteadd.dart';
 
@@ -78,6 +79,17 @@ class _ByDatePageState extends State<ByDatePage> {
     );
   }
 
+  Future showInGrid(String filterKey) async {
+    String searchDate = filterKey.replaceAll('daily', '').trim();
+    List rows = await bl.supRepo.dateinsertRows(searchDate);
+    bl.currentSS.swiperIndexIncrement = false;
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QResultBuilder(rows)),
+    );
+  }
+
   List filterKeys = <String>[].obs;
 
   ListView filtersLv() {
@@ -98,6 +110,14 @@ class _ByDatePageState extends State<ByDatePage> {
                   await searchSheetNamesWord5Swip(
                       'dateinsert', searchDate, '', '', '', '');
                 },
+                trailing: IconButton(
+                  icon: const Icon(Icons.grid_goldenratio),
+                  onPressed: () {
+                    String searchDate =
+                        filterKeys[index].replaceAll('daily', '').trim();
+                    showInGrid(searchDate);
+                  },
+                ),
               )),
         );
       }, // lists don't need it
