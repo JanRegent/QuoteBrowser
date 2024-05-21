@@ -173,18 +173,17 @@ class GService23 {
     return tags;
   }
 
-  Future<List<String>> getrowsByTagPrefixes(String tagPrefixes) async {
+  Future getrowsByTagPrefixes(String tagPrefixes) async {
     if (tagPrefixes.isEmpty) return [];
-    // Response response = await dio.get(
-    //   backendUrl,
-    //   queryParameters: {
-    //     'action': 'getrowsByTagPrefixes',
-    //     'tagPrefixes': tagPrefixes
-    //   },
-    // );
+    Response response = await dio.get(
+      backendUrl,
+      queryParameters: {
+        'action': 'getrowsByTagPrefixes',
+        'tagPrefixes': tagPrefixes
+      },
+    );
 
-    return [];
-    // bl.sheetRowsHelper.insertResponseAll('', response.data['data']);
+    return response.data['data'];
   }
 
   //----------------------------------------------------comments2tagsYellowparts

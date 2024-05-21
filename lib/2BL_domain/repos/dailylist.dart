@@ -18,6 +18,13 @@ class DailyList {
     return null;
   }
 
+  String getRowkeyPrefix(String sheetName) {
+    for (DailyListRow row in rows) {
+      if (row.sheetName == sheetName) return row.rowkey;
+    }
+    return '';
+  }
+
   Future getData() async {
     List data = await dl.gservice23.getPureSheet('dailyList');
 

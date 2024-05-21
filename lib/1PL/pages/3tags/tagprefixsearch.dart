@@ -10,7 +10,17 @@ import '../../widgets/alib/alib.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
 
 Future<String> tag4swipper(String tagPrefixes) async {
-  bl.currentSS.keys = await dl.gservice23.getrowsByTagPrefixes(tagPrefixes);
+  bl.currentSS.keys = [];
+  List data = await dl.gservice23.getrowsByTagPrefixes(tagPrefixes);
+  for (var i = 1; i < data.length; i++) {
+    List<String> rownos = data[i][2].toString().split(',');
+
+    String sheetName = data[i][1];
+    String rowkeyPrefix = bl.currentSS.dailyList.getRowkeyPrefix(sheetName);
+    for (var ni = 0; ni < rownos.length; ni++) {
+      bl.currentSS.keys.add(rowkeyPrefix + rownos[ni]);
+    }
+  }
 
   if (bl.currentSS.keys.isEmpty) {
     return '0';
@@ -74,7 +84,7 @@ class _TagPrefixSearchState extends State<TagPrefixSearch> {
           context, 'Get tags by prefix', 'write somme start chars', 5);
       return;
     }
-    bl.homeTitle.value = 'Get tags with prefix\n$tagPrefix';
+    bl.homeTitle.value = 'Geting prefix*\n$tagPrefix';
     incList = await dl.gservice23.getTagsByPrefix(tagPrefixController.text);
     bl.homeTitle.value = '';
     setState(() {});
