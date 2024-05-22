@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/alib/alib.dart';
 import 'checks.dart';
 import 'sheets2db.dart';
+import 'varsdebug.dart';
 
 class AdminTabs extends StatelessWidget {
   const AdminTabs({super.key});
@@ -11,12 +12,13 @@ class AdminTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             leading: al.iconBack(context),
             bottom: const TabBar(
               tabs: [
+                Tab(icon: Icon(Icons.view_array)),
                 Tab(icon: Icon(Icons.check)),
                 Tab(icon: Icon(Icons.import_export)),
               ],
@@ -24,7 +26,7 @@ class AdminTabs extends StatelessWidget {
             title: const Text('Admin tabs'),
           ),
           body: const TabBarView(
-            children: [ChecksGrid(), Sheets2dbPage()],
+            children: [VarsDebugGrid(), ChecksGrid(), Sheets2dbPage()],
           ),
         ),
       ),

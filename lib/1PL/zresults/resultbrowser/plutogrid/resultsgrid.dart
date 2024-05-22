@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../../2BL_domain/bl.dart';
-import '../../../../2BL_domain/repos/sharedprefs.dart';
 import '../../../../2BL_domain/repos/sheetrowshelper.dart';
 import '../../../widgets/alib/alib.dart';
 import '../../swiperbrowser/_swiper.dart';
@@ -116,17 +115,6 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
                 icon: const Icon(Icons.view_agenda))
           ],
         ),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                //await sheetrowsHelper.deleteAllRows();
-                SharedPrefs.clear();
-
-                await getData();
-                setState(() {});
-              },
-              icon: const Icon(Icons.delete))
-        ],
       ),
       body: Container(
         padding: const EdgeInsets.all(15),

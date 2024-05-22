@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../../../2BL_domain/bl.dart';
-import '../../../../../2BL_domain/repos/sharedprefs.dart';
 import '../../../../widgets/alib/alib.dart';
 import '../../../swiperbrowser/_swiper.dart';
 
@@ -89,9 +88,6 @@ class _ResultsGridPageState extends State<ResultsGridPage> {
         actions: [
           IconButton(
               onPressed: () async {
-                //await sheetrowsHelper.deleteAllRows();
-                SharedPrefs.clear();
-
                 await getDataPlutoRows();
                 setState(() {});
               },
