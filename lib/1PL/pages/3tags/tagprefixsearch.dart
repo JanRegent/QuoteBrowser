@@ -13,7 +13,7 @@ Future<String> tag4swipper(String tagPrefixes) async {
   bl.currentSS.keys = [];
   List data = await dl.gservice23.getrowsByTagPrefixes(tagPrefixes);
   for (var i = 1; i < data.length; i++) {
-    List<String> rownos = data[i][2].toString().split(',');
+    List<String> rownos = data[i][2].toString().split('_');
 
     String sheetName = data[i][1];
     String rowkeyPrefix = bl.currentSS.dailyList.getRowkeyPrefix(sheetName);
