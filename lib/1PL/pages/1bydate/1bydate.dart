@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quotebrowser/1PL/widgets/alib/alicons.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/repos/sharedprefs.dart';
@@ -10,7 +11,6 @@ import '../../widgets/alib/alib.dart';
 import '../../controllers/selectvalue.dart';
 import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
-import 'quoteadd.dart';
 
 class ByDatePage extends StatefulWidget {
   const ByDatePage({super.key});
@@ -111,7 +111,7 @@ class _ByDatePageState extends State<ByDatePage> {
                       'dateinsert', searchDate, '', '', '', '');
                 },
                 trailing: IconButton(
-                  icon: const Icon(Icons.grid_goldenratio),
+                  icon: ALicons.viewIcons.gridView,
                   onPressed: () {
                     String searchDate =
                         filterKeys[index].replaceAll('daily', '').trim();
@@ -136,17 +136,6 @@ class _ByDatePageState extends State<ByDatePage> {
               lastdaySelection()
             ],
           ),
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const QuoteAddPage()),
-                  );
-                },
-                icon: const Icon(Icons.man_outlined))
-          ],
         ),
         body: filtersLv()
 

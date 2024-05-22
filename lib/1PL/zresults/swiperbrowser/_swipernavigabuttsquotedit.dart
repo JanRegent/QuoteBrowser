@@ -49,6 +49,7 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
     return Row(children: [
       al.infoButton(context, widget.title1, '\n${widget.title2}'),
       const Spacer(),
+      rowViewMenu({}, widget.setStateSwiper),
       ElevatedButton(
           onPressed: () {
             if (bl.curRow.setCellColor == Colors.red) return;
@@ -92,7 +93,6 @@ class _SwiperNavigButtsQuoteditState extends State<SwiperNavigButtsQuotedit> {
     return Scaffold(
         appBar: AppBar(
           title: titleArrowsRowOff(),
-          actions: [rowViewMenu({}, widget.setStateSwiper)],
         ),
         body: SafeArea(
             child: previewPageOn

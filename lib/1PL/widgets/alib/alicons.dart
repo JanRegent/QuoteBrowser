@@ -28,6 +28,10 @@ class ViewIcons {
     return const Icon(Icons.table_bar);
   }
 
+  Icon get gridView {
+    return const Icon(Icons.grid_4x4);
+  }
+
   Icon get listView {
     return const Icon(Icons.list);
   }

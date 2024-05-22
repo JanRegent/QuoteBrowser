@@ -7,6 +7,7 @@ import '../../../3Data/builddate.dart';
 import '../../widgets/alib/alicons.dart';
 
 import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
+import '../1bydate/quoteadd.dart';
 import '../2books/__authors.dart';
 import '../1bydate/1bydate.dart';
 
@@ -60,6 +61,15 @@ class _HomeTabState extends State<HomeTab> {
             ),
             title: titleRowHome(),
             actions: [
+              IconButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const QuoteAddPage()),
+                    );
+                  },
+                  icon: const Icon(Icons.add)),
               ElevatedButton(
                   onPressed: () async {
                     Navigator.push(

@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:quotebrowser/1PL/widgets/alib/alicons.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../widgets/alib/alib.dart';
@@ -168,7 +169,7 @@ class Words5PageState extends State<Words5Page> {
   IconButton search52grid() {
     return IconButton(
         onPressed: () async => await w5queryGrid(),
-        icon: const Icon(Icons.grid_4x4));
+        icon: ALicons.viewIcons.gridView);
   }
 
   ListView bodyListview() {
