@@ -7,7 +7,6 @@ import 'package:quotebrowser/2BL_domain/repos/suprepo.dart';
 
 import '../3Data/providers/gwebapp/tagsparts.dart';
 import 'currow.dart';
-import '../1PL/zresults/repoadmin/repoadmin.dart';
 import 'repos/authbooksmap.dart';
 
 import 'bluti.dart';
@@ -32,7 +31,6 @@ class Bl {
 
   PrepareKeys prepareKeys = PrepareKeys();
 
-  RepoAdmin repoAdmin = const RepoAdmin();
   SupabaseRepo supRepo = SupabaseRepo();
   NeonRepo neonRepo = NeonRepo();
   KoyebRepo koyebRepo = KoyebRepo();

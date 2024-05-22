@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../3Data/dl.dart';
@@ -27,16 +26,17 @@ class ReadSup {
     return cols;
   }
 
-  void rowkeysToday() async {
+  Future<String> rowkeysToday() async {
     var rowkeysTodays = await supabase
         .from('sheetrows')
         .select('rowkey')
         .eq('dateinsert', '${blUti.todayStr()}.');
 
-    debugPrint('--------------------------------rowkeysToday');
+    String report = '--------------------------------rowkeysToday';
     for (var i = 0; i < rowkeysTodays.length; i++) {
-      debugPrint(rowkeysTodays[i].toString());
+      report += '\n${rowkeysTodays[i]}';
     }
+    return report;
   }
 
   Future<String> last10rows(String sheetName) async {

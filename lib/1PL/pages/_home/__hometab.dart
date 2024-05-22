@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../zresults/repoadmin/repoadmin.dart';
+import '../../zresults/repoadmin/_admintabs.dart';
 import '../../../3Data/builddate.dart';
 import '../../widgets/alib/alicons.dart';
 
@@ -75,7 +75,7 @@ class _HomeTabState extends State<HomeTab> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const RepoAdmin()),
+                          builder: (context) => const AdminTabs()),
                     );
                   },
                   child: const Icon(Icons.admin_panel_settings)),

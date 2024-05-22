@@ -7,6 +7,13 @@ import 'package:quotebrowser/1PL/widgets/alib/alicons.dart';
 import '../../../../2BL_domain/bl.dart';
 import 'text_with_highlight.dart';
 
+Future debugPrintShow(BuildContext context, String report) async {
+  await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => DebugPrintPage(report)),
+  );
+}
+
 class DebugPrintPage extends StatefulWidget {
   String content;
   DebugPrintPage(this.content, {super.key});
