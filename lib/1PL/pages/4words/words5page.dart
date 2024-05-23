@@ -6,7 +6,7 @@ import '../../../2BL_domain/bl.dart';
 import '../../widgets/alib/alib.dart';
 import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
-import 'w5listview.dart';
+import 'w5listviewpanel.dart';
 
 class Words5Page extends StatefulWidget {
   const Words5Page({super.key});
