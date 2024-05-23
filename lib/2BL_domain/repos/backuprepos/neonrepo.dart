@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:postgres/postgres.dart';
 
-import 'commonrepos.dart';
-import 'zgitignore.dart';
+import '../commonrepos.dart';
+import '../zgitignore.dart';
 
 class NeonRepo {
   late Connection conn;

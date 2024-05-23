@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:postgres/postgres.dart';
 
-import '../bl.dart';
-import 'commonrepos.dart';
-import 'zgitignore.dart';
+import '../../bl.dart';
+import '../commonrepos.dart';
+import '../zgitignore.dart';
 
 class KoyebRepo {
   late Connection conn;

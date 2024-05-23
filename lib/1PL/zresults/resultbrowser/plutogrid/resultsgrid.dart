@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../../2BL_domain/bl.dart';
-import '../../../../2BL_domain/repos/sheetrowshelper.dart';
+import '../../../../2BL_domain/repos/supabase/sheetrowshelper.dart';
 import '../../../widgets/alib/alib.dart';
 import '../../swiperbrowser/_swiper.dart';
 

@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../3Data/dl.dart';
-import '../bluti.dart';
+import '../../../3Data/dl.dart';
+import '../../bluti.dart';
 import 'supreadw5.dart';
 
 class ReadSup {

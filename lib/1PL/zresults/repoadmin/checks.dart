@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/repos/suprepo.dart';
+import '../../../2BL_domain/repos/supabase/suprepo.dart';
 import '../../controllers/selectvalue.dart';
 import '../../widgets/alib/alib.dart';
 import 'debugprint/debugprintpage.dart';
@@ -55,7 +55,7 @@ class _ChecksGridState extends State<ChecksGrid> {
               //   if (c1 == ckoyeb) debugPrint('koueb ok $ckoyeb');
               // } catch (_) {}
             },
-            child: const Text('countCheck \n neon <> sup')));
+            child: const Text('countCheck \n neon <>')));
   }
 
   @override

@@ -8,7 +8,7 @@ import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 import '../../../bluti.dart';
 import '../../commonrepos.dart';
-import '../../sheetrowshelper.dart';
+import '../../supabase/sheetrowshelper.dart';
 
 SheetRowsHelper sheetrowsHelper = SheetRowsHelper();
 

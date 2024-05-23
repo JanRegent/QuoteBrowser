@@ -3,7 +3,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/2BL_domain/repos/suprepo.dart';
+import 'package:quotebrowser/2BL_domain/repos/supabase/suprepo.dart';
 
 import '../3Data/providers/gwebapp/tagsparts.dart';
 import 'currow.dart';
@@ -11,8 +11,9 @@ import 'repos/authbooksmap.dart';
 
 import 'bluti.dart';
 
-import 'repos/koyebrepo.dart';
-import 'repos/neonrepo.dart';
+import 'repos/wfiltersrepo.dart';
+import 'repos/backuprepos/koyebrepo.dart';
+import 'repos/backuprepos/neonrepo.dart';
 
 import 'usecases/keys4swiper/_preparekeys.dart';
 
@@ -32,6 +33,7 @@ class Bl {
   PrepareKeys prepareKeys = PrepareKeys();
 
   SupabaseRepo supRepo = SupabaseRepo();
+  WFiltersRepo wfiltersRepo = WFiltersRepo();
   NeonRepo neonRepo = NeonRepo();
   KoyebRepo koyebRepo = KoyebRepo();
 
@@ -44,6 +46,7 @@ class Bl {
     //await sheetRowsHelper.initDB(); sqlite
     debugPrint('supRepo init start');
     await supRepo.init();
+    wfiltersRepo.supabase = supRepo.supabase;
 
     if (!kIsWeb) {
       debugPrint('neonRepo init start');

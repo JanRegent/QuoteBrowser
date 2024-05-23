@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../3Data/dl.dart';
-import '../bl.dart';
+import '../../../3Data/dl.dart';
+import '../../bl.dart';
 import 'supread.dart';
-import 'zgitignore.dart';
+import '../zgitignore.dart';
 
 RxString currentSheet2supabase = ''.obs;
 RxString currentSup2neon = ''.obs;

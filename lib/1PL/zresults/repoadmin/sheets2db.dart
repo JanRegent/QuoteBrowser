@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/repos/suprepo.dart';
+import '../../../2BL_domain/repos/supabase/suprepo.dart';
 import '../../widgets/alib/alib.dart';
 
 class Sheets2dbPage extends StatefulWidget {

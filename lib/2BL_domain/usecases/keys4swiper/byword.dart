@@ -34,6 +34,7 @@ class ByWord {
 
     if (filterColumnName == 'dateinsert') {
       bl.currentSS.keys = await bl.supRepo.dateinsertKeys(word1);
+      bl.wfiltersRepo.insert({'filtertype': 'dateinsert', 'w1': word1});
     }
     if (filterColumnName == 'quote') {
       bl.currentSS.keys = await bl.supRepo.quote1Select(word1);

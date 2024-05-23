@@ -26,3 +26,19 @@ String sheetRowsCreateTable() {
 
 String colsSql =
     'rowkey,sheetname,quote,author,book,parpage,tags,yellowparts,stars,favorite,dateinsert,sourceurl,fileurl,docurl,original,vydal,folderurl,title';
+
+String filtersCreateTable() {
+  return '''
+    CREATE TABLE IF NOT EXISTS wfilters(
+            id SERIAL PRIMARY KEY,
+            filtertype TEXT ,
+            w1 TEXT,
+            w2 TEXT,
+            w3 TEXT,
+            w4 TEXT,
+            w5 TEXT,
+            columnname  TEXT,
+            columnvalue TEXT
+    )
+    ''';
+}

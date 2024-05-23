@@ -112,8 +112,8 @@ class Words5PageState extends State<Words5Page> {
     }
     bl.homeTitle.value = 'Search w5 ';
 
-    Map filterMap = {
-      'qtype': 'w5',
+    Map wfilterMap = {
+      'filtertype': 'w5',
       'w1': txCont[1].text,
       'w2': txCont[2].text,
       'w3': txCont[3].text,
@@ -121,8 +121,9 @@ class Words5PageState extends State<Words5Page> {
       'w5': txCont[5].text
     };
     bl.currentSS.keys =
-        await bl.supRepo.readSup.readW5.w5queryTextSearch(filterMap, true);
-    String info = filterMap.toString();
+        await bl.supRepo.readSup.readW5.w5queryTextSearchKeys(wfilterMap);
+    bl.wfiltersRepo.insert(wfilterMap);
+    String info = wfilterMap.toString();
     bl.homeTitle.value = '';
     // ignore: use_build_context_synchronously
     Navigator.push(
@@ -148,7 +149,7 @@ class Words5PageState extends State<Words5Page> {
       'w5': txCont[5].text
     };
     List rows =
-        await bl.supRepo.readSup.readW5.w5queryTextSearch(filterMap, false);
+        await bl.supRepo.readSup.readW5.w5queryTextSearchRows(filterMap);
     bl.homeTitle.value = '';
     await showInGrid(rows);
   }

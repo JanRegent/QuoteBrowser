@@ -5,7 +5,7 @@ import '../1PL/pages/2books/bookslist.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
 import 'repos/dailylist.dart';
-import 'repos/sheetrowshelper.dart';
+import 'repos/supabase/sheetrowshelper.dart';
 
 TextEditingController quoteEditController = TextEditingController();
 
