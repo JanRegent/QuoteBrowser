@@ -1,72 +1,34 @@
-// ignore_for_file: file_names
-
+// ignore: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quotebrowser/1PL/widgets/alib/alicons.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/repos/sharedprefs.dart';
-import '../../widgets/alib/alib.dart';
-
-import '../../controllers/selectvalue.dart';
+import '../../widgets/alib/alicons.dart';
 import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
-import '../../zresults/swiperbrowser/_swiper.dart';
 
-class ByDatePage extends StatefulWidget {
-  const ByDatePage({super.key});
+// ignore: must_be_immutable
+class W5ListviewPanel extends StatefulWidget {
+  List<TextEditingController> txCont;
+  W5ListviewPanel(this.txCont, {super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ByDatePageState createState() => _ByDatePageState();
+  State<W5ListviewPanel> createState() => _W5ListviewPanelState();
 }
 
-class _ByDatePageState extends State<ByDatePage> {
-  ElevatedButton lastdaySelection() {
-    return ElevatedButton(
-      child: const Icon(Icons.date_range),
-      onPressed: () async {
-        String searchDate = await dateSelect(context);
-        if (searchDate.isEmpty) return;
-        // ignore: use_build_context_synchronously
-        await searchSheetNamesWord5Swip(
-            'dateinsert', searchDate, '', '', '', '');
-        filterRows = SharedPrefs.getKeysAll();
-        setState(() {});
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    //filterKeys = SharedPrefs.getKeysAll();
-  }
-
+class _W5ListviewPanelState extends State<W5ListviewPanel> {
+  List filterRows = <String>[].obs;
   Future<String> getData() async {
-    filterRows = await bl.wfiltersRepo.getAllDateInsert();
+    filterRows = await bl.wfiltersRepo.getAllW5Insert();
     return 'ok';
   }
 
-  Future searchSheetNamesWord5Swip(String filterColumnName, String word1,
-      String word2, String word3, String word4, String word5) async {
-    bl.homeTitle.value = '$word1 $word2 $word3 $word4 $word5 ';
-    String filterName = '$word1 $word2 $word3 $word4 $word5 ';
-    int rowsCount = await bl.prepareKeys.byWord
-        .columnWord5(filterColumnName, word1, word2, word3, word4, word5);
-    bl.homeTitle.value = '';
-    if (rowsCount == 0) {
-      // ignore: use_build_context_synchronously
-      al.messageInfo(context, 'Nothing found for $word1', '', 8);
-      return;
-    }
+  List<ListTile> listTiles = [];
 
-    bl.currentSS.swiperIndexIncrement = false;
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => CardSwiper(filterName, '', const {})),
-    );
+  String filterTitle(Map row) {
+    for (var key in row.keys) {
+      if (row[key] == null) row[key] = '';
+    }
+    return '${row['w1']} ${row['w2']} ${row['w3']} ${row['w4']} ${row['w5']}';
   }
 
   Future showInGrid(String filterKey) async {
@@ -78,16 +40,6 @@ class _ByDatePageState extends State<ByDatePage> {
       context,
       MaterialPageRoute(builder: (context) => QResultBuilder(rows)),
     );
-  }
-
-  List<ListTile> listTiles = [];
-
-  List filterRows = <String>[].obs;
-  String filterTitle(Map row) {
-    for (var key in row.keys) {
-      if (row[key] == null) row[key] = '';
-    }
-    return '${row['w1']} ${row['w2']} ${row['w3']} ${row['w4']} ${row['w5']}';
   }
 
   ListView filtersLv() {
@@ -110,9 +62,11 @@ class _ByDatePageState extends State<ByDatePage> {
                 ),
                 title: Text(filterTitle(filterRows[index])),
                 onTap: () async {
-                  String searchDate = filterRows[index]['w1'];
-                  await searchSheetNamesWord5Swip(
-                      'dateinsert', searchDate, '', '', '', '');
+                  widget.txCont[1].text = filterRows[index]['w1'];
+                  widget.txCont[2].text = filterRows[index]['w2'];
+                  widget.txCont[3].text = filterRows[index]['w3'];
+                  widget.txCont[4].text = filterRows[index]['w4'];
+                  widget.txCont[5].text = filterRows[index]['w5'];
                 },
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
@@ -129,18 +83,9 @@ class _ByDatePageState extends State<ByDatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              const Text('By date'),
-              al.linkIconOpenDoc(
-                  '1ty2xYUsBC_J5rXMay488NNalTQ3UZXtszGTuKIFevOU', context, ''),
-              lastdaySelection()
-            ],
-          ),
-        ),
-        body: FutureBuilder<String>(
+    return Container(
+        color: Colors.green[200],
+        child: FutureBuilder<String>(
           future: getData(), // a previously-obtained Future<String> or null
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             List<Widget> children;
@@ -178,10 +123,6 @@ class _ByDatePageState extends State<ByDatePage> {
               ),
             );
           },
-        )
-
-        //Row(children: [todayNews(false), todayNews(true)])
-
-        );
+        ));
   }
 }

@@ -6,6 +6,7 @@ import '../../../2BL_domain/bl.dart';
 import '../../widgets/alib/alib.dart';
 import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
+import 'w5listview.dart';
 
 class Words5Page extends StatefulWidget {
   const Words5Page({super.key});
@@ -176,22 +177,35 @@ class Words5PageState extends State<Words5Page> {
   ListView bodyListview() {
     return ListView(
       children: [
-        authorsDropdownButton2(context),
+        //authorsDropdownButton2(context),
         tagsTextfield(1),
         tagsTextfield(2),
         tagsTextfield(3),
         tagsTextfield(4),
         tagsTextfield(5),
-        Row(children: [search52swip(), search52grid()])
+        Row(children: [search52grid(), const Spacer(), search52swip()])
       ],
     );
   }
 
+  final int paneProportion = 30;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: !loading
-            ? bodyListview()
+            ? Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Flexible(
+                    flex: 30,
+                    child: bodyListview(),
+                  ),
+                  Flexible(
+                    flex: 70,
+                    child: W5ListviewPanel(txCont),
+                  ),
+                ],
+              )
             : const Row(
                 children: [
                   CircularProgressIndicator(),

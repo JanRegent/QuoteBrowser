@@ -52,21 +52,27 @@ class WFiltersRepo {
     return data;
   }
 
-  Future getBook(String sheetname) async {
+  Future getAllDateInsert() async {
     // Select data with filters
     var data =
-        await supabase.from('wfilters').select().eq('sheetname', sheetname);
+        await supabase.from('wfilters').select().eq('filtertype', 'dateinsert');
 
-    return rowkeysList(data);
+    return data;
   }
 
+  Future getAllW5Insert() async {
+    // Select data with filters
+    var data = await supabase.from('wfilters').select().eq('filtertype', 'w5');
+
+    return data;
+  }
   //-----------------------------------------------------------------update
 
   //-------------------------------------------------------delete
 
-  Future deleteSheet(String sheetName) async {
+  Future deleteWFilter(int id) async {
     try {
-      await supabase.from('wfilters').delete().match({'sheetname': sheetName});
+      await supabase.from('wfilters').delete().match({'id': id});
     } catch (error) {
       // error occured
       debugPrint(error.toString());
