@@ -37,8 +37,8 @@ String filtersCreateTable() {
             w3 TEXT,
             w4 TEXT,
             w5 TEXT,
-            columnname  TEXT,
-            columnvalue TEXT
+            author  TEXT
+            
     )
     ''';
 }

@@ -49,7 +49,22 @@ class Words5PageState extends State<Words5Page> {
     }
   }
 
-  String? selectedValueAuthor;
+  //------------------------------------------------------------author
+  String? selectedValueAuthor = '';
+
+  ListTile authorListTile(BuildContext context) {
+    return ListTile(
+      leading: IconButton(
+        onPressed: () {
+          selectedValueAuthor = '';
+          setState(() {});
+        },
+        icon: const Icon(Icons.clear),
+      ),
+      title: authorsDropdownButton2(context),
+      tileColor: const Color.fromARGB(255, 135, 206, 239),
+    );
+  }
 
   DropdownButton2 authorsDropdownButton2(BuildContext context) {
     return DropdownButton2<String>(
@@ -92,6 +107,7 @@ class Words5PageState extends State<Words5Page> {
   bool loading = false;
   List<String> words = ['allscope', '', '', '', '', ''];
 
+  //------------------------------------------------------------w5
   TextField tagsTextfield(wordIndex) {
     return TextField(
       controller: txCont[wordIndex],
@@ -119,7 +135,8 @@ class Words5PageState extends State<Words5Page> {
       'w2': txCont[2].text,
       'w3': txCont[3].text,
       'w4': txCont[4].text,
-      'w5': txCont[5].text
+      'w5': txCont[5].text,
+      'author': selectedValueAuthor
     };
     bl.currentSS.keys =
         await bl.supRepo.readSup.readW5.w5queryTextSearchKeys(wfilterMap);
@@ -142,12 +159,13 @@ class Words5PageState extends State<Words5Page> {
     bl.homeTitle.value = 'Search w5 ';
 
     Map filterMap = {
-      'qtype': 'w5',
+      'filtertype': 'w5',
       'w1': txCont[1].text,
       'w2': txCont[2].text,
       'w3': txCont[3].text,
       'w4': txCont[4].text,
-      'w5': txCont[5].text
+      'w5': txCont[5].text,
+      'author': selectedValueAuthor
     };
     List rows =
         await bl.supRepo.readSup.readW5.w5queryTextSearchRows(filterMap);
@@ -174,15 +192,19 @@ class Words5PageState extends State<Words5Page> {
         icon: ALicons.viewIcons.gridView);
   }
 
+  //-----------------------------------------------------------body
   ListView bodyListview() {
     return ListView(
       children: [
-        //authorsDropdownButton2(context),
+        const Divider(
+          color: Colors.blue,
+        ),
         tagsTextfield(1),
         tagsTextfield(2),
         tagsTextfield(3),
         tagsTextfield(4),
         tagsTextfield(5),
+        authorListTile(context),
         Row(children: [search52grid(), const Spacer(), search52swip()])
       ],
     );

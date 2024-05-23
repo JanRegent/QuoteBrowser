@@ -73,8 +73,8 @@ class SupReadW5 {
     return rowkeys;
   }
 
-  Future<List<String>> w5queryTextSearchKeys(Map w5q) async {
-    List data = await w5queryTextSearchRows(w5q);
+  Future<List<String>> w5queryTextSearchKeys(Map wfilterMap) async {
+    List data = await w5queryTextSearchRows(wfilterMap);
     List<String> rowkeys = [];
 
     try {
@@ -86,15 +86,15 @@ class SupReadW5 {
     return rowkeys;
   }
 
-  Future w5queryTextSearchRows(Map w5q) async {
-    if (w5q['filtertype'] != 'w5') return [];
+  Future w5queryTextSearchRows(Map wfilterMap) async {
+    if (wfilterMap['filtertype'] != 'w5') return [];
 
-    String w1 = w5q['w1'].toString();
+    String w1 = wfilterMap['w1'].toString();
     if (w1.isEmpty) return [];
-    String w2 = w5q['w2'].toString();
-    String w3 = w5q['w3'].toString();
-    String w4 = w5q['w4'].toString();
-    String w5 = w5q['w5'].toString();
+    String w2 = wfilterMap['w2'].toString();
+    String w3 = wfilterMap['w3'].toString();
+    String w4 = wfilterMap['w4'].toString();
+    String w5 = wfilterMap['w5'].toString();
 
     var data = [];
     //----------------------------------------------w5
@@ -138,7 +138,16 @@ class SupReadW5 {
           .textSearch('quote', "'$w1'")
           .limit(100);
     }
+    String author = wfilterMap['author'];
+    if (author == '') return data;
+    List dataAuth = [];
+    for (var i = 0; i < data.length; i++) {
+      try {
+        if (!data[i]['author'].toString().contains(author)) continue;
+        dataAuth.add(data[i]);
+      } catch (_) {}
+    }
 
-    return data;
+    return dataAuth;
   }
 }

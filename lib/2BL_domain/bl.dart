@@ -11,7 +11,7 @@ import 'repos/authbooksmap.dart';
 
 import 'bluti.dart';
 
-import 'repos/wfiltersrepo.dart';
+import 'repos/supabase/w5filtersrepo.dart';
 import 'repos/backuprepos/koyebrepo.dart';
 import 'repos/backuprepos/neonrepo.dart';
 
@@ -68,7 +68,7 @@ class Bl {
   Set authorsSet = {};
   AuthorBooksMap authorBooksMap = AuthorBooksMap();
   void updateSlowly() async {
-    authors = [];
+    authors = ['']; //for authost no selection
     authors.addAll(blUti.toListString(authorsSet.toList().sorted()));
     authorBooksMap.getData();
   }
