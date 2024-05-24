@@ -28,7 +28,7 @@ class _Sheets2dbPageState extends State<Sheets2dbPage> {
     return ListTile(
         title: ElevatedButton(
             onPressed: () async {
-              await bl.supRepo.insertSheet2sqldb('ramtalk');
+              await bl.supRepo.insertSheet2sqldb('EduardT');
             },
             child: const Text('one sheet2sup ramtalk')));
   }

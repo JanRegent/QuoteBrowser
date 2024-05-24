@@ -141,7 +141,7 @@ class GService23 {
     sheetRow.quote = valueGet('quote', row);
     sheetRow.author = valueGet('author', row);
     sheetRow.book = valueGet('book', row);
-    sheetRow.parPage = valueGet('parPage', row);
+    sheetRow.parPage = valueGet('parPage', row).trim();
     sheetRow.tags = valueGet('tags', row);
     sheetRow.yellowParts = valueGet('yellowParts', row);
     sheetRow.stars = valueGet('stars', row);
