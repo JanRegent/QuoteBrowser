@@ -105,7 +105,7 @@ class _DebugPrintPageState extends State<DebugPrintPage> {
         fontWeight: FontWeight.bold);
 
     if (tagAllPartsIndex == 1) {
-      List<String> parts = bl.curRow.yellowParts.value.split('__|__');
+      List<String> parts = bl.curRow.yellowparts.value.split('__|__');
 
       for (var i = 0; i < parts.length; i++) {
         if (parts[i].isEmpty) continue;

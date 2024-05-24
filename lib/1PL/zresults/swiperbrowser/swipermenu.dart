@@ -68,7 +68,7 @@ PopupMenuButton rowViewMenu(Map configRow, VoidCallback swiperSetstate) {
       PopupMenuItem(
         child: PopupMenuItem<String>(
             child: TextButton(
-          child: Text('${bl.curRow.rowkey.value}\n${bl.curRow.dateinsert}'),
+          child: Text('${bl.curRow.rowkey.value}\n\n${bl.curRow.dateinsert}'),
           onPressed: () async {
             await al.jump2sheetRow(
                 bl.curRow.rowkey.value, context, 'Jump to row');

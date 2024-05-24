@@ -46,7 +46,7 @@ class AttrIcons {
     return const Icon(FluentIcons.book_24_regular);
   }
 
-  Icon get parPageIcon {
+  Icon get parpageIcon {
     return const Icon(Icons.pages);
   }
 

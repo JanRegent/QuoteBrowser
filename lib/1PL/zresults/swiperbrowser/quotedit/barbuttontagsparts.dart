@@ -69,9 +69,9 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
   items.add(PopupMenuItem(
       child: ListTile(
     leading: IconButton(
-        icon: ALicons.attrIcons.parPageIcon,
+        icon: ALicons.attrIcons.parpageIcon,
         onPressed: () => setCellAL('parPage', context, swiperSetstate)),
-    title: Obx(() => Text(bl.curRow.parPage.value)),
+    title: Obx(() => Text(bl.curRow.parpage.value)),
     onTap: () {},
   )));
 

@@ -32,7 +32,7 @@ class DailyList {
     int sheetNameIx = cols.indexOf('sheetName');
     int sheetUrlIx = cols.indexOf('sheetUrl');
     int swiperIndexIx = cols.indexOf('swiperIndex');
-    int parPageParseIx = cols.indexOf('parPageParse');
+    int parpageParseIx = cols.indexOf('parPageParse');
     int remove1Ix = cols.indexOf('remove1');
     int remove2Ix = cols.indexOf('remove2');
     int authorIx = cols.indexOf('author');
@@ -54,7 +54,7 @@ class DailyList {
         ..sheetUrl = data[i][sheetUrlIx]
         ..swiperIndex = swiperIndex
         ..author = data[i][authorIx].toString().trim()
-        ..parPageParse = data[i][parPageParseIx].toString().trim()
+        ..parpageParse = data[i][parpageParseIx].toString().trim()
         ..remove1 = data[i][remove1Ix].toString().trim()
         ..remove2 = data[i][remove2Ix].toString().trim());
 
@@ -70,7 +70,7 @@ class DailyListRow {
   String sheetUrl = '';
   String swiperIndex = '2';
   String author = '';
-  String parPageParse = '';
+  String parpageParse = '';
   String remove1 = '';
   String remove2 = '';
   String rowkey = '';

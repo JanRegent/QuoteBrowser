@@ -22,7 +22,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
 
   TextEditingController quoteContr = TextEditingController(text: '');
 
-  TextEditingController parPageContr = TextEditingController(text: '');
+  TextEditingController parpageContr = TextEditingController(text: '');
 
   String? sheetName;
   DailyListRow currRow = DailyListRow();
@@ -60,7 +60,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
       onChanged: (String? value) {
         sheetName = value;
         currRow = bl.currentSS.dailyList.getBySheetName(sheetName!)!;
-        parPageExp.value = currRow.parPageParse;
+        parpageExp.value = currRow.parpageParse;
         setState(() {});
       },
       buttonStyleData: const ButtonStyleData(
@@ -134,7 +134,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
         text = text.replaceAll(currRow.remove2, '').trim();
         quoteContr.text = text;
 
-        parPagesParse();
+        parpagesParse();
       },
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 30),
@@ -153,13 +153,13 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
   }
 
   //--------------------------------------------------------------parse
-  TextField parPageText() {
+  TextField parpageText() {
     return TextField(
       minLines: 3,
       maxLines: 3,
-      controller: parPageContr,
+      controller: parpageContr,
       decoration: InputDecoration(
-        hintText: 'parPage?',
+        hintText: 'parpage?',
         hintStyle: const TextStyle(
           height: 2.8,
         ),
@@ -169,25 +169,25 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
     );
   }
 
-  RxString parPageExp = ''.obs;
+  RxString parpageExp = ''.obs;
 
-  ListTile parPageTile() {
+  ListTile parpageTile() {
     return ListTile(
-      leading: Obx(() => Text(parPageExp.value)),
-      title: parPageText(),
+      leading: Obx(() => Text(parpageExp.value)),
+      title: parpageText(),
     );
   }
 
-  void parPagesParse() {
-    if (currRow.parPageParse.isEmpty) return;
-    List<String> pars = currRow.parPageParse.split('^');
+  void parpagesParse() {
+    if (currRow.parpageParse.isEmpty) return;
+    List<String> pars = currRow.parpageParse.split('^');
     if (!quoteContr.text.contains(pars[0].trim())) return;
     int start = quoteContr.text.indexOf(pars[0].trim());
     String qtemp = quoteContr.text.substring(start);
     try {
-      parPageContr.text = qtemp.substring(0, qtemp.indexOf(pars[1].trim()));
+      parpageContr.text = qtemp.substring(0, qtemp.indexOf(pars[1].trim()));
     } catch (_) {
-      parPageContr.text = '';
+      parpageContr.text = '';
     }
   }
 
@@ -205,7 +205,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
         }
         saving.value = 'saving to gdrive';
         saving.value = await dl.gservice23.appendQuote(currRow.sheetName,
-            quoteContr.text, parPageContr.text, currRow.author);
+            quoteContr.text, parpageContr.text, currRow.author);
 
         if (saving.value.length < 5) clearCtrls();
       },
@@ -214,7 +214,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
 
   void clearCtrls() {
     quoteContr.text = '';
-    parPageContr.text = '';
+    parpageContr.text = '';
   }
 
   RxString saving = ''.obs;
@@ -243,7 +243,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
         ],
       )),
       body: ListView(
-        children: [sheetAuthorRow(), quote(), parPageTile(), buttRow()],
+        children: [sheetAuthorRow(), quote(), parpageTile(), buttRow()],
       ),
     );
     //Row(children: [todayNews(false), todayNews(true)])

@@ -19,9 +19,9 @@ void setCellAL(String attribName, BuildContext context,
       bl.curRow.setCellBL('book', bl.curRow.book.value);
       break;
     case 'parPage':
-      bl.curRow.parPage.value;
-      bl.curRow.parPage.value += ' ${bl.curRow.selectedText.value}';
-      bl.curRow.setCellBL(attribName, bl.curRow.parPage.value);
+      bl.curRow.parpage.value;
+      bl.curRow.parpage.value += ' ${bl.curRow.selectedText.value}';
+      bl.curRow.setCellBL(attribName, bl.curRow.parpage.value);
       break;
     case 'vydal':
       bl.curRow.setCellBL(attribName, bl.curRow.selectedText.value);
@@ -41,14 +41,14 @@ void setCellAL(String attribName, BuildContext context,
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
       if (bl.curRow.selectedText.value.length <= 10) {
-        warningDialog('yellowPart length <= 10', context);
+        warningDialog('yellowpart length <= 10', context);
         break;
       }
 
-      bl.curRow.yellowParts.value += '__|__\n${bl.curRow.selectedText.value}';
+      bl.curRow.yellowparts.value += '__|__\n${bl.curRow.selectedText.value}';
 
       bl.tagsParts.pureYellowparts();
-      bl.curRow.setCellBL(attribName, bl.curRow.yellowParts.value);
+      bl.curRow.setCellBL(attribName, bl.curRow.yellowparts.value);
       break;
     case 'original':
       bl.curRow.setCellBL(attribName, bl.curRow.original.value);
@@ -67,14 +67,6 @@ void setCellAL(String attribName, BuildContext context,
 int regpatternMatchMapsIndex = 0;
 String coloredText = '';
 String editControlerInit() {
-  // List<String> parts = bl.curRow.yellowParts.value.split('__|__\n');
-  // for (var i = 0; i < parts.length; i++) {
-  //   Map<String, TextStyle> map = {
-  //     parts[i]: const TextStyle(backgroundColor: Colors.yellow)
-  //   };
-  //   matches.add(map);
-  // }
-
   String tags = bl.curRow.tags.value.replaceAll('#', '|');
   for (var i = 0; i < tags.length; i++) {
     coloredText = coloredText.replaceAll(tags[i], '*_/${tags[i]}*_/');

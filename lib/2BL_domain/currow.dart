@@ -51,7 +51,7 @@ class CurRow {
   //-----------------------attribs
   RxString author = ''.obs;
   RxString book = ''.obs;
-  RxString parPage = ''.obs;
+  RxString parpage = ''.obs;
   RxString tags = ''.obs;
   RxString stars = ''.obs;
   RxString fav = ''.obs;
@@ -67,7 +67,7 @@ class CurRow {
   //----------------------optional user fields
   RxString publisher = ''.obs;
   RxString folder = ''.obs;
-  RxString yellowParts = ''.obs;
+  RxString yellowparts = ''.obs;
 
   List<String> optionalColumNames = [];
   RxList<RxString> optionalvalues = RxList<RxString>();
@@ -79,17 +79,15 @@ class CurRow {
     //--------------------------ids
     bl.curRow.rowkey.value = row['rowkey'] ?? '';
 
-    bl.curRow.sheetName.value = row['sheetName'] ?? '';
-
+    bl.curRow.sheetName.value = row['sheetname'] ?? '';
     bl.curRow.quote.value = row['quote'] ?? '';
     quoteEditController.text = bl.curRow.quote.value;
-    bl.curRow.yellowParts.value = row['yellowParts'] ?? '';
-
+    bl.curRow.yellowparts.value = row['yellowparts'] ?? '';
     bl.curRow.author.value = row['author'] ?? '';
 
     bl.curRow.book.value = row['book'] ?? '';
 
-    bl.curRow.parPage.value = row['parpage'] ?? '';
+    bl.curRow.parpage.value = row['parpage'] ?? '';
     bl.curRow.tags.value = row['tags'] ?? '';
     bl.curRow.stars.value = row['stars'] ?? '';
     bl.curRow.fav.value = row['favorite'] ?? '';

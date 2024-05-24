@@ -89,8 +89,8 @@ void clearField(String attribName) async {
       bl.curRow.setCellBL('book', bl.curRow.book.value);
       break;
     case 'parPage':
-      bl.curRow.parPage.value = '';
-      bl.curRow.setCellBL('parPage', bl.curRow.parPage.value);
+      bl.curRow.parpage.value = '';
+      bl.curRow.setCellBL('parPage', bl.curRow.parpage.value);
       break;
     case 'vydal':
       bl.curRow.setCellBL('vydal', '');

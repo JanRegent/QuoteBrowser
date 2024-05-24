@@ -82,7 +82,7 @@ class _PreviewPageState extends State<PreviewPage> {
       children: [
         Obx(() => Text(bl.curRow.author.value)),
         const Text(' / '),
-        Obx(() => Text('${bl.curRow.book.value}\n${bl.curRow.parPage.value}')),
+        Obx(() => Text('${bl.curRow.book.value}\n${bl.curRow.parpage.value}')),
         const Spacer(),
         tagPartsSwitch()
       ],
@@ -111,7 +111,7 @@ class _PreviewPageState extends State<PreviewPage> {
         fontWeight: FontWeight.bold);
 
     if (tagAllPartsIndex == 1) {
-      List<String> parts = bl.curRow.yellowParts.value.split('__|__');
+      List<String> parts = bl.curRow.yellowparts.value.split('__|__');
 
       for (var i = 0; i < parts.length; i++) {
         if (parts[i].isEmpty) continue;

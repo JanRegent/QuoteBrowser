@@ -32,8 +32,8 @@ class _TagsYellowPageState extends State<TagsYellowPage> {
             bl.curRow.tags.value = items.join('#');
             bl.curRow.setCellBL('tags', bl.curRow.tags.value);
           } else {
-            bl.curRow.yellowParts.value = items.join('__|__\n');
-            bl.curRow.setCellBL('yellowParts', bl.curRow.yellowParts.value);
+            bl.curRow.yellowparts.value = items.join('__|__\n');
+            bl.curRow.setCellBL('yellowParts', bl.curRow.yellowparts.value);
           }
         },
         icon: const Icon(Icons.delete));
@@ -45,7 +45,7 @@ class _TagsYellowPageState extends State<TagsYellowPage> {
     if (widget.tagsYellow == 'tags') {
       items = bl.curRow.tags.value.split('#');
     } else {
-      items = bl.curRow.yellowParts.value.split('__|__\n');
+      items = bl.curRow.yellowparts.value.split('__|__\n');
     }
 
     for (int index = 0; index < items.length; index++) {

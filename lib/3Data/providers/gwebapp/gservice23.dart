@@ -121,7 +121,7 @@ class GService23 {
     bl.supRepo.setCellDL(rowkey, 'tags', tags);
 
     dl.gservice23.setCellDL(sheetName, 'yellowParts', data[1], rowkey);
-    bl.supRepo.setCellDL(rowkey, 'yellowParts', data[1]);
+    bl.supRepo.setCellDL(rowkey, 'yellowparts', data[1]);
 
     dl.gservice23.setCellDL(sheetName, 'quote', data[2], rowkey);
     bl.supRepo.setCellDL(rowkey, 'quote', data[2]);
@@ -253,7 +253,7 @@ class GService23 {
   }
 
   Future<String> appendQuote(
-      String sheetName, String quote, String parPage, String author) async {
+      String sheetName, String quote, String parpage, String author) async {
     // The below request is the same as above.
     try {
       // ignore: unused_local_variable
@@ -264,7 +264,7 @@ class GService23 {
           'sheetName': sheetName,
           'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName]!),
           'quote': quote,
-          'parPage': parPage,
+          'parPage': parpage,
           'author': author
         },
       );

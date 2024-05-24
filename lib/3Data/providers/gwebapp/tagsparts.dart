@@ -34,10 +34,10 @@ class TagsParts {
   }
 
   void pureYellowparts() {
-    List<String> ypList = bl.curRow.yellowParts.value.split('__|__');
+    List<String> ypList = bl.curRow.yellowparts.value.split('__|__');
     Set set = ypList.toSet();
     List<String> parts = blUti.toListString(set.toList());
 
-    bl.curRow.yellowParts.value = parts.join('__|__');
+    bl.curRow.yellowparts.value = parts.join('__|__');
   }
 }
