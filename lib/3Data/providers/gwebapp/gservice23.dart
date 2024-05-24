@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 
-import '../../../2BL_domain/repos/supabase/sheetrowshelper.dart';
 import '../../dl.dart';
 import 'backendurl.dart';
 
@@ -70,9 +69,7 @@ class GService23 {
 
     try {
       List data = response.data['data'];
-      List<String> cols = blUti.toListString(data[0]);
-      if (!cols.contains('quote')) return [];
-      return await data2rowmaps(sheetName, cols, data);
+      return data;
     } catch (e) {
       String mess = '''
       sheetName: $sheetName
@@ -81,85 +78,6 @@ class GService23 {
       bl.supRepo.log2sheetrows(mess);
       return [];
     }
-  }
-
-  Future<List> data2rowmaps(
-      String sheetName, List<String> cols, List data) async {
-    List listmap = [];
-    for (var i = 1; i < data.length; i++) {
-      SheetRows sheetRow = rowdyn2sheetRows(sheetName, cols, data[i]);
-      listmap.add(sheetRow.toMapSup(sheetName));
-    }
-
-    return listmap;
-  }
-
-  SheetRows rowdyn2sheetRows(String sheetName, List<String> cols, List rowdyn) {
-    List<String> row = blUti.toListString(rowdyn);
-
-    String fileUrlSet(String value) {
-      if (value.isEmpty) return value;
-      if (!value.startsWith('fb')) {
-        if (!value.startsWith('http')) {
-          value = 'https://docs.google.com/document/d/$value/view';
-        }
-      }
-      return value;
-    }
-
-    String folderUrlSet(String value) {
-      try {
-        if (value.isEmpty) value = row[cols.indexOf('folderUrl')];
-      } catch (_) {}
-
-      if (value.isEmpty) return value;
-      if (!value.startsWith('http')) {
-        value = 'https://drive.google.com/drive/u/0/folders/$value';
-      }
-      return value;
-    }
-
-    String valueGet(String columnName, List<String> row) {
-      int fieldIndex = cols.indexOf(columnName);
-      if (fieldIndex == -1) return '';
-      try {
-        String value = row[fieldIndex];
-        if (columnName == 'fileUrl') return fileUrlSet(value);
-        if (columnName == 'docUrl') return fileUrlSet(value);
-        if (columnName == 'folder') return folderUrlSet(value);
-        return value;
-      } catch (_) {
-        return '';
-      }
-    }
-
-    SheetRows sheetRow = SheetRows();
-    sheetRow.rowkey = valueGet('rowkey', row);
-    try {
-      sheetRow.sheetName = sheetName;
-    } catch (_) {}
-    sheetRow.quote = valueGet('quote', row);
-    sheetRow.author = valueGet('author', row);
-    sheetRow.book = valueGet('book', row);
-    sheetRow.parPage = valueGet('parPage', row).trim();
-    sheetRow.tags = valueGet('tags', row);
-    sheetRow.yellowParts = valueGet('yellowParts', row);
-    sheetRow.stars = valueGet('stars', row);
-    sheetRow.favorite = valueGet('favorite', row);
-    sheetRow.dateinsert = valueGet('dateinsert', row);
-    sheetRow.sourceUrl = valueGet('sourceUrl', row);
-
-    if (cols.contains('fileUrl')) {
-      sheetRow.fileUrl = valueGet('fileUrl', row);
-    } else {
-      sheetRow.fileUrl = valueGet('docUrl', row);
-    }
-    sheetRow.original = valueGet('original', row);
-    sheetRow.vydal = valueGet('vydal', row);
-    sheetRow.folderUrl = valueGet('folder', row);
-    sheetRow.title = valueGet('title', row);
-
-    return sheetRow;
   }
 
   //-------------------------------------------------------------------tags

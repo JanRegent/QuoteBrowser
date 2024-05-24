@@ -5,7 +5,6 @@ import '../1PL/pages/2books/bookslist.dart';
 import '../3Data/dl.dart';
 import 'bl.dart';
 import 'repos/dailylist.dart';
-import 'repos/supabase/sheetrowshelper.dart';
 
 TextEditingController quoteEditController = TextEditingController();
 
@@ -76,36 +75,35 @@ class CurRow {
   //--------------------------------------------------------get
 
   Future getRow(String rowkey) async {
-    SheetRows sheetRow =
-        SheetRows().fromMap(await bl.supRepo.rowkeySelect(rowkey));
+    var row = await bl.supRepo.rowkeySelect(rowkey);
     //--------------------------ids
-    bl.curRow.rowkey.value = sheetRow.rowkey;
+    bl.curRow.rowkey.value = row['rowkey'] ?? '';
 
-    bl.curRow.sheetName.value = sheetRow.sheetName;
+    bl.curRow.sheetName.value = row['sheetName'] ?? '';
 
-    bl.curRow.quote.value = sheetRow.quote;
+    bl.curRow.quote.value = row['quote'] ?? '';
     quoteEditController.text = bl.curRow.quote.value;
-    bl.curRow.yellowParts.value = sheetRow.yellowParts;
+    bl.curRow.yellowParts.value = row['yellowParts'] ?? '';
 
-    bl.curRow.author.value = sheetRow.author;
+    bl.curRow.author.value = row['author'] ?? '';
 
-    bl.curRow.book.value = sheetRow.book;
+    bl.curRow.book.value = row['book'] ?? '';
 
-    bl.curRow.parPage.value = sheetRow.parPage;
-    bl.curRow.tags.value = sheetRow.tags;
-    bl.curRow.stars.value = sheetRow.stars;
-    bl.curRow.fav.value = sheetRow.favorite;
+    bl.curRow.parPage.value = row['parpage'] ?? '';
+    bl.curRow.tags.value = row['tags'] ?? '';
+    bl.curRow.stars.value = row['stars'] ?? '';
+    bl.curRow.fav.value = row['favorite'] ?? '';
 
-    bl.curRow.dateinsert = sheetRow.dateinsert;
+    bl.curRow.dateinsert = row['dateinsert'] ?? '';
 
-    bl.curRow.sourceUrl.value = sheetRow.sourceUrl;
+    bl.curRow.sourceUrl.value = row['sourceUrl'] ?? '';
 
-    bl.curRow.original.value = sheetRow.original;
+    bl.curRow.original.value = row['original'] ?? '';
 
-    bl.curRow.publisher.value = sheetRow.vydal;
-    bl.curRow.fileUrl.value = sheetRow.fileUrl;
+    bl.curRow.publisher.value = row['vydal'] ?? '';
+    bl.curRow.fileUrl.value = row['fileUrl'] ?? '';
 
-    bl.curRow.folder.value = sheetRow.folderUrl;
+    bl.curRow.folder.value = row['folderUrl'] ?? '';
     bl.tagsParts.pureTags();
 
     void optionalValuesSet() {
