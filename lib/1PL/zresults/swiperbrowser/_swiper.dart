@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/currow.dart';
 
-import '../../../2BL_domain/usecases/keys4swiper/emptyresults.dart';
+import '../../widgets/alib/alib.dart';
 import '_swipernavigabuttsquotedit.dart';
 
 class CardSwiper extends StatefulWidget {
@@ -67,4 +67,28 @@ class _CardSwiperState extends State<CardSwiper> {
       return emptyResultListview('Filter is empty', context);
     }
   }
+}
+
+({String searchText, String sheetGroup, String sheetName}) emptyResult =
+    (searchText: '', sheetGroup: '', sheetName: '');
+
+ListView emptyResultListview(String title, BuildContext context) {
+  return ListView(
+    children: [
+      Row(children: [al.iconBack(context)]),
+      Text(title),
+      ListTile(
+        leading: const Text('searchText'),
+        title: Text(emptyResult.searchText),
+      ),
+      ListTile(
+        leading: const Text('sheetsGroup'),
+        title: Text(emptyResult.sheetGroup),
+      ),
+      ListTile(
+        leading: const Text('sheetName'),
+        title: Text(emptyResult.sheetName),
+      )
+    ],
+  );
 }

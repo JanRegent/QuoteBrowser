@@ -15,8 +15,6 @@ import 'repos/supabase/w5filtersrepo.dart';
 import 'repos/backuprepos/koyebrepo.dart';
 import 'repos/backuprepos/neonrepo.dart';
 
-import 'usecases/keys4swiper/_preparekeys.dart';
-
 Bl bl = Bl();
 
 class Bl {
@@ -29,8 +27,6 @@ class Bl {
 
   CurrentSS currentSS = CurrentSS();
   CurRow curRow = CurRow();
-
-  PrepareKeys prepareKeys = PrepareKeys();
 
   SupabaseRepo supRepo = SupabaseRepo();
   WFiltersRepo wfiltersRepo = WFiltersRepo();

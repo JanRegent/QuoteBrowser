@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../../../2BL_domain/bl.dart';
 import '../../../widgets/alib/alib.dart';
 
-import '../../swiperbrowser/_swiper.dart';
 import 'plutogrid/resultsgrid.dart';
 
 class QResultBuilder extends StatefulWidget {
@@ -56,29 +55,6 @@ class _QResultBuilderState extends State<QResultBuilder> {
         side: const BorderSide(width: 2, color: Colors.black),
         borderRadius: BorderRadius.circular(10),
       ),
-    );
-  }
-
-  Future searchSheetNamesWord5Swip(String filterColumnName, String word1,
-      String word2, String word3, String word4, String word5) async {
-    bl.homeTitle.value = '$word1 $word2 $word3 $word4 $word5 ';
-
-    int rowsCount = await bl.prepareKeys.byWord
-        .columnWord5(filterColumnName, word1, word2, word3, word4, word5);
-    bl.homeTitle.value = '';
-    if (rowsCount == 0) {
-      // ignore: use_build_context_synchronously
-      al.messageInfo(context, 'Nothing found for $word1', '', 8);
-      return;
-    }
-
-    bl.currentSS.swiperIndexIncrement = false;
-    String filterName = '$word1 $word2 $word3 $word4 $word5 ';
-    // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => CardSwiper(filterName, '', const {})),
     );
   }
 

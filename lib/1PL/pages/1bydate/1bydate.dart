@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:quotebrowser/1PL/widgets/alib/alicons.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/repos/sharedprefs.dart';
+
 import '../../widgets/alib/alib.dart';
 
 import '../../controllers/selectvalue.dart';
@@ -21,16 +21,31 @@ class ByDatePage extends StatefulWidget {
 }
 
 class _ByDatePageState extends State<ByDatePage> {
+  Map wFilterMapGet() {
+    Map wfilterMap = {
+      'filtertype': 'dateinsert',
+      'w1': searchDate,
+      'w2': '',
+      'w3': '',
+      'w4': '',
+      'w5': '',
+      'author': ''
+    };
+    return wfilterMap;
+  }
+
+  String searchDate = '';
+
   ElevatedButton lastdaySelection() {
     return ElevatedButton(
       child: const Icon(Icons.date_range),
       onPressed: () async {
-        String searchDate = await dateSelect(context);
+        searchDate = await dateSelect(context);
         if (searchDate.isEmpty) return;
         // ignore: use_build_context_synchronously
-        await searchSheetNamesWord5Swip(
-            'dateinsert', searchDate, '', '', '', '');
-        filterRows = SharedPrefs.getKeysAll();
+        await searchDateDo(searchDate);
+        bl.wfiltersRepo.insert(wFilterMapGet());
+
         setState(() {});
       },
     );
@@ -47,18 +62,12 @@ class _ByDatePageState extends State<ByDatePage> {
     return 'ok';
   }
 
-  Future searchSheetNamesWord5Swip(String filterColumnName, String word1,
-      String word2, String word3, String word4, String word5) async {
-    bl.homeTitle.value = '$word1 $word2 $word3 $word4 $word5 ';
-    String filterName = '$word1 $word2 $word3 $word4 $word5 ';
-    int rowsCount = await bl.prepareKeys.byWord
-        .columnWord5(filterColumnName, word1, word2, word3, word4, word5);
+  Future searchDateDo(String searchDate) async {
+    bl.homeTitle.value = searchDate;
+    String filterName = searchDate;
+    bl.currentSS.keys = await bl.supRepo.readSup.rowkeysDateinsert(searchDate);
+
     bl.homeTitle.value = '';
-    if (rowsCount == 0) {
-      // ignore: use_build_context_synchronously
-      al.messageInfo(context, 'Nothing found for $word1', '', 8);
-      return;
-    }
 
     bl.currentSS.swiperIndexIncrement = false;
     // ignore: use_build_context_synchronously
@@ -111,13 +120,13 @@ class _ByDatePageState extends State<ByDatePage> {
                 title: Text(filterTitle(filterRows[index])),
                 onTap: () async {
                   String searchDate = filterRows[index]['w1'];
-                  await searchSheetNamesWord5Swip(
-                      'dateinsert', searchDate, '', '', '', '');
+                  await searchDateDo(searchDate);
                 },
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    bl.wfiltersRepo.deleteWFilter(filterRows[index]['id']);
+                  onPressed: () async {
+                    await bl.wfiltersRepo
+                        .deleteWFilter(filterRows[index]['id']);
                     setState(() {});
                   },
                 ),

@@ -26,6 +26,21 @@ class ReadSup {
     return cols;
   }
 
+  Future<List<String>> rowkeysDateinsert(String dateinsert) async {
+    var rowkeysMap = await supabase
+        .from('sheetrows')
+        .select('rowkey')
+        .eq('dateinsert', '$dateinsert.')
+        .order('author');
+
+    List<String> rowkeys = [];
+    for (var i = 0; i < rowkeysMap.length; i++) {
+      rowkeys.add(rowkeysMap[i]['rowkey']);
+    }
+
+    return rowkeys;
+  }
+
   Future<String> rowkeysToday() async {
     var rowkeysTodays = await supabase
         .from('sheetrows')

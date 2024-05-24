@@ -121,14 +121,7 @@ class Words5PageState extends State<Words5Page> {
     );
   }
 
-  Future w5querySwipper() async {
-    String word = txCont[1].text;
-    if (word.isEmpty) {
-      al.messageInfo(context, 'Get by word', 'write somme word', 5);
-      return;
-    }
-    bl.homeTitle.value = 'Search w5 ';
-
+  Map wFilterMapGet() {
     Map wfilterMap = {
       'filtertype': 'w5',
       'w1': txCont[1].text,
@@ -138,10 +131,21 @@ class Words5PageState extends State<Words5Page> {
       'w5': txCont[5].text,
       'author': selectedValueAuthor
     };
+    return wfilterMap;
+  }
+
+  Future w5querySwipper() async {
+    String word = txCont[1].text;
+    if (word.isEmpty) {
+      al.messageInfo(context, 'Get by word', 'write somme word', 5);
+      return;
+    }
+    bl.homeTitle.value = 'Search w5 ';
+
     bl.currentSS.keys =
-        await bl.supRepo.readSup.readW5.w5queryTextSearchKeys(wfilterMap);
-    bl.wfiltersRepo.insert(wfilterMap);
-    String info = wfilterMap.toString();
+        await bl.supRepo.readSup.readW5.w5queryTextSearchKeys(wFilterMapGet());
+
+    String info = wFilterMapGet().toString();
     bl.homeTitle.value = '';
     // ignore: use_build_context_synchronously
     Navigator.push(
@@ -158,17 +162,8 @@ class Words5PageState extends State<Words5Page> {
     }
     bl.homeTitle.value = 'Search w5 ';
 
-    Map filterMap = {
-      'filtertype': 'w5',
-      'w1': txCont[1].text,
-      'w2': txCont[2].text,
-      'w3': txCont[3].text,
-      'w4': txCont[4].text,
-      'w5': txCont[5].text,
-      'author': selectedValueAuthor
-    };
     List rows =
-        await bl.supRepo.readSup.readW5.w5queryTextSearchRows(filterMap);
+        await bl.supRepo.readSup.readW5.w5queryTextSearchRows(wFilterMapGet());
     bl.homeTitle.value = '';
     await showInGrid(rows);
   }
@@ -184,6 +179,15 @@ class Words5PageState extends State<Words5Page> {
     return IconButton(
         onPressed: () async => await w5querySwipper(),
         icon: const Icon(Icons.search));
+  }
+
+  IconButton filterSave() {
+    return IconButton(
+        onPressed: () async {
+          bl.wfiltersRepo.insert(wFilterMapGet());
+          setState(() {});
+        },
+        icon: const Icon(Icons.save));
   }
 
   IconButton search52grid() {
@@ -205,7 +209,13 @@ class Words5PageState extends State<Words5Page> {
         tagsTextfield(4),
         tagsTextfield(5),
         authorListTile(context),
-        Row(children: [search52grid(), const Spacer(), search52swip()])
+        Row(children: [
+          search52grid(),
+          const Spacer(),
+          filterSave(),
+          const Spacer(),
+          search52swip()
+        ])
       ],
     );
   }
