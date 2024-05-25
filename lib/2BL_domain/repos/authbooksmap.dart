@@ -1,3 +1,5 @@
+import 'package:dartx/dartx.dart';
+import 'package:flutter/foundation.dart';
 import 'package:quotebrowser/2BL_domain/bluti.dart';
 import 'package:quotebrowser/3Data/dl.dart';
 
@@ -14,9 +16,7 @@ class AuthorBooksMap {
     cols = blUti.toListString(data[0]);
     int authorIx = cols.indexOf('author');
     int bookIx = cols.indexOf('book');
-    // int cleanStringIx = cols.indexOf('cleanString');
-    // int pageParseIx = cols.indexOf('pageParse');
-    //rows.clear();
+
     for (var i = 1; i < data.length; i++) {
       String author = data[i][authorIx].toString().trim();
       if (author.isEmpty) continue;
@@ -29,5 +29,20 @@ class AuthorBooksMap {
         authBooksMap[author] = book;
       }
     }
+    authorsInit();
+    debugPrint('authors: ${authors.length}');
+  }
+
+  List<String> authors = [];
+  void authorsInit() {
+    Set authorsSet = Set.from(authBooksMap.keys.toList().sorted());
+    authors = blUti.toListString(authorsSet.toList().sorted());
+    authors.insert(0, '');
+  }
+
+  List<String> authorBooksGet(String author) {
+    Set booksSet = Set.from(authBooksMap[author].toString().split('__|__'));
+
+    return blUti.toListString(booksSet.toList().sorted());
   }
 }

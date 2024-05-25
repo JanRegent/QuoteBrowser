@@ -2,12 +2,12 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../2BL_domain/bl.dart';
-import '../../../widgets/alib/alib.dart';
-import 'editcontent.dart';
+import '../../../../../2BL_domain/bl.dart';
+import '../../../../widgets/alib/alib.dart';
+import '../editcontent.dart';
 import 'othersfields.dart';
 import 'quotepopup.dart';
-import 'originalview.dart';
+import '../originalview.dart';
 
 List<PopupMenuItem> buttonRowMenu(BuildContext context) {
   return [

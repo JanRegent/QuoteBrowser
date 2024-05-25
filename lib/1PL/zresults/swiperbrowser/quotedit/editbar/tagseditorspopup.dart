@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../2BL_domain/bl.dart';
-import '../../../../2BL_domain/currow.dart';
-import '../../../controllers/selectvalue.dart';
-import '../../../widgets/alib/alib.dart';
-import '../../../widgets/alib/alicons.dart';
-import 'tagsyellowlist.dart';
+import '../../../../../2BL_domain/bl.dart';
+import '../../../../../2BL_domain/currow.dart';
+import '../../../../controllers/selectvalue.dart';
+import '../../../../widgets/alib/alib.dart';
+import '../../../../widgets/alib/alicons.dart';
+import '../tagsyellowlist.dart';
 import 'stars.dart';
 import 'barpopup.dart';
-import 'setcell.dart';
+import '../setcell.dart';
 
 void selectText(BuildContext context) {
   try {
@@ -152,7 +152,7 @@ PopupMenuButton tagsYellowPopup(BuildContext context,
   );
 }
 
-Container tagsPartsButtRow(BuildContext context, VoidCallback swiperSetstate) {
+Container editorspopup(BuildContext context, VoidCallback swiperSetstate) {
   return Container(
     margin: const EdgeInsets.all(15.0),
     padding: const EdgeInsets.all(3.0),

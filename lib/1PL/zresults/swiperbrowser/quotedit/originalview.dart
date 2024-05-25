@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../2BL_domain/bl.dart';
-import 'quotepopup.dart';
+import 'editbar/quotepopup.dart';
 
 // ignore: must_be_immutable
 class OriginalView extends StatefulWidget {

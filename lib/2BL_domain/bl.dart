@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:quotebrowser/2BL_domain/repos/supabase/suprepo.dart';
@@ -8,8 +7,6 @@ import 'package:quotebrowser/2BL_domain/repos/supabase/suprepo.dart';
 import '../3Data/providers/gwebapp/tagsparts.dart';
 import 'currow.dart';
 import 'repos/authbooksmap.dart';
-
-import 'bluti.dart';
 
 import 'repos/supabase/w5filtersrepo.dart';
 import 'repos/backuprepos/koyebrepo.dart';
@@ -60,13 +57,9 @@ class Bl {
     devModeSet();
   }
 
-  List<String> authors = [];
-  Set authorsSet = {};
   AuthorBooksMap authorBooksMap = AuthorBooksMap();
   void updateSlowly() async {
-    authors = ['']; //for authost no selection
-    authors.addAll(blUti.toListString(authorsSet.toList().sorted()));
-    authorBooksMap.getData();
+    await authorBooksMap.getData();
   }
 
   void devModeSet() {

@@ -5,7 +5,7 @@ import '../../../../2BL_domain/bl.dart';
 import '../../../../2BL_domain/currow.dart';
 
 import '../prewiew/previewpage.dart';
-import 'barbuttontagsparts.dart';
+import 'editbar/tagseditorspopup.dart';
 
 // ignore: must_be_immutable
 class QuoteEdit extends StatefulWidget {
@@ -66,7 +66,7 @@ class _QuoteEditState extends State<QuoteEdit> {
           backgroundColor: bl.curRow.setCellColor,
           leading:
               tagsYellowPopup(context, quoteSetstate, widget.swiperSetstate),
-          title: tagsPartsButtRow(context, widget.swiperSetstate),
+          title: editorspopup(context, widget.swiperSetstate),
           actions: [previewPageSet()],
         ),
         body: SingleChildScrollView(child: quoteTextField()));

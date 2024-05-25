@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:quotebrowser/1PL/widgets/alib/alicons.dart';
 
 import '../../../2BL_domain/bl.dart';
@@ -49,7 +50,7 @@ class Words5PageState extends State<Words5Page> {
     }
   }
 
-  //------------------------------------------------------------author
+  //------------------------------------------------------------/authors
   String? selectedValueAuthor = '';
 
   ListTile authorListTile(BuildContext context) {
@@ -76,7 +77,7 @@ class Words5PageState extends State<Words5Page> {
           color: Theme.of(context).hintColor,
         ),
       ),
-      items: bl.authors
+      items: bl.authorBooksMap.authors
           .map((String item) => DropdownMenuItem<String>(
                 value: item,
                 child: Text(
@@ -89,9 +90,10 @@ class Words5PageState extends State<Words5Page> {
           .toList(),
       value: selectedValueAuthor,
       onChanged: (String? value) {
-        setState(() {
-          selectedValueAuthor = value;
-        });
+        selectedValueAuthor = value;
+        books = bl.authorBooksMap.authorBooksGet(selectedValueAuthor!);
+        books.insert(0, '');
+        setState(() {});
       },
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -104,6 +106,155 @@ class Words5PageState extends State<Words5Page> {
     );
   }
 
+  //------------------------------------------------------------/authors
+  String? selectedValueBook = '';
+  List<String> books = [''];
+  ListTile bookListTile(BuildContext context) {
+    return ListTile(
+      leading: IconButton(
+        onPressed: () {
+          selectedValueBook = '';
+          setState(() {});
+        },
+        icon: const Icon(Icons.clear),
+      ),
+      title: bookDropdownButton2(context),
+      tileColor: const Color.fromARGB(255, 135, 206, 239),
+    );
+  }
+
+  DropdownButton2 bookDropdownButton2(BuildContext context) {
+    return DropdownButton2<String>(
+      isExpanded: true,
+      hint: Text(
+        'Book?',
+        style: TextStyle(
+          fontSize: 14,
+          color: Theme.of(context).hintColor,
+        ),
+      ),
+      items: books
+          .map((String item) => DropdownMenuItem<String>(
+                value: item,
+                child: Text(
+                  item,
+                  style: const TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ))
+          .toList(),
+      value: selectedValueBook,
+      onChanged: (String? value) {
+        selectedValueBook = value;
+        setState(() {});
+      },
+      buttonStyleData: const ButtonStyleData(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        height: 40,
+        width: 140,
+      ),
+      menuItemStyleData: const MenuItemStyleData(
+        height: 40,
+      ),
+    );
+  }
+
+  //-------------------------------------------------------------stars/favorite
+  String? selectedValueStars = '';
+  ListTile starsListTile(BuildContext context) {
+    return ListTile(
+      leading: IconButton(
+        onPressed: () {
+          setState(() {
+            starrsValue = 0;
+          });
+        },
+        icon: const Icon(Icons.clear),
+      ),
+      title: ratingStars(),
+    );
+  }
+
+  double starrsValue = 0;
+
+  Row ratingStars() {
+    return Row(
+      children: [
+        RatingStars(
+          value: starrsValue,
+          onValueChanged: (v) {
+            setState(() {
+              starrsValue = v;
+              //starsValueInsert();
+            });
+          },
+          starBuilder: (index, color) => Icon(
+            Icons.ac_unit_outlined,
+            color: color,
+          ),
+          starCount: 5,
+          starSize: 20,
+          valueLabelColor: const Color(0xff9b9b9b),
+          valueLabelTextStyle: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+              fontStyle: FontStyle.normal,
+              fontSize: 12.0),
+          valueLabelRadius: 10,
+          maxValue: 5,
+          starSpacing: 2,
+          maxValueVisibility: true,
+          valueLabelVisibility: false,
+          animationDuration: const Duration(milliseconds: 100),
+          valueLabelPadding:
+              const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+          valueLabelMargin: const EdgeInsets.only(right: 8),
+          starOffColor: const Color(0xffe7e8ea),
+          starColor: Colors.yellow,
+        ),
+      ],
+    );
+  }
+
+  String? selectedValueFav = '';
+  ListTile favListTile(BuildContext context) {
+    return ListTile(
+      leading: IconButton(
+        onPressed: () {
+          favValue = '';
+          setState(() {});
+        },
+        icon: const Icon(Icons.clear),
+      ),
+      title: Row(
+        children: [favButt()],
+      ),
+    );
+  }
+
+  String favValue = '';
+  Widget favButt() {
+    Icon favIcon = const Icon(Icons.favorite_outline);
+
+    if (favValue == 'f') {
+      favIcon = const Icon(Icons.favorite);
+    } else {
+      favIcon = const Icon(Icons.favorite_outline);
+    }
+    return IconButton(
+        icon: favIcon,
+        onPressed: () async {
+          if (favValue.isEmpty) {
+            favValue = 'f';
+          } else {
+            favValue = '';
+          }
+          setState(() {});
+        });
+  }
+
+  //--------------------------------------------------------
   bool loading = false;
   List<String> words = ['allscope', '', '', '', '', ''];
 
@@ -200,15 +351,17 @@ class Words5PageState extends State<Words5Page> {
   ListView bodyListview() {
     return ListView(
       children: [
-        const Divider(
-          color: Colors.blue,
-        ),
+        const Divider(color: Colors.blue, height: 10, thickness: 5),
         tagsTextfield(1),
         tagsTextfield(2),
         tagsTextfield(3),
         tagsTextfield(4),
         tagsTextfield(5),
         authorListTile(context),
+        bookListTile(context),
+        starsListTile(context),
+        favListTile(context),
+        const Divider(color: Colors.blue, height: 10, thickness: 5),
         Row(children: [
           search52grid(),
           const Spacer(),

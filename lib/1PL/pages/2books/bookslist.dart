@@ -1,8 +1,6 @@
 import 'package:quotebrowser/2BL_domain/bluti.dart';
 import 'package:quotebrowser/3Data/dl.dart';
 
-import '../../../2BL_domain/bl.dart';
-
 class BooksList {
   List<BookListRow> rows = [];
 
@@ -24,7 +22,6 @@ class BooksList {
       String bookName = data[i][bookNameIx].toString().trim();
       if (bookName.isEmpty) continue;
       String author = data[i][authorIx];
-      bl.authorsSet.add(author);
       rows.add(BookListRow()
         ..bookName = bookName
         ..author = author
