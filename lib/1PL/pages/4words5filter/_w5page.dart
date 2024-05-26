@@ -349,10 +349,30 @@ class Words5PageState extends State<Words5Page> {
   }
 
   //-----------------------------------------------------------body
+  double leftRatio = 0.25;
+  double rightRatio = 0.75;
+
   ListView bodyListview() {
     return ListView(
       children: [
-        const Divider(color: Colors.blue, height: 10, thickness: 5),
+        ListTile(
+            leading: TextButton(
+                onPressed: () {
+                  leftRatio = leftRatio - 0.25;
+                  if (leftRatio <= 0) leftRatio = 0.25;
+                  rightRatio = 1 - leftRatio;
+                  setState(() {});
+                },
+                child: const Text('<<')),
+            title: const Divider(color: Colors.blue, height: 10, thickness: 5),
+            trailing: TextButton(
+                onPressed: () {
+                  leftRatio = leftRatio + 0.25;
+                  if (leftRatio >= 1) leftRatio = 0.25;
+                  rightRatio = 1 - leftRatio;
+                  setState(() {});
+                },
+                child: const Text('>>'))),
         tagsTextfield(1),
         tagsTextfield(2),
         tagsTextfield(3),
@@ -374,12 +394,14 @@ class Words5PageState extends State<Words5Page> {
     );
   }
 
-  final int paneProportion = 30;
   bool hovered = false;
+  ResizableController resizableController = ResizableController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: ResizableContainer(
+      controller: resizableController,
       direction: Axis.horizontal,
       divider: ResizableDivider(
         color: hovered
@@ -392,12 +414,14 @@ class Words5PageState extends State<Words5Page> {
       ),
       children: [
         ResizableChild(
+          size: ResizableSize.ratio(leftRatio),
           child: ColoredBox(
             color: Theme.of(context).colorScheme.primaryContainer,
             child: bodyListview(),
           ),
         ),
         ResizableChild(
+          size: ResizableSize.ratio(rightRatio),
           child: ColoredBox(
             color: Theme.of(context).colorScheme.tertiaryContainer,
             child: W5ListviewPanel(txCont),
