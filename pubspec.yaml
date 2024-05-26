@@ -12,6 +12,7 @@ dependencies:
   #============================================================================AL
   ##----layout
   card_swiper: ^3.0.1 #https://pub.dev/packages/card_swiper
+  flutter_resizable_container: ^2.0.0 #https://pub.dev/packages/flutter_resizable_container
 
   searchable_listview: ^2.7.0 #https://pub.dev/packages/searchable_listview
   expandable: ^5.0.1 #https://pub.dev/packages/expandable

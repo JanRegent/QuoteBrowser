@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:quotebrowser/1PL/widgets/alib/alicons.dart';
 
 import '../../../2BL_domain/bl.dart';
@@ -374,28 +375,58 @@ class Words5PageState extends State<Words5Page> {
   }
 
   final int paneProportion = 30;
+  bool hovered = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: !loading
-            ? Flex(
-                direction: Axis.horizontal,
-                children: [
-                  Flexible(
-                    flex: 30,
-                    child: bodyListview(),
-                  ),
-                  Flexible(
-                    flex: 70,
-                    child: W5ListviewPanel(txCont),
-                  ),
-                ],
-              )
-            : const Row(
-                children: [
-                  CircularProgressIndicator(),
-                  Text('waiting results from cloud')
-                ],
-              ));
+        body: ResizableContainer(
+      direction: Axis.horizontal,
+      divider: ResizableDivider(
+        color: hovered
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.inversePrimary,
+        thickness: 2,
+        size: 14,
+        onHoverEnter: () => setState(() => hovered = true),
+        onHoverExit: () => setState(() => hovered = false),
+      ),
+      children: [
+        ResizableChild(
+          child: ColoredBox(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            child: bodyListview(),
+          ),
+        ),
+        ResizableChild(
+          child: ColoredBox(
+            color: Theme.of(context).colorScheme.tertiaryContainer,
+            child: W5ListviewPanel(txCont),
+          ),
+        ),
+      ],
+    )
+
+        // !loading
+        //     ? Flex(
+        //         direction: Axis.horizontal,
+        //         children: [
+        //           Flexible(
+        //             flex: 30,
+        //             child: bodyListview(),
+        //           ),
+        //           Flexible(
+        //             flex: 70,
+        //             child: W5ListviewPanel(txCont),
+        //           ),
+        //         ],
+        //       )
+        //     : const Row(
+        //         children: [
+        //           CircularProgressIndicator(),
+        //           Text('waiting results from cloud')
+        //         ],
+        //       )
+
+        );
   }
 }
