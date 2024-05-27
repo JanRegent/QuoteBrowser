@@ -2,7 +2,6 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../2BL_domain/bl.dart';
-import '../../../../2BL_domain/repos/supabase/w5filtersrepo.dart';
 
 class AuthorBooksUI {
   VoidCallback setStateW5;
@@ -12,7 +11,7 @@ class AuthorBooksUI {
     return ListTile(
         leading: IconButton(
           onPressed: () {
-            wfilterMap['author'] = '';
+            bl.wfiltersRepo.wfilterMap['author'] = '';
             setStateW5();
           },
           icon: const Icon(Icons.clear),
@@ -41,11 +40,12 @@ class AuthorBooksUI {
                 ),
               ))
           .toList(),
-      value: wfilterMap['author'],
+      value: bl.wfiltersRepo.wfilterMap['author'],
       onChanged: (String? value) {
-        wfilterMap['author'] = value;
-        wfilterMap['book'] = '';
-        books = bl.authorBooksMap.authorBooksGet(wfilterMap['author']!);
+        bl.wfiltersRepo.wfilterMap['author'] = value;
+        bl.wfiltersRepo.wfilterMap['book'] = '';
+        books = bl.authorBooksMap
+            .authorBooksGet(bl.wfiltersRepo.wfilterMap['author']!);
         books.insert(0, '');
         setStateW5();
       },
@@ -67,7 +67,7 @@ class AuthorBooksUI {
     return ListTile(
         leading: IconButton(
           onPressed: () {
-            wfilterMap['book'] = '';
+            bl.wfiltersRepo.wfilterMap['book'] = '';
             setStateW5();
           },
           icon: const Icon(Icons.clear),
@@ -96,9 +96,9 @@ class AuthorBooksUI {
                 ),
               ))
           .toList(),
-      value: wfilterMap['book'],
+      value: bl.wfiltersRepo.wfilterMap['book'],
       onChanged: (String? value) {
-        wfilterMap['book'] = value;
+        bl.wfiltersRepo.wfilterMap['book'] = value;
         setStateW5();
       },
       buttonStyleData: const ButtonStyleData(

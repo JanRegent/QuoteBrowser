@@ -29,7 +29,11 @@ class _RpanelWfilterLvState extends State<RpanelWfilterLv> {
     for (var key in row.keys) {
       if (row[key] == null) row[key] = '';
     }
-    return '${row['w1']} ${row['w2']} ${row['w3']} ${row['w4']} ${row['w5']}';
+    String titlerow =
+        '${row['w1']} ${row['w2']} ${row['w3']} ${row['w4']} ${row['w5']}';
+    titlerow +=
+        '\n${row['author']} ${row['book']} ${'*****'.substring(0, row['stars'])} ${row['starsany']} ${row['favorite']}';
+    return titlerow;
   }
 
   Future showInGrid(String filterKey) async {
@@ -45,14 +49,10 @@ class _RpanelWfilterLvState extends State<RpanelWfilterLv> {
 
   ListView filtersLv() {
     return ListView.builder(
-      itemCount: filterRows.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Card(
-          margin: const EdgeInsets.all(15),
-          child: Container(
-              color: Colors.orange[100 * (index % 12 + 1)],
-              height: 60,
-              alignment: Alignment.center,
+        itemCount: filterRows.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+              margin: const EdgeInsets.all(15),
               child: ListTile(
                 leading: IconButton(
                   icon: ALicons.viewIcons.gridView,
@@ -61,25 +61,25 @@ class _RpanelWfilterLvState extends State<RpanelWfilterLv> {
                     showInGrid(searchDate);
                   },
                 ),
-                title: Text(filterTitle(filterRows[index])),
+                title: Text(
+                  filterTitle(filterRows[index]),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 20),
+                ),
                 onTap: () async {
-                  widget.txCont[1].text = filterRows[index]['w1'];
-                  widget.txCont[2].text = filterRows[index]['w2'];
-                  widget.txCont[3].text = filterRows[index]['w3'];
-                  widget.txCont[4].text = filterRows[index]['w4'];
-                  widget.txCont[5].text = filterRows[index]['w5'];
+                  bl.wfiltersRepo.wfilterDbrow2wfilterMap(filterRows[index]);
+                  widget.setStateW5();
                 },
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: () {
                     bl.wfiltersRepo.deleteWFilter(filterRows[index]['id']);
-                    setState(() {});
+                    widget.setStateW5();
                   },
                 ),
-              )),
-        );
-      }, // lists don't need it
-    );
+              ));
+        });
   }
 
   @override

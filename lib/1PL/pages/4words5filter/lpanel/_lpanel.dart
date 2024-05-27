@@ -25,10 +25,10 @@ ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
     }
     bl.homeTitle.value = 'Search w5 ';
 
-    bl.currentSS.keys =
-        await bl.supRepo.readSup.readW5.w5queryTextSearchKeys(wfilterMap);
+    bl.currentSS.keys = await bl.supRepo.readSup.readW5
+        .w5queryTextSearchKeys(bl.wfiltersRepo.wfilterMap);
 
-    String info = wfilterMap.toString();
+    String info = bl.wfiltersRepo.wfilterMap.toString();
     bl.homeTitle.value = '';
     // ignore: use_build_context_synchronously
     Navigator.push(
@@ -52,8 +52,8 @@ ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
     }
     bl.homeTitle.value = 'Search w5 ';
 
-    List rows =
-        await bl.supRepo.readSup.readW5.w5queryTextSearchRows(wfilterMap);
+    List rows = await bl.supRepo.readSup.readW5
+        .w5queryTextSearchRows(bl.wfiltersRepo.wfilterMap);
     bl.homeTitle.value = '';
     await showInGrid(rows);
   }
@@ -67,7 +67,7 @@ ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
   IconButton filterSave() {
     return IconButton(
         onPressed: () async {
-          bl.wfiltersRepo.insert(wfilterMap);
+          bl.wfiltersRepo.insert(bl.wfiltersRepo.wfilterMap);
           setStateW5();
         },
         icon: const Icon(Icons.save));
@@ -80,9 +80,11 @@ ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
   }
 
   TextField wordTextfield(wordIndex) {
+    w5Cont[wordIndex].text = bl.wfiltersRepo.wfilterMap['w$wordIndex'];
+
     void searchClean(wordIndex) {
       {
-        wfilterMap['w$wordIndex'] = '';
+        bl.wfiltersRepo.wfilterMap['w$wordIndex'] = '';
         w5Cont[wordIndex].text = '';
         setStateW5();
       }
@@ -91,7 +93,7 @@ ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
     return TextField(
       controller: w5Cont[wordIndex],
       onChanged: (value) {
-        wfilterMap['w$wordIndex'] = value;
+        bl.wfiltersRepo.wfilterMap['w$wordIndex'] = value;
       },
       decoration: InputDecoration(
         hintText: 'Enter word $wordIndex',
@@ -108,7 +110,7 @@ ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
       ListTile(
           leading: IconButton(
             icon: const Icon(Icons.clear_all_rounded),
-            onPressed: () => wfilterMapClearAll(),
+            onPressed: () => bl.wfiltersRepo.wfilterMapClearAll(),
           ),
           trailing: TextButton(
               onPressed: () {

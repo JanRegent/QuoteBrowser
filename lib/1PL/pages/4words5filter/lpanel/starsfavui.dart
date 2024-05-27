@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
-import '../../../../2BL_domain/repos/supabase/w5filtersrepo.dart';
+import '../../../../2BL_domain/bl.dart';
 
 class StarsFavoriteUI {
   VoidCallback setStateW5;
@@ -11,7 +11,7 @@ class StarsFavoriteUI {
     return ListTile(
       leading: IconButton(
         onPressed: () {
-          wfilterMap['stars'] = 0.0;
+          bl.wfiltersRepo.wfilterMap['stars'] = 0.0;
           setStateW5();
         },
         icon: const Icon(Icons.clear),
@@ -24,9 +24,9 @@ class StarsFavoriteUI {
     return Row(
       children: [
         RatingStars(
-          value: wfilterMap['stars'],
+          value: bl.wfiltersRepo.wfilterMap['stars'],
           onValueChanged: (value) {
-            wfilterMap['stars'] = value;
+            bl.wfiltersRepo.wfilterMap['stars'] = value;
             setStateW5();
           },
           starBuilder: (index, color) => Icon(
@@ -61,7 +61,7 @@ class StarsFavoriteUI {
     return ListTile(
       leading: IconButton(
         onPressed: () {
-          wfilterMap['favorite'] = '';
+          bl.wfiltersRepo.wfilterMap['favorite'] = '';
           setStateW5();
         },
         icon: const Icon(Icons.clear),
@@ -75,7 +75,7 @@ class StarsFavoriteUI {
   Widget favButt() {
     Icon favIcon = const Icon(Icons.favorite_outline);
 
-    if (wfilterMap['favorite'] == 'f') {
+    if (bl.wfiltersRepo.wfilterMap['favorite'] == 'f') {
       favIcon = const Icon(Icons.favorite);
     } else {
       favIcon = const Icon(Icons.favorite_outline);
@@ -83,10 +83,10 @@ class StarsFavoriteUI {
     return IconButton(
         icon: favIcon,
         onPressed: () async {
-          if (wfilterMap['favorite'].isEmpty) {
-            wfilterMap['favorite'] = 'f';
+          if (bl.wfiltersRepo.wfilterMap['favorite'].isEmpty) {
+            bl.wfiltersRepo.wfilterMap['favorite'] = 'f';
           } else {
-            wfilterMap['favorite'] = '';
+            bl.wfiltersRepo.wfilterMap['favorite'] = '';
           }
           setStateW5();
         });

@@ -79,30 +79,47 @@ class WFiltersRepo {
       debugPrint(error.toString());
     }
   }
-}
 
 //******************************************************************BL */
 
-Map wfilterMap = {
-  'filtertype': 'w5',
-  'w1': '',
-  'w2': '',
-  'w3': '',
-  'w4': '',
-  'w5': '',
-  'author': '',
-  'book': '',
-  'stars': 0.0,
-  'starsany': '',
-  'favorite': '',
-};
+  Map wfilterMap = {
+    'filtertype': 'w5',
+    'w1': '',
+    'w2': '',
+    'w3': '',
+    'w4': '',
+    'w5': '',
+    'author': '',
+    'book': '',
+    'stars': 0.0,
+    'starsany': '',
+    'favorite': '',
+  };
 
-void wfilterMapClearAll() {
-  for (var key in wfilterMap.keys) {
-    wfilterMap[key] = '';
+  void wfilterMapClearAll() {
+    for (var key in wfilterMap.keys) {
+      wfilterMap[key] = '';
+    }
+    wfilterMap['stars'] = 0.0;
+    wfilterMap['filtertype'] = 'w5';
   }
-  wfilterMap['stars'] = 0.0;
-  wfilterMap['filtertype'] = 'w5';
+
+  void wfilterDbrow2wfilterMap(Map dbrow) {
+    wfilterMapClearAll();
+    for (var key in dbrow.keys) {
+      if (key == 'stars') {
+        try {
+          wfilterMap['stars'] = dbrow['stars'].toDouble();
+        } catch (_) {
+          wfilterMap['stars'] = 0.0;
+        }
+        continue;
+      }
+      if (key == 'book') continue;
+      if (key == 'author') continue;
+      wfilterMap[key] = dbrow[key];
+    }
+  }
 }
 
 List<TextEditingController> w5Cont = [
