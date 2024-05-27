@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
-import '../../../2BL_domain/repos/supabase/w5filtersrepo.dart';
+import '../../../../2BL_domain/repos/supabase/w5filtersrepo.dart';
 
 class StarsFavoriteUI {
   VoidCallback setStateW5;

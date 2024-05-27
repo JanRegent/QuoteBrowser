@@ -14,7 +14,7 @@ import '../1bydate/1bydate.dart';
 import '../../../0app/config/9appsettings.dart';
 import '../3tags/tagprefixsearch.dart';
 
-import '../4words5filter/w5top.dart';
+import '../4words5filter/words5page.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -133,7 +133,7 @@ class _HomeTabState extends State<HomeTab> {
               ByDatePage(),
               BooksAuthors(),
               TagPrefixSearch(),
-              Word5Tabs(),
+              Words5Page(),
               //ColumnWord5Page(),
             ],
           ),

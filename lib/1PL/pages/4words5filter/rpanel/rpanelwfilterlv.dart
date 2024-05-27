@@ -2,21 +2,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../2BL_domain/bl.dart';
-import '../../widgets/alib/alicons.dart';
-import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
+import '../../../../2BL_domain/bl.dart';
+import '../../../widgets/alib/alicons.dart';
+import '../../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 
 // ignore: must_be_immutable
-class W5ListviewPanel extends StatefulWidget {
+class RpanelWfilterLv extends StatefulWidget {
   List<TextEditingController> txCont;
   VoidCallback setStateW5;
-  W5ListviewPanel(this.txCont, this.setStateW5, {super.key});
+  RpanelWfilterLv(this.txCont, this.setStateW5, {super.key});
 
   @override
-  State<W5ListviewPanel> createState() => _W5ListviewPanelState();
+  State<RpanelWfilterLv> createState() => _RpanelWfilterLvState();
 }
 
-class _W5ListviewPanelState extends State<W5ListviewPanel> {
+class _RpanelWfilterLvState extends State<RpanelWfilterLv> {
   List filterRows = <String>[].obs;
   Future<String> getData() async {
     filterRows = await bl.wfiltersRepo.getAllW5Insert();
