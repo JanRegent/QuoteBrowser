@@ -37,8 +37,11 @@ String filtersCreateTable() {
             w3 TEXT,
             w4 TEXT,
             w5 TEXT,
-            author  TEXT
-            
+            author  TEXT,
+            book TEXT,
+            stars real,
+            starsany TEXT,
+            favorite TEXT            
     )
     ''';
 }

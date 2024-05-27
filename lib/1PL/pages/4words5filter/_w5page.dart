@@ -9,6 +9,7 @@ import '../../widgets/alib/alib.dart';
 import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 import '../../zresults/swiperbrowser/_swiper.dart';
 import 'w5listviewpanel.dart';
+import 'wfilterbl.dart';
 
 class Words5Page extends StatefulWidget {
   const Words5Page({super.key});
@@ -18,18 +19,6 @@ class Words5Page extends StatefulWidget {
 }
 
 class Words5PageState extends State<Words5Page> {
-  bool isSelectionMode = false;
-  final int listLength = 3;
-
-  List<TextEditingController> txCont = [
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController()
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -45,27 +34,24 @@ class Words5PageState extends State<Words5Page> {
 
   void searchClean(wordIndex) {
     {
-      txCont[wordIndex].clear;
-      txCont[wordIndex].text = '';
+      wfilterMap['w$wordIndex'] = '';
+      w5Cont[wordIndex].text = '';
       setState(() {});
     }
   }
 
   //------------------------------------------------------------/authors
-  String? selectedValueAuthor = '';
 
   ListTile authorListTile(BuildContext context) {
     return ListTile(
-      leading: IconButton(
-        onPressed: () {
-          selectedValueAuthor = '';
-          setState(() {});
-        },
-        icon: const Icon(Icons.clear),
-      ),
-      title: authorsDropdownButton2(context),
-      tileColor: const Color.fromARGB(255, 135, 206, 239),
-    );
+        leading: IconButton(
+          onPressed: () {
+            wfilterMap['author'] = '';
+            setState(() {});
+          },
+          icon: const Icon(Icons.clear),
+        ),
+        title: authorsDropdownButton2(context));
   }
 
   DropdownButton2 authorsDropdownButton2(BuildContext context) {
@@ -89,10 +75,10 @@ class Words5PageState extends State<Words5Page> {
                 ),
               ))
           .toList(),
-      value: selectedValueAuthor,
+      value: wfilterMap['author'],
       onChanged: (String? value) {
-        selectedValueAuthor = value;
-        books = bl.authorBooksMap.authorBooksGet(selectedValueAuthor!);
+        wfilterMap['author'] = value;
+        books = bl.authorBooksMap.authorBooksGet(wfilterMap['author']!);
         books.insert(0, '');
         setState(() {});
       },
@@ -108,20 +94,18 @@ class Words5PageState extends State<Words5Page> {
   }
 
   //------------------------------------------------------------/authors
-  String? selectedValueBook = '';
+
   List<String> books = [''];
   ListTile bookListTile(BuildContext context) {
     return ListTile(
-      leading: IconButton(
-        onPressed: () {
-          selectedValueBook = '';
-          setState(() {});
-        },
-        icon: const Icon(Icons.clear),
-      ),
-      title: bookDropdownButton2(context),
-      tileColor: const Color.fromARGB(255, 135, 206, 239),
-    );
+        leading: IconButton(
+          onPressed: () {
+            wfilterMap['book'] = '';
+            setState(() {});
+          },
+          icon: const Icon(Icons.clear),
+        ),
+        title: bookDropdownButton2(context));
   }
 
   DropdownButton2 bookDropdownButton2(BuildContext context) {
@@ -145,9 +129,9 @@ class Words5PageState extends State<Words5Page> {
                 ),
               ))
           .toList(),
-      value: selectedValueBook,
+      value: wfilterMap['book'],
       onChanged: (String? value) {
-        selectedValueBook = value;
+        wfilterMap['book'] = value;
         setState(() {});
       },
       buttonStyleData: const ButtonStyleData(
@@ -168,7 +152,7 @@ class Words5PageState extends State<Words5Page> {
       leading: IconButton(
         onPressed: () {
           setState(() {
-            starrsValue = 0;
+            wfilterMap['stars'] = 0.0;
           });
         },
         icon: const Icon(Icons.clear),
@@ -177,17 +161,14 @@ class Words5PageState extends State<Words5Page> {
     );
   }
 
-  double starrsValue = 0;
-
   Row ratingStars() {
     return Row(
       children: [
         RatingStars(
-          value: starrsValue,
-          onValueChanged: (v) {
+          value: wfilterMap['stars'],
+          onValueChanged: (value) {
             setState(() {
-              starrsValue = v;
-              //starsValueInsert();
+              wfilterMap['stars'] = value;
             });
           },
           starBuilder: (index, color) => Icon(
@@ -218,12 +199,11 @@ class Words5PageState extends State<Words5Page> {
     );
   }
 
-  String? selectedValueFav = '';
   ListTile favListTile(BuildContext context) {
     return ListTile(
       leading: IconButton(
         onPressed: () {
-          favValue = '';
+          wfilterMap['favorite'] = '';
           setState(() {});
         },
         icon: const Icon(Icons.clear),
@@ -234,11 +214,10 @@ class Words5PageState extends State<Words5Page> {
     );
   }
 
-  String favValue = '';
   Widget favButt() {
     Icon favIcon = const Icon(Icons.favorite_outline);
 
-    if (favValue == 'f') {
+    if (wfilterMap['favorite'] == 'f') {
       favIcon = const Icon(Icons.favorite);
     } else {
       favIcon = const Icon(Icons.favorite_outline);
@@ -246,23 +225,22 @@ class Words5PageState extends State<Words5Page> {
     return IconButton(
         icon: favIcon,
         onPressed: () async {
-          if (favValue.isEmpty) {
-            favValue = 'f';
+          if (wfilterMap['favorite'].isEmpty) {
+            wfilterMap['favorite'] = 'f';
           } else {
-            favValue = '';
+            wfilterMap['favorite'] = '';
           }
           setState(() {});
         });
   }
 
-  //--------------------------------------------------------
-  bool loading = false;
-  List<String> words = ['allscope', '', '', '', '', ''];
-
   //------------------------------------------------------------w5
   TextField tagsTextfield(wordIndex) {
     return TextField(
-      controller: txCont[wordIndex],
+      controller: w5Cont[wordIndex],
+      onChanged: (value) {
+        wfilterMap['w$wordIndex'] = value;
+      },
       decoration: InputDecoration(
         hintText: 'Enter word $wordIndex',
         prefixIcon: IconButton(
@@ -273,21 +251,8 @@ class Words5PageState extends State<Words5Page> {
     );
   }
 
-  Map wFilterMapGet() {
-    Map wfilterMap = {
-      'filtertype': 'w5',
-      'w1': txCont[1].text,
-      'w2': txCont[2].text,
-      'w3': txCont[3].text,
-      'w4': txCont[4].text,
-      'w5': txCont[5].text,
-      'author': selectedValueAuthor
-    };
-    return wfilterMap;
-  }
-
   Future w5querySwipper() async {
-    String word = txCont[1].text;
+    String word = w5Cont[1].text;
     if (word.isEmpty) {
       al.messageInfo(context, 'Get by word', 'write somme word', 5);
       return;
@@ -295,9 +260,9 @@ class Words5PageState extends State<Words5Page> {
     bl.homeTitle.value = 'Search w5 ';
 
     bl.currentSS.keys =
-        await bl.supRepo.readSup.readW5.w5queryTextSearchKeys(wFilterMapGet());
+        await bl.supRepo.readSup.readW5.w5queryTextSearchKeys(wfilterMap);
 
-    String info = wFilterMapGet().toString();
+    String info = wfilterMap.toString();
     bl.homeTitle.value = '';
     // ignore: use_build_context_synchronously
     Navigator.push(
@@ -307,7 +272,7 @@ class Words5PageState extends State<Words5Page> {
   }
 
   Future w5queryGrid() async {
-    String word = txCont[1].text;
+    String word = w5Cont[1].text;
     if (word.isEmpty) {
       al.messageInfo(context, 'Get by word', 'write somme word', 5);
       return;
@@ -315,7 +280,7 @@ class Words5PageState extends State<Words5Page> {
     bl.homeTitle.value = 'Search w5 ';
 
     List rows =
-        await bl.supRepo.readSup.readW5.w5queryTextSearchRows(wFilterMapGet());
+        await bl.supRepo.readSup.readW5.w5queryTextSearchRows(wfilterMap);
     bl.homeTitle.value = '';
     await showInGrid(rows);
   }
@@ -336,7 +301,8 @@ class Words5PageState extends State<Words5Page> {
   IconButton filterSave() {
     return IconButton(
         onPressed: () async {
-          bl.wfiltersRepo.insert(wFilterMapGet());
+          print(wfilterMap);
+          bl.wfiltersRepo.insert(wfilterMap);
           setState(() {});
         },
         icon: const Icon(Icons.save));
@@ -356,30 +322,34 @@ class Words5PageState extends State<Words5Page> {
     return ListView(
       children: [
         ListTile(
-            leading: TextButton(
-                onPressed: () {
-                  leftRatio = leftRatio - 0.25;
-                  if (leftRatio <= 0) leftRatio = 0.25;
-                  rightRatio = 1 - leftRatio;
-                  setState(() {});
-                },
-                child: const Text('<<')),
-            title: const Divider(color: Colors.blue, height: 10, thickness: 5),
+            leading: IconButton(
+              icon: const Icon(Icons.clear_all_rounded),
+              onPressed: () => wfilterMapClearAll(),
+            ),
             trailing: TextButton(
                 onPressed: () {
-                  leftRatio = leftRatio + 0.25;
+                  leftRatio = leftRatio + 0.5;
                   if (leftRatio >= 1) leftRatio = 0.25;
                   rightRatio = 1 - leftRatio;
                   setState(() {});
                 },
-                child: const Text('>>'))),
+                child: Text(leftRatio == 0.25 ? '>>' : '<<',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        backgroundColor: Color.fromARGB(255, 186, 215, 239))))),
         tagsTextfield(1),
         tagsTextfield(2),
         tagsTextfield(3),
         tagsTextfield(4),
         tagsTextfield(5),
-        authorListTile(context),
-        bookListTile(context),
+        Card(
+          color: Colors.lightBlue,
+          child: Column(children: [
+            authorListTile(context),
+            bookListTile(context),
+          ]),
+        ),
         starsListTile(context),
         favListTile(context),
         const Divider(color: Colors.blue, height: 10, thickness: 5),
@@ -409,8 +379,6 @@ class Words5PageState extends State<Words5Page> {
             : Theme.of(context).colorScheme.inversePrimary,
         thickness: 2,
         size: 14,
-        onHoverEnter: () => setState(() => hovered = true),
-        onHoverExit: () => setState(() => hovered = false),
       ),
       children: [
         ResizableChild(
@@ -424,33 +392,10 @@ class Words5PageState extends State<Words5Page> {
           size: ResizableSize.ratio(rightRatio),
           child: ColoredBox(
             color: Theme.of(context).colorScheme.tertiaryContainer,
-            child: W5ListviewPanel(txCont),
+            child: W5ListviewPanel(w5Cont),
           ),
         ),
       ],
-    )
-
-        // !loading
-        //     ? Flex(
-        //         direction: Axis.horizontal,
-        //         children: [
-        //           Flexible(
-        //             flex: 30,
-        //             child: bodyListview(),
-        //           ),
-        //           Flexible(
-        //             flex: 70,
-        //             child: W5ListviewPanel(txCont),
-        //           ),
-        //         ],
-        //       )
-        //     : const Row(
-        //         children: [
-        //           CircularProgressIndicator(),
-        //           Text('waiting results from cloud')
-        //         ],
-        //       )
-
-        );
+    ));
   }
 }
