@@ -9,7 +9,8 @@ import '../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 // ignore: must_be_immutable
 class W5ListviewPanel extends StatefulWidget {
   List<TextEditingController> txCont;
-  W5ListviewPanel(this.txCont, {super.key});
+  VoidCallback setStateW5;
+  W5ListviewPanel(this.txCont, this.setStateW5, {super.key});
 
   @override
   State<W5ListviewPanel> createState() => _W5ListviewPanelState();
