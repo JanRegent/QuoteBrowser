@@ -58,7 +58,7 @@ PopupMenuButton personPopup(BuildContext context, VoidCallback swiperSetstate) {
         onPressed: () => setCellAL('book', context, swiperSetstate)),
     title: Obx(() => Text(bl.curRow.book.value)),
     onTap: () async {
-      String bookSelected = await bookSelect(context);
+      String bookSelected = await bookSelect(context, bl.curRow.author.value);
       if (bookSelected.isEmpty) return;
       bl.curRow.setCellBL('book', bookSelected);
       bl.curRow.getRow(bl.curRow.rowkey.value);
@@ -160,6 +160,8 @@ Container editorspopup(BuildContext context, VoidCallback swiperSetstate) {
         border: Border.all(color: const Color.fromARGB(255, 143, 203, 246))),
     child: ListTile(
       leading: personPopup(context, swiperSetstate),
+      title: Obx(() => Text(bl.curRow.stars.value)),
+      subtitle: Obx(() => Text(bl.curRow.fav.value)),
       trailing: PopupMenuButton(
         itemBuilder: (BuildContext context) {
           return buttonRowMenu(context);

@@ -2,7 +2,6 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:quotebrowser/2BL_domain/repos/authbooksmap.dart';
 
-import '../../2BL_domain/bl.dart';
 import '../../2BL_domain/bluti.dart';
 import '../../3Data/dl.dart';
 import '../widgets/alib/alib.dart';
@@ -63,9 +62,8 @@ Future<String> authorSelect() async {
   }
 }
 
-Future<String> bookSelect(BuildContext context) async {
-  List<String> books =
-      authBooksMap[bl.curRow.author.value].toString().split('__|__');
+Future<String> bookSelect(BuildContext context, String author) async {
+  List<String> books = authBooksMap[author].toString().split('__|__');
   try {
     return await Navigator.push(
       context,

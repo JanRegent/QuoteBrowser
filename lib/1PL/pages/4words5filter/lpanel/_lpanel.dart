@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../2BL_domain/bl.dart';
 import '../../../../2BL_domain/repos/supabase/w5filtersrepo.dart';
-import '../../../widgets/alib/alib.dart';
 import '../../../widgets/alib/alicons.dart';
 import '../../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 import '../../../zresults/swiperbrowser/_swiper.dart';
@@ -18,11 +17,6 @@ double rightRatio = 0.75;
 
 ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
   Future w5querySwipper() async {
-    String word = w5Cont[1].text;
-    if (word.isEmpty) {
-      al.messageInfo(context, 'Get by word', 'write somme word', 5);
-      return;
-    }
     bl.homeTitle.value = 'Search w5 ';
 
     bl.currentSS.keys = await bl.supRepo.readSup.readW5
@@ -45,11 +39,6 @@ ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
   }
 
   Future w5queryGrid() async {
-    String word = w5Cont[1].text;
-    if (word.isEmpty) {
-      al.messageInfo(context, 'Get by word', 'write somme word', 5);
-      return;
-    }
     bl.homeTitle.value = 'Search w5 ';
 
     List rows = await bl.supRepo.readSup.readW5

@@ -89,65 +89,110 @@ class SupReadW5 {
   Future w5queryTextSearchRows(Map wfilterMap) async {
     if (wfilterMap['filtertype'] != 'w5') return [];
 
-    String w1 = wfilterMap['w1'].toString();
-    if (w1.isEmpty) return [];
-    String w2 = wfilterMap['w2'].toString();
-    String w3 = wfilterMap['w3'].toString();
-    String w4 = wfilterMap['w4'].toString();
-    String w5 = wfilterMap['w5'].toString();
+    List data = await searchW5(wfilterMap);
+    if (data.isEmpty) data = await authorSearch(wfilterMap);
+    if (data.isEmpty) data = await starsSearch(wfilterMap);
+    if (data.isEmpty) data = await favoriteSearch(wfilterMap);
 
-    var data = [];
-    //----------------------------------------------w5
-    if (w5.isNotEmpty) {
-      data = await supabase
-          .from('sheetrows')
-          .select('*')
-          .textSearch('quote', "'$w1' & '$w2' & '$w3' & '$w4' & '$w5'")
-          .limit(100);
-    }
-    //----------------------------------------------w4
-    if (w4.isNotEmpty) {
-      data = await supabase
-          .from('sheetrows')
-          .select('*')
-          .textSearch('quote', "'$w1' & '$w2' & '$w3' & '$w4'")
-          .limit(100);
-    }
-    //----------------------------------------------w3
-    if (w3.isNotEmpty) {
-      data = await supabase
-          .from('sheetrows')
-          .select('*')
-          .textSearch('quote', "'$w1' & '$w2' & '$w3'")
-          .limit(100);
-    }
-    //----------------------------------------------w2
-    if (w2.isNotEmpty) {
-      data = await supabase
-          .from('sheetrows')
-          .select('*')
-          .textSearch('quote', "'$w1' & '$w2'")
-          .limit(100);
+    data = await authorPost(data, wfilterMap['author']);
+    data = await starsPost(data, wfilterMap['stars']);
+    data = await favoritePost(data, wfilterMap['favorite']);
+
+    return data;
+  }
+
+  Future searchW5(Map wfilterMap) async {
+    String w5s = wfilterMap['w1'] +
+        wfilterMap['w2'] +
+        wfilterMap['w3'] +
+        wfilterMap['w4'] +
+        wfilterMap['w5'];
+
+    if (w5s.isEmpty) return [];
+
+    w5s = '';
+    for (String key in wfilterMap.keys) {
+      if (!key.startsWith('w')) continue;
+      if (wfilterMap[key] != '') w5s += "'&${wfilterMap[key]}' ";
     }
 
-    //----------------------------------------------w1
-    if (w1.isNotEmpty) {
-      data = await supabase
-          .from('sheetrows')
-          .select('*')
-          .textSearch('quote', "'$w1'")
-          .limit(100);
-    }
-    String author = wfilterMap['author'];
-    if (author == '') return data;
-    List dataAuth = [];
-    for (var i = 0; i < data.length; i++) {
+    var data1 = await supabase
+        .from('sheetrows')
+        .select('*')
+        .textSearch('quote', w5s)
+        .limit(100);
+
+    return data1;
+  }
+
+  Future authorSearch(Map wfilterMap) async {
+    if (wfilterMap['author'] == '') return [];
+
+    var data1 = await supabase
+        .from('sheetrows')
+        .select('*')
+        .eq('author', wfilterMap['author'])
+        .limit(100);
+
+    return data1;
+  }
+
+  Future authorPost(List data1, String author) async {
+    if (author.isEmpty) return data1;
+    List data = [];
+    for (var i = 0; i < data1.length; i++) {
       try {
-        if (!data[i]['author'].toString().contains(author)) continue;
-        dataAuth.add(data[i]);
+        if (!data1[i]['author'].toString().contains(author)) continue;
+        data.add(data1[i]);
       } catch (_) {}
     }
+    return data;
+  }
 
-    return dataAuth;
+  Future starsSearch(Map wfilterMap) async {
+    if (wfilterMap['stars'] == '') return [];
+    if (wfilterMap['stars'] == 0.0) return [];
+
+    var data1 = await supabase
+        .from('sheetrows')
+        .select('*')
+        .eq('stars', '*****'.substring(0, wfilterMap['stars'].toInt()))
+        .limit(100);
+
+    return data1;
+  }
+
+  Future starsPost(List data1, stars) async {
+    if (stars < 0.1) return data1;
+    List data = [];
+    for (var i = 0; i < data1.length; i++) {
+      try {
+        if (data1[i]['stars'].toString() != stars) continue;
+        data.add(data1[i]);
+      } catch (_) {}
+    }
+    return data;
+  }
+
+  Future favoriteSearch(Map wfilterMap) async {
+    if (wfilterMap['favorite'] == '') return [];
+    var data1 = await supabase
+        .from('sheetrows')
+        .select('*')
+        .eq('favorite', 'f')
+        .limit(100);
+    return data1;
+  }
+
+  Future favoritePost(List data1, String favorite) async {
+    if (favorite.isEmpty) return data1;
+    List data = [];
+    for (var i = 0; i < data1.length; i++) {
+      try {
+        if (data1[i]['favorite'].toString() != 'f') continue;
+        data.add(data1[i]);
+      } catch (_) {}
+    }
+    return data;
   }
 }

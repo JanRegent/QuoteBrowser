@@ -31,8 +31,10 @@ class _RpanelWfilterLvState extends State<RpanelWfilterLv> {
     }
     String titlerow =
         '${row['w1']} ${row['w2']} ${row['w3']} ${row['w4']} ${row['w5']}';
+    titlerow += '\n${row['author']} ${row['book']} ';
     titlerow +=
-        '\n${row['author']} ${row['book']} ${'*****'.substring(0, row['stars'])} ${row['starsany']} ${row['favorite']}';
+        '\n${'*****'.substring(0, row['stars'])} ${row['starsany']} ${row['favorite']}';
+
     return titlerow;
   }
 

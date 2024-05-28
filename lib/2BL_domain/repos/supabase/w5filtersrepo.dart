@@ -10,6 +10,11 @@ class WFiltersRepo {
   //-----------------------------------------------------------------create
 
   Future insert(Map filterMap) async {
+    try {
+      //duplicate key value violates unique constraint "wfilters_pkey",
+      //details: Key (id)=(1) already exists.
+      filterMap.remove('id');
+    } catch (_) {}
     await supabase.from('wfilters').insert(filterMap);
   }
 
@@ -115,8 +120,7 @@ class WFiltersRepo {
         }
         continue;
       }
-      if (key == 'book') continue;
-      if (key == 'author') continue;
+
       wfilterMap[key] = dbrow[key];
     }
   }
