@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/bluti.dart';
 
+import '../../../2BL_domain/repos/commonrepos.dart';
 import '../../dl.dart';
 import 'backendurl.dart';
 
@@ -72,19 +73,13 @@ class GService23 {
       List<String> cols = [];
       cols.addAll(blUti.toListString(data[0]));
       List<Map<String, dynamic>> maprows = [];
-
+      List<String> sqlcols = colsSql.split(',');
       for (var rix = 1; rix < data.length; rix++) {
         Map<String, dynamic> maprow = {};
-        for (int cix = 0; cix < cols.length; cix++) {
-          if (cols[cix].isEmpty) continue;
-          if (cols[cix].contains('bruntonsid')) continue;
-          if (cols[cix].contains('feedid')) continue;
-          if (cols[cix].contains('id')) continue;
-          if (cols[cix].contains('kategorie')) continue;
-          if (cols[cix].contains('kapitola')) continue;
-          if (cols[cix].contains('paragraf')) continue;
-
-          maprow[cols[cix].toLowerCase()] = data[rix][cix];
+        for (var colSql in sqlcols) {
+          int colIx = cols.indexOf(colSql);
+          if (colIx == -1) continue;
+          maprow[colSql] = data[rix][colIx];
         }
         maprows.add(maprow);
       }
