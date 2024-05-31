@@ -69,12 +69,21 @@ class GService23 {
 
     try {
       List data = response.data['data'];
-      List<String> cols = blUti.toListString(data[0]);
+      List<String> cols = [];
+      cols.addAll(blUti.toListString(data[0]));
       List<Map<String, dynamic>> maprows = [];
 
       for (var rix = 1; rix < data.length; rix++) {
         Map<String, dynamic> maprow = {};
         for (int cix = 0; cix < cols.length; cix++) {
+          if (cols[cix].isEmpty) continue;
+          if (cols[cix].contains('bruntonsid')) continue;
+          if (cols[cix].contains('feedid')) continue;
+          if (cols[cix].contains('id')) continue;
+          if (cols[cix].contains('kategorie')) continue;
+          if (cols[cix].contains('kapitola')) continue;
+          if (cols[cix].contains('paragraf')) continue;
+
           maprow[cols[cix].toLowerCase()] = data[rix][cix];
         }
         maprows.add(maprow);
