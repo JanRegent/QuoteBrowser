@@ -69,7 +69,17 @@ class GService23 {
 
     try {
       List data = response.data['data'];
-      return data;
+      List<String> cols = blUti.toListString(data[0]);
+      List<Map<String, dynamic>> maprows = [];
+
+      for (var rix = 1; rix < data.length; rix++) {
+        Map<String, dynamic> maprow = {};
+        for (int cix = 0; cix < cols.length; cix++) {
+          maprow[cols[cix].toLowerCase()] = data[rix][cix];
+        }
+        maprows.add(maprow);
+      }
+      return maprows;
     } catch (e) {
       String mess = '''
       sheetName: $sheetName

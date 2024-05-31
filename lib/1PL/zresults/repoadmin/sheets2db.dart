@@ -30,7 +30,7 @@ class _Sheets2dbPageState extends State<Sheets2dbPage> {
             onPressed: () async {
               await bl.supRepo.insertSheet2sqldb('EduardT');
             },
-            child: const Text('one sheet2sup ramtalk')));
+            child: const Text('one sheet2sup EduardT')));
   }
   // ListTile koyebRepoByRowkey() {
   //   return ListTile(
