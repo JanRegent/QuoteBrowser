@@ -139,6 +139,14 @@ class BLuti {
     return list;
   }
 
+  List<String> toListStringToLower(List<dynamic> items) {
+    List<String> list = [];
+    for (var item in items) {
+      list.add(item.toString().toLowerCase());
+    }
+    return list;
+  }
+
   List<int> toListInt(List<dynamic> items) {
     List<int> list = [];
     for (var item in items) {

@@ -25,7 +25,7 @@ String sheetRowsCreateTable() {
 }
 
 String colsSql =
-    'rowkey,sheetname,quote,author,book,parpage,tags,yellowparts,stars,favorite,dateinsert,sourceurl,fileurl,docurl,original,vydal,folderurl,title';
+    'rowkey,sheetname,quote,author,book,parPage,tags,yellowparts,stars,favorite,dateinsert,sourceUrl,fileUrl,docUrl,original,vydal,folderUrl,title';
 
 String filtersCreateTable() {
   return '''

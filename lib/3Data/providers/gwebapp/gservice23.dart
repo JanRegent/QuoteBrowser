@@ -71,7 +71,7 @@ class GService23 {
     try {
       List data = response.data['data'];
       List<String> cols = [];
-      cols.addAll(blUti.toListString(data[0]));
+      cols.addAll(blUti.toListStringToLower(data[0]));
       List<Map<String, dynamic>> maprows = [];
       List<String> sqlcols = colsSql.split(',');
       for (var rix = 1; rix < data.length; rix++) {
@@ -79,8 +79,9 @@ class GService23 {
         for (var colSql in sqlcols) {
           int colIx = cols.indexOf(colSql);
           if (colIx == -1) continue;
-          maprow[colSql] = data[rix][colIx];
+          maprow[colSql.toLowerCase()] = data[rix][colIx];
         }
+        maprow['sheetname'] = sheetName;
         maprows.add(maprow);
       }
       return maprows;
