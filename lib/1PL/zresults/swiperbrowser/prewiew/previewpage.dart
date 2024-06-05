@@ -7,6 +7,7 @@ import 'package:highlight_text/highlight_text.dart';
 import 'package:quotebrowser/1PL/widgets/alib/alicons.dart';
 
 import '../../../../2BL_domain/bl.dart';
+import '../../../widgets/alib/alib.dart';
 import 'text_with_highlight.dart';
 
 bool previewPageOn = false;
@@ -80,9 +81,8 @@ class _PreviewPageState extends State<PreviewPage> {
   Row titleRow() {
     return Row(
       children: [
-        Obx(() => Text(bl.curRow.author.value)),
-        const Text(' / '),
-        Obx(() => Text('${bl.curRow.book.value}\n${bl.curRow.parpage.value}')),
+        al.infoButton(context, bl.curRow.author.value,
+            '${bl.curRow.book.value}\n${bl.curRow.parpage.value}'),
         const Spacer(),
         tagPartsSwitch()
       ],
