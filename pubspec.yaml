@@ -49,6 +49,11 @@ dependencies:
 
   postgres: ^3.1.1 #https://pub.dev/packages/postgres
 
+  firebase_ui_firestore: ^1.6.3 #https://pub.dev/packages/firebase_ui_firestore/example
+  cloud_firestore: ^4.15.5 #https://pub.dev/packages/cloud_firestore
+  firebase_core: ^2.27.0 #https://pub.dev/packages/firebase_core
+  firebase_database: ^10.4.9 #https://pub.dev/packages/firebase_database
+
   #cloud_firestore: ^4.15.8 #https://pub.dev/packages/cloud_firestore
   #cloud_firestore_api: ^0.0.9
   # firebase_core: ^2.27.0
@@ -70,6 +75,7 @@ dependencies:
   fluentui_system_icons: ^1.1.210 #https://pub.dev/packages/fluentui_system_icons
   cupertino_icons: ^1.0.5 #https://pub.dev/packages/cupertino_icons
   holdable_button: ^0.0.9 #https://pub.dev/packages/holdable_button
+  http: ^1.2.0
 #******************************************************************************DEV
 dev_dependencies:
   analyzer: 5.13.0
