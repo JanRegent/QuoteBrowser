@@ -3,9 +3,6 @@ import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
 import '../../../2BL_domain/repos/supabase/suprepo.dart';
-import '../../../3Data/providers/firebase/fdb.dart';
-import '../../../3Data/providers/firebase/first1.dart';
-import '../../../3Data/providers/firebase/fui.dart';
 import '../../widgets/alib/alib.dart';
 
 class Sheets2dbPage extends StatefulWidget {
@@ -34,33 +31,6 @@ class _Sheets2dbPageState extends State<Sheets2dbPage> {
               await bl.supRepo.insertSheet2sqldb('EduardT');
             },
             child: const Text('one sheet2sup EduardT')));
-  }
-
-  ListTile toFirebase() {
-    return ListTile(
-      title: const Text('>> FirebaseUI'),
-      onTap: () async {
-        await mainFirebase();
-      },
-    );
-  }
-
-  ListTile toFirebaseFdb() {
-    return ListTile(
-      title: const Text('>> FirebaseDb'),
-      onTap: () async {
-        await mainFirDb();
-      },
-    );
-  }
-
-  ListTile toFirebaseFirest() {
-    return ListTile(
-      title: const Text('>> mainFirest'),
-      onTap: () async {
-        await mainFirest();
-      },
-    );
   }
 
   // ListTile koyebRepoDeleteAll() {
@@ -117,21 +87,18 @@ class _Sheets2dbPageState extends State<Sheets2dbPage> {
               height: 200,
               color: Colors.blue,
               margin: const EdgeInsets.all(5),
-              child: toFirebase(),
             ),
             Container(
               width: 200,
               height: 200,
               color: Colors.blue,
               margin: const EdgeInsets.all(5),
-              child: toFirebaseFdb(),
             ),
             Container(
               width: 200,
               height: 200,
               color: Colors.blue,
               margin: const EdgeInsets.all(5),
-              child: toFirebaseFirest(),
             ),
           ],
         ));
