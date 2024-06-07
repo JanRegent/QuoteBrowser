@@ -189,6 +189,9 @@ class SupabaseRepo {
 
       await bl.supRepo.deleteSheet(sheetName);
       await supabase.from('sheetrows').insert(maprows); //1
+
+      bl.firestoreRepo.upsertAll(maprows);
+
       // List<String> sqlValues = await bl.neonRepo.sqlValuesGet(maprows);
       // log2sheetrows('neon..');
       // await bl.neonRepo.sqlValuesInsert('sheetrows', sqlValues); //2
