@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../2BL_domain/bl.dart';
-import '../../../2BL_domain/repos/sharedprefs.dart';
 import '../../../2BL_domain/repos/supabase/suprepo.dart';
 import '../../controllers/selectvalue.dart';
 import '../../widgets/alib/alib.dart';
@@ -111,8 +110,6 @@ class _VarsDebugGridState extends State<VarsDebugGrid> {
     return ListTile(
         title: ElevatedButton(
             onPressed: () async {
-              SharedPrefs.clear();
-
               setState(() {});
             },
             child: const Row(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../3Data/dl.dart';
@@ -10,6 +11,7 @@ class ReadSup {
   SupReadW5 readW5 = SupReadW5();
 
   void init() {
+    debugPrint('readW5 init start');
     readW5.supabase = supabase;
   }
 

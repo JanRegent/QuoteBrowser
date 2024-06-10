@@ -8,7 +8,6 @@ import '../3Data/providers/gwebapp/tagsparts.dart';
 import 'currow.dart';
 import 'repos/authbooksmap.dart';
 
-import 'repos/firestorerepo.dart';
 import 'repos/supabase/w5filtersrepo.dart';
 import 'repos/backuprepos/koyebrepo.dart';
 import 'repos/backuprepos/neonrepo.dart';
@@ -30,20 +29,17 @@ class Bl {
   WFiltersRepo wfiltersRepo = WFiltersRepo();
   NeonRepo neonRepo = NeonRepo();
   KoyebRepo koyebRepo = KoyebRepo();
-  FirestoreRepo firestoreRepo = FirestoreRepo();
-
-  //FirestoreRepo fireRepo = FirestoreRepo();
+  //FirestoreRepo firestoreRepo = FirestoreRepo();
 
   TagsParts tagsParts = TagsParts();
 
   Future init() async {
     debugPrint('sheetRowsHelper init start');
-    //await sheetRowsHelper.initDB(); sqlite
     debugPrint('supRepo init start');
     await supRepo.init();
     wfiltersRepo.supabase = supRepo.supabase;
-    debugPrint('firestoreRepo init start');
-    await firestoreRepo.init();
+    // debugPrint('firestoreRepo init start');
+    // await firestoreRepo.init();
 
     if (!kIsWeb) {
       debugPrint('neonRepo init start');

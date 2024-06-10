@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import '2BL_domain/bl.dart';
 
 import '2BL_domain/blloading.dart';
-import '2BL_domain/repos/sharedprefs.dart';
 import '3Data/dl.dart';
 
 // flutter run -d windows  --dart-define=devmode=1
 // flutter run -d chrome --web-renderer html --dart-define=devmode=1 --web-browser-flag "--disable-web-security"
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SharedPrefs.init();
   await bl.init();
 
   await dl.init();
