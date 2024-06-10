@@ -66,7 +66,7 @@ class _QuoteEditState extends State<QuoteEdit> {
           backgroundColor: bl.curRow.setCellColor,
           leading:
               tagsYellowPopup(context, quoteSetstate, widget.swiperSetstate),
-          title: editorspopup(context, widget.swiperSetstate),
+          title: personAndPopup(context, widget.swiperSetstate),
           actions: [previewPageSet()],
         ),
         body: SingleChildScrollView(child: quoteTextField()));

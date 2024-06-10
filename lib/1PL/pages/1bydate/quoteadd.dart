@@ -60,7 +60,7 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
       onChanged: (String? value) {
         sheetName = value;
         currRow = bl.currentSS.dailyList.getBySheetName(sheetName!)!;
-        parpageExp.value = currRow.parpageParse;
+        parpageExp.value = currRow.parpageParse.trim();
         setState(() {});
       },
       buttonStyleData: const ButtonStyleData(

@@ -152,7 +152,7 @@ PopupMenuButton tagsYellowPopup(BuildContext context,
   );
 }
 
-Container editorspopup(BuildContext context, VoidCallback swiperSetstate) {
+Container personAndPopup(BuildContext context, VoidCallback swiperSetstate) {
   return Container(
     margin: const EdgeInsets.all(15.0),
     padding: const EdgeInsets.all(3.0),

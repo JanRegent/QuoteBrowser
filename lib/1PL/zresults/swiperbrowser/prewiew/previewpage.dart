@@ -83,6 +83,7 @@ class _PreviewPageState extends State<PreviewPage> {
       children: [
         al.infoButton(context, bl.curRow.author.value,
             '${bl.curRow.book.value}\n${bl.curRow.parpage.value}'),
+        Obx(() => Text('${bl.curRow.stars.value}\n${bl.curRow.fav.value}')),
         const Spacer(),
         tagPartsSwitch()
       ],
