@@ -60,6 +60,13 @@ Future<Connection> initElephant() async {
   ));
 }
 
+class AppwriteConstants {
+  static const String projectid = "66631126000fce666c5a";
+  static const String endpoint = "https://cloud.appwrite.io/v1";
+  static const String dbID = "666312e60021ce239e7d";
+  static const String collectionID = "66631305002f0b92ee97";
+}
+
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:

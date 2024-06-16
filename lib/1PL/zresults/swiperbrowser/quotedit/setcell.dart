@@ -45,7 +45,7 @@ void setCellAL(String attribName, BuildContext context,
         break;
       }
 
-      bl.curRow.yellowparts.value += '__|__\n${bl.curRow.selectedText.value}';
+      bl.curRow.yellowparts.value += '__|__${bl.curRow.selectedText.value}';
 
       bl.tagsParts.pureYellowparts();
       bl.curRow.setCellBL(attribName, bl.curRow.yellowparts.value);
@@ -79,12 +79,6 @@ RxString coloredQuote = ''.obs;
 
 String coloringText() {
   coloredQuote.value = bl.curRow.quote.value;
-
-  // List<String> parts = bl.curRow.yellowParts.value.split('__|__\n');
-  // for (var i = 0; i < parts.length; i++) {
-  //   coloredQuote.value =
-  //       coloredQuote.value.replaceAll(parts[i], '_${parts[i]}_');
-  // }
 
   List<String> tags = bl.curRow.tags.value.split('#');
   for (var i = 0; i < tags.length; i++) {

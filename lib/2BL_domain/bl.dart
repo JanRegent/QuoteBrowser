@@ -27,6 +27,7 @@ class Bl {
 
   SupabaseRepo supRepo = SupabaseRepo();
   WFiltersRepo wfiltersRepo = WFiltersRepo();
+
   NeonRepo neonRepo = NeonRepo();
   KoyebRepo koyebRepo = KoyebRepo();
   //FirestoreRepo firestoreRepo = FirestoreRepo();

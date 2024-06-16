@@ -34,10 +34,28 @@ class TagsParts {
   }
 
   void pureYellowparts() {
+    //------------------------------------------------------uniq
     List<String> ypList = bl.curRow.yellowparts.value.split('__|__');
     Set set = ypList.toSet();
     List<String> parts = blUti.toListString(set.toList());
+    //------------------------------------------------------indexOf
 
-    bl.curRow.yellowparts.value = parts.join('__|__');
+    String quote = bl.curRow.quote.value.toLowerCase();
+    Map<int, String> partsMap = {};
+    for (var part in parts) {
+      if (part.trim().isEmpty) continue;
+      int index = quote.indexOf(part.trim().toLowerCase());
+      if (index == -1) continue;
+
+      partsMap[index] = part.trim();
+    }
+    //------------------------------------------------------sort by index
+    List<String> sortedParts = [];
+    var sortedMap = Map.fromEntries(
+        partsMap.entries.toList()..sort((e1, e2) => e1.key.compareTo(e2.key)));
+    for (var part in sortedMap.values) {
+      sortedParts.add(part);
+    }
+    bl.curRow.yellowparts.value = sortedParts.join('__|__');
   }
 }
