@@ -134,8 +134,9 @@ class _PreviewPageState extends State<PreviewPage> {
     List<String> parts = bl.curRow.yellowparts.value.split('__|__');
     for (String part in parts) {
       List<String> tags1 = part.split(' ');
-      if (tags1[0].isEmpty) continue;
-      tags.add(tags1[0]);
+      String tag1 = tags1[0].trim();
+      if (tag1.isEmpty) continue;
+      tags.add(tag1);
     }
     return tags;
   }
