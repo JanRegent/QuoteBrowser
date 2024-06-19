@@ -127,6 +127,19 @@ class _PreviewPageState extends State<PreviewPage> {
     return sortedParts;
   }
 
+  int tagsLen = 0;
+  List<String> tagsGet() {
+    List<String> tags = bl.curRow.tags.value.split('#');
+    tagsLen = tags.length;
+    List<String> parts = bl.curRow.yellowparts.value.split('__|__');
+    for (String part in parts) {
+      List<String> tags1 = part.split(' ');
+      if (tags1[0].isEmpty) continue;
+      tags.add(tags1[0]);
+    }
+    return tags;
+  }
+
   void highStrings() {
     highlightedTexts = [];
     tagWords = {};
@@ -135,7 +148,11 @@ class _PreviewPageState extends State<PreviewPage> {
         fontSize: 20.0,
         color: Colors.red,
         fontWeight: FontWeight.bold);
-
+    TextStyle tagStyleFirstWord = const TextStyle(
+        // You can set the general style, like a Text()
+        fontSize: 20.0,
+        color: Colors.yellow,
+        fontWeight: FontWeight.bold);
     if (tagAllPartsIndex == 1) {
       List<String> parts = sortedPartsGet();
 
@@ -145,7 +162,7 @@ class _PreviewPageState extends State<PreviewPage> {
       }
     }
     if (tagAllPartsIndex == 0) {
-      List<String> tags = bl.curRow.tags.value.split('#');
+      List<String> tags = tagsGet();
       highlightedTexts.addAll(tags);
       for (var i = 0; i < tags.length; i++) {
         if (tags[i].isEmpty) continue;
@@ -154,7 +171,7 @@ class _PreviewPageState extends State<PreviewPage> {
             onTap: () {
               debugPrint(tags[i]);
             },
-            textStyle: tagStyle,
+            textStyle: i < tagsLen ? tagStyle : tagStyleFirstWord,
           )
         });
       }
