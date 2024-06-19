@@ -1,1 +1,1 @@
-String buildDate = ' 2024_06_16__19_28_build_AL-quotedit---sortedParts ';  
+String buildDate = ' 2024_06_19__18_03_build_AL-swiper---preview-sortedPartsGet ';  

@@ -7,6 +7,7 @@ import 'package:highlight_text/highlight_text.dart';
 import 'package:quotebrowser/1PL/widgets/alib/alicons.dart';
 
 import '../../../../2BL_domain/bl.dart';
+import '../../../../2BL_domain/bluti.dart';
 import '../../../widgets/alib/alib.dart';
 import 'text_with_highlight.dart';
 
@@ -46,7 +47,7 @@ class _PreviewPageState extends State<PreviewPage> {
         borderWidth: 1.5,
         borderRadius: BorderRadius.circular(10),
         selectedBorderColor: Colors.pink,
-// add widgets for which the users need to toggle
+        // add widgets for which the users need to toggle
         children: [
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
@@ -101,6 +102,31 @@ class _PreviewPageState extends State<PreviewPage> {
   List<String> highlightedTexts = [];
   Map<String, HighlightedWord> tagWords = {};
 
+  List<String> sortedPartsGet() {
+    List<String> ypList = bl.curRow.yellowparts.value.split('__|__');
+    Set set = ypList.toSet();
+    List<String> parts = blUti.toListString(set.toList());
+    //------------------------------------------------------indexOf
+
+    String quote = bl.curRow.quote.value.toLowerCase();
+    Map<int, String> partsMap = {};
+    for (var part in parts) {
+      if (part.trim().isEmpty) continue;
+      int index = quote.indexOf(part.trim().toLowerCase());
+      if (index == -1) continue;
+
+      partsMap[index] = part.trim();
+    }
+    //------------------------------------------------------sort by index
+    List<String> sortedParts = [];
+    var sortedMap = Map.fromEntries(
+        partsMap.entries.toList()..sort((e1, e2) => e1.key.compareTo(e2.key)));
+    for (var part in sortedMap.values) {
+      sortedParts.add(part);
+    }
+    return sortedParts;
+  }
+
   void highStrings() {
     highlightedTexts = [];
     tagWords = {};
@@ -111,7 +137,7 @@ class _PreviewPageState extends State<PreviewPage> {
         fontWeight: FontWeight.bold);
 
     if (tagAllPartsIndex == 1) {
-      List<String> parts = bl.curRow.yellowparts.value.split('__|__');
+      List<String> parts = sortedPartsGet();
 
       for (var i = 0; i < parts.length; i++) {
         if (parts[i].isEmpty) continue;
