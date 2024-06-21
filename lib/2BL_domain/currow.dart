@@ -94,14 +94,17 @@ class CurRow {
 
     bl.curRow.dateinsert = row['dateinsert'] ?? '';
 
-    bl.curRow.sourceUrl.value = row['sourceUrl'] ?? '';
+    bl.curRow.sourceUrl.value = row['sourceurl'] ?? '';
 
     bl.curRow.original.value = row['original'] ?? '';
 
     bl.curRow.publisher.value = row['vydal'] ?? '';
-    bl.curRow.fileUrl.value = row['fileUrl'] ?? '';
+    bl.curRow.fileUrl.value = row['fileurl'] ?? '';
+    if (bl.curRow.fileUrl.value.isEmpty) {
+      bl.curRow.fileUrl.value = row['docurl'] ?? '';
+    }
 
-    bl.curRow.folder.value = row['folderUrl'] ?? '';
+    bl.curRow.folder.value = row['folderurl'] ?? '';
     bl.tagsParts.pureTags();
 
     void optionalValuesSet() {

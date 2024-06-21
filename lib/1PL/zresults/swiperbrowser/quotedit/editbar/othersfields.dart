@@ -24,7 +24,10 @@ class _OthersFieldsState extends State<OthersFields> {
     expandedOthersBuild();
   }
 
+  String docUrl = '';
+
   List<Widget> expandedOthersBuild() {
+    docUrl = bl.curRow.fileUrl.value;
     othersFieldsWidgets = [
       ListTile(
           tileColor: Colors.white,
@@ -33,14 +36,13 @@ class _OthersFieldsState extends State<OthersFields> {
                 importComments(context);
                 setState(() {});
               },
-              child: const Text('fileUrl')),
+              child: const Text('docUrl')),
           title: TextButton(
               child: Row(
-                children: [Obx(() => Text(bl.curRow.fileUrl.value))],
+                children: [Text(docUrl)],
               ),
-              onPressed: () => onOpen(bl.curRow.fileUrl.value)),
-          trailing: copyPasteClearPopupMenuButton(
-              bl.curRow.fileUrl.value, 'fileUrl')),
+              onPressed: () => onOpen(docUrl)),
+          trailing: copyPasteClearPopupMenuButton(docUrl, 'fileUrl')),
       ListTile(
           tileColor: Colors.white,
           leading: const Text('sourceUrl'),
@@ -94,9 +96,9 @@ class _OthersFieldsState extends State<OthersFields> {
                 child: Text(columnName)),
             title: TextButton(
                 child: Row(
-                  children: [Obx(() => Text(bl.curRow.fileUrl.value))],
+                  children: [Obx(() => Text(docUrl))],
                 ),
-                onPressed: () => onOpen(bl.curRow.fileUrl.value)),
+                onPressed: () => onOpen(docUrl)),
             trailing: copyPasteClearPopupMenuButton(
                 bl.curRow.sourceUrl.value, 'docUrl')));
       } else {
