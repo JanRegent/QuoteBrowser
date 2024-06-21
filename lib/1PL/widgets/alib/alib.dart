@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:input_dialog/input_dialog.dart';
 
+///https://pub.dev/packages/awesome_dialog
+///
+///https://blog.stackademic.com/how-the-getx-easy-to-use-in-flutter-1468c488c4c4
+///
+
 //import 'package:sheetviewer/uti/viewers/json_viewer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
