@@ -27,7 +27,7 @@ class _OthersFieldsState extends State<OthersFields> {
   String docUrl = '';
 
   List<Widget> expandedOthersBuild() {
-    docUrl = bl.curRow.fileUrl.value;
+    docUrl = bl.curRow.fileurl.value;
     othersFieldsWidgets = [
       ListTile(
           tileColor: Colors.white,
@@ -42,7 +42,7 @@ class _OthersFieldsState extends State<OthersFields> {
                 children: [Text(docUrl)],
               ),
               onPressed: () => onOpen(docUrl)),
-          trailing: copyPasteClearPopupMenuButton(docUrl, 'fileUrl')),
+          trailing: copyPasteClearPopupMenuButton(docUrl, 'fileurl')),
       ListTile(
           tileColor: Colors.white,
           leading: const Text('sourceUrl'),
@@ -78,14 +78,14 @@ class _OthersFieldsState extends State<OthersFields> {
     for (var i = 0; i < bl.curRow.optionalColumNames.length; i++) {
       String columnName = bl.curRow.optionalColumNames[i];
       if (columnName.toString().isEmpty) continue;
-      if (columnName == 'fileUrl') continue;
+      if (columnName == 'fileurl') continue;
       if (columnName == 'sourceUrl') continue;
       if (columnName == 'original') continue;
       if (columnName == 'vydal') continue;
       if (columnName == 'folder') continue;
       if (columnName == 'yellowParts') continue;
 
-      if (columnName == 'docUrl' || columnName == 'fileUrl') {
+      if (columnName == 'docUrl' || columnName == 'fileurl') {
         othersFieldsWidgets.add(ListTile(
             tileColor: Colors.white,
             leading: TextButton(

@@ -17,7 +17,7 @@
 
 // RxInt rowsCount = 0.obs;
 
-// Drawer drawerGrid(BuildContext context, Function setStateFunc, String fileUrl,
+// Drawer drawerGrid(BuildContext context, Function setStateFunc, String fileurl,
 //     String sheetName, List<String> cols) {
 //   return Drawer(
 //     child: ListView(
@@ -51,7 +51,7 @@
 //             // await Navigator.push(
 //             //     context,
 //             //     MaterialPageRoute(
-//             //       builder: (ctx) => ViewHelperPage(fileUrl, sheetName),
+//             //       builder: (ctx) => ViewHelperPage(fileurl, sheetName),
 //             //     ));
 //             Navigator.pop(context);
 //           },
@@ -74,7 +74,7 @@
 //             Navigator.pop(context);
 //           },
 //         ),
-//         al.linkIconOpenDoc(fileUrl, context),
+//         al.linkIconOpenDoc(fileurl, context),
 //       ],
 //     ),
 //   );

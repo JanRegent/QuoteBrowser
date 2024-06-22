@@ -128,7 +128,7 @@
 //   SheetRows rowdyn2sheetRows(String sheetName, List<String> cols, List rowdyn) {
 //     List<String> row = blUti.toListString(rowdyn);
 
-//     String fileUrlSet(String value) {
+//     String fileurlSet(String value) {
 //       if (value.isEmpty) return value;
 //       if (!value.startsWith('fb')) {
 //         if (!value.startsWith('http')) {
@@ -155,8 +155,8 @@
 //       if (fieldIndex == -1) return '';
 //       try {
 //         String value = row[fieldIndex];
-//         if (columnName == 'fileUrl') return fileUrlSet(value);
-//         if (columnName == 'docUrl') return fileUrlSet(value);
+//         if (columnName == 'fileurl') return fileurlSet(value);
+//         if (columnName == 'docUrl') return fileurlSet(value);
 //         if (columnName == 'folder') return folderUrlSet(value);
 //         return value;
 //       } catch (_) {
@@ -180,10 +180,10 @@
 //     sheetRow.dateinsert = valueGet('dateinsert', row);
 //     sheetRow.sourceUrl = valueGet('sourceUrl', row);
 
-//     if (cols.contains('fileUrl')) {
-//       sheetRow.fileUrl = valueGet('fileUrl', row);
+//     if (cols.contains('fileurl')) {
+//       sheetRow.fileurl = valueGet('fileurl', row);
 //     } else {
-//       sheetRow.fileUrl = valueGet('docUrl', row);
+//       sheetRow.fileurl = valueGet('docUrl', row);
 //     }
 //     sheetRow.original = valueGet('original', row);
 //     sheetRow.vydal = valueGet('vydal', row);

@@ -32,9 +32,9 @@ ListView toReadListview(BuildContext context, VoidCallback setStateSwiper) {
       const Text('__toRead__'),
       TextButton(
           child: Row(
-            children: [Obx(() => Text(bl.curRow.fileUrl.value))],
+            children: [Obx(() => Text(bl.curRow.fileurl.value))],
           ),
-          onPressed: () => onOpen(bl.curRow.fileUrl.value)),
+          onPressed: () => onOpen(bl.curRow.fileurl.value)),
       TextButton(
           onPressed: () {
             importComments(context);

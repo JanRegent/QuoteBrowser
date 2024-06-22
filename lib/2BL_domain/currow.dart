@@ -58,7 +58,7 @@ class CurRow {
   RxString categories = ''.obs;
   //--------------------------others
   RxString sourceUrl = ''.obs;
-  RxString fileUrl = ''.obs;
+  RxString fileurl = ''.obs;
   //--------------------------ids
   RxString rowkey = ''.obs;
   RxString sheetName = ''.obs;
@@ -99,9 +99,9 @@ class CurRow {
     bl.curRow.original.value = row['original'] ?? '';
 
     bl.curRow.publisher.value = row['vydal'] ?? '';
-    bl.curRow.fileUrl.value = row['fileurl'] ?? '';
-    if (bl.curRow.fileUrl.value.isEmpty) {
-      bl.curRow.fileUrl.value = row['docurl'] ?? '';
+    bl.curRow.fileurl.value = row['fileurl'] ?? '';
+    if (bl.curRow.fileurl.value.isEmpty) {
+      bl.curRow.fileurl.value = row['docurl'] ?? '';
     }
 
     bl.curRow.folder.value = row['folderurl'] ?? '';

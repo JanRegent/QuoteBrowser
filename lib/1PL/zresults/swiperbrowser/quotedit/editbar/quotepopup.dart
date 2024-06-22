@@ -32,7 +32,7 @@ PopupMenuItem pastePopupMenuItem(String columnName) {
       icon: const Icon(Icons.paste, color: Colors.black),
       onPressed: () {
         FlutterClipboard.paste().then((value) async {
-          if (['fileUrl', 'sourceUrl', 'folder'].contains(columnName)) {
+          if (['fileurl', 'sourceUrl', 'folder'].contains(columnName)) {
             value = blUti.pureHttpGDriveLink(value);
           }
           bl.curRow.setCellBL(columnName, value);

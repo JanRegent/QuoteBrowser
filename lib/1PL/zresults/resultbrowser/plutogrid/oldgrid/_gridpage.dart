@@ -87,7 +87,7 @@ class _GridPageState extends State<GridPage> {
           stateManager = event.stateManager;
         } catch (_) {}
         // gridViewOpt = GridViewOpt(
-        //     widget.fileListRow['fileUrl'],
+        //     widget.fileListRow['fileurl'],
         //     widget.fileListRow['sheetName'],
         //     stateManager,
         //     widget.columns);

@@ -14,13 +14,13 @@
 
 // class GridViewOpt {
 //   Map expr = {};
-//   final String fileUrl;
+//   final String fileurl;
 //   String fileId = '';
 //   final String sheetName;
 //   PlutoGridStateManager stateManager;
 //   List<PlutoColumn> plutoCols;
-//   GridViewOpt(this.fileUrl, this.sheetName, this.stateManager, this.plutoCols) {
-//     fileId = bl.blUti.url2fileid(fileUrl);
+//   GridViewOpt(this.fileurl, this.sheetName, this.stateManager, this.plutoCols) {
+//     fileId = bl.blUti.url2fileid(fileurl);
 //   }
 
 //   Future save() async {
