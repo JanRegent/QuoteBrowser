@@ -269,6 +269,89 @@ class GService23 {
 
   Future<String> appendQuote(
       String sheetName, String quote, String parpage, String author) async {
+    if (quote.length < 5000) {
+      return await appendQuoteLess5kb(sheetName, quote, parpage, author);
+    }
+    debugPrint('quoteLength = ${quote.length}');
+    List<String> parts = [];
+    int partCount = quote.length ~/ 5000; //translate limit
+    debugPrint('partCount = $partCount');
+    int partEnd = 0;
+    for (var i = 0; i < partCount; i++) {
+      partEnd = (i + 1) * 5000;
+      if (partEnd > quote.length) partEnd = quote.length;
+      parts.add(quote.substring(i * 5000, partEnd));
+    }
+    parts.add(quote.substring(partEnd + 1, quote.length));
+
+    await appendQuoteClear();
+    for (var originalPart in parts) {
+      await appendQuotePart(originalPart);
+    }
+    try {
+      // ignore: unused_local_variable
+      Response response = await dio.get(
+        backendUrl,
+        queryParameters: {
+          'action': 'appendQuoteFinal',
+          'sheetName': sheetName,
+          'sheetId': blUti.url2fileid(dl.sheetUrls[sheetName]!),
+          'parPage': parpage,
+          'author': author
+        },
+      );
+      debugPrint(response.data['data'].toString());
+      return response.data['data'];
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future appendQuotePart(String originalPart) async {
+    debugPrint(originalPart.length.toString());
+    try {
+      Response response = await dio.post(
+        backendUrl,
+        data: {'action': 'appendQuotePart', 'originalPart': originalPart},
+      );
+
+      debugPrint(response.realUri.toString());
+      debugPrint(response.headers.toString());
+    } catch (e) {
+      if (e.toString().contains('of 302')) return '';
+      debugPrint(e.toString());
+    }
+    debugPrint('--');
+  }
+
+  // Future appendQuotePart(String originalPart) async {
+  //   debugPrint('originalPart ${originalPart.length}');
+  //   try {
+  //     Response response = await dio.get(
+  //       backendUrl,
+  //       queryParameters: {
+  //         'action': 'appendQuotePart',
+  //         'originalPart': 'original Part ${originalPart.length}'
+  //       },
+  //     );
+  //     debugPrint(response.data['data']);
+  //   } catch (e) {
+  //     debugPrint('appendQuotePart\n$e');
+  //   }
+  // }
+
+  Future appendQuoteClear() async {
+    try {
+      Response response = await dio.get(
+        backendUrl,
+        queryParameters: {'action': 'appendQuoteClear'},
+      );
+      debugPrint(response.data['data']);
+    } catch (_) {}
+  }
+
+  Future<String> appendQuoteLess5kb(
+      String sheetName, String quote, String parpage, String author) async {
     // The below request is the same as above.
     try {
       // ignore: unused_local_variable
