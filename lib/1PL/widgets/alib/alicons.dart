@@ -1,6 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 //https://github.com/microsoft/fluentui-system-icons/tree/main/flutter/example/lib
-//https://pub.dev/packages/iconify_flutter
 //https://pub.dev/packages/simple_icons
 
 import 'package:flutter/material.dart';

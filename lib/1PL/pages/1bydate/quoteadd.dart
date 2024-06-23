@@ -35,6 +35,9 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
     super.dispose();
   }
 
+  // ignore: prefer_const_constructors
+  Color colorBlue = Color(0xffe64a6f);
+
   DropdownButton2 sheetNameSelect() {
     return DropdownButton2<String>(
       isExpanded: true,
@@ -50,9 +53,17 @@ class _QuoteAddPageState extends State<QuoteAddPage> {
                 value: item,
                 child: Text(
                   item,
-                  style: const TextStyle(
-                    fontSize: 14,
-                  ),
+                  style: [
+                    'ramp',
+                    'ramf',
+                    'papp',
+                    'nisp',
+                    'robf',
+                    'toll',
+                    'lask'
+                  ].contains(item.substring(0, 4))
+                      ? TextStyle(fontSize: 18, color: colorBlue)
+                      : const TextStyle(fontSize: 18),
                 ),
               ))
           .toList(),
