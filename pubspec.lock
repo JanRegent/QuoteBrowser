@@ -1230,10 +1230,10 @@ packages:
     dependency: "direct main"
     description:
       name: supabase_extensions
-      sha256: dd459d50530545a75c14cb3c7fd3568a134b6edc60cd0a4679bdd751bca668d0
+      sha256: "7b1ceb76a303fb3f97905941e3c513fa72cad204e6e9f15434f82f6ea165e2ae"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   supabase_flutter:
     dependency: "direct main"
     description:

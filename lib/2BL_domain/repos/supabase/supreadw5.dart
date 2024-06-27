@@ -1,7 +1,42 @@
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../zgitignore.dart';
 
 class SupReadW5 {
   late SupabaseClient supabase;
+
+  Future init() async {
+    await Supabase.initialize(
+        url: supUrl,
+        anonKey:
+            anonKey //Enable Row Level Security (RLS) via serviceRoleKey   NO anonKey,
+        );
+  }
+
+  Future<List<Map<String, dynamic>>> allWordsFTX(wordsAnd) async {
+    final result = await supabase
+        .from('sheetrows')
+        .select()
+        .textSearch('quote', wordsAnd); //   "'syn' & 'Milost' "
+
+    resultPrint(result);
+    return result;
+  }
+
+  void resultPrint(List<Map<String, dynamic>> result) {
+    for (var row in result) {
+      debugPrint(row['author'] + ' ' + row['rowkey'] + ' ' + row['sheetname']);
+    }
+  }
+
+  List<String> resultKeys(List<Map<String, dynamic>> result) {
+    List<String> keys = [];
+    for (var row in result) {
+      keys.add(row['rowkey']);
+    }
+    return keys;
+  }
 
   Future w5queryLike(Map w5q, bool rowkeysOnly) async {
     if (w5q['qtype'] != 'w5') return [];
@@ -74,34 +109,28 @@ class SupReadW5 {
   }
 
   Future<List<String>> w5queryTextSearchKeys(Map wfilterMap) async {
-    List data = await w5queryTextSearchRows(wfilterMap);
-    List<String> rowkeys = [];
+    List<Map<String, dynamic>> data = await w5queryTextSearchRows(wfilterMap);
 
-    try {
-      for (var i = 0; i < data.length; i++) {
-        rowkeys.add(data[i]['rowkey']);
-      }
-    } catch (_) {}
-
-    return rowkeys;
+    return resultKeys(data);
   }
 
-  Future w5queryTextSearchRows(Map wfilterMap) async {
+  Future<List<Map<String, dynamic>>> w5queryTextSearchRows(
+      Map wfilterMap) async {
     if (wfilterMap['filtertype'] != 'w5') return [];
 
-    List data = await searchW5(wfilterMap);
-    if (data.isEmpty) data = await authorSearch(wfilterMap);
-    if (data.isEmpty) data = await starsSearch(wfilterMap);
-    if (data.isEmpty) data = await favoriteSearch(wfilterMap);
+    List<Map<String, dynamic>> data = await searchW5(wfilterMap);
+    // if (data.isEmpty) data = await authorSearch(wfilterMap);
+    // if (data.isEmpty) data = await starsSearch(wfilterMap);
+    // if (data.isEmpty) data = await favoriteSearch(wfilterMap);
 
-    data = await authorPost(data, wfilterMap['author']);
-    data = await starsPost(data, wfilterMap['stars']);
-    data = await favoritePost(data, wfilterMap['favorite']);
+    // data = await authorPost(data, wfilterMap['author']);
+    // data = await starsPost(data, wfilterMap['stars']);
+    // data = await favoritePost(data, wfilterMap['favorite']);
 
     return data;
   }
 
-  Future searchW5(Map wfilterMap) async {
+  Future<List<Map<String, dynamic>>> searchW5(Map wfilterMap) async {
     String w5s = wfilterMap['w1'] +
         wfilterMap['w2'] +
         wfilterMap['w3'] +
@@ -113,14 +142,10 @@ class SupReadW5 {
     w5s = '';
     for (String key in wfilterMap.keys) {
       if (!key.startsWith('w')) continue;
-      if (wfilterMap[key] != '') w5s += "'&${wfilterMap[key]}' ";
+      if (wfilterMap[key] != '') w5s += " & '${wfilterMap[key]}'  ";
     }
-
-    var data1 = await supabase
-        .from('sheetrows')
-        .select('*')
-        .textSearch('quote', w5s)
-        .limit(100);
+    w5s = w5s.trim().substring(1); //remove first &
+    var data1 = await allWordsFTX(w5s);
 
     return data1;
   }
@@ -195,4 +220,11 @@ class SupReadW5 {
     }
     return data;
   }
+}
+
+/// Describes a query result
+class QueryResults0 {
+  final List<Map<String, dynamic>>? rows;
+
+  QueryResults0({this.rows});
 }

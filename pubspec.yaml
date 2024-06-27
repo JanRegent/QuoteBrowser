@@ -45,7 +45,7 @@ dependencies:
   sqflite_common_ffi: ^2.3.2+1
 
   supabase_flutter: ^2.3.4 #https://pub.dev/packages/supabase_flutter
-  supabase_extensions: ^1.0.0 #https://pub.dev/packages/supabase_extensions
+  supabase_extensions: ^1.0.1 #https://pub.dev/packages/supabase_extensions
 
   postgres: ^3.1.1 #https://pub.dev/packages/postgres
 

@@ -98,9 +98,12 @@ ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
     children: [
       ListTile(
           leading: IconButton(
-            icon: const Icon(Icons.clear_all_rounded),
-            onPressed: () => bl.wfiltersRepo.wfilterMapClearAll(),
-          ),
+              icon: const Icon(Icons.clear_all_rounded),
+              onPressed: () =>
+                  bl.supRepo.readSup.readW5.allWordsFTX("'syn' & 'Milost' ")
+
+              //bl.wfiltersRepo.wfilterMapClearAll(),
+              ),
           trailing: TextButton(
               onPressed: () {
                 leftRatio = leftRatio + 0.5;

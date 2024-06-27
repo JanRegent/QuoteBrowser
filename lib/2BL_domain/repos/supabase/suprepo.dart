@@ -17,10 +17,10 @@ class SupabaseRepo {
   late ReadSup readSup = ReadSup();
   Future init() async {
     await Supabase.initialize(
-      url: supUrl,
-      anonKey:
-          serviceRoleKey, //Enable Row Level Security (RLS) via serviceRoleKey   NO anonKey,
-    );
+        url: supUrl,
+        anonKey:
+            serviceRoleKey //Enable Row Level Security (RLS) via serviceRoleKey   NO anonKey,
+        );
     supabase = Supabase.instance.client;
     readSup.supabase = supabase;
     readSup.init();
