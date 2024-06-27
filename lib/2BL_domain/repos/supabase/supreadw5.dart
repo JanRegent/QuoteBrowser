@@ -14,16 +14,6 @@ class SupReadW5 {
         );
   }
 
-  Future<List<Map<String, dynamic>>> allWordsFTX(wordsAnd) async {
-    final result = await supabase
-        .from('sheetrows')
-        .select()
-        .textSearch('quote', wordsAnd); //   "'syn' & 'Milost' "
-
-    resultPrint(result);
-    return result;
-  }
-
   void resultPrint(List<Map<String, dynamic>> result) {
     for (var row in result) {
       debugPrint(row['author'] + ' ' + row['rowkey'] + ' ' + row['sheetname']);
@@ -109,17 +99,45 @@ class SupReadW5 {
   }
 
   Future<List<String>> w5queryTextSearchKeys(Map wfilterMap) async {
-    List<Map<String, dynamic>> data = await w5queryTextSearchRows(wfilterMap);
+    List<Map<String, dynamic>> data = await w5querySwitch(wfilterMap);
 
     return resultKeys(data);
   }
 
-  Future<List<Map<String, dynamic>>> w5queryTextSearchRows(
-      Map wfilterMap) async {
+  Future<List<Map<String, dynamic>>> w5querySwitch(Map wfilterMap) async {
     if (wfilterMap['filtertype'] != 'w5') return [];
 
-    List<Map<String, dynamic>> data = await searchW5(wfilterMap);
-    // if (data.isEmpty) data = await authorSearch(wfilterMap);
+    String w5s = wfilterMap['w1'] +
+        wfilterMap['w2'] +
+        wfilterMap['w3'] +
+        wfilterMap['w4'] +
+        wfilterMap['w5'];
+
+    String now5s =
+        wfilterMap['author'].toString() + wfilterMap['favorite'].toString();
+    //------------------------------------------------------------------w5 only
+    if (w5s.isNotEmpty && now5s.isEmpty && wfilterMap['stars'] == 0.0) {
+      return await searchW5(wfilterMap, 'w5only');
+    }
+    //-----------------------------------------------------------------w5 author
+    if (w5s.isNotEmpty && wfilterMap['author'].toString().isNotEmpty) {
+      w5s = ftxExpresion(wfilterMap);
+      return await authorSearch(w5s, wfilterMap['author']);
+    }
+
+    if (w5s.isNotEmpty &&
+        wfilterMap['author'].toString().isNotEmpty &&
+        wfilterMap['book'].toString().isNotEmpty) {
+      w5s = ftxExpresion(wfilterMap);
+      return await authorW5BookSearch(
+          w5s, wfilterMap['author'], wfilterMap['author']);
+    }
+
+    if (w5s.isEmpty &&
+        wfilterMap['author'].toString().isNotEmpty &&
+        wfilterMap['book'].toString().isNotEmpty) {
+      return await authorBookSearch(wfilterMap['author'], wfilterMap['book']);
+    }
     // if (data.isEmpty) data = await starsSearch(wfilterMap);
     // if (data.isEmpty) data = await favoriteSearch(wfilterMap);
 
@@ -127,10 +145,21 @@ class SupReadW5 {
     // data = await starsPost(data, wfilterMap['stars']);
     // data = await favoritePost(data, wfilterMap['favorite']);
 
-    return data;
+    return [];
   }
 
-  Future<List<Map<String, dynamic>>> searchW5(Map wfilterMap) async {
+  String ftxExpresion(Map wfilterMap) {
+    String w5s = '';
+    for (String key in wfilterMap.keys) {
+      if (!key.startsWith('w')) continue;
+      if (wfilterMap[key] != '') w5s += " & '${wfilterMap[key]}'  ";
+    }
+    w5s = w5s.trim().substring(1); //remove first &
+    return w5s;
+  }
+
+  Future<List<Map<String, dynamic>>> searchW5(
+      Map wfilterMap, String range) async {
     String w5s = wfilterMap['w1'] +
         wfilterMap['w2'] +
         wfilterMap['w3'] +
@@ -138,28 +167,55 @@ class SupReadW5 {
         wfilterMap['w5'];
 
     if (w5s.isEmpty) return [];
+    w5s = ftxExpresion(wfilterMap);
+    if (range == 'w5only') return await allWordsFTX(w5s);
 
-    w5s = '';
-    for (String key in wfilterMap.keys) {
-      if (!key.startsWith('w')) continue;
-      if (wfilterMap[key] != '') w5s += " & '${wfilterMap[key]}'  ";
-    }
-    w5s = w5s.trim().substring(1); //remove first &
-    var data1 = await allWordsFTX(w5s);
-
-    return data1;
+    return [];
   }
 
-  Future authorSearch(Map wfilterMap) async {
-    if (wfilterMap['author'] == '') return [];
-
-    var data1 = await supabase
+  Future<List<Map<String, dynamic>>> allWordsFTX(wordsAnd) async {
+    final result = await supabase
         .from('sheetrows')
-        .select('*')
-        .eq('author', wfilterMap['author'])
-        .limit(100);
+        .select()
+        .textSearch('quote', wordsAnd); //   "'syn' & 'Milost' "
 
-    return data1;
+    resultPrint(result);
+    return result;
+  }
+
+  Future authorSearch(String wordsAnd, String author) async {
+    if (author.isEmpty) return [];
+
+    return await supabase
+        .from('sheetrows')
+        .select()
+        .textSearch('quote', wordsAnd)
+        .eq('author', author)
+        .limit(100);
+  }
+
+  Future authorW5BookSearch(String wordsAnd, String author, String book) async {
+    if (author.isEmpty) return [];
+    if (book.isEmpty) return [];
+    return await supabase
+        .from('sheetrows')
+        .select()
+        .textSearch('quote', wordsAnd)
+        .eq('author', author)
+        .eq('book', book)
+        .limit(100);
+  }
+
+  Future authorBookSearch(String author, String book) async {
+    if (author.isEmpty) return [];
+    if (book.isEmpty) return [];
+    return await supabase
+        .from('sheetrows')
+        .select()
+        .eq('author', author)
+        .eq('book', book)
+        .order('parpage')
+        .limit(100);
   }
 
   Future authorPost(List data1, String author) async {
