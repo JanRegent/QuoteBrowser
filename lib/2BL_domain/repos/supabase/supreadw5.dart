@@ -98,7 +98,7 @@ class SupReadW5 {
     return rowkeys;
   }
 
-  Future<List<String>> w5queryTextSearchKeys(Map wfilterMap) async {
+  Future<List<String>> w5queryGetRowkeys(Map wfilterMap) async {
     List<Map<String, dynamic>> data = await w5querySwitch(wfilterMap);
 
     return resultKeys(data);
@@ -107,43 +107,109 @@ class SupReadW5 {
   Future<List<Map<String, dynamic>>> w5querySwitch(Map wfilterMap) async {
     if (wfilterMap['filtertype'] != 'w5') return [];
 
-    String w5s = wfilterMap['w1'] +
-        wfilterMap['w2'] +
-        wfilterMap['w3'] +
-        wfilterMap['w4'] +
-        wfilterMap['w5'];
-
+    String w5s = ftxExpresion(wfilterMap);
     String now5s =
         wfilterMap['author'].toString() + wfilterMap['favorite'].toString();
     //------------------------------------------------------------------w5 only
     if (w5s.isNotEmpty && now5s.isEmpty && wfilterMap['stars'] == 0.0) {
-      return await searchW5(wfilterMap, 'w5only');
+      return await allWordsFTX(w5s);
+    }
+    if (w5s.isNotEmpty && now5s.isEmpty && wfilterMap['stars'] > 0.0) {
+      return await supabase
+          .from('sheetrows')
+          .select()
+          .textSearch('quote', w5s)
+          .neq('stars', '');
+    }
+    if (w5s.isNotEmpty &&
+        wfilterMap['author'].toString().isEmpty &&
+        wfilterMap['book'].toString().isEmpty &&
+        wfilterMap['favorite'].toString().isNotEmpty) {
+      return await supabase
+          .from('sheetrows')
+          .select()
+          .textSearch('quote', w5s)
+          .neq('favorite', '');
     }
     //-----------------------------------------------------------------w5 author
-    if (w5s.isNotEmpty && wfilterMap['author'].toString().isNotEmpty) {
-      w5s = ftxExpresion(wfilterMap);
-      return await authorSearch(w5s, wfilterMap['author']);
-    }
 
     if (w5s.isNotEmpty &&
         wfilterMap['author'].toString().isNotEmpty &&
-        wfilterMap['book'].toString().isNotEmpty) {
-      w5s = ftxExpresion(wfilterMap);
-      return await authorW5BookSearch(
-          w5s, wfilterMap['author'], wfilterMap['author']);
+        wfilterMap['book'].toString().isNotEmpty &&
+        wfilterMap['favorite'].toString().isNotEmpty) {
+      return await supabase
+          .from('sheetrows')
+          .select()
+          .textSearch('quote', w5s)
+          .eq('author', wfilterMap['author'])
+          .eq('book', wfilterMap['book'])
+          .neq('favorite', '')
+          .limit(100);
     }
 
     if (w5s.isEmpty &&
         wfilterMap['author'].toString().isNotEmpty &&
-        wfilterMap['book'].toString().isNotEmpty) {
-      return await authorBookSearch(wfilterMap['author'], wfilterMap['book']);
+        wfilterMap['book'].toString().isNotEmpty &&
+        wfilterMap['favorite'].toString().isNotEmpty) {
+      return await supabase
+          .from('sheetrows')
+          .select()
+          .eq('author', wfilterMap['author'])
+          .eq('book', wfilterMap['book'])
+          .neq('favorite', '')
+          .limit(100);
     }
-    // if (data.isEmpty) data = await starsSearch(wfilterMap);
-    // if (data.isEmpty) data = await favoriteSearch(wfilterMap);
+    if (w5s.isEmpty &&
+        wfilterMap['author'].toString().isNotEmpty &&
+        wfilterMap['book'].toString().isNotEmpty) {
+      return await supabase
+          .from('sheetrows')
+          .select()
+          .eq('author', wfilterMap['author'])
+          .eq('book', wfilterMap['book'])
+          .limit(100);
+    }
 
-    // data = await authorPost(data, wfilterMap['author']);
-    // data = await starsPost(data, wfilterMap['stars']);
-    // data = await favoritePost(data, wfilterMap['favorite']);
+    if (w5s.isNotEmpty &&
+        wfilterMap['author'].toString().isNotEmpty &&
+        wfilterMap['favorite'].toString().isNotEmpty) {
+      return await supabase
+          .from('sheetrows')
+          .select()
+          .textSearch('quote', w5s)
+          .eq('author', wfilterMap['author'])
+          .neq('favorite', '')
+          .limit(100);
+    }
+    if (w5s.isNotEmpty && wfilterMap['author'].toString().isNotEmpty) {
+      return await supabase
+          .from('sheetrows')
+          .select()
+          .textSearch('quote', w5s)
+          .eq('author', wfilterMap['author'])
+          .limit(100);
+    }
+
+    if (w5s.isEmpty &&
+        wfilterMap['author'].toString().isNotEmpty &&
+        wfilterMap['favorite'].toString().isNotEmpty) {
+      return await supabase
+          .from('sheetrows')
+          .select()
+          .eq('author', wfilterMap['author'])
+          .neq('favorite', '')
+          .limit(100);
+    }
+
+    if (w5s.isEmpty && wfilterMap['author'].toString().isNotEmpty) {
+      return await supabase
+          .from('sheetrows')
+          .select()
+          .eq('author', wfilterMap['author'])
+          .limit(100);
+    }
+
+    // if (data.isEmpty) data = await starsSearch(wfilterMap);
 
     return [];
   }
@@ -154,23 +220,12 @@ class SupReadW5 {
       if (!key.startsWith('w')) continue;
       if (wfilterMap[key] != '') w5s += " & '${wfilterMap[key]}'  ";
     }
-    w5s = w5s.trim().substring(1); //remove first &
-    return w5s;
-  }
-
-  Future<List<Map<String, dynamic>>> searchW5(
-      Map wfilterMap, String range) async {
-    String w5s = wfilterMap['w1'] +
-        wfilterMap['w2'] +
-        wfilterMap['w3'] +
-        wfilterMap['w4'] +
-        wfilterMap['w5'];
-
-    if (w5s.isEmpty) return [];
-    w5s = ftxExpresion(wfilterMap);
-    if (range == 'w5only') return await allWordsFTX(w5s);
-
-    return [];
+    try {
+      w5s = w5s.trim().substring(1); //remove first &
+      return w5s;
+    } catch (_) {
+      return '';
+    }
   }
 
   Future<List<Map<String, dynamic>>> allWordsFTX(wordsAnd) async {
@@ -183,54 +238,7 @@ class SupReadW5 {
     return result;
   }
 
-  Future authorSearch(String wordsAnd, String author) async {
-    if (author.isEmpty) return [];
-
-    return await supabase
-        .from('sheetrows')
-        .select()
-        .textSearch('quote', wordsAnd)
-        .eq('author', author)
-        .limit(100);
-  }
-
-  Future authorW5BookSearch(String wordsAnd, String author, String book) async {
-    if (author.isEmpty) return [];
-    if (book.isEmpty) return [];
-    return await supabase
-        .from('sheetrows')
-        .select()
-        .textSearch('quote', wordsAnd)
-        .eq('author', author)
-        .eq('book', book)
-        .limit(100);
-  }
-
-  Future authorBookSearch(String author, String book) async {
-    if (author.isEmpty) return [];
-    if (book.isEmpty) return [];
-    return await supabase
-        .from('sheetrows')
-        .select()
-        .eq('author', author)
-        .eq('book', book)
-        .order('parpage')
-        .limit(100);
-  }
-
-  Future authorPost(List data1, String author) async {
-    if (author.isEmpty) return data1;
-    List data = [];
-    for (var i = 0; i < data1.length; i++) {
-      try {
-        if (!data1[i]['author'].toString().contains(author)) continue;
-        data.add(data1[i]);
-      } catch (_) {}
-    }
-    return data;
-  }
-
-  Future starsSearch(Map wfilterMap) async {
+  Future<List<Map<String, dynamic>>> starsSearch(Map wfilterMap) async {
     if (wfilterMap['stars'] == '') return [];
     if (wfilterMap['stars'] == 0.0) return [];
 
@@ -243,19 +251,7 @@ class SupReadW5 {
     return data1;
   }
 
-  Future starsPost(List data1, stars) async {
-    if (stars < 0.1) return data1;
-    List data = [];
-    for (var i = 0; i < data1.length; i++) {
-      try {
-        if (data1[i]['stars'].toString() != stars) continue;
-        data.add(data1[i]);
-      } catch (_) {}
-    }
-    return data;
-  }
-
-  Future favoriteSearch(Map wfilterMap) async {
+  Future<List<Map<String, dynamic>>> favoriteSearch(Map wfilterMap) async {
     if (wfilterMap['favorite'] == '') return [];
     var data1 = await supabase
         .from('sheetrows')
@@ -263,18 +259,6 @@ class SupReadW5 {
         .eq('favorite', 'f')
         .limit(100);
     return data1;
-  }
-
-  Future favoritePost(List data1, String favorite) async {
-    if (favorite.isEmpty) return data1;
-    List data = [];
-    for (var i = 0; i < data1.length; i++) {
-      try {
-        if (data1[i]['favorite'].toString() != 'f') continue;
-        data.add(data1[i]);
-      } catch (_) {}
-    }
-    return data;
   }
 }
 

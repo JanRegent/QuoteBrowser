@@ -15,12 +15,12 @@ late StarsFavoriteUI starsFavoriteUI;
 double leftRatio = 0.25;
 double rightRatio = 0.75;
 
-ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
+Column lpanelListview(BuildContext context, VoidCallback setStateW5) {
   Future w5querySwipper() async {
     bl.homeTitle.value = 'Search w5 ';
 
     bl.currentSS.keys = await bl.supRepo.readSup.readW5
-        .w5queryTextSearchKeys(bl.wfiltersRepo.wfilterMap);
+        .w5queryGetRowkeys(bl.wfiltersRepo.wfilterMap);
 
     String info = bl.wfiltersRepo.wfilterMap.toString();
     bl.homeTitle.value = '';
@@ -94,53 +94,56 @@ ListView lpanelListview(BuildContext context, VoidCallback setStateW5) {
     );
   }
 
-  return ListView(
-    children: [
-      ListTile(
-          leading: IconButton(
-            icon: const Icon(Icons.clear_all_rounded),
-            onPressed: () => bl.wfiltersRepo.wfilterMapClearAll(),
-          ),
-          trailing: TextButton(
-              onPressed: () {
-                leftRatio = leftRatio + 0.5;
-                if (leftRatio >= 1) leftRatio = 0.25;
-                rightRatio = 1 - leftRatio;
-                setStateW5();
-              },
-              child: Text(leftRatio == 0.25 ? '>>' : '<<',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      backgroundColor: Color.fromARGB(255, 186, 215, 239))))),
-      wordTextfield(1),
-      wordTextfield(2),
-      wordTextfield(3),
-      wordTextfield(4),
-      wordTextfield(5),
-      Card(
-        color: Colors.lightBlue,
-        child: Column(children: [
-          authorBooksUI.authorListTile(context),
-          authorBooksUI.bookListTile(context),
-        ]),
-      ),
-      Card(
-          shape: RoundedRectangleBorder(
-              side: const BorderSide(color: Colors.yellow, width: 2.0),
-              borderRadius: BorderRadius.circular(9.0)),
+  return Column(children: <Widget>[
+    Expanded(
+        child: ListView(
+      children: [
+        ListTile(
+            leading: IconButton(
+              icon: const Icon(Icons.clear_all_rounded),
+              onPressed: () => bl.wfiltersRepo.wfilterMapClearAll(),
+            ),
+            trailing: TextButton(
+                onPressed: () {
+                  leftRatio = leftRatio + 0.5;
+                  if (leftRatio >= 1) leftRatio = 0.25;
+                  rightRatio = 1 - leftRatio;
+                  setStateW5();
+                },
+                child: Text(leftRatio == 0.25 ? '>>' : '<<',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        backgroundColor: Color.fromARGB(255, 186, 215, 239))))),
+        wordTextfield(1),
+        wordTextfield(2),
+        wordTextfield(3),
+        wordTextfield(4),
+        wordTextfield(5),
+        Card(
+          color: Colors.lightBlue,
           child: Column(children: [
-            starsFavoriteUI.starsListTile(context),
-            starsFavoriteUI.favListTile(context)
-          ])),
-      const Divider(color: Colors.blue, height: 10, thickness: 5),
-      Row(children: [
-        search52grid(),
-        const Spacer(),
-        filterSave(),
-        const Spacer(),
-        search52swip()
-      ])
-    ],
-  );
+            authorBooksUI.authorListTile(context),
+            authorBooksUI.bookListTile(context),
+          ]),
+        ),
+        Card(
+            shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Colors.yellow, width: 2.0),
+                borderRadius: BorderRadius.circular(9.0)),
+            child: Column(children: [
+              starsFavoriteUI.starsListTile(context),
+              starsFavoriteUI.favListTile(context)
+            ])),
+        const Divider(color: Colors.blue, height: 10, thickness: 5),
+        Row(children: [
+          search52grid(),
+          const Spacer(),
+          filterSave(),
+          const Spacer(),
+          search52swip()
+        ])
+      ],
+    ))
+  ]);
 }
