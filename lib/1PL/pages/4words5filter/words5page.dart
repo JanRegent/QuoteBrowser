@@ -32,10 +32,8 @@ class Words5PageState extends State<Words5Page> {
     setState(() {});
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: ResizableContainer(
+  Widget twoPanel() {
+    return ResizableContainer(
       direction: Axis.horizontal,
       divider: ResizableDivider(
         color: Theme.of(context).colorScheme.primary,
@@ -58,6 +56,14 @@ class Words5PageState extends State<Words5Page> {
           ),
         ),
       ],
-    ));
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: MediaQuery.of(context).size.width < 400
+            ? lpanelListview(context, setstateW5)
+            : twoPanel());
   }
 }

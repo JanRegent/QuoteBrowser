@@ -5,6 +5,7 @@ import '../../../../2BL_domain/repos/supabase/w5filtersrepo.dart';
 import '../../../widgets/alib/alicons.dart';
 import '../../../zresults/repoadmin/resultbuilder/qresultbuilder.dart';
 import '../../../zresults/swiperbrowser/_swiper.dart';
+import '../rpanel/rpanelwfilterlv.dart';
 import 'authorsbooksui.dart';
 import 'starsfavui.dart';
 
@@ -101,20 +102,33 @@ Column lpanelListview(BuildContext context, VoidCallback setStateW5) {
         ListTile(
             leading: IconButton(
               icon: const Icon(Icons.clear_all_rounded),
-              onPressed: () => bl.wfiltersRepo.wfilterMapClearAll(),
+              onPressed: () {
+                bl.wfiltersRepo.wfilterMapClearAll();
+                setStateW5();
+              },
             ),
             trailing: TextButton(
                 onPressed: () {
-                  leftRatio = leftRatio + 0.5;
-                  if (leftRatio >= 1) leftRatio = 0.25;
-                  rightRatio = 1 - leftRatio;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Scaffold(
+                            appBar: AppBar(
+                                title: const Text(
+                                    'Select query parameters. Click on <--')),
+                            body: RpanelWfilterLv(w5Cont, setStateW5))),
+                  );
+
                   setStateW5();
                 },
-                child: Text(leftRatio == 0.25 ? '>>' : '<<',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        backgroundColor: Color.fromARGB(255, 186, 215, 239))))),
+                child: MediaQuery.of(context).size.width < 400
+                    ? const Text('>>',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            backgroundColor:
+                                Color.fromARGB(255, 186, 215, 239)))
+                    : const Text(' '))),
         wordTextfield(1),
         wordTextfield(2),
         wordTextfield(3),
@@ -137,9 +151,9 @@ Column lpanelListview(BuildContext context, VoidCallback setStateW5) {
             ])),
         const Divider(color: Colors.blue, height: 10, thickness: 5),
         Row(children: [
-          search52grid(),
-          const Spacer(),
           filterSave(),
+          const Spacer(),
+          search52grid(),
           const Spacer(),
           search52swip()
         ])
